@@ -1,6 +1,6 @@
 module.exports = function(controller) {
 
-    controller.hears(['^check ^in$'], 'direct_message', function(bot, message) {
+    controller.hears(['check in', 'Check in', 'check In', 'Check In'], 'direct_message', function(bot, message) {
 
         bot.startConversation(message, function(err, convo) {
 

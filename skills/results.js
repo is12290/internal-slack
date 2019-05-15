@@ -1,6 +1,6 @@
 module.exports = function(controller) {
 
-    controller.hears(['^result$', '^results$'], 'direct_message,direct_mention', function(bot, message) {
+    controller.hears(['result', 'Result', 'results', 'Results'], 'direct_message,direct_mention', function(bot, message) {
         
         controller.storage.results.find({ team: message.team }, function(error, results) {
             var arrayLength = results.length;
