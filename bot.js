@@ -47,8 +47,8 @@ This bot demonstrates many of the core features of Botkit:
     -> http://howdy.ai/botkit
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-var env = require('node-env-file');
-env(__dirname + '/.env');
+const dotenv = require('dotenv');
+dotenv.config();
 
 
 if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
@@ -88,9 +88,6 @@ var webserver = require(__dirname + '/components/express_webserver.js')(controll
 
 if (!process.env.clientId || !process.env.clientSecret) {
 
-  // Load in some helpers that make running Botkit on Glitch.com better
-  require(__dirname + '/components/plugin_glitch.js')(controller);
-
   webserver.get('/', function(req, res){
     res.render('installation', {
       domain: req.get('host'),
@@ -100,8 +97,6 @@ if (!process.env.clientId || !process.env.clientSecret) {
     });
   })
 
-  var where_its_at = 'http://' + (process.env.PROJECT_DOMAIN ? process.env.PROJECT_DOMAIN+ '.glitch.me/' : 'localhost:' + process.env.PORT || 3000);
-  console.log('WARNING: This application is not fully configured to work with Slack. Please see instructions at ' + where_its_at);
 }else {
 
   webserver.get('/', function(req, res){
@@ -119,55 +114,8 @@ if (!process.env.clientId || !process.env.clientSecret) {
   // Send an onboarding message when a new team joins
   require(__dirname + '/components/onboarding.js')(controller);
 
-  // Load in some helpers that make running Botkit on Glitch.com better
-  require(__dirname + '/components/plugin_glitch.js')(controller);
-
   var normalizedPath = require("path").join(__dirname, "skills");
   require("fs").readdirSync(normalizedPath).forEach(function(file) {
     require("./skills/" + file)(controller);
   });
-
-  // This captures and evaluates any message sent to the bot as a DM
-  // or sent to the bot in the form "@bot message" and passes it to
-  // Botkit CMS to evaluate for trigger words and patterns.
-  // If a trigger is matched, the conversation will automatically fire!
-  // You can tie into the execution of the script using the functions
-  // controller.studio.before, controller.studio.after and controller.studio.validate
-  if (process.env.studio_token) {
-      controller.on('direct_message,direct_mention,mention', function(bot, message) {
-          controller.studio.runTrigger(bot, message.text, message.user, message.channel, message).then(function(convo) {
-              if (!convo) {
-                  // no trigger was matched
-                  // If you want your bot to respond to every message,
-                  // define a 'fallback' script in Botkit CMS
-                  // and uncomment the line below.
-                  // controller.studio.run(bot, 'fallback', message.user, message.channel);
-              } else {
-                  // set variables here that are needed for EVERY script
-                  // use controller.studio.before('script') to set variables specific to a script
-                  convo.setVar('current_time', new Date());
-              }
-          }).catch(function(err) {
-              bot.reply(message, 'I experienced an error with a request to Botkit CMS: ' + err);
-              debug('Botkit CMS: ', err);
-          });
-      });
-  } else {
-      console.log('~~~~~~~~~~');
-      console.log('NOTE: Botkit CMS functionality has not been enabled');
-      console.log('Learn mode https://github.com/howdyai/botkit-cms');
-  }
-}
-
-
-
-
-
-function usage_tip() {
-    console.log('~~~~~~~~~~');
-    console.log('Botkit Starter Kit');
-    console.log('Execute your bot application like this:');
-    console.log('clientId=<MY SLACK CLIENT ID> clientSecret=<MY CLIENT SECRET> PORT=3000 node bot.js');
-    console.log('Get Slack app credentials here: https://api.slack.com/apps')
-    console.log('~~~~~~~~~~');
 }
