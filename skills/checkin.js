@@ -298,10 +298,10 @@ module.exports = function(controller) {
                             user.id = message.user,
                             user.team = message.team,
                             user.checkin = score;
-                            controller.storage.result.save(user);
+                            controller.storage.results.save(user);
                         } else {
                             user.checkin = score;
-                            controller.storage.result.save(user);
+                            controller.storage.results.save(user);
                         }
                     });
 
