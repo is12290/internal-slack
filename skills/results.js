@@ -24,7 +24,7 @@ module.exports = function(controller) {
                     "color": "#02D2FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.sleepOutcomePositive + "\n*Negative:* " + percent.sleepOutcomeNegative + "\n" + average.sleepMessage + "\n\n*Energy*"
+                        "text": "*Positive:* " + percent.sleepPositiveOutcome + "\n*Negative:* " + percent.sleepNegativeOutcome + "\n" + average.sleepMessage + "\n\n*Energy*"
                     }
                 },
                 {
@@ -35,7 +35,7 @@ module.exports = function(controller) {
                     "color": "#2A02FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.energyOutcomePositive + "\n*Negative:* " + percent.energyOutcomeNegative + "\n" + average.energyMessage + "\n\n*Mood*"
+                        "text": "*Positive:* " + percent.energyPositiveOutcome + "\n*Negative:* " + percent.energyNegativeOutcome + "\n" + average.energyMessage + "\n\n*Mood*"
                     }
                 },
                 {
@@ -46,7 +46,7 @@ module.exports = function(controller) {
                     "color": "#8A02FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.moodOutcomePositive + "\n*Negative:* " + percent.moodOutcomeNegative + "\n" + average.moodMessage + "\n\n*Motivation*"
+                        "text": "*Positive:* " + percent.moodPositiveOutcome + "\n*Negative:* " + percent.moodNegativeOutcome + "\n" + average.moodMessage + "\n\n*Motivation*"
                     }
                 },
                 {
@@ -57,7 +57,7 @@ module.exports = function(controller) {
                     "color": "#CF02FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.motivationOutcomePositive + "\n*Negative:* " + percent.motivationOutcomeNegative + "\n" + average.motivationMessage + "\n\n*Efficiency*"
+                        "text": "*Positive:* " + percent.motivationPositiveOutcome + "\n*Negative:* " + percent.motivationNegativeOutcome + "\n" + average.motivationMessage + "\n\n*Efficiency*"
                     }
                 },
                 {
@@ -68,7 +68,7 @@ module.exports = function(controller) {
                     "color": "#FF029D",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.efficiencyOutcomePositive + "\n*Negative:* " + percent.efficiencyOutcomeNegative + "\n" + average.efficiencyMessage + "\n\n*Fulfillment*"
+                        "text": "*Positive:* " + percent.efficiencyPositiveOutcome + "\n*Negative:* " + percent.efficiencyNegativeOutcome + "\n" + average.efficiencyMessage + "\n\n*Fulfillment*"
                     }
                 },
                 {
@@ -79,7 +79,7 @@ module.exports = function(controller) {
                     "color": "#FF8402",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.fulfillmentOutcomePositive + "\n*Negative:* " + percent.fulfillmentOutcomeNegative + "\n" + average.fulfillmentMessage + "\n\n*Overall*"
+                        "text": "*Positive:* " + percent.fulfillmentPositiveOutcome + "\n*Negative:* " + percent.fulfillmentNegativeOutcome + "\n" + average.fulfillmentMessage + "\n\n*Overall*"
                     }
                 },
                 {
