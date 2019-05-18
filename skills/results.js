@@ -101,6 +101,21 @@ module.exports = function(controller) {
     });
 
     function getPercentage(user) {
+
+        // Necessary variables
+        var sleepPositive;
+        var sleepNegative;
+        var energyPositive;
+        var energyNegative;
+        var moodPositive;
+        var moodNegative;
+        var motivationPositive;
+        var motivationNegative;
+        var efficiencyPositive;
+        var efficiencyNegative;
+        var fulfillmentPositive;
+        var fulfillmentNegative;
+
         controller.storage.results.find({team: user.team}, function(error, results) {
             var arrayLength = results.length;
             for (var i; i < arrayLength; i++) {
@@ -109,19 +124,6 @@ module.exports = function(controller) {
                 var checkIn = instance.checkin;
                 var checkOut = instance.checkout;
     
-                // Necessary variables
-                var sleepPositive;
-                var sleepNegative;
-                var energyPositive;
-                var energyNegative;
-                var moodPositive;
-                var moodNegative;
-                var motivationPositive;
-                var motivationNegative;
-                var efficiencyPositive;
-                var efficiencyNegative;
-                var fulfillmentPositive;
-                var fulfillmentNegative;
     
                 // Check In
                 if (checkIn[0] < 2) {
@@ -189,6 +191,21 @@ module.exports = function(controller) {
     }
 
     function getAverage(user) {
+
+        // Necessary constants
+        var positiveDay;
+        var negativeDay;
+        // Checkin Constants
+        var checkInSleep;
+        var checkInEnergy;
+        var checkInMood;
+        var checkInMotivation;
+        // Checkout Constants
+        var checkOutEfficiency;
+        var checkOutEnergy;
+        var checkOutMood;
+        var checkOutFulfillment;
+
         controller.storage.results.find({ team: user.team }, function(error, results) {
             var arrayLength = results.length;
             for (var i; i < arrayLength; i++) {
@@ -199,20 +216,6 @@ module.exports = function(controller) {
                 var checkInScore = checkIn[4];
                 var checkOutScore = checkOut[4];
                 var scoreDifference = checkInScore - checkOutScore;
-    
-                // Necessary constants
-                var positiveDay;
-                var negativeDay;
-                // Checkin Constants
-                var checkInSleep;
-                var checkInEnergy;
-                var checkInMood;
-                var checkInMotivation;
-                // Checkout Constants
-                var checkOutEfficiency;
-                var checkOutEnergy;
-                var checkOutMood;
-                var checkOutFulfillment;
     
                 // Check In
                 checkInSleep = checkInSleep + checkIn[0];
@@ -288,5 +291,5 @@ module.exports = function(controller) {
         var averageArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, dayMessage];
         return averageArray;
     }
-    
+
 }
