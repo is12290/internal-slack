@@ -1,104 +1,107 @@
+import { getAverage } from "average.js";
+import { getPercentage } from "percentage.js";
+
 module.exports = function(controller) {
 
     controller.hears(['result', 'Result', 'results', 'Results'], 'direct_message,direct_mention', function(bot, message) {
         
-        controller.storage.results.find({ team: message.team }, function(error, results) {
-            var arrayLength = results.length;
-            for (var i; i < arrayLength; i++) {
-                // Results variables
-                var instance = results[i];
-                var checkIn = instance.checkin;
-                var checkOut = instance.checkout;
-                var checkInScore = checkIn[4];
-                var checkOutScore = checkOut[4];
-                var scoreDifference = checkInScore - checkOutScore;
+        if (message.is_admin) {
+            getAverage();
+            getPercentage();
 
-                // Necessary constants
-                var positiveDay;
-                var negativeDay;
-                // Checkin Constants
-                var checkInSleep;
-                var checkInEnergy;
-                var checkInMood;
-                var checkInMotivation;
-                // Checkout Constants
-                var checkOutEfficiency;
-                var checkOutEnergy;
-                var checkOutMood;
-                var checkOutFulfillment;
+            const content = {
+                blocks: [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Hey! Here are your results...\n\n*Sleep*"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "color": "#02D2FF",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "*Positive:* " + sleepOutcomePositive + "\n*Negative:* " + sleepOutcomeNegative + "\n" + sleepMessage + "\n\n*Energy*"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "color": "#2A02FF",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "*Positive:* " + energyOutcomePositive + "\n*Negative:* " + energyOutcomeNegative + "\n" + energyMessage + "\n\n*Mood*"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "color": "#8A02FF",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "*Positive:* " + moodOutcomePositive + "\n*Negative:* " + moodOutcomeNegative + "\n" + moodMessage + "\n\n*Motivation*"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "color": "#CF02FF",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "*Positive:* " + motivationOutcomePositive + "\n*Negative:* " + motivationOutcomeNegative + "\n" + motivationMessage + "\n\n*Efficiency*"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "color": "#FF029D",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "*Positive:* " + efficiencyOutcomePositive + "\n*Negative:* " + efficiencyOutcomeNegative + "\n" + efficiencyMessage + "\n\n*Fulfillment*"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "color": "#FF8402",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "*Positive:* " + fulfillmentOutcomePositive + "\n*Negative:* " + fulfillmentOutcomeNegative + "\n" + fulfillmentMessage + "\n\n*Overall*"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "color": "#02FF57",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": dayMessage
+                        }
+                    }
+                ]
+            };
 
-                // Check In
-                checkInSleep = checkInSleep + checkIn[0];
-                checkInEnergy = checkInEnergy + checkIn[1];
-                checkInMood = checkInMood + checkIn[2];
-                checkInMotivation = checkInMotivation + checkIn[3];
+            bot.reply(message, content);
 
-                // Check Out
-                checkOutEfficiency = checkOutEfficiency + checkOut[0];
-                checkOutEnergy = checkOutEnergy + checkOut[1];
-                checkOutMood = checkOutMood + checkOut[2];
-                checkOutFulfillment = checkOutFulfillment + checkOut[3];
-
-                // Determine Day Outcome
-                if (scoreDifference >= 0) {
-                    positiveDay = positiveDay + 1;
-                } else {
-                    negativeDay = negativeDay + 1;
-                }
-
-            }
-
-            var sleepOutcome = checkInSleep / arrayLength;
-            var energyOutcome = (checkInEnergy + checkOutEnergy) / (arrayLength * 2);
-            var moodOutcome = (checkInMood + checkOutMood) / (arrayLength * 2);
-            var motivationOutcome = checkInMotivation / arrayLength;
-            var efficiencyOutcome = checkOutEfficiency / arrayLength;
-            var fulfillmentOutcome = checkOutFulfillment / arrayLength;
-
-            if (sleepOutcome > 2) {
-                var sleepMessage = '*Sleep*\nThe average sleep last night was *_poor_*';
-            } else {
-                var sleepMessage = '*Sleep*\nThe average sleep last night was *_good_*';
-            }
-
-            if (energyOutcome > 2) {
-                var energyMessage = '*Energy*\nThe average energy level is *_low_*';
-            } else {
-                var energyMessage = '*Energy*\nThe average energy level is *_sufficient_*';
-            }
-
-            if (moodOutcome > 2) {
-                var moodMessage = '*Mood*\nThe average mood is, sadly, *_negative_*';
-            } else {
-                var moodMessage = '*Mood*\nThe average mood is, happily, *_positive_*';
-            }
-
-            if (motivationOutcome > 2) {
-                var motivationMessage = '*Motivation*\nThe average motivation level is *_lacking_*';
-            } else {
-                var motivationMessage = '*Motivation*\nThe average motivation level is *_high_*';
-            }
-
-            if (efficiencyOutcome > 2) {
-                var efficiencyMessage = '*Efficiency*\nThe average employee *_does not_* believe they were too efficient today';
-            } else {
-                var efficiencyMessage = '*Efficiency*\nThe average employee *_does_*, indeed, believe they were efficient today';
-            }
-
-            if (fulfillmentOutcome > 2) {
-                var fulfillmentMessage = '*Fulfillment*\nThe average employee is *_not_* feeling fulfilled';
-            } else {
-                var fulfillmentMessage = '*Fulfillment*\nThe average employee *_is_* feeling fulfilled';
-            }
-
-            if (positiveDay > negativeDay) {
-                var dayMessage = '*Daily Outcome*\nThe average employee\'s day got *_better_* following their shift';
-            } else {
-                var dayMessage = '*Daily Outcome*\nThe average employee\'s day got *_worse_* following their shift';
-            }
-
-            bot.reply(message, 'Here are your results:\n' + sleepMessage + '\n\n' + energyMessage + '\n\n' + moodMessage + '\n\n' + motivationMessage + '\n\n' + efficiencyMessage + '\n\n' + fulfillmentMessage + '\n\n' + dayMessage);
-
-        });
+        } else {
+            bot.reply(message, 'My sincerest apologies, but you have to be an admin to report the results :upside_down_face:');
+        }
     });
 };
