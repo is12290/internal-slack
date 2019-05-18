@@ -2,8 +2,8 @@ module.exports = function(controller) {
 
     controller.hears(['result', 'Result', 'results', 'Results'], 'direct_message,direct_mention', function(bot, message) {
         
-        getAverage(message);
-        getPercentage(message);
+        var average = getAverage(message);
+        var percent = getPercentage(message);
 
 
         // Block Content
@@ -24,7 +24,7 @@ module.exports = function(controller) {
                     "color": "#02D2FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + sleepOutcomePositive + "\n*Negative:* " + sleepOutcomeNegative + "\n" + sleepMessage + "\n\n*Energy*"
+                        "text": "*Positive:* " + percent.sleepOutcomePositive + "\n*Negative:* " + percent.sleepOutcomeNegative + "\n" + average.sleepMessage + "\n\n*Energy*"
                     }
                 },
                 {
@@ -35,7 +35,7 @@ module.exports = function(controller) {
                     "color": "#2A02FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + energyOutcomePositive + "\n*Negative:* " + energyOutcomeNegative + "\n" + energyMessage + "\n\n*Mood*"
+                        "text": "*Positive:* " + percent.energyOutcomePositive + "\n*Negative:* " + percent.energyOutcomeNegative + "\n" + average.energyMessage + "\n\n*Mood*"
                     }
                 },
                 {
@@ -46,7 +46,7 @@ module.exports = function(controller) {
                     "color": "#8A02FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + moodOutcomePositive + "\n*Negative:* " + moodOutcomeNegative + "\n" + moodMessage + "\n\n*Motivation*"
+                        "text": "*Positive:* " + percent.moodOutcomePositive + "\n*Negative:* " + percent.moodOutcomeNegative + "\n" + average.moodMessage + "\n\n*Motivation*"
                     }
                 },
                 {
@@ -57,7 +57,7 @@ module.exports = function(controller) {
                     "color": "#CF02FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + motivationOutcomePositive + "\n*Negative:* " + motivationOutcomeNegative + "\n" + motivationMessage + "\n\n*Efficiency*"
+                        "text": "*Positive:* " + percent.motivationOutcomePositive + "\n*Negative:* " + percent.motivationOutcomeNegative + "\n" + average.motivationMessage + "\n\n*Efficiency*"
                     }
                 },
                 {
@@ -68,7 +68,7 @@ module.exports = function(controller) {
                     "color": "#FF029D",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + efficiencyOutcomePositive + "\n*Negative:* " + efficiencyOutcomeNegative + "\n" + efficiencyMessage + "\n\n*Fulfillment*"
+                        "text": "*Positive:* " + percent.efficiencyOutcomePositive + "\n*Negative:* " + percent.efficiencyOutcomeNegative + "\n" + average.efficiencyMessage + "\n\n*Fulfillment*"
                     }
                 },
                 {
@@ -79,7 +79,7 @@ module.exports = function(controller) {
                     "color": "#FF8402",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + fulfillmentOutcomePositive + "\n*Negative:* " + fulfillmentOutcomeNegative + "\n" + fulfillmentMessage + "\n\n*Overall*"
+                        "text": "*Positive:* " + percent.fulfillmentOutcomePositive + "\n*Negative:* " + percent.fulfillmentOutcomeNegative + "\n" + average.fulfillmentMessage + "\n\n*Overall*"
                     }
                 },
                 {
@@ -90,7 +90,7 @@ module.exports = function(controller) {
                     "color": "#02FF57",
                     "text": {
                         "type": "mrkdwn",
-                        "text": dayMessage
+                        "text": average.dayMessage
                     }
                 }
             ]
