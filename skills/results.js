@@ -24,7 +24,7 @@ module.exports = function(controller) {
                     "color": "#02D2FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.sleepPositiveOutcome + "\n*Negative:* " + percent.sleepNegativeOutcome + "\n" + average.sleepMessage + "\n\n*Energy*"
+                        "text": "*Positive:* " + percent[0] + "\n*Negative:* " + percent[1] + "\n" + average[0] + "\n\n*Energy*"
                     }
                 },
                 {
@@ -35,7 +35,7 @@ module.exports = function(controller) {
                     "color": "#2A02FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.energyPositiveOutcome + "\n*Negative:* " + percent.energyNegativeOutcome + "\n" + average.energyMessage + "\n\n*Mood*"
+                        "text": "*Positive:* " + percent[2] + "\n*Negative:* " + percent[3] + "\n" + average[1] + "\n\n*Mood*"
                     }
                 },
                 {
@@ -46,7 +46,7 @@ module.exports = function(controller) {
                     "color": "#8A02FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.moodPositiveOutcome + "\n*Negative:* " + percent.moodNegativeOutcome + "\n" + average.moodMessage + "\n\n*Motivation*"
+                        "text": "*Positive:* " + percent[4] + "\n*Negative:* " + percent[5] + "\n" + average[2] + "\n\n*Motivation*"
                     }
                 },
                 {
@@ -57,7 +57,7 @@ module.exports = function(controller) {
                     "color": "#CF02FF",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.motivationPositiveOutcome + "\n*Negative:* " + percent.motivationNegativeOutcome + "\n" + average.motivationMessage + "\n\n*Efficiency*"
+                        "text": "*Positive:* " + percent[6] + "\n*Negative:* " + percent[7] + "\n" + average[3] + "\n\n*Efficiency*"
                     }
                 },
                 {
@@ -68,7 +68,7 @@ module.exports = function(controller) {
                     "color": "#FF029D",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.efficiencyPositiveOutcome + "\n*Negative:* " + percent.efficiencyNegativeOutcome + "\n" + average.efficiencyMessage + "\n\n*Fulfillment*"
+                        "text": "*Positive:* " + percent[8] + "\n*Negative:* " + percent[9] + "\n" + average[4] + "\n\n*Fulfillment*"
                     }
                 },
                 {
@@ -79,7 +79,7 @@ module.exports = function(controller) {
                     "color": "#FF8402",
                     "text": {
                         "type": "mrkdwn",
-                        "text": "*Positive:* " + percent.fulfillmentPositiveOutcome + "\n*Negative:* " + percent.fulfillmentNegativeOutcome + "\n" + average.fulfillmentMessage + "\n\n*Overall*"
+                        "text": "*Positive:* " + percent[10] + "\n*Negative:* " + percent[11] + "\n" + average[5] + "\n\n*Overall*"
                     }
                 },
                 {
@@ -90,7 +90,7 @@ module.exports = function(controller) {
                     "color": "#02FF57",
                     "text": {
                         "type": "mrkdwn",
-                        "text": average.dayMessage
+                        "text": average[6]
                     }
                 }
             ]
@@ -180,8 +180,10 @@ module.exports = function(controller) {
             var efficiencyNegativeOutcome = (efficiencyNegative / arrayLength) * 100;
             var fulfillmentPositiveOutcome = (fulfillmentPositive / arrayLength) * 100;
             var fulfillmentNegativeOutcome = (fulfillmentNegative / arrayLength) * 100;
+
+            var percentArray = [sleepPositiveOutcome, sleepNegativeOutcome, energyPositiveOutcome, energyNegativeOutcome, moodPositiveOutcome, moodNegativeOutcome, motivationPositiveOutcome, motivationNegativeOutcome, efficiencyPositiveOutcome, efficiencyNegativeOutcome, fulfillmentPositiveOutcome, fulfillmentNegativeOutcome];
     
-            return sleepPositiveOutcome, sleepNegativeOutcome, energyPositiveOutcome, energyNegativeOutcome, moodPositiveOutcome, moodNegativeOutcome, motivationPositiveOutcome, motivationNegativeOutcome, efficiencyPositiveOutcome, efficiencyNegativeOutcome, fulfillmentPositiveOutcome, fulfillmentNegativeOutcome;
+            return percentArray;
         });
     }
 
@@ -281,7 +283,8 @@ module.exports = function(controller) {
                 var dayMessage = 'The average employee\'s emotional state got *_better_* following the work day';
             }
     
-            return sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, dayMessage;
+            var averageArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, dayMessage];
+            return averageArray;
         });
     }
 }
