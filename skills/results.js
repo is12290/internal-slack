@@ -167,24 +167,25 @@ module.exports = function(controller) {
                     fulfillmentNegative = fulfillmentNegative + 1;
                 }
             }
-    
-            var sleepPositiveOutcome = (sleepPositive / arrayLength) * 100;
-            var sleepNegativeOutcome = (sleepNegative / arrayLength)* 100;
-            var energyPositiveOutcome = (energyPositive / (arrayLength * 2)) * 100;
-            var energyNegativeOutcome = (energyNegative / (arrayLength * 2)) * 100;
-            var moodPositiveOutcome = (moodPositive / (arrayLength * 2)) * 100;
-            var moodNegativeOutcome = (moodNegative / (arrayLength * 2)) * 100;
-            var motivationPositiveOutcome = (motivationPositive / arrayLength) * 100;
-            var motivationNegativeOutcome = (motivationNegative / arrayLength) * 100;
-            var efficiencyPositiveOutcome = (efficiencyPositive / arrayLength) * 100;
-            var efficiencyNegativeOutcome = (efficiencyNegative / arrayLength) * 100;
-            var fulfillmentPositiveOutcome = (fulfillmentPositive / arrayLength) * 100;
-            var fulfillmentNegativeOutcome = (fulfillmentNegative / arrayLength) * 100;
-
-            var percentArray = [sleepPositiveOutcome, sleepNegativeOutcome, energyPositiveOutcome, energyNegativeOutcome, moodPositiveOutcome, moodNegativeOutcome, motivationPositiveOutcome, motivationNegativeOutcome, efficiencyPositiveOutcome, efficiencyNegativeOutcome, fulfillmentPositiveOutcome, fulfillmentNegativeOutcome];
-    
-            return percentArray;
         })
+    
+        var sleepPositiveOutcome = (sleepPositive / arrayLength) * 100;
+        var sleepNegativeOutcome = (sleepNegative / arrayLength)* 100;
+        var energyPositiveOutcome = (energyPositive / (arrayLength * 2)) * 100;
+        var energyNegativeOutcome = (energyNegative / (arrayLength * 2)) * 100;
+        var moodPositiveOutcome = (moodPositive / (arrayLength * 2)) * 100;
+        var moodNegativeOutcome = (moodNegative / (arrayLength * 2)) * 100;
+        var motivationPositiveOutcome = (motivationPositive / arrayLength) * 100;
+        var motivationNegativeOutcome = (motivationNegative / arrayLength) * 100;
+        var efficiencyPositiveOutcome = (efficiencyPositive / arrayLength) * 100;
+        var efficiencyNegativeOutcome = (efficiencyNegative / arrayLength) * 100;
+        var fulfillmentPositiveOutcome = (fulfillmentPositive / arrayLength) * 100;
+        var fulfillmentNegativeOutcome = (fulfillmentNegative / arrayLength) * 100;
+
+        var percentArray = [sleepPositiveOutcome, sleepNegativeOutcome, energyPositiveOutcome, energyNegativeOutcome, moodPositiveOutcome, moodNegativeOutcome, motivationPositiveOutcome, motivationNegativeOutcome, efficiencyPositiveOutcome, efficiencyNegativeOutcome, fulfillmentPositiveOutcome, fulfillmentNegativeOutcome];
+    
+        return percentArray;
+        
     }
 
     function getAverage(user) {
@@ -233,58 +234,59 @@ module.exports = function(controller) {
                 }
     
             }
+        })
     
-            var sleepOutcome = checkInSleep / arrayLength;
-            var energyOutcome = (checkInEnergy + checkOutEnergy) / (arrayLength * 2);
-            var moodOutcome = (checkInMood + checkOutMood) / (arrayLength * 2);
-            var motivationOutcome = checkInMotivation / arrayLength;
-            var efficiencyOutcome = checkOutEfficiency / arrayLength;
-            var fulfillmentOutcome = checkOutFulfillment / arrayLength;
+        var sleepOutcome = checkInSleep / arrayLength;
+        var energyOutcome = (checkInEnergy + checkOutEnergy) / (arrayLength * 2);
+        var moodOutcome = (checkInMood + checkOutMood) / (arrayLength * 2);
+        var motivationOutcome = checkInMotivation / arrayLength;
+        var efficiencyOutcome = checkOutEfficiency / arrayLength;
+        var fulfillmentOutcome = checkOutFulfillment / arrayLength;
     
-            if (sleepOutcome > 2) {
-                var sleepMessage = '*Average*: Negative';
-            } else {
-                var sleepMessage = '*Average*: Positive';
-            }
+        if (sleepOutcome > 2) {
+            var sleepMessage = '*Average*: Negative';
+        } else {
+            var sleepMessage = '*Average*: Positive';
+        }
     
-            if (energyOutcome > 2) {
-                var energyMessage = '*Average*: Negative';
-            } else {
-                var energyMessage = '*Average*: Positive';
-            }
+        if (energyOutcome > 2) {
+            var energyMessage = '*Average*: Negative';
+        } else {
+            var energyMessage = '*Average*: Positive';
+        }
     
-            if (moodOutcome > 2) {
-                var moodMessage = '*Average*: Negative';
-            } else {
-                var moodMessage = '*Average*: Positive';
-            }
+        if (moodOutcome > 2) {
+            var moodMessage = '*Average*: Negative';
+        } else {
+            var moodMessage = '*Average*: Positive';
+        }
     
-            if (motivationOutcome > 2) {
-                var motivationMessage = '*Average*: Negative';
-            } else {
-                var motivationMessage = '*Average*: Positive';
-            }
+        if (motivationOutcome > 2) {
+            var motivationMessage = '*Average*: Negative';
+        } else {
+            var motivationMessage = '*Average*: Positive';
+        }
     
-            if (efficiencyOutcome > 2) {
-                var efficiencyMessage = '*Average*: Negative';
-            } else {
-                var efficiencyMessage = '*Average*: Positive';
-            }
+        if (efficiencyOutcome > 2) {
+            var efficiencyMessage = '*Average*: Negative';
+        } else {
+            var efficiencyMessage = '*Average*: Positive';
+        }
     
-            if (fulfillmentOutcome > 2) {
-                var fulfillmentMessage = '*Average*: Negative';
-            } else {
-                var fulfillmentMessage = '*Average*: Positive';
-            }
+        if (fulfillmentOutcome > 2) {
+            var fulfillmentMessage = '*Average*: Negative';
+        } else {
+            var fulfillmentMessage = '*Average*: Positive';
+        }
     
-            if (positiveDay > negativeDay) {
-                var dayMessage = 'The average employee\'s emotional state got *_worse_* following the work day';
-            } else {
-                var dayMessage = 'The average employee\'s emotional state got *_better_* following the work day';
-            }
+        if (positiveDay > negativeDay) {
+            var dayMessage = 'The average employee\'s emotional state got *_worse_* following the work day';
+        } else {
+            var dayMessage = 'The average employee\'s emotional state got *_better_* following the work day';
+        }
     
-            var averageArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, dayMessage];
-            return averageArray;
-        });
+        var averageArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, dayMessage];
+        return averageArray;
     }
+    
 }
