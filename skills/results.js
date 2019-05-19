@@ -7,97 +7,97 @@ module.exports = function(controller) {
 
 
         // Block Content
-        const content = {
-            blocks: [
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "Hey! Here are your results...\n\n*Sleep*"
-                    }
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "section",
-                    "color": "#02D2FF",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "*Positive:* " + percent[0] + "%\n*Negative:* " + percent[1] + "%\n" + average[0] + "\n\n*Energy*"
-                    }
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "section",
-                    "color": "#2A02FF",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "*Positive:* " + percent[2] + "%\n*Negative:* " + percent[3] + "%\n" + average[1] + "\n\n*Mood*"
-                    }
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "section",
-                    "color": "#8A02FF",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "*Positive:* " + percent[4] + "%\n*Negative:* " + percent[5] + "%\n" + average[2] + "\n\n*Motivation*"
-                    }
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "section",
-                    "color": "#CF02FF",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "*Positive:* " + percent[6] + "%\n*Negative:* " + percent[7] + "%\n" + average[3] + "\n\n*Efficiency*"
-                    }
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "section",
-                    "color": "#FF029D",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "*Positive:* " + percent[8] + "%\n*Negative:* " + percent[9] + "%\n" + average[4] + "\n\n*Fulfillment*"
-                    }
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "section",
-                    "color": "#FF8402",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "*Positive:* " + percent[10] + "%\n*Negative:* " + percent[11] + "%\n" + average[5] + "\n\n*Overall*"
-                    }
-                },
-                {
-                    "type": "divider"
-                },
-                {
-                    "type": "section",
-                    "color": "#02FF57",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": average[6]
-                    }
-                }
-            ]
-        };
+        // const content = {
+        //     blocks: [
+        //         {
+        //             "type": "section",
+        //             "text": {
+        //                 "type": "mrkdwn",
+        //                 "text": "Hey! Here are your results...\n\n*Sleep*"
+        //             }
+        //         },
+        //         {
+        //             "type": "divider"
+        //         },
+        //         {
+        //             "type": "section",
+        //             "color": "#02D2FF",
+        //             "text": {
+        //                 "type": "mrkdwn",
+        //                 "text": "*Positive:* " + percent[0] + "%\n*Negative:* " + percent[1] + "%\n" + average[0] + "\n\n*Energy*"
+        //             }
+        //         },
+        //         {
+        //             "type": "divider"
+        //         },
+        //         {
+        //             "type": "section",
+        //             "color": "#2A02FF",
+        //             "text": {
+        //                 "type": "mrkdwn",
+        //                 "text": "*Positive:* " + percent[2] + "%\n*Negative:* " + percent[3] + "%\n" + average[1] + "\n\n*Mood*"
+        //             }
+        //         },
+        //         {
+        //             "type": "divider"
+        //         },
+        //         {
+        //             "type": "section",
+        //             "color": "#8A02FF",
+        //             "text": {
+        //                 "type": "mrkdwn",
+        //                 "text": "*Positive:* " + percent[4] + "%\n*Negative:* " + percent[5] + "%\n" + average[2] + "\n\n*Motivation*"
+        //             }
+        //         },
+        //         {
+        //             "type": "divider"
+        //         },
+        //         {
+        //             "type": "section",
+        //             "color": "#CF02FF",
+        //             "text": {
+        //                 "type": "mrkdwn",
+        //                 "text": "*Positive:* " + percent[6] + "%\n*Negative:* " + percent[7] + "%\n" + average[3] + "\n\n*Efficiency*"
+        //             }
+        //         },
+        //         {
+        //             "type": "divider"
+        //         },
+        //         {
+        //             "type": "section",
+        //             "color": "#FF029D",
+        //             "text": {
+        //                 "type": "mrkdwn",
+        //                 "text": "*Positive:* " + percent[8] + "%\n*Negative:* " + percent[9] + "%\n" + average[4] + "\n\n*Fulfillment*"
+        //             }
+        //         },
+        //         {
+        //             "type": "divider"
+        //         },
+        //         {
+        //             "type": "section",
+        //             "color": "#FF8402",
+        //             "text": {
+        //                 "type": "mrkdwn",
+        //                 "text": "*Positive:* " + percent[10] + "%\n*Negative:* " + percent[11] + "%\n" + average[5] + "\n\n*Overall*"
+        //             }
+        //         },
+        //         {
+        //             "type": "divider"
+        //         },
+        //         {
+        //             "type": "section",
+        //             "color": "#02FF57",
+        //             "text": {
+        //                 "type": "mrkdwn",
+        //                 "text": average[6]
+        //             }
+        //         }
+        //     ]
+        // };
 
         // Replying
-        bot.reply(message, content);
+        bot.reply(message, "*Sleep*\nPositive: " + percent[0] + "%\nNegative: " + percent[1] + "%\nAverage: " + average[0]);
     });
 
     function getPercentage(user) {
