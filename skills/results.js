@@ -1,6 +1,6 @@
 module.exports = function(controller) {
 
-    controller.hears(['poop'], 'direct_message,direct_mention', function(bot, message) {
+    controller.hears(['result', 'Result', 'results', 'Results'], 'direct_message,direct_mention', function(bot, message) {
         
         var average = getAverage(message);
         var percent = getPercentage(message);
@@ -27,11 +27,11 @@ module.exports = function(controller) {
         var fulfillmentPositive;
         var fulfillmentNegative;
 
-        controller.storage.results.find({team: user.team}, function(error, results) {
-            var arrayLength = results.length;
+        controller.storage.results.find({team: user.team}, function(error, output) {
+            var arrayLength = output.length;
             for (var i; i < arrayLength; i++) {
                 // Housekeeping variables
-                var instance = results[i];
+                var instance = output[i];
                 var checkIn = instance.checkin;
                 var checkOut = instance.checkout;
     
@@ -118,11 +118,11 @@ module.exports = function(controller) {
         var checkOutMood;
         var checkOutFulfillment;
 
-        controller.storage.results.find({ team: user.team }, function(error, results) {
-            var arrayLength = results.length;
+        controller.storage.results.find({ team: user.team }, function(error, output) {
+            var arrayLength = output.length;
             for (var i; i < arrayLength; i++) {
                 // Results variables
-                var instance = results[i];
+                var instance = output[i];
                 var checkIn = instance.checkin;
                 var checkOut = instance.checkout;
                 var checkInScore = checkIn[4];
