@@ -4,6 +4,7 @@ module.exports = function(controller) {
         
         var average = getAverage(message);
         var percent = getPercentage(message);
+        console.log(percent);
 
 
         // Block Content
@@ -97,7 +98,7 @@ module.exports = function(controller) {
         // };
 
         // Replying
-        bot.reply(message, "*Sleep*\nPositive: " + percent[0] + "%\nNegative: " + percent[1] + average[0]);
+        bot.reply(message, "*Sleep*\nPositive: " + percent[0] + "%\nNegative: " + percent[1] + "%\n" + average[0] + "\nDay: " + average[6]);
     });
 
     function getPercentage(user) {
