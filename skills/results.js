@@ -4,7 +4,9 @@ module.exports = function(controller) {
         
         var report = getResults(message);
         var percent = report['percent'];
+        console.log(percent);
         var average = report['average'];
+        console.log(average);
 
 
         // Block Content
