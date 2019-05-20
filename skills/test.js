@@ -15,13 +15,14 @@ module.exports = function(controller) {
         var fulfillmentNegative;
 
         controller.storage.results.find({team: message.team}, function(error, results) {
-            console.log(results);
+            console.log("RESULTS: " + results);
             var arrayLength = results.length;
+            console.log("LENGTH: " + arrayLength);
             for (var i; i < arrayLength; i++) {
                 // Results variables
                 var instance = results[i];
                 console.log(instance);
-                var checkIn = instance['checkin'];
+                var checkIn = instance.checkin;
                 console.log("CHECK IN: " + checkIn);
                 var checkOut = instance.checkout;
                 console.log("CHECK OUT: " + checkOut);
