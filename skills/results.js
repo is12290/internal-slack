@@ -214,8 +214,11 @@ module.exports = function(controller) {
             for (var i; i < arrayLength; i++) {
                 // Results variables
                 var instance = results[i];
+                console.log("Instance: " + instance);
                 var checkIn = instance.checkin;
+                console.log("Check In: " + checkIn);
                 var checkOut = instance.checkout;
+                console.log("Check Out: " + checkOut);
                 var checkInScore = checkIn[4];
                 var checkOutScore = checkOut[4];
                 var scoreDifference = checkInScore - checkOutScore;
