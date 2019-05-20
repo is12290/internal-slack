@@ -16,18 +16,18 @@ module.exports = function(controller) {
     function getPercentage(user) {
 
         // Necessary variables
-        var sleepPositive;
-        var sleepNegative;
-        var energyPositive;
-        var energyNegative;
-        var moodPositive;
-        var moodNegative;
-        var motivationPositive;
-        var motivationNegative;
-        var efficiencyPositive;
-        var efficiencyNegative;
-        var fulfillmentPositive;
-        var fulfillmentNegative;
+        var sleepPositive = [];
+        var sleepNegative = [];
+        var energyPositive = [];
+        var energyNegative = [];
+        var moodPositive = [];
+        var moodNegative = [];
+        var motivationPositive = [];
+        var motivationNegative = [];
+        var efficiencyPositive = [];
+        var efficiencyNegative = [];
+        var fulfillmentPositive = [];
+        var fulfillmentNegative = [];
 
         controller.storage.results.find({team: user.team}, function(error, output) {
             var arrayLength = output.length;
@@ -39,63 +39,63 @@ module.exports = function(controller) {
     
                 // Check In
                 if (checkIn[0] < 2) {
-                    sleepPositive++;
+                    sleepPositive.push(1);
                 } else {
-                    sleepNegative++;
+                    sleepNegative.push(1);
                 }
                 if (checkIn[1] < 2) {
-                    energyPositive++;
+                    energyPositive.push(1);
                 } else {
-                    energyNegative++;
+                    energyNegative.push(1);
                 }
                 if (checkIn[2] < 2) {
-                    moodPositive++;
+                    moodPositive.push(1);
                 } else {
-                    moodNegative++;
+                    moodNegative.push(1);
                 }
                 if (checkIn[3] < 2) {
-                    motivationPositive++;
+                    motivationPositive.push(1);
                 } else {
-                    motivationNegative++;
+                    motivationNegative.push(1);
                 }
     
                 // Check Out
                 if (checkOut[0] < 2) {
-                    efficiencyPositive++;
+                    efficiencyPositive.push(1);
                 } else {
-                    efficiencyNegative++;
+                    efficiencyNegative.push(1);
                 }
                 if (checkOut[1] < 2) {
-                    energyPositive++;
+                    energyPositive.push(1);
                 } else {
-                    energyNegative++;
+                    energyNegative.push(1);
                 }
                 if (checkOut[2] < 2) {
-                    moodPositive++;
+                    moodPositive.push(1);
                 } else {
-                    moodNegative++;
+                    moodNegative.push(1);
                 }
                 if (checkOut[3] < 2) {
-                    fulfillmentPositive++;
+                    fulfillmentPositive.push(1);
                 } else {
-                    fulfillmentNegative++;
+                    fulfillmentNegative.push(1);
                 }
             }
         })
     
-        var totalLength = sleepPositive + sleepNegative;
-        var sleepPositiveOutcome = (sleepPositive / totalLength) * 100;
-        var sleepNegativeOutcome = (sleepNegative / totalLength)* 100;
-        var energyPositiveOutcome = (energyPositive / (totalLength * 2)) * 100;
-        var energyNegativeOutcome = (energyNegative / (totalLength * 2)) * 100;
-        var moodPositiveOutcome = (moodPositive / (totalLength * 2)) * 100;
-        var moodNegativeOutcome = (moodNegative / (totalLength * 2)) * 100;
-        var motivationPositiveOutcome = (motivationPositive / totalLength) * 100;
-        var motivationNegativeOutcome = (motivationNegative / totalLength) * 100;
-        var efficiencyPositiveOutcome = (efficiencyPositive / totalLength) * 100;
-        var efficiencyNegativeOutcome = (efficiencyNegative / totalLength) * 100;
-        var fulfillmentPositiveOutcome = (fulfillmentPositive / totalLength) * 100;
-        var fulfillmentNegativeOutcome = (fulfillmentNegative / totalLength) * 100;
+        var totalLength = sleepPositive.length + sleepNegative.length;
+        var sleepPositiveOutcome = (sleepPositive.length / totalLength) * 100;
+        var sleepNegativeOutcome = (sleepNegative.length / totalLength)* 100;
+        var energyPositiveOutcome = (energyPositive.length / (totalLength * 2)) * 100;
+        var energyNegativeOutcome = (energyNegative.length / (totalLength * 2)) * 100;
+        var moodPositiveOutcome = (moodPositive.length / (totalLength * 2)) * 100;
+        var moodNegativeOutcome = (moodNegative.length / (totalLength * 2)) * 100;
+        var motivationPositiveOutcome = (motivationPositive.length / totalLength) * 100;
+        var motivationNegativeOutcome = (motivationNegative.length / totalLength) * 100;
+        var efficiencyPositiveOutcome = (efficiencyPositive.length / totalLength) * 100;
+        var efficiencyNegativeOutcome = (efficiencyNegative.length / totalLength) * 100;
+        var fulfillmentPositiveOutcome = (fulfillmentPositive.length / totalLength) * 100;
+        var fulfillmentNegativeOutcome = (fulfillmentNegative.length / totalLength) * 100;
 
         var percentArray = [sleepPositiveOutcome, sleepNegativeOutcome, energyPositiveOutcome, energyNegativeOutcome, moodPositiveOutcome, moodNegativeOutcome, motivationPositiveOutcome, motivationNegativeOutcome, efficiencyPositiveOutcome, efficiencyNegativeOutcome, fulfillmentPositiveOutcome, fulfillmentNegativeOutcome];
     
