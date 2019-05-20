@@ -15,7 +15,7 @@ module.exports = function(controller) {
         var checkOutMood;
         var checkOutFulfillment;
 
-        controller.storage.results.find({ team: user.team }, function(error, results) {
+        controller.storage.results.find({ team: message.team }, function(error, results) {
             var arrayLength = results.length;
             console.log("LENGTH: " + arrayLength);
             for (var i; i < arrayLength; i++) {
