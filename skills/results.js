@@ -3,12 +3,14 @@ module.exports = function(controller) {
     controller.hears(['result', 'Result', 'results', 'Results'], 'direct_message,direct_mention', function(bot, message) {
         
         var average = getAverage(message);
+        console.log(average);
         var percent = getPercentage(message);
+        console.log(percent);
 
 
         
         // Replying
-        bot.reply(message, "*Sleep*\nPositive: " + percent[0] + "%\nNegative: " + percent[1] + "%\n" + average[0] + "\nDay: " + average[6]);
+        bot.reply(message, "*Sleep*\nPositive: " + percent[0] + "%\nNegative: " + percent[1] + "%\n" + average[0] + "\n" + average[6]);
     });
 
     function getPercentage(user) {
@@ -161,39 +163,39 @@ module.exports = function(controller) {
         var fulfillmentOutcome = checkOutFulfillment / tally;
     
         if (sleepOutcome > 2) {
-            var sleepMessage = '*Average*: Negative';
+            var sleepMessage = 'Average: Negative';
         } else {
-            var sleepMessage = '*Average*: Positive';
+            var sleepMessage = 'Average: Positive';
         }
     
         if (energyOutcome > 2) {
-            var energyMessage = '*Average*: Negative';
+            var energyMessage = 'Average: Negative';
         } else {
-            var energyMessage = '*Average*: Positive';
+            var energyMessage = 'Average: Positive';
         }
     
         if (moodOutcome > 2) {
-            var moodMessage = '*Average*: Negative';
+            var moodMessage = 'Average: Negative';
         } else {
-            var moodMessage = '*Average*: Positive';
+            var moodMessage = 'Average: Positive';
         }
     
         if (motivationOutcome > 2) {
-            var motivationMessage = '*Average*: Negative';
+            var motivationMessage = 'Average: Negative';
         } else {
-            var motivationMessage = '*Average*: Positive';
+            var motivationMessage = 'Average: Positive';
         }
     
         if (efficiencyOutcome > 2) {
-            var efficiencyMessage = '*Average*: Negative';
+            var efficiencyMessage = 'Average: Negative';
         } else {
-            var efficiencyMessage = '*Average*: Positive';
+            var efficiencyMessage = 'Average: Positive';
         }
     
         if (fulfillmentOutcome > 2) {
-            var fulfillmentMessage = '*Average*: Negative';
+            var fulfillmentMessage = 'Average: Negative';
         } else {
-            var fulfillmentMessage = '*Average*: Positive';
+            var fulfillmentMessage = 'Average: Positive';
         }
     
         if (positiveDay > negativeDay) {
