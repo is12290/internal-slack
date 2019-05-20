@@ -14,22 +14,21 @@ module.exports = function(controller) {
     });
 
     function getPercentage(user) {
-
-        // Necessary variables
-        var sleepPositive = 0;
-        var sleepNegative = 0;
-        var energyPositive = 0;
-        var energyNegative = 0;
-        var moodPositive = 0;
-        var moodNegative = 0;
-        var motivationPositive = 0;
-        var motivationNegative = 0;
-        var efficiencyPositive = 0;
-        var efficiencyNegative = 0;
-        var fulfillmentPositive = 0;
-        var fulfillmentNegative = 0;
-
         controller.storage.results.find({team: user.team}, function(error, output) {
+            // Necessary variables
+            var sleepPositive = 0;
+            var sleepNegative = 0;
+            var energyPositive = 0;
+            var energyNegative = 0;
+            var moodPositive = 0;
+            var moodNegative = 0;
+            var motivationPositive = 0;
+            var motivationNegative = 0;
+            var efficiencyPositive = 0;
+            var efficiencyNegative = 0;
+            var fulfillmentPositive = 0;
+            var fulfillmentNegative = 0;
+            
             var arrayLength = output.length;
             for (var i; i < arrayLength; i++) {
                 // Housekeeping variables
@@ -81,25 +80,25 @@ module.exports = function(controller) {
                     fulfillmentNegative++;
                 }
             }
-        })
-    
-        var totalLength = sleepPositive + sleepNegative;
-        var sleepPositiveOutcome = (sleepPositive / totalLength) * 100;
-        var sleepNegativeOutcome = (sleepNegative / totalLength)* 100;
-        var energyPositiveOutcome = (energyPositive / (totalLength * 2)) * 100;
-        var energyNegativeOutcome = (energyNegative / (totalLength * 2)) * 100;
-        var moodPositiveOutcome = (moodPositive / (totalLength * 2)) * 100;
-        var moodNegativeOutcome = (moodNegative / (totalLength * 2)) * 100;
-        var motivationPositiveOutcome = (motivationPositive / totalLength) * 100;
-        var motivationNegativeOutcome = (motivationNegative / totalLength) * 100;
-        var efficiencyPositiveOutcome = (efficiencyPositive / totalLength) * 100;
-        var efficiencyNegativeOutcome = (efficiencyNegative / totalLength) * 100;
-        var fulfillmentPositiveOutcome = (fulfillmentPositive / totalLength) * 100;
-        var fulfillmentNegativeOutcome = (fulfillmentNegative / totalLength) * 100;
 
-        var percentArray = [sleepPositiveOutcome, sleepNegativeOutcome, energyPositiveOutcome, energyNegativeOutcome, moodPositiveOutcome, moodNegativeOutcome, motivationPositiveOutcome, motivationNegativeOutcome, efficiencyPositiveOutcome, efficiencyNegativeOutcome, fulfillmentPositiveOutcome, fulfillmentNegativeOutcome];
+            var totalLength = sleepPositive + sleepNegative;
+            var sleepPositiveOutcome = (sleepPositive / totalLength) * 100;
+            var sleepNegativeOutcome = (sleepNegative / totalLength)* 100;
+            var energyPositiveOutcome = (energyPositive / (totalLength * 2)) * 100;
+            var energyNegativeOutcome = (energyNegative / (totalLength * 2)) * 100;
+            var moodPositiveOutcome = (moodPositive / (totalLength * 2)) * 100;
+            var moodNegativeOutcome = (moodNegative / (totalLength * 2)) * 100;
+            var motivationPositiveOutcome = (motivationPositive / totalLength) * 100;
+            var motivationNegativeOutcome = (motivationNegative / totalLength) * 100;
+            var efficiencyPositiveOutcome = (efficiencyPositive / totalLength) * 100;
+            var efficiencyNegativeOutcome = (efficiencyNegative / totalLength) * 100;
+            var fulfillmentPositiveOutcome = (fulfillmentPositive / totalLength) * 100;
+            var fulfillmentNegativeOutcome = (fulfillmentNegative / totalLength) * 100;
+
+            var percentArray = [sleepPositiveOutcome, sleepNegativeOutcome, energyPositiveOutcome, energyNegativeOutcome, moodPositiveOutcome, moodNegativeOutcome, motivationPositiveOutcome, motivationNegativeOutcome, efficiencyPositiveOutcome, efficiencyNegativeOutcome, fulfillmentPositiveOutcome, fulfillmentNegativeOutcome];
     
-        return percentArray;
+            return percentArray;
+        })
         
     }
 
