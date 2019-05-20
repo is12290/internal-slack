@@ -97,7 +97,7 @@ module.exports = function(controller) {
         // };
 
         // Replying
-        bot.reply(message, "*Sleep*\nPositive: " + percent[0] + "%\nNegative: " + percent[1] + "%\nAverage: " + average[0]);
+        bot.reply(message, "*Sleep*\nPositive: " + percent[0] + "%\nNegative: " + percent[1] + average[0]);
     });
 
     function getPercentage(user) {
@@ -131,17 +131,17 @@ module.exports = function(controller) {
                 } else {
                     sleepNegative = sleepNegative + 1;
                 }
-                if (checkIn[2] < 2) {
+                if (checkIn[1] < 2) {
                     energyPositive = energyPositive + 1;
                 } else {
                     energyNegative = energyNegative + 1;
                 }
-                if (checkIn[3] < 2) {
+                if (checkIn[2] < 2) {
                     moodPositive = moodPositive + 1;
                 } else {
                     moodNegative = moodNegative + 1;
                 }
-                if (checkIn[4] < 2) {
+                if (checkIn[3] < 2) {
                     motivationPositive = motivationPositive + 1;
                 } else {
                     motivationNegative = motivationNegative + 1;
@@ -153,17 +153,17 @@ module.exports = function(controller) {
                 } else {
                     efficiencyNegative = efficiencyNegative + 1;
                 }
-                if (checkOut[2] < 2) {
+                if (checkOut[1] < 2) {
                     energyPositive = energyPositive + 1;
                 } else {
                     energyNegative = energyNegative + 1;
                 }
-                if (checkOut[3] < 2) {
+                if (checkOut[2] < 2) {
                     moodPositive = moodPositive + 1;
                 } else {
                     moodNegative = moodNegative + 1;
                 }
-                if (checkOut[4] < 2) {
+                if (checkOut[3] < 2) {
                     fulfillmentPositive = fulfillmentPositive + 1;
                 } else {
                     fulfillmentNegative = fulfillmentNegative + 1;
