@@ -21,10 +21,10 @@ module.exports = function(controller) {
                 // Results variables
                 var instance = results[i];
                 console.log(instance);
-                var checkIn = instance.checkin;
-                console.log(checkIn);
+                var checkIn = instance['checkin'];
+                console.log("CHECK IN: " + checkIn);
                 var checkOut = instance.checkout;
-                console.log(checkOut);
+                console.log("CHECK OUT: " + checkOut);
 
                 // Check In
                 if (checkIn[0] < 2) {
@@ -71,6 +71,7 @@ module.exports = function(controller) {
                 }
             }
 
+            var tally = sleepNegative + sleepPositive;
             var sleepPositiveOutcome = (sleepPositive / tally) * 100;
             var sleepNegativeOutcome = (sleepNegative / tally)* 100;
             var energyPositiveOutcome = (energyPositive / (tally * 2)) * 100;
