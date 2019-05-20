@@ -15,7 +15,7 @@ module.exports = function(controller) {
         var fulfillmentNegative;
 
         controller.storage.results.find({team: message.team}, function(error, results) {
-            console.log("RESULTS: " + results);
+            console.log("RESULTS: ", results);
             var arrayLength = results.length;
             console.log("LENGTH: " + arrayLength);
             for (var i; i < arrayLength; i++) {
