@@ -25,6 +25,7 @@ module.exports = function(controller) {
             var efficiencyNegative = 0;
             var fulfillmentPositive = 0;
             var fulfillmentNegative = 0;
+            
             var arrayLength = output.length;
             var i;
             for (i = 0; i < arrayLength; i++) {
@@ -150,59 +151,59 @@ module.exports = function(controller) {
                 }
     
             }
+
+            var sleepOutcome = checkInSleep / tally;
+            var energyOutcome = (checkInEnergy + checkOutEnergy) / (tally * 2);
+            var moodOutcome = (checkInMood + checkOutMood) / (tally * 2);
+            var motivationOutcome = checkInMotivation / tally;
+            var efficiencyOutcome = checkOutEfficiency / tally;
+            var fulfillmentOutcome = checkOutFulfillment / tally;
+    
+            if (sleepOutcome > 2) {
+                var sleepMessage = '- Got *bad* sleep\n';
+            } else {
+                var sleepMessage = '- Got *good* sleep\n';
+            }
+    
+            if (energyOutcome > 2) {
+                var energyMessage = '- Had *low* energy\n';
+            } else {
+                var energyMessage = '- Had *high* energy\n';
+            }
+    
+            if (moodOutcome > 2) {
+                var moodMessage = '- Was in a *bad* mood\n';
+            } else {
+                var moodMessage = '- Was in a *good* mood\n';
+            }
+    
+            if (motivationOutcome > 2) {
+                var motivationMessage = '- Felt *un*motivated\n';
+            } else {
+                var motivationMessage = '- Felt *very* motivated\n';
+            }
+    
+            if (efficiencyOutcome > 2) {
+                var efficiencyMessage = '- Was *not* efficient\n';
+            } else {
+                var efficiencyMessage = '- Was *decently* efficient\n';
+            }
+    
+            if (fulfillmentOutcome > 2) {
+                var fulfillmentMessage = '- Felt *un*fulfilled\n';
+            } else {
+                var fulfillmentMessage = '- Felt *fulfilled*\n';
+            }
+    
+            if (positiveDay > negativeDay) {
+                var dayMessage = 'The overall emotional fitness *_declined_* through the work day';
+            } else {
+                var dayMessage = 'The overall emotional fitness *_increased_* through the work day';
+            }
+    
+            var averageArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, dayMessage];
+            return averageArray;
         })
-    
-        var sleepOutcome = checkInSleep / tally;
-        var energyOutcome = (checkInEnergy + checkOutEnergy) / (tally * 2);
-        var moodOutcome = (checkInMood + checkOutMood) / (tally * 2);
-        var motivationOutcome = checkInMotivation / tally;
-        var efficiencyOutcome = checkOutEfficiency / tally;
-        var fulfillmentOutcome = checkOutFulfillment / tally;
-    
-        if (sleepOutcome > 2) {
-            var sleepMessage = '- Got *bad* sleep\n';
-        } else {
-            var sleepMessage = '- Got *good* sleep\n';
-        }
-    
-        if (energyOutcome > 2) {
-            var energyMessage = '- Had *low* energy\n';
-        } else {
-            var energyMessage = '- Had *high* energy\n';
-        }
-    
-        if (moodOutcome > 2) {
-            var moodMessage = '- Was in a *bad* mood\n';
-        } else {
-            var moodMessage = '- Was in a *good* mood\n';
-        }
-    
-        if (motivationOutcome > 2) {
-            var motivationMessage = '- Felt *un*motivated\n';
-        } else {
-            var motivationMessage = '- Felt *very* motivated\n';
-        }
-    
-        if (efficiencyOutcome > 2) {
-            var efficiencyMessage = '- Was *not* efficient\n';
-        } else {
-            var efficiencyMessage = '- Was *decently* efficient\n';
-        }
-    
-        if (fulfillmentOutcome > 2) {
-            var fulfillmentMessage = '- Felt *un*fulfilled\n';
-        } else {
-            var fulfillmentMessage = '- Felt *fulfilled*\n';
-        }
-    
-        if (positiveDay > negativeDay) {
-            var dayMessage = 'The overall emotional fitness *_declined_* through the work day';
-        } else {
-            var dayMessage = 'The overall emotional fitness *_increased_* through the work day';
-        }
-    
-        var averageArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, dayMessage];
-        return averageArray;
     }
 
 }
