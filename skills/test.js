@@ -4,106 +4,53 @@ module.exports = function(controller) {
             var percent = getPercentage(output);
             var average = getAverage(percent);
 
-            const content = {
-                blocks: [
+            bot.reply(message, {
+                text: 'Hey there! Here are your results for the day...\n',
+                attachments: [
                     {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Hey there! Here are your results for the day...\n"
-                        }
+                        title: 'Sleep',
+                        color: '#02D2FF',
+                        attachment_type: 'default',
+                        text: 'Positive: *' + percent[0] + '%*\nNegative: *' + percent[1] + '%*\n' + average[0] + '\n'
                     },
                     {
-                        "type": "divider"
+                        title: 'Energy',
+                        color: '#2A02FF',
+                        attachment_type: 'default',
+                        text: 'Positive: *' + percent[2] + '%*\nNegative: *' + percent[3] + '%*\n' + average[1] + '\n'
                     },
                     {
-                        "type": "section",
-                        "title": "Sleep",
-                        "color": "#02D2FF",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Positive: *" + percent[0] + "%*\nNegative: *" + percent[1] + "%*\n" + average[0] + "\n"
-                        }
+                        title: 'Mood',
+                        color: '#8A02FF',
+                        attachment_type: 'default',
+                        text: 'Positive: *' + percent[4] + '%*\nNegative: *' + percent[5] + '%*\n' + average[2] + '\n'
                     },
                     {
-                        "type": "divider"
+                        title: 'Motivation',
+                        color: '#CF02FF',
+                        attachment_type: 'default',
+                        text: 'Positive: *' + percent[6] + '%*\nNegative: *' + percent[7] + '%*\n' + average[3] + '\n'
                     },
                     {
-                        "type": "section",
-                        "title": "Energy",
-                        "color": "#2A02FF",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Positive: *" + percent[2] + "%*\nNegative: *" + percent[3] + "%*\n" + average[1] + "\n"
-                        }
+                        title: 'Efficiency',
+                        color: '#FF029D',
+                        attachment_type: 'default',
+                        text: 'Positive: *' + percent[8] + '%*\nNegative: *' + percent[9] + '%*\n' + average[4] + '\n'
                     },
                     {
-                        "type": "divider"
+                        title: 'Fulfillment',
+                        color: '#FF8402',
+                        attachment_type: 'default',
+                        text: 'Positive: *' + percent[10] + '%*\nNegative: *' + percent[11] + '%*\n' + average[5] + '\n'
                     },
                     {
-                        "type": "section",
-                        "title": "Mood",
-                        "color": "#8A02FF",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Positive: *" + percent[4] + "%*\nNegative: *" + percent[5] + "%*\n" + average[2] + "\n"
-                        }
-                    },
-                    {
-                        "type": "divider"
-                    },
-                    {
-                        "type": "section",
-                        "title": "Motivation",
-                        "color": "#CF02FF",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Positive: *" + percent[6] + "%*\nNegative: *" + percent[7] + "%*\n" + average[3] + "\n"
-                        }
-                    },
-                    {
-                        "type": "divider"
-                    },
-                    {
-                        "type": "divider"
-                    },
-                    {
-                        "type": "section",
-                        "title": "Efficiency",
-                        "color": "#FF029D",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Positive: *" + percent[8] + "%*\nNegative: *" + percent[9] + "%*\n" + average[4] + "\n"
-                        }
-                    },
-                    {
-                        "type": "divider"
-                    },
-                    {
-                        "type": "section",
-                        "title": "Fulfillment",
-                        "color": "#FF8402",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Positive: *" + percent[10] + "%*\nNegative: *" + percent[11] + "%*\n" + average[5] + "\n"
-                        }
-                    },
-                    {
-                        "type": "divider"
-                    },
-                    {
-                        "type": "section",
-                        "title": "Overall",
-                        "color": "#02FF57",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": average[6]
-                        }
-                    },
+                        title: 'Overall',
+                        color: '#02FF57',
+                        attachment_type: 'default',
+                        text: average[6]
+                    }
                 ]
-            };
-
-            bot.reply(message, content);
+            });
 
         });
     });
