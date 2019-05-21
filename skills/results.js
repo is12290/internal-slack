@@ -2,15 +2,12 @@ module.exports = function(controller) {
 
     controller.hears(['result', 'Result', 'results', 'Results'], 'direct_message,direct_mention', function(bot, message) {
         
-        var average = getAverage(message);
-        console.log(average);
         var percent = getPercentage(message);
         console.log(percent);
-
-
-        
+        var average = getAverage(message);
+  
         // Replying
-        bot.reply(message, "*Sleep*\nPositive: " + percent[0] + "%\nNegative: " + percent[1] + "%\n" + average[0] + "\n" + average[6]);
+        bot.reply(message, "The average employee...\n " + average[0] + average[1] + average[2] + average[3] + average[4] + average[5] + average[6]);
     });
 
     function getPercentage(user) {
@@ -38,9 +35,9 @@ module.exports = function(controller) {
     
                 // Check In
                 if (checkIn[0] < 2) {
-                    sleepPositive++;
+                    sleepPositive = sleepPositive + 1;
                 } else {
-                    sleepNegative++;
+                    sleepNegative = sleepNegative + 1;
                 }
                 if (checkIn[1] < 2) {
                     energyPositive++;
@@ -104,22 +101,22 @@ module.exports = function(controller) {
 
     function getAverage(user) {
 
-        // Necessary constants
-        var positiveDay;
-        var negativeDay;
-        var tally;
-        // Checkin Constants
-        var checkInSleep;
-        var checkInEnergy;
-        var checkInMood;
-        var checkInMotivation;
-        // Checkout Constants
-        var checkOutEfficiency;
-        var checkOutEnergy;
-        var checkOutMood;
-        var checkOutFulfillment;
-
         controller.storage.results.find({ team: user.team }, function(error, output) {
+            // Necessary constants
+            var positiveDay;
+            var negativeDay;
+            var tally;
+            // Checkin Constants
+            var checkInSleep;
+            var checkInEnergy;
+            var checkInMood;
+            var checkInMotivation;
+            // Checkout Constants
+            var checkOutEfficiency;
+            var checkOutEnergy;
+            var checkOutMood;
+            var checkOutFulfillment;
+
             var arrayLength = output.length;
             for (var i; i < arrayLength; i++) {
                 // Results variables
@@ -162,45 +159,45 @@ module.exports = function(controller) {
         var fulfillmentOutcome = checkOutFulfillment / tally;
     
         if (sleepOutcome > 2) {
-            var sleepMessage = 'Average: Negative';
+            var sleepMessage = '- Got *bad* sleep\n';
         } else {
-            var sleepMessage = 'Average: Positive';
+            var sleepMessage = '- Got *good* sleep\n';
         }
     
         if (energyOutcome > 2) {
-            var energyMessage = 'Average: Negative';
+            var energyMessage = '- Had *low* energy\n';
         } else {
-            var energyMessage = 'Average: Positive';
+            var energyMessage = '- Had *high* energy\n';
         }
     
         if (moodOutcome > 2) {
-            var moodMessage = 'Average: Negative';
+            var moodMessage = '- Was in a *bad* mood\n';
         } else {
-            var moodMessage = 'Average: Positive';
+            var moodMessage = '- Was in a *good* mood\n';
         }
     
         if (motivationOutcome > 2) {
-            var motivationMessage = 'Average: Negative';
+            var motivationMessage = '- Felt *un*motivated\n';
         } else {
-            var motivationMessage = 'Average: Positive';
+            var motivationMessage = '- Felt *very* motivated\n';
         }
     
         if (efficiencyOutcome > 2) {
-            var efficiencyMessage = 'Average: Negative';
+            var efficiencyMessage = '- Was *not* efficient\n';
         } else {
-            var efficiencyMessage = 'Average: Positive';
+            var efficiencyMessage = '- Was *decently* efficient\n';
         }
     
         if (fulfillmentOutcome > 2) {
-            var fulfillmentMessage = 'Average: Negative';
+            var fulfillmentMessage = '- Felt *un*fulfilled\n';
         } else {
-            var fulfillmentMessage = 'Average: Positive';
+            var fulfillmentMessage = '- Felt *fulfilled*\n';
         }
     
         if (positiveDay > negativeDay) {
-            var dayMessage = 'The average employee\'s emotional state got *_worse_* following the work day';
+            var dayMessage = 'The overall emotional fitness *_declined_* through the work day';
         } else {
-            var dayMessage = 'The average employee\'s emotional state got *_better_* following the work day';
+            var dayMessage = 'The overall emotional fitness *_increased_* through the work day';
         }
     
         var averageArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, dayMessage];
