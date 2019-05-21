@@ -1,5 +1,5 @@
 module.exports = function(controller) {
-    controller.hears(['test'], 'direct_message', function(bot, message) {
+    controller.hears(['foo'], 'direct_message', function(bot, message) {
         controller.storage.results.find({team: message.team}, function(error, output) {
             var outputLength = output.length;
             var i;
@@ -13,4 +13,5 @@ module.exports = function(controller) {
             }
         })
     })
+
 }
