@@ -11,21 +11,20 @@ module.exports = function(controller) {
     });
 
     function getPercentage(user) {
-        // Necessary variables
-        var sleepPositive = 0;
-        var sleepNegative = 0;
-        var energyPositive = 0;
-        var energyNegative = 0;
-        var moodPositive = 0;
-        var moodNegative = 0;
-        var motivationPositive = 0;
-        var motivationNegative = 0;
-        var efficiencyPositive = 0;
-        var efficiencyNegative = 0;
-        var fulfillmentPositive = 0;
-        var fulfillmentNegative = 0;
-
         controller.storage.results.find({team: user.team}, function(error, output) {
+            // Necessary variables
+            var sleepPositive = 0;
+            var sleepNegative = 0;
+            var energyPositive = 0;
+            var energyNegative = 0;
+            var moodPositive = 0;
+            var moodNegative = 0;
+            var motivationPositive = 0;
+            var motivationNegative = 0;
+            var efficiencyPositive = 0;
+            var efficiencyNegative = 0;
+            var fulfillmentPositive = 0;
+            var fulfillmentNegative = 0;
             var arrayLength = output.length;
             var i;
             for (i = 0; i < arrayLength; i++) {
@@ -102,22 +101,21 @@ module.exports = function(controller) {
 
     function getAverage(user) {
 
-        // Necessary constants
-        var positiveDay;
-        var negativeDay;
-        var tally;
-        // Checkin Constants
-        var checkInSleep;
-        var checkInEnergy;
-        var checkInMood;
-        var checkInMotivation;
-        // Checkout Constants
-        var checkOutEfficiency;
-        var checkOutEnergy;
-        var checkOutMood;
-        var checkOutFulfillment;
-
         controller.storage.results.find({ team: user.team }, function(error, output) {
+            // Necessary constants
+            var positiveDay;
+            var negativeDay;
+            var tally;
+            // Checkin Constants
+            var checkInSleep;
+            var checkInEnergy;
+            var checkInMood;
+            var checkInMotivation;
+            // Checkout Constants
+            var checkOutEfficiency;
+            var checkOutEnergy;
+            var checkOutMood;
+            var checkOutFulfillment;
 
             var arrayLength = output.length;
             var i;
