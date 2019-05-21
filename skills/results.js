@@ -11,23 +11,24 @@ module.exports = function(controller) {
     });
 
     function getPercentage(user) {
+        // Necessary variables
+        var sleepPositive = 0;
+        var sleepNegative = 0;
+        var energyPositive = 0;
+        var energyNegative = 0;
+        var moodPositive = 0;
+        var moodNegative = 0;
+        var motivationPositive = 0;
+        var motivationNegative = 0;
+        var efficiencyPositive = 0;
+        var efficiencyNegative = 0;
+        var fulfillmentPositive = 0;
+        var fulfillmentNegative = 0;
+
         controller.storage.results.find({team: user.team}, function(error, output) {
-            // Necessary variables
-            var sleepPositive = 0;
-            var sleepNegative = 0;
-            var energyPositive = 0;
-            var energyNegative = 0;
-            var moodPositive = 0;
-            var moodNegative = 0;
-            var motivationPositive = 0;
-            var motivationNegative = 0;
-            var efficiencyPositive = 0;
-            var efficiencyNegative = 0;
-            var fulfillmentPositive = 0;
-            var fulfillmentNegative = 0;
-            
             var arrayLength = output.length;
-            for (var i; i < arrayLength; i++) {
+            var i;
+            for (i = 0; i < arrayLength; i++) {
                 // Housekeeping variables
                 var instance = output[i];
                 var checkIn = instance.checkin;
@@ -119,7 +120,8 @@ module.exports = function(controller) {
         controller.storage.results.find({ team: user.team }, function(error, output) {
 
             var arrayLength = output.length;
-            for (var i; i < arrayLength; i++) {
+            var i;
+            for (i = 0; i < arrayLength; i++) {
                 // Results variables
                 var instance = output[i];
                 var checkIn = instance.checkin;
