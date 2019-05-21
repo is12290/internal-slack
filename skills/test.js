@@ -2,9 +2,108 @@ module.exports = function(controller) {
     controller.hears(['test'], 'direct_message', function(bot, message){
         controller.storage.results.find({team: message.team}, function(error, output){
             var percent = getPercentage(output);
-            console.log("PERCENT: ", percent);
-            var average = getAverage(output);
-            console.log("AVERAGE: ",average)
+            var average = getAverage(percent);
+
+            const content = {
+                blocks: [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Hey there! Here are your results for the day...\n"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "title": "Sleep",
+                        "color": "#02D2FF",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Positive: *" + percent[0] + "%*\nNegative: *" + percent[1] + "%*\n" + average[0] + "\n"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "title": "Energy",
+                        "color": "#2A02FF",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Positive: *" + percent[2] + "%*\nNegative: *" + percent[3] + "%*\n" + average[1] + "\n"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "title": "Mood",
+                        "color": "#8A02FF",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Positive: *" + percent[4] + "%*\nNegative: *" + percent[5] + "%*\n" + average[2] + "\n"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "title": "Motivation",
+                        "color": "#CF02FF",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Positive: *" + percent[6] + "%*\nNegative: *" + percent[7] + "%*\n" + average[3] + "\n"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "title": "Efficiency",
+                        "color": "#FF029D",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Positive: *" + percent[8] + "%*\nNegative: *" + percent[9] + "%*\n" + average[4] + "\n"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "title": "Fulfillment",
+                        "color": "#FF8402",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Positive: *" + percent[10] + "%*\nNegative: *" + percent[11] + "%*\n" + average[5] + "\n"
+                        }
+                    },
+                    {
+                        "type": "divider"
+                    },
+                    {
+                        "type": "section",
+                        "title": "Overall",
+                        "color": "#02FF57",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": average[6]
+                        }
+                    },
+                ]
+            };
+
+            bot.reply(message, content);
 
         });
     });
@@ -91,111 +190,58 @@ module.exports = function(controller) {
         var fulfillmentPositiveOutcome = (fulfillmentPositive / totalLength) * 100;
         var fulfillmentNegativeOutcome = (fulfillmentNegative / totalLength) * 100;
 
-        var percentArray = [sleepPositiveOutcome, sleepNegativeOutcome, energyPositiveOutcome, energyNegativeOutcome, moodPositiveOutcome, moodNegativeOutcome, motivationPositiveOutcome, motivationNegativeOutcome, efficiencyPositiveOutcome, efficiencyNegativeOutcome, fulfillmentPositiveOutcome, fulfillmentNegativeOutcome];
+        var positiveOutcome = sleepPositive + energyPositive + moodPositive + motivationPositive + efficiencyPositive + fulfillmentPositive;
+        var negativeOutcome = totalLength - positiveOutcome;
+
+        var percentArray = [sleepPositiveOutcome, sleepNegativeOutcome, energyPositiveOutcome, energyNegativeOutcome, moodPositiveOutcome, moodNegativeOutcome, motivationPositiveOutcome, motivationNegativeOutcome, efficiencyPositiveOutcome, efficiencyNegativeOutcome, fulfillmentPositiveOutcome, fulfillmentNegativeOutcome, positiveOutcome, negativeOutcome];
     
         return percentArray;  
     }
 
     function getAverage(input) {
-        // Necessary constants
-        var positiveDay;
-        var negativeDay;
-        var tally;
-        // Checkin Constants
-        var checkInSleep;
-        var checkInEnergy;
-        var checkInMood;
-        var checkInMotivation;
-        // Checkout Constants
-        var checkOutEfficiency;
-        var checkOutEnergy;
-        var checkOutMood;
-        var checkOutFulfillment;
-
-        var arrayLength = input.length;
-        var i;
-        for (i = 0; i < arrayLength; i++) {
-            // Results variables
-            var instance = input[i];
-            var checkIn = instance.checkin;
-            var checkOut = instance.checkout;
-            var checkInScore = checkIn[4];
-            var checkOutScore = checkOut[4];
-            var scoreDifference = checkInScore - checkOutScore;
-    
-            // Check In
-            checkInSleep = checkInSleep + checkIn[0];
-            checkInEnergy = checkInEnergy + checkIn[1];
-            checkInMood = checkInMood + checkIn[2];
-            checkInMotivation = checkInMotivation + checkIn[3];
-    
-            // Check Out
-            checkOutEfficiency = checkOutEfficiency + checkOut[0];
-            checkOutEnergy = checkOutEnergy + checkOut[1];
-            checkOutMood = checkOutMood + checkOut[2];
-            checkOutFulfillment = checkOutFulfillment + checkOut[3];
-    
-            // Determine Day Outcome
-            if (scoreDifference >= 0) {
-                positiveDay = positiveDay + 1;
-                tally = tally + 1;
-            } else {
-                negativeDay = negativeDay + 1;
-                tally = tally + 1;
-            }
-    
-        }
-
-        var sleepOutcome = checkInSleep / tally;
-        var energyOutcome = (checkInEnergy + checkOutEnergy) / (tally * 2);
-        var moodOutcome = (checkInMood + checkOutMood) / (tally * 2);
-        var motivationOutcome = checkInMotivation / tally;
-        var efficiencyOutcome = checkOutEfficiency / tally;
-        var fulfillmentOutcome = checkOutFulfillment / tally;
-    
-        if (sleepOutcome > 2) {
-            var sleepMessage = '- Got *bad* sleep\n';
+        if (input[0] > input[1]) {
+            var sleepAverage = 'Average: *Negative*';
         } else {
-            var sleepMessage = '- Got *good* sleep\n';
+            var sleepAverage = 'Average: *Positive';
         }
     
-        if (energyOutcome > 2) {
-            var energyMessage = '- Had *low* energy\n';
+        if (input[2] > input[3]) {
+            var energyAverage = 'Average: *Negative';
         } else {
-            var energyMessage = '- Had *high* energy\n';
+            var energyAverage = 'Average: *Positive';
         }
     
-        if (moodOutcome > 2) {
-            var moodMessage = '- Was in a *bad* mood\n';
+        if (input[4] > input[5]) {
+            var moodAverage = 'Average: *Negative';
         } else {
-            var moodMessage = '- Was in a *good* mood\n';
+            var moodAverage = 'Average: *Positive';
         }
     
-        if (motivationOutcome > 2) {
-            var motivationMessage = '- Felt *un*motivated\n';
+        if (input[6] > input[7]) {
+            var motivationAverage = 'Average: *Negative';
         } else {
-            var motivationMessage = '- Felt *very* motivated\n';
+            var motivationAverage = 'Average: *Positive';
         }
     
-        if (efficiencyOutcome > 2) {
-            var efficiencyMessage = '- Was *not* efficient\n';
+        if (input[8] > input[9]) {
+            var efficiencyAverage = 'Average: *Negative';
         } else {
-            var efficiencyMessage = '- Was *decently* efficient\n';
+            var efficiencyAverage = 'Average: *Positive';
         }
     
-        if (fulfillmentOutcome > 2) {
-            var fulfillmentMessage = '- Felt *un*fulfilled\n';
+        if (input[10] > input[11]) {
+            var fulfillmentAverage = 'Average: *Negative';
         } else {
-            var fulfillmentMessage = '- Felt *fulfilled*\n';
+            var fulfillmentAverage = 'Average: *Positive';
         }
     
-        if (positiveDay > negativeDay) {
-            var dayMessage = 'The overall emotional fitness *_declined_* through the work day';
+        if (input[12] > input[13]) {
+            var dayAverage = 'The overall emotional fitness was *_negative_* today';
         } else {
-            var dayMessage = 'The overall emotional fitness *_increased_* through the work day';
+            var dayAverage = 'The overall emotional fitness was *_positive_* today';
         }
     
-        var averageArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, dayMessage];
+        var averageArray = [sleepAverage, energyAverage, moodAverage, motivationAverage, efficiencyAverage, fulfillmentAverage, dayAverage];
         return averageArray;
     }
 }
