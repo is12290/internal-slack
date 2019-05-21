@@ -25,7 +25,7 @@ module.exports = function(controller) {
             var efficiencyNegative = 0;
             var fulfillmentPositive = 0;
             var fulfillmentNegative = 0;
-            
+
             var arrayLength = output.length;
             var i;
             for (i = 0; i < arrayLength; i++) {
@@ -36,9 +36,9 @@ module.exports = function(controller) {
     
                 // Check In
                 if (checkIn[0] < 2) {
-                    sleepPositive = sleepPositive + 1;
+                    sleepPositive++;
                 } else {
-                    sleepNegative = sleepNegative + 1;
+                    sleepNegative++;
                 }
                 if (checkIn[1] < 2) {
                     energyPositive++;
