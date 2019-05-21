@@ -101,21 +101,22 @@ module.exports = function(controller) {
 
     function getAverage(user) {
 
+        // Necessary constants
+        var positiveDay;
+        var negativeDay;
+        var tally;
+        // Checkin Constants
+        var checkInSleep;
+        var checkInEnergy;
+        var checkInMood;
+        var checkInMotivation;
+        // Checkout Constants
+        var checkOutEfficiency;
+        var checkOutEnergy;
+        var checkOutMood;
+        var checkOutFulfillment;
+
         controller.storage.results.find({ team: user.team }, function(error, output) {
-            // Necessary constants
-            var positiveDay;
-            var negativeDay;
-            var tally;
-            // Checkin Constants
-            var checkInSleep;
-            var checkInEnergy;
-            var checkInMood;
-            var checkInMotivation;
-            // Checkout Constants
-            var checkOutEfficiency;
-            var checkOutEnergy;
-            var checkOutMood;
-            var checkOutFulfillment;
 
             var arrayLength = output.length;
             for (var i; i < arrayLength; i++) {
