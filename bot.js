@@ -148,7 +148,7 @@ result_rule.dayOfWeek = new schedule.Range(1, 5);
 result_rule.hour = 17;
 result_rule.minute = 0;
  
-var result_reminder = result_schedule.scheduleJob(result_rule, function(){
+var result_reminder = schedule.scheduleJob(result_rule, function(){
     module.exports = function(controller) {
         controller.on('ambient', function(bot, message) {
             bot.say({
