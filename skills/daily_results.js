@@ -4,6 +4,20 @@ module.exports = function(controller) {
             var percent = getPercentage(output);
             var average = getAverage(percent);
 
+            controller.storage.week.get(message.team, function(err, input) {
+                var d = new Date();
+                var n = d.getDay();
+                if (!input) {
+                    input = {};
+                    input.team = message.team,
+                    input[n] = average,
+                    controller.storage.week.save(input);
+                } else {
+                    input[n] = average;
+                    controller.storage.week.save(input)
+                }
+            });
+
             bot.reply(message, {
                 text: 'Hey there! Here are your results for the day...\n',
                 attachments: [
@@ -149,37 +163,37 @@ module.exports = function(controller) {
         if (input[0] > input[1]) {
             var sleepAverage = 'Average: *Negative*';
         } else {
-            var sleepAverage = 'Average: *Positive';
+            var sleepAverage = 'Average: *Positive*';
         }
     
         if (input[2] > input[3]) {
-            var energyAverage = 'Average: *Negative';
+            var energyAverage = 'Average: *Negative*';
         } else {
-            var energyAverage = 'Average: *Positive';
+            var energyAverage = 'Average: *Positive*';
         }
     
         if (input[4] > input[5]) {
-            var moodAverage = 'Average: *Negative';
+            var moodAverage = 'Average: *Negative*';
         } else {
-            var moodAverage = 'Average: *Positive';
+            var moodAverage = 'Average: *Positive*';
         }
     
         if (input[6] > input[7]) {
-            var motivationAverage = 'Average: *Negative';
+            var motivationAverage = 'Average: *Negative*';
         } else {
-            var motivationAverage = 'Average: *Positive';
+            var motivationAverage = 'Average: *Positive*';
         }
     
         if (input[8] > input[9]) {
-            var efficiencyAverage = 'Average: *Negative';
+            var efficiencyAverage = 'Average: *Negative*';
         } else {
-            var efficiencyAverage = 'Average: *Positive';
+            var efficiencyAverage = 'Average: *Positive*';
         }
     
         if (input[10] > input[11]) {
-            var fulfillmentAverage = 'Average: *Negative';
+            var fulfillmentAverage = 'Average: *Negative*';
         } else {
-            var fulfillmentAverage = 'Average: *Positive';
+            var fulfillmentAverage = 'Average: *Positive*';
         }
     
         if (input[12] > input[13]) {

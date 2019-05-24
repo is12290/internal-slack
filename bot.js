@@ -49,6 +49,7 @@ This bot demonstrates many of the core features of Botkit:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 const dotenv = require('dotenv');
 dotenv.config();
+const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY).slack;
 
 
 if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
@@ -72,7 +73,7 @@ var bot_options = {
 // Use a mongo database if specified, otherwise store in a JSON file local to the app.
 // Mongo is automatically configured when deploying to Heroku
 if (process.env.MONGODB_URI) {
-    var mongoStorage = require('botkit-storage-mongo')({mongoUri: process.env.MONGODB_URI, tables: ['results']});
+    var mongoStorage = require('botkit-storage-mongo')({mongoUri: process.env.MONGODB_URI, tables: ['results', 'week']});
     bot_options.storage = mongoStorage;
 } else {
     bot_options.json_file_store = __dirname + '/.data/db/'; // store user data in a simple JSON format
@@ -80,6 +81,9 @@ if (process.env.MONGODB_URI) {
 
 // Create the Botkit controller, which controls all instances of the bot.
 var controller = Botkit.slackbot(bot_options);
+
+controller.middleware.receive.use(dashbot.receive);
+controller.middleware.send.use(dashbot.send);
 
 controller.startTicking();
 
