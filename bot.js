@@ -123,3 +123,38 @@ if (!process.env.clientId || !process.env.clientSecret) {
     require("./skills/" + file)(controller);
   });
 }
+
+// Send reminders for questionnaires and results
+var schedule = require('node-schedule');
+
+var log_rule = new schedule.RecurrenceRule();
+log_rule.dayOfWeek = new schedule.Range(1, 5);
+log_rule.hour = 9;
+log_rule.minute = 0;
+
+var log_reminder = schedule.scheduleJob(log_rule, function(){
+  module.exports = function(controller) {
+    controller.on('ambient', function(bot, message) {
+      bot.say({
+        channel: 'general',
+        text: 'Hola, friends! Don\'t forget to do your logs today :thumbsup:'
+        });
+    });
+  }
+});
+
+var result_rule = new schedule.RecurrenceRule();
+result_rule.dayOfWeek = new schedule.Range(1, 5);
+result_rule.hour = 17;
+result_rule.minute = 0;
+ 
+var result_reminder = result_schedule.scheduleJob(result_rule, function(){
+    module.exports = function(controller) {
+        controller.on('ambient', function(bot, message) {
+            bot.say({
+                channel: 'general',
+                text: 'Good evening, team! I\'m checking in to remind you to check out your organization\'s results for the day :heavy_check_mark:'
+            });
+        });
+    }
+});
