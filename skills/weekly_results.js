@@ -1,55 +1,59 @@
 module.exports  = function(controller) {
     controller.hears(['Week results', 'week results', 'Weekly results', 'weekly results'], 'direct_message,direct_mention', function (bot, message) {
         controller.storage.week.find({team: message.team}, function(error, output) {
-            var results = getOutput(output);
-    
-            bot.reply(message, {
-                text: 'Hey there! Here are your weekly organization averages...\n',
-                attachments: [
-                    {
-                        title: 'Sleep',
-                        color: '#02D2FF',
-                        attachment_type: 'default',
-                        text: results[0] + '\n'
-                    },
-                    {
-                        title: 'Energy',
-                        color: '#2A02FF',
-                        attachment_type: 'default',
-                        text: results[1] + '\n'
-                    },
-                    {
-                        title: 'Mood',
-                        color: '#8A02FF',
-                        attachment_type: 'default',
-                        text: results[2] + '\n'
-                    },
-                    {
-                        title: 'Motivation',
-                        color: '#CF02FF',
-                        attachment_type: 'default',
-                        text: results[3] + '\n'
-                    },
-                    {
-                        title: 'Efficiency',
-                        color: '#FF029D',
-                        attachment_type: 'default',
-                        text: results[4] + '\n'
-                    },
-                    {
-                        title: 'Fulfillment',
-                        color: '#FF8402',
-                        attachment_type: 'default',
-                        text: results[5] + '\n'
-                    },
-                    {
-                        title: 'Overall',
-                        color: '#02FF57',
-                        attachment_type: 'default',
-                        text: results[6]
-                    }
-                ]
-            });
+            if (!output['1'] || !output['2'] || !output['3'] || !output['4'] || !output['5']) {
+                bot.reply(message, 'Sorry, it must not be the end of the week yet or your organization hasn\'t been doing their logs :pensive:');
+            } else {
+                var results = getOutput(output);
+
+                bot.reply(message, {
+                    text: 'Hey there! Here are your weekly organization averages...\n',
+                    attachments: [
+                        {
+                            title: 'Sleep',
+                            color: '#02D2FF',
+                            attachment_type: 'default',
+                            text: results[0] + '\n'
+                        },
+                        {
+                            title: 'Energy',
+                            color: '#2A02FF',
+                            attachment_type: 'default',
+                            text: results[1] + '\n'
+                        },
+                        {
+                            title: 'Mood',
+                            color: '#8A02FF',
+                            attachment_type: 'default',
+                            text: results[2] + '\n'
+                        },
+                        {
+                            title: 'Motivation',
+                            color: '#CF02FF',
+                            attachment_type: 'default',
+                            text: results[3] + '\n'
+                        },
+                        {
+                            title: 'Efficiency',
+                            color: '#FF029D',
+                            attachment_type: 'default',
+                            text: results[4] + '\n'
+                        },
+                        {
+                            title: 'Fulfillment',
+                            color: '#FF8402',
+                            attachment_type: 'default',
+                            text: results[5] + '\n'
+                        },
+                        {
+                            title: 'Overall',
+                            color: '#02FF57',
+                            attachment_type: 'default',
+                            text: results[6]
+                        }
+                    ]
+                });
+            }
         });
     })
     

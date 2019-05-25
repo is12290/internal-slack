@@ -1,5 +1,5 @@
 module.exports = function(controller) { 
-    controller.hears(['result', 'Result', 'results', 'Results'], 'direct_message', function(bot, message){
+    controller.hears(['^daily result', '^daily results', '^daily Results', '^daily Result'], 'direct_message', function(bot, message){
         controller.storage.results.find({team: message.team}, function(error, output){
             var percent = getPercentage(output);
             var average = getAverage(percent);
