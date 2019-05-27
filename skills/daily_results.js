@@ -1,70 +1,74 @@
 module.exports = function(controller) { 
     controller.hears(['^daily result', '^daily results', '^daily Results', '^daily Result'], 'direct_message', function(bot, message){
         controller.storage.results.find({team: message.team}, function(error, output){
-            var percent = getPercentage(output);
-            var average = getAverage(percent);
+            if (!output) {
+                bot.reply(message, 'Sorry, for some reason I can\'t display today\'s results right now.')
+            } else {
+                var percent = getPercentage(output);
+                var average = getAverage(percent);
 
-            controller.storage.week.get(message.team, function(err, input) {
-                var d = new Date();
-                var n = d.getDay();
-                if (!input) {
-                    input = {};
-                    input.team = message.team,
-                    input[n] = average,
-                    controller.storage.week.save(input);
-                } else {
-                    input[n] = average;
-                    controller.storage.week.save(input)
-                }
-            });
-
-            bot.reply(message, {
-                text: 'Hey there! Here are your results for the day...\n',
-                attachments: [
-                    {
-                        title: 'Sleep',
-                        color: '#02D2FF',
-                        attachment_type: 'default',
-                        text: 'Positive: *' + percent[0] + '%*\nNegative: *' + percent[1] + '%*\n' + average[0] + '\n'
-                    },
-                    {
-                        title: 'Energy',
-                        color: '#2A02FF',
-                        attachment_type: 'default',
-                        text: 'Positive: *' + percent[2] + '%*\nNegative: *' + percent[3] + '%*\n' + average[1] + '\n'
-                    },
-                    {
-                        title: 'Mood',
-                        color: '#8A02FF',
-                        attachment_type: 'default',
-                        text: 'Positive: *' + percent[4] + '%*\nNegative: *' + percent[5] + '%*\n' + average[2] + '\n'
-                    },
-                    {
-                        title: 'Motivation',
-                        color: '#CF02FF',
-                        attachment_type: 'default',
-                        text: 'Positive: *' + percent[6] + '%*\nNegative: *' + percent[7] + '%*\n' + average[3] + '\n'
-                    },
-                    {
-                        title: 'Efficiency',
-                        color: '#FF029D',
-                        attachment_type: 'default',
-                        text: 'Positive: *' + percent[8] + '%*\nNegative: *' + percent[9] + '%*\n' + average[4] + '\n'
-                    },
-                    {
-                        title: 'Fulfillment',
-                        color: '#FF8402',
-                        attachment_type: 'default',
-                        text: 'Positive: *' + percent[10] + '%*\nNegative: *' + percent[11] + '%*\n' + average[5] + '\n'
-                    },
-                    {
-                        title: 'Overall',
-                        color: '#02FF57',
-                        attachment_type: 'default',
-                        text: average[6]
+                controller.storage.week.get(message.team, function(err, input) {
+                    var d = new Date();
+                    var n = d.getDay();
+                    if (!input) {
+                        input = {};
+                        input.team = message.team,
+                        input[n] = average,
+                        controller.storage.week.save(input);
+                    } else {
+                        input[n] = average;
+                        controller.storage.week.save(input)
                     }
-                ]
-            });
+                });
+
+                bot.reply(message, {
+                    text: 'Hey there! Here are your results for the day...\n',
+                    attachments: [
+                        {
+                            title: 'Sleep',
+                            color: '#02D2FF',
+                            attachment_type: 'default',
+                            text: 'Positive: *' + percent[0] + '%*\nNegative: *' + percent[1] + '%*\n' + average[0] + '\n'
+                        },
+                        {
+                            title: 'Energy',
+                            color: '#2A02FF',
+                            attachment_type: 'default',
+                            text: 'Positive: *' + percent[2] + '%*\nNegative: *' + percent[3] + '%*\n' + average[1] + '\n'
+                        },
+                        {
+                            title: 'Mood',
+                            color: '#8A02FF',
+                            attachment_type: 'default',
+                            text: 'Positive: *' + percent[4] + '%*\nNegative: *' + percent[5] + '%*\n' + average[2] + '\n'
+                        },
+                        {
+                            title: 'Motivation',
+                            color: '#CF02FF',
+                            attachment_type: 'default',
+                            text: 'Positive: *' + percent[6] + '%*\nNegative: *' + percent[7] + '%*\n' + average[3] + '\n'
+                        },
+                        {
+                            title: 'Efficiency',
+                            color: '#FF029D',
+                            attachment_type: 'default',
+                            text: 'Positive: *' + percent[8] + '%*\nNegative: *' + percent[9] + '%*\n' + average[4] + '\n'
+                        },
+                        {
+                            title: 'Fulfillment',
+                            color: '#FF8402',
+                            attachment_type: 'default',
+                            text: 'Positive: *' + percent[10] + '%*\nNegative: *' + percent[11] + '%*\n' + average[5] + '\n'
+                        },
+                        {
+                            title: 'Overall',
+                            color: '#02FF57',
+                            attachment_type: 'default',
+                            text: average[6]
+                        }
+                    ]
+                });
+            }
 
         });
     });

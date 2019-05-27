@@ -2,7 +2,7 @@ module.exports = function(controller) {
     controller.hears(['Personal Results', 'Personal Result', 'Personal results', 'Personal result', 'personal results', 'personal result'], 'direct_message', function(bot, message) {
         controller.storage.week.find({id: message.id}, function(error, output) {
             if (!output['1'] || !output['2'] || !output['3'] || !output['4'] || !output['5']) {
-                bot.reply(message, 'Sorry - Either it\'s not the end of the week or you may have missed a log this week :thinking_face:');
+                bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right now :thinking_face:');
             } else {
                 results = getOutput(output);
 
