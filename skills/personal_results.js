@@ -7,7 +7,7 @@ module.exports = function(controller) {
                 results = getOutput(output);
 
                 bot.reply(message, {
-                    text: 'Hey there! Here are yours personal weekly report. Scores are out of 100%...\n',
+                    text: 'Hey there! Here are is you personal report for the week. Scores are out of 100%...\n',
                     attachments: [
                         {
                             title: 'Sleep',
@@ -71,6 +71,8 @@ module.exports = function(controller) {
 
         var checkin = [];
         var checkout = [];
+        console.log(checkin)
+        console.log(checkout)
         var mainArrayLength = mainArray.length;
         for (var i = 0; i < mainArrayLength; i ++) {
             var iteration = mainArray[i];
