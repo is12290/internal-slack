@@ -71,14 +71,14 @@ module.exports = function(controller) {
 
         var checkin = [];
         var checkout = [];
-        console.log(checkin)
-        console.log(checkout)
         var mainArrayLength = mainArray.length;
         for (var i = 0; i < mainArrayLength; i ++) {
             var iteration = mainArray[i];
             checkin.push(iteration[0]);
             checkout.push(iteration[1]);
         }
+        console.log(checkin)
+        console.log(checkout)
 
         var sleepCount = 0;
         var energyCount = 0;
