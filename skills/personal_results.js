@@ -1,8 +1,8 @@
 module.exports = function(controller) {
     controller.hears(['Personal Results', 'Personal Result', 'Personal results', 'Personal result', 'personal results', 'personal result'], 'direct_message', function(bot, message) {
         controller.storage.week.find({id: message.id}, function(error, output) {
-            if (!output['1'] || !output['2'] || !output['3'] || !output['4'] || !output['5']) {
-                bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right now :thinking_face:');
+            if (!output) {
+                bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right :thinking_face:');
             } else {
                 results = getOutput(output);
 
@@ -59,13 +59,55 @@ module.exports = function(controller) {
     });
 
     function getOutput(results) {
-        var sleep = ((results['1'][0][0] + results['2'][0][0] + results['3'][0][0] + results['4'][0][0] + results['5'][0][0]) / 5) * 25;
-        var energy = ((results['1'][1][1] + results['2'][1][1] + results['3'][1][1] + results['4'][1][1] + results['5'][1][1]) / 5) * 25;
-        var mood = ((results['1'][2][2] + results['2'][2][2] + results['3'][2][2] + results['4'][2][2] + results['5'][2][2]) / 5) * 25;
-        var motivation = ((results['1'][3][3] + results['2'][3][3] + results['3'][3][3] + results['4'][3][3] + results['5'][3][3]) / 5) * 25;
-        var efficiency = ((results['1'][4][4] + results['2'][4][4] + results['3'][4][4] + results['4'][4][4] + results['5'][4][4]) / 5) * 25;
-        var fulfillment = ((results['1'][5][5] + results['2'][5][5] + results['3'][5][5] + results['4'][5][5] + results['5'][5][5]) / 5) * 25;
-        var overall = ((results['1'][6][6] + results['2'][6][6] + results['3'][6][6] + results['4'][6][6] + results['5'][6][6]) / 5) * 25;
+
+        var mainArray = [];
+        for (var key in results) {
+            if (isNaN(parseInt(key))) {
+                // Pass
+            } else {
+                mainArray.push(results[key]);
+            }
+        }
+
+        var checkin = [];
+        var checkout = [];
+        var mainArrayLength = mainArray.length;
+        for (var i = 0; i < mainArrayLength; i ++) {
+            var iteration = mainArray[i];
+            checkin.push(iteration[0]);
+            checkout.push(iteration[1]);
+        }
+
+        var sleepCount = 0;
+        var energyCount = 0;
+        var moodCount = 0;
+        var motivationCount = 0;
+        var efficiencyCount = 0;
+        var fulfillmentCount = 0;
+
+        for (var j = 0; j < checkin.length; j++) {
+            var checkinInstance = checkin[j];
+            sleepCount = sleepCount + checkinInstance[0];
+            energyCount = energyCount + checkinInstance[1];
+            moodCount = moodCount + checkinInstance[2];
+            motivationCount = motivationCount + checkinInstance[3];
+        }
+
+        for (var m = 0; m < checkout.length; m++) {
+            var checkoutInstance = checkout[m];
+            efficiencyCount = efficiencyCount + checkoutInstance[0];
+            energyCount = energyCount + checkoutInstance[1];
+            moodCount = moodCount + checkoutInstance[2];
+            fulfillmentCount = fulfillmentCount + checkoutInstance[3];
+        }
+
+        var sleep = (sleepCount / checkin.length) * 25;
+        var energy = (energyCount / (checkin.length + checkout.length)) * 25;
+        var mood = (moodCount / (checkin.length + checkout.length)) * 25;
+        var motivation = (motivationCount / checkin.length) * 25;
+        var efficiency = (efficiencyCount / checkout.length) * 25;
+        var fulfillment = (fulfillmentCount / checkout.length) * 25;
+        var overall = (sleep + energy + mood + motivation + efficiency + fulfillment) / 6;
 
         if (overall < 50) {
             var overallAnalysis = 'Hmm.. It seems as though this week was not the best for you. I\'m sorry about that. There\'s always next week - Improve them scores!' 
@@ -83,5 +125,7 @@ module.exports = function(controller) {
 
         var returnArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, overallMessage];
         return returnArray;
+        
     }
+
 }

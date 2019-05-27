@@ -1,8 +1,8 @@
 module.exports  = function(controller) {
     controller.hears(['Week results', 'week results', 'Weekly results', 'weekly results'], 'direct_message,direct_mention', function (bot, message) {
         controller.storage.week.find({team: message.team}, function(error, output) {
-            if (!output['1'] || !output['2'] || !output['3'] || !output['4'] || !output['5']) {
-                bot.reply(message, 'Sorry, it must not be the end of the week yet or your organization hasn\'t been doing their logs :pensive:');
+            if (!output) {
+                bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right now :thinking_face:');
             } else {
                 var results = getOutput(output);
 
@@ -56,61 +56,90 @@ module.exports  = function(controller) {
             }
         });
     })
-    
 
-      function getOutput(results) {
-          var sleep = (results['1'][0] + results['2'][0] + results['3'][0] + results['4'][0] + results['5'][0]) / 5;
-          var energy = (results['1'][1] + results['2'][1] + results['3'][1] + results['4'][1] + results['5'][1]) / 5;
-          var mood = (results['1'][2] + results['2'][2] + results['3'][2] + results['4'][2] + results['5'][2]) / 5;
-          var motivation = (results['1'][3] + results['2'][3] + results['3'][3] + results['4'][3] + results['5'][3]) / 5;
-          var efficiency = (results['1'][4] + results['2'][4] + results['3'][4] + results['4'][4] + results['5'][4]) / 5;
-          var fulfillment = (results['1'][5] + results['2'][5] + results['3'][5] + results['4'][5] + results['5'][5]) / 5;
-          var overall = (results['1'][6] + results['2'][6] + results['3'][6] + results['4'][6] + results['5'][6]) / 5;
+    function getOutput(results) {
+        var mainArray = [];
+        for (var key in results) {
+            if (isNaN(parseInt(key))) {
+                //pass
+            } else {
+                mainArray.push(results[key]);
+            }
+        }
 
-          if (sleep < 2) {
-              var sleepWeek = 'Average: *Positive*';
-          } else {
-              var sleepWeek = 'Average: *Negative*';
-          }
+        var sleepCount = 0;
+        var energyCount = 0;
+        var moodCount = 0;
+        var motivationCount = 0;
+        var efficiencyCount = 0;
+        var fulfillmentCount = 0;
+        var overallCount = 0;
 
-          if (energy < 2) {
-              var energyWeek = 'Average: *Positive*';
-          } else {
-              var energyWeek = 'Average: *Negative*';
-          }
+        var mainArrayLength = mainArray.length;
+        for (var i = 0; i < mainArrayLength; i++) {
+            var instance = mainArray[i];
+            sleepCount = sleepCount + instance[0];
+            energyCount = energyCount + instance [1];
+            moodCount = moodCount + instance[2];
+            motivationCount = motivationCount + instance[3];
+            efficiencyCount = efficiencyCount + instance[4];
+            fulfillmentCount = fulfillmentCount + instance[5];
+            overallCount = overallCount + instance[6];
+        }
 
-          if (mood < 2) {
-              var moodWeek = 'Average: *Positive*';
-          } else {
-              var moodWeek = 'Average: *Negative*';
-          }
+        var sleep = sleepCount / mainArrayLength;
+        var energy = energyCount / mainArrayLength;
+        var mood = moodCount / mainArrayLength;
+        var motivation = motivationCount / mainArrayLength;
+        var efficiency = efficiencyCount / mainArrayLength;
+        var fulfillment = fulfillmentCount / mainArrayLength;
+        var overall = overallCount / mainArrayLength;
 
-          if (motivation < 2) {
-              var motivationWeek = 'Average: *Positive*';
-          } else {
-              var motivationWeek = 'Average: *Negative*';
-          }
+        if (sleep < 2) {
+            var sleepWeek = 'Average: *Positive*';
+        } else {
+            var sleepWeek = 'Average: *Negative*';
+        }
+  
+        if (energy < 2) {
+            var energyWeek = 'Average: *Positive*';
+        } else {
+            var energyWeek = 'Average: *Negative*';
+        }
+  
+        if (mood < 2) {
+            var moodWeek = 'Average: *Positive*';
+        } else {
+            var moodWeek = 'Average: *Negative*';
+        }
+  
+        if (motivation < 2) {
+            var motivationWeek = 'Average: *Positive*';
+        } else {
+            var motivationWeek = 'Average: *Negative*';
+        }
+  
+        if (efficiency < 2) {
+            var efficiencyWeek = 'Average: *Positive*';
+        } else {
+            var efficiencyWeek = 'Average: *Negative*';
+        }
+  
+        if (fulfillment < 2) {
+            var fulfillmentWeek = 'Average: *Positive*';
+        } else {
+            var fulfillmentWeek = 'Average: *Negative*';
+        }
+  
+        if (overall < 2) {
+            var overallWeek = 'The overall emotional fitness this week was *positive*!';
+        }
+        else {
+            var overallWeek = 'The overall emotional fitness this week was *negative*';
+        }
+  
+        var weeklyReport = [sleepWeek, energyWeek, moodWeek, motivationWeek, efficiencyWeek, fulfillmentWeek, overallWeek];
+        return weeklyReport;
 
-          if (efficiency < 2) {
-              var efficiencyWeek = 'Average: *Positive*';
-          } else {
-              var efficiencyWeek = 'Average: *Negative*';
-          }
-
-          if (fulfillment < 2) {
-              var fulfillmentWeek = 'Average: *Positive*';
-          } else {
-              var fulfillmentWeek = 'Average: *Negative*';
-          }
-
-          if (overall < 2) {
-              var overallWeek = 'The overall emotional fitness this week was *positive*!';
-          }
-          else {
-              var overallWeek = 'The overall emotional fitness this week was *negative*';
-          }
-
-          var weeklyReport = [sleepWeek, energyWeek, moodWeek, motivationWeek, efficiencyWeek, fulfillmentWeek, overallWeek];
-          return weeklyReport;
-      }
+    }
 }
