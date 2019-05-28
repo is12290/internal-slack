@@ -298,7 +298,7 @@ module.exports = function(controller) {
                         var d = new Date();
                         var n = d.getDay();
                         var week = {};
-                        week.id = user.id;
+                        week.id = message.id;
                         week[n] = [user.checkin, user.checkout];
                         controller.storage.week.save(week);
                     });
