@@ -59,17 +59,14 @@ module.exports = function(controller) {
     });
 
     function getOutput(results) {
-        console.log("RESULTS: ", results);
         var result = results[0];
 
         var mainArray = [];
         for (var key in result) {
             if (isNaN(parseInt(key))) {
                 // pass
-                console.log('fuck');
             } else {
                 mainArray.push(result[key]);
-                console.log(result[key]);
             }
         }
 
@@ -81,8 +78,6 @@ module.exports = function(controller) {
             checkin.push(iteration[0]);
             checkout.push(iteration[1]);
         }
-        console.log(checkin)
-        console.log(checkout)
 
         var sleepCount = 0;
         var energyCount = 0;

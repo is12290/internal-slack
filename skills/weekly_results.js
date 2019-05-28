@@ -95,43 +95,43 @@ module.exports  = function(controller) {
         var fulfillment = fulfillmentCount / mainArrayLength;
         var overall = overallCount / mainArrayLength;
 
-        if (sleep < 2) {
+        if (sleep > 2) {
             var sleepWeek = 'Average: *Positive*';
         } else {
             var sleepWeek = 'Average: *Negative*';
         }
   
-        if (energy < 2) {
+        if (energy > 2) {
             var energyWeek = 'Average: *Positive*';
         } else {
             var energyWeek = 'Average: *Negative*';
         }
   
-        if (mood < 2) {
+        if (mood > 2) {
             var moodWeek = 'Average: *Positive*';
         } else {
             var moodWeek = 'Average: *Negative*';
         }
   
-        if (motivation < 2) {
+        if (motivation > 2) {
             var motivationWeek = 'Average: *Positive*';
         } else {
             var motivationWeek = 'Average: *Negative*';
         }
   
-        if (efficiency < 2) {
+        if (efficiency > 2) {
             var efficiencyWeek = 'Average: *Positive*';
         } else {
             var efficiencyWeek = 'Average: *Negative*';
         }
   
-        if (fulfillment < 2) {
+        if (fulfillment > 2) {
             var fulfillmentWeek = 'Average: *Positive*';
         } else {
             var fulfillmentWeek = 'Average: *Negative*';
         }
   
-        if (overall < 2) {
+        if (overall > 2) {
             var overallWeek = 'The overall emotional fitness this week was *positive*!';
         }
         else {

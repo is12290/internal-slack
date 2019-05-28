@@ -51,28 +51,28 @@ module.exports = function(controller) {
                 {
                     pattern: 'Overdrive',
                     callback: function(reply, convo) {
-                        score.push(1);
+                        score.push(4);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Normal',
                     callback: function(reply, convo) {
-                        score.push(2);
+                        score.push(3);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Slow',
                     callback: function(reply, convo) {
-                        score.push(3);
+                        score.push(2);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Dragging',
                     callback: function(reply, convo) {
-                        score.push(4);
+                        score.push(1);
                         convo.next();
                     }
                 }
@@ -118,28 +118,28 @@ module.exports = function(controller) {
                 {
                     pattern: 'Full',
                     callback: function(reply, convo) {
-                        score.push(1);
+                        score.push(4);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Half',
                     callback: function(reply, convo) {
-                        score.push(2);
+                        score.push(3);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Dying',
                     callback: function(reply, convo) {
-                        score.push(3);
+                        score.push(2);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Dead',
                     callback: function(reply, convo) {
-                        score.push(4);
+                        score.push(1);
                         convo.next();
                     }
                 }
@@ -185,28 +185,28 @@ module.exports = function(controller) {
                 {
                     pattern: 'Positive',
                     callback: function(reply, convo) {
-                        score.push(1);
+                        score.push(4);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Indifferent',
                     callback: function(reply, convo) {
-                        score.push(2);
+                        score.push(3);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Frustrated',
+                    pattern: 'Anxious',
                     callback: function(reply, convo) {
-                        score.push(3);
+                        score.push(2);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Negative',
                     callback: function(reply, convo) {
-                        score.push(4);
+                        score.push(1);
                         convo.next();
                     }
                 }
@@ -252,28 +252,28 @@ module.exports = function(controller) {
                 {
                     pattern: 'Complete',
                     callback: function(reply, convo) {
-                        score.push(1);
+                        score.push(4);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Present',
                     callback: function(reply, convo) {
-                        score.push(2);
+                        score.push(3);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Searching',
                     callback: function(reply, convo) {
-                        score.push(3);
+                        score.push(2);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Non-Existent',
                     callback: function(reply, convo) {
-                        score.push(4);
+                        score.push(1);
                         convo.next();
                     }
                 }

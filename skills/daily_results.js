@@ -97,44 +97,44 @@ module.exports = function(controller) {
             var checkOut = instance.checkout;
     
             // Check In
-            if (checkIn[0] < 2) {
+            if (checkIn[0] > 2) {
                 sleepPositive++;
             } else {
                 sleepNegative++;
             }
-            if (checkIn[1] < 2) {
+            if (checkIn[1] > 2) {
                 energyPositive++;
             } else {
                 energyNegative++;
             }
-            if (checkIn[2] < 2) {
+            if (checkIn[2] > 2) {
                 moodPositive++;
             } else {
                 moodNegative++;
             }
-            if (checkIn[3] < 2) {
+            if (checkIn[3] > 2) {
                 motivationPositive++;
             } else {
                 motivationNegative++;
             }
     
             // Check Out
-            if (checkOut[0] < 2) {
+            if (checkOut[0] > 2) {
                 efficiencyPositive++;
             } else {
                 efficiencyNegative++;
             }
-            if (checkOut[1] < 2) {
+            if (checkOut[1] > 2) {
                 energyPositive++;
             } else {
                 energyNegative++;
             }
-            if (checkOut[2] < 2) {
+            if (checkOut[2] > 2) {
                 moodPositive++;
             } else {
                 moodNegative++;
             }
-            if (checkOut[3] < 2) {
+            if (checkOut[3] > 2) {
                 fulfillmentPositive++;
             } else {
                 fulfillmentNegative++;

@@ -51,28 +51,28 @@ module.exports = function(controller) {
                 {
                     pattern: 'Perfect',
                     callback: function(reply, convo) {
-                        score.push(1);
+                        score.push(4);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Sufficient',
                     callback: function(reply, convo) {
-                        score.push(2);
+                        score.push(3);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Restless',
                     callback: function(reply, convo) {
-                        score.push(3);
+                        score.push(2);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Terrible',
                     callback: function(reply, convo) {
-                        score.push(4);
+                        score.push(1);
                         convo.next();
                     }
                 }
@@ -118,28 +118,28 @@ module.exports = function(controller) {
                 {
                     pattern: 'Full',
                     callback: function(reply, convo) {
-                        score.push(1);
+                        score.push(4);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Half',
                     callback: function(reply, convo) {
-                        score.push(2);
+                        score.push(3);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Dying',
                     callback: function(reply, convo) {
-                        score.push(3);
+                        score.push(2);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Dead',
                     callback: function(reply, convo) {
-                        score.push(4);
+                        score.push(1);
                         convo.next();
                     }
                 }
@@ -183,9 +183,16 @@ module.exports = function(controller) {
                 ]
             },[
                 {
-                    pattern: 'Happy',
+                    pattern: 'Positive',
                     callback: function(reply, convo) {
-                        score.push(1);
+                        score.push(4);
+                        convo.next();
+                    }
+                },
+                {
+                    pattern: 'Indifferent',
+                    callback: function(reply, convo) {
+                        score.push(3);
                         convo.next();
                     }
                 },
@@ -197,16 +204,9 @@ module.exports = function(controller) {
                     }
                 },
                 {
-                    pattern: 'Sad',
+                    pattern: 'Negative',
                     callback: function(reply, convo) {
-                        score.push(3);
-                        convo.next();
-                    }
-                },
-                {
-                    pattern: 'Angry',
-                    callback: function(reply, convo) {
-                        score.push(4);
+                        score.push(1);
                         convo.next();
                     }
                 }
@@ -252,28 +252,28 @@ module.exports = function(controller) {
                 {
                     pattern: 'Sprint',
                     callback: function(reply, convo) {
-                        score.push(1);
+                        score.push(4);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Jog',
                     callback: function(reply, convo) {
-                        score.push(2);
+                        score.push(3);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Walk',
                     callback: function(reply, convo) {
-                        score.push(3);
+                        score.push(2);
                         convo.next();
                     }
                 },
                 {
                     pattern: 'Crawl',
                     callback: function(reply, convo) {
-                        score.push(4);
+                        score.push(1);
                         convo.next();
                     }
                 }
