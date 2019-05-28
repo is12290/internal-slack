@@ -295,15 +295,18 @@ module.exports = function(controller) {
                     controller.storage.results.get(message.user, function(err, user) {
                         user.checkout = score;
                         controller.storage.results.save(user);
-                        var d = new Date();
-                        var n = d.getDay();
-                        var week = {};
-                        week.id = message.id;
-                        week[n] = [user.checkin, user.checkout];
-                        controller.storage.personal.save(week);
                     });
                 
                     bot.reply(message, 'Thanks for checking out!');
+
+                    controller.storage.results.get(message.user, function (err, user) {
+                        var d = new Date();
+                        var n = d.getDay();
+                        var week = {};
+                        week.id = message.user;
+                        week[n] = [user.checkin, user.checkout];
+                        controller.storage.personal.save(week);
+                    });
                 }
 
 
