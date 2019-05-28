@@ -306,7 +306,7 @@ module.exports = function(controller) {
                         var n = d.getDay();
                         var week = {};
                         week.id = message.user;
-                        week[n] = [user[checkin], user[checkin]];
+                        week[n] = [user.checkin, user.checkin];
                         controller.storage.personal.save(week);
                     });
                 }
