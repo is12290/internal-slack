@@ -1,6 +1,6 @@
 module.exports = function(controller) {
     controller.hears(['Personal Results', 'Personal Result', 'Personal results', 'Personal result', 'personal results', 'personal result'], 'direct_message', function(bot, message) {
-        controller.storage.week.find({id: message.id}, function(error, output) {
+        controller.storage.personal.find({id: message.id}, function(error, output) {
             if (!output) {
                 bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right :thinking_face:');
             } else {
