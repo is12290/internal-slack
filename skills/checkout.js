@@ -300,11 +300,13 @@ module.exports = function(controller) {
                     bot.reply(message, 'Thanks for checking out!');
 
                     controller.storage.results.get(message.user, function (err, user) {
+                        console.log("CHECKIN: ", user.checkin);
+                        console.log("CEHCKOUT: ", user.checkout);
                         var d = new Date();
                         var n = d.getDay();
                         var week = {};
                         week.id = message.user;
-                        week[n] = [user.checkin, user.checkout];
+                        week[n] = [user[checkin], user[checkin]];
                         controller.storage.personal.save(week);
                     });
                 }
