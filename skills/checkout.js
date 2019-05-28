@@ -299,14 +299,11 @@ module.exports = function(controller) {
                 
                     bot.reply(message, 'Thanks for checking out!');
 
-                    controller.storage.results.get(message.user, function (err, user) {
+                    controller.storage.personal.get(message.user, function (err, user) {
                         var d = new Date();
                         var n = d.getDay();
-                        var week = {};
-                        week.id = message.user,
-                        week[n] = [user.checkin, user.checkin];
-                        console.log(week[n])
-                        controller.storage.personal.save(week);
+                        user[n].push(score);
+                        controller.storage.personal.save(user);
                     });
                 }
 

@@ -305,6 +305,20 @@ module.exports = function(controller) {
                         }
                     });
 
+                    controller.storage.personal.get(message.user, function(err, user) {
+                        var d = new Date();
+                        var n = d.getDay();
+                        if (!user) {
+                            user = {};
+                            user.id = message.user,
+                            user[n] = score;
+                            controller.storage.personal.save(user);
+                        } else {
+                            user[n] = [score];
+                            controller.storage.personal.save(user);
+                        }
+                    })
+
                     
                     bot.reply(message, 'Thanks for checking in!');
                 }
