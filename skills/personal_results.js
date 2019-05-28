@@ -59,14 +59,16 @@ module.exports = function(controller) {
     });
 
     function getOutput(results) {
-        console.log("RESULTS: ", JSON.stringify(results));
+        console.log("RESULTS: ", results);
 
         var mainArray = [];
         for (var key in results) {
             if (isNaN(parseInt(key))) {
-                // Pass
+                // pass
+                console.log('fuck');
             } else {
                 mainArray.push(results[key]);
+                console.log(results[key]);
             }
         }
 
