@@ -59,7 +59,7 @@ module.exports = function(controller) {
     });
 
     function getOutput(results) {
-        console.log("RESULTS: ", JSON.stringify(results);
+        console.log("RESULTS: ", JSON.stringify(results));
 
         var mainArray = [];
         for (var key in results) {
