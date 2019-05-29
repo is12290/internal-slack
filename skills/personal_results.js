@@ -1,7 +1,7 @@
 module.exports = function(controller) {
     controller.hears(['Personal Results', 'Personal Result', 'Personal results', 'Personal result', 'personal results', 'personal result'], 'direct_message', function(bot, message) {
         controller.storage.personal.find({id: message.user}, function(error, output) {
-            if (!output) {
+            if (!output || output[0]["1"] === undefined && output[0]["2"] === undefined && output[0]["3"] === undefined && output[0]["4"] === undefined && output[0]["5"] === undefined) {
                 bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right :thinking_face:');
             } else {
                 results = getOutput(output);

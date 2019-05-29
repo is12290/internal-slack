@@ -155,9 +155,15 @@ module.exports = function(controller) {
                         color: '#8A02FF',
                         actions: [
                             {
-                                'name': 'happy-button',
-                                'value': 'Happy',
-                                'text': 'Happy',
+                                'name': 'positive-button',
+                                'value': 'Positive',
+                                'text': 'Positive',
+                                'type': 'button'
+                            },
+                            {
+                                'name': 'indifferent-button',
+                                'value': 'Indifferent',
+                                'text': 'Indifferent',
                                 'type': 'button'
                             },
                             {
@@ -167,15 +173,9 @@ module.exports = function(controller) {
                                 'type': 'button'
                             },
                             {
-                                'name': 'sad-button',
-                                'value': 'Sad',
-                                'text': 'Sad',
-                                'type': 'button'
-                            },
-                            {
-                                'name': 'angry-button',
-                                'value': 'Angry',
-                                'text': 'Angry',
+                                'name': 'negative-button',
+                                'value': 'Negative',
+                                'text': 'Negative',
                                 'type': 'button'
                             },
                         ]

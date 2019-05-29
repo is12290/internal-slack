@@ -1,7 +1,7 @@
 module.exports = function(controller) { 
     controller.hears(['^daily result', '^daily results', '^daily Results', '^daily Result'], 'direct_message', function(bot, message){
         controller.storage.results.find({team: message.team}, function(error, output){
-            if (!output) {
+            if (output.checkin === undefined || output.checkout === undefined || isNaN(output.checkin[2]) || isNaN(output.checkin[3])) {
                 bot.reply(message, 'Sorry, for some reason I can\'t display today\'s results right now.')
             } else {
                 var percent = getPercentage(output);
@@ -13,10 +13,10 @@ module.exports = function(controller) {
                     if (!input) {
                         input = {};
                         input.team = message.team,
-                        input[n] = average,
+                        input[n] = percent,
                         controller.storage.week.save(input);
                     } else {
-                        input[n] = average;
+                        input[n] = percent;
                         controller.storage.week.save(input)
                     }
                 });
