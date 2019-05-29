@@ -1,7 +1,7 @@
 module.exports  = function(controller) {
     controller.hears(['Week results', 'week results', 'Weekly results', 'weekly results'], 'direct_message,direct_mention', function (bot, message) {
         controller.storage.week.find({team: message.team}, function(error, output) {
-            if (!output || output[0]["1"] === undefined && output[0]["2"] === undefined && output[0]["3"] === undefined && output[0]["4"] === undefined && output[0]["5"] === undefined) {
+            if (!output) {
                 bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right now :thinking_face:');
             } else {
                 var results = getOutput(output);
@@ -89,13 +89,13 @@ module.exports  = function(controller) {
             overallCount = overallCount + instance[12];
         }
 
-        var sleep = sleepCount / mainArrayLength;
-        var energy = energyCount / mainArrayLength;
-        var mood = moodCount / mainArrayLength;
-        var motivation = motivationCount / mainArrayLength;
-        var efficiency = efficiencyCount / mainArrayLength;
-        var fulfillment = fulfillmentCount / mainArrayLength;
-        var overall = overallCount / mainArrayLength;
+        var sleep = (sleepCount / mainArrayLength).toFixed(2);
+        var energy = (energyCount / mainArrayLength).toFixed(2);
+        var mood = (moodCount / mainArrayLength).toFixed(2);
+        var motivation = (motivationCount / mainArrayLength).toFixed(2);
+        var efficiency = (efficiencyCount / mainArrayLength).toFixed(2);
+        var fulfillment = (fulfillmentCount / mainArrayLength).toFixed(2);
+        var overall = (overallCount / mainArrayLength).toFixed(2);
 
         if (sleep > 50) {
             var sleepWeek = 'Score: ' + sleep + '\nAverage: *Positive*';

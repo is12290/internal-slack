@@ -1,7 +1,7 @@
 module.exports = function(controller) {
     controller.hears(['Personal Results', 'Personal Result', 'Personal results', 'Personal result', 'personal results', 'personal result'], 'direct_message', function(bot, message) {
         controller.storage.personal.find({id: message.user}, function(error, output) {
-            if (!output || output[0]["1"] === undefined && output[0]["2"] === undefined && output[0]["3"] === undefined && output[0]["4"] === undefined && output[0]["5"] === undefined) {
+            if (!output) {
                 bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right :thinking_face:');
             } else {
                 results = getOutput(output);
@@ -102,13 +102,13 @@ module.exports = function(controller) {
             fulfillmentCount = fulfillmentCount + checkoutInstance[3];
         }
 
-        var sleep = (sleepCount / checkin.length) * 25;
-        var energy = (energyCount / (checkin.length + checkout.length)) * 25;
-        var mood = (moodCount / (checkin.length + checkout.length)) * 25;
-        var motivation = (motivationCount / checkin.length) * 25;
-        var efficiency = (efficiencyCount / checkout.length) * 25;
-        var fulfillment = (fulfillmentCount / checkout.length) * 25;
-        var overall = (sleep + energy + mood + motivation + efficiency + fulfillment) / 6;
+        var sleep = ((sleepCount / checkin.length) * 25).toFixed(2);
+        var energy = ((energyCount / (checkin.length + checkout.length)) * 25).toFixed(2);
+        var mood = ((moodCount / (checkin.length + checkout.length)) * 25).toFixed(2);
+        var motivation = ((motivationCount / checkin.length) * 25).toFixed(2);
+        var efficiency = ((efficiencyCount / checkout.length) * 25).toFixed(2);
+        var fulfillment = ((fulfillmentCount / checkout.length) * 25).toFixed(2);
+        var overall = ((sleep + energy + mood + motivation + efficiency + fulfillment) / 6).toFixed(2);
 
         if (overall < 50) {
             var overallAnalysis = 'Hmm.. It seems as though this week was not the best for you. I\'m sorry about that. There\'s always next week - Improve them scores!' 
