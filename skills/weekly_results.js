@@ -98,46 +98,46 @@ module.exports  = function(controller) {
         var overall = (overallCount / mainArrayLength).toFixed(2);
 
         if (sleep > 50) {
-            var sleepWeek = 'Score: ' + sleep + '\nAverage: *Positive*';
+            var sleepWeek = 'Score: *' + sleep + '%*\nAverage: *Positive*';
         } else {
-            var sleepWeek = 'Score: ' + sleep + '\nAverage: *Negative*';
+            var sleepWeek = 'Score: *' + sleep + '%*\nAverage: *Negative*';
         }
   
         if (energy > 50) {
-            var energyWeek = 'Score: ' + energy + '\nAverage: *Positive*';
+            var energyWeek = 'Score: *' + energy + '%*\nAverage: *Positive*';
         } else {
-            var energyWeek = 'Score: ' + energy + '\nAverage: *Negative*';
+            var energyWeek = 'Score: *' + energy + '%*\nAverage: *Negative*';
         }
   
         if (mood > 50) {
-            var moodWeek = 'Score: ' + mood + '\nAverage: *Positive*';
+            var moodWeek = 'Score: *' + mood + '%*\nAverage: *Positive*';
         } else {
-            var moodWeek = 'Score: ' + mood + '\nAverage: *Negative*';
+            var moodWeek = 'Score: *' + mood + '%*\nAverage: *Negative*';
         }
   
         if (motivation > 50) {
-            var motivationWeek = 'Score: ' + motivation + '\nAverage: *Positive*';
+            var motivationWeek = 'Score: *' + motivation + '%*\nAverage: *Positive*';
         } else {
-            var motivationWeek = 'Score: ' + motivation + '\nAverage: *Negative*';
+            var motivationWeek = 'Score: *' + motivation + '%*\nAverage: *Negative*';
         }
   
         if (efficiency > 50) {
-            var efficiencyWeek = 'Score: ' + efficiency + '\nAverage: *Positive*';
+            var efficiencyWeek = 'Score: *' + efficiency + '%*\nAverage: *Positive*';
         } else {
-            var efficiencyWeek = 'Score: ' + efficiency + '\nAverage: *Negative*';
+            var efficiencyWeek = 'Score: *' + efficiency + '%*\nAverage: *Negative*';
         }
   
         if (fulfillment > 50) {
-            var fulfillmentWeek = 'Score: ' + fulfillment + '\nAverage: *Positive*';
+            var fulfillmentWeek = 'Score: *' + fulfillment + '%*\nAverage: *Positive*';
         } else {
-            var fulfillmentWeek = 'Score: ' + fulfillment + '\nAverage: *Negative*';
+            var fulfillmentWeek = 'Score: *' + fulfillment + '%*\nAverage: *Negative*';
         }
   
         if (overall > 50) {
-            var overallWeek = 'Score: ' + overall + '\nThe overall emotional fitness this week was *positive*!';
+            var overallWeek = 'Score: *' + overall + '%*\nThe overall emotional fitness this week was *positive*!';
         }
         else {
-            var overallWeek = 'Score: ' + overall + '\nThe overall emotional fitness this week was *negative*';
+            var overallWeek = 'Score: *' + overall + '%*\nThe overall emotional fitness this week was *negative*';
         }
   
         var weeklyReport = [sleepWeek, energyWeek, moodWeek, motivationWeek, efficiencyWeek, fulfillmentWeek, overallWeek];
