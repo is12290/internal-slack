@@ -5,54 +5,58 @@ module.exports  = function(controller) {
                 bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right now :thinking_face:');
             } else {
                 var results = getOutput(output);
+                if (isNan(results[0])) {
+                    bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right now :thinking_face:');
+                } else {
+                    bot.reply(message, {
+                        text: 'Hey there! Here are your weekly organization averages...\n',
+                        attachments: [
+                            {
+                                title: 'Sleep',
+                                color: '#02D2FF',
+                                attachment_type: 'default',
+                                text: results[0] + '\n'
+                            },
+                            {
+                                title: 'Energy',
+                                color: '#2A02FF',
+                                attachment_type: 'default',
+                                text: results[1] + '\n'
+                            },
+                            {
+                                title: 'Mood',
+                                color: '#8A02FF',
+                                attachment_type: 'default',
+                                text: results[2] + '\n'
+                            },
+                            {
+                                title: 'Motivation',
+                                color: '#CF02FF',
+                                attachment_type: 'default',
+                                text: results[3] + '\n'
+                            },
+                            {
+                                title: 'Efficiency',
+                                color: '#FF029D',
+                                attachment_type: 'default',
+                                text: results[4] + '\n'
+                            },
+                            {
+                                title: 'Fulfillment',
+                                color: '#FF8402',
+                                attachment_type: 'default',
+                                text: results[5] + '\n'
+                            },
+                            {
+                                title: 'Overall',
+                                color: '#02FF57',
+                                attachment_type: 'default',
+                                text: results[6]
+                            }
+                        ]
+                    });
 
-                bot.reply(message, {
-                    text: 'Hey there! Here are your weekly organization averages...\n',
-                    attachments: [
-                        {
-                            title: 'Sleep',
-                            color: '#02D2FF',
-                            attachment_type: 'default',
-                            text: results[0] + '\n'
-                        },
-                        {
-                            title: 'Energy',
-                            color: '#2A02FF',
-                            attachment_type: 'default',
-                            text: results[1] + '\n'
-                        },
-                        {
-                            title: 'Mood',
-                            color: '#8A02FF',
-                            attachment_type: 'default',
-                            text: results[2] + '\n'
-                        },
-                        {
-                            title: 'Motivation',
-                            color: '#CF02FF',
-                            attachment_type: 'default',
-                            text: results[3] + '\n'
-                        },
-                        {
-                            title: 'Efficiency',
-                            color: '#FF029D',
-                            attachment_type: 'default',
-                            text: results[4] + '\n'
-                        },
-                        {
-                            title: 'Fulfillment',
-                            color: '#FF8402',
-                            attachment_type: 'default',
-                            text: results[5] + '\n'
-                        },
-                        {
-                            title: 'Overall',
-                            color: '#02FF57',
-                            attachment_type: 'default',
-                            text: results[6]
-                        }
-                    ]
-                });
+                }
             }
         });
     })
