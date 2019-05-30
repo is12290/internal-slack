@@ -5,8 +5,7 @@ module.exports = function(controller) {
                 bot.reply(message, 'Sorry, something has gone wrong :thinking_face:');
             } else {
                 results = getOutput(output);
-                console.log(results);
-                if (isNaN(results[0])) {
+                if (isNaN(results[1])) {
                     bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right :thinking_face:');
                 } else {
                     bot.reply(message, {
@@ -22,37 +21,37 @@ module.exports = function(controller) {
                                 title: 'Energy',
                                 color: '#2A02FF',
                                 attachment_type: 'default',
-                                text: results[1] + '\n'
+                                text: results[2] + '\n'
                             },
                             {
                                 title: 'Mood',
                                 color: '#8A02FF',
                                 attachment_type: 'default',
-                                text: results[2] + '\n'
+                                text: results[3] + '\n'
                             },
                             {
                                 title: 'Motivation',
                                 color: '#CF02FF',
                                 attachment_type: 'default',
-                                text: results[3] + '\n'
+                                text: results[4] + '\n'
                             },
                             {
                                 title: 'Efficiency',
                                 color: '#FF029D',
                                 attachment_type: 'default',
-                                text: results[4] + '\n'
+                                text: results[5] + '\n'
                             },
                             {
                                 title: 'Fulfillment',
                                 color: '#FF8402',
                                 attachment_type: 'default',
-                                text: results[5] + '\n'
+                                text: results[6] + '\n'
                             },
                             {
                                 title: 'Overall',
                                 color: '#02FF57',
                                 attachment_type: 'default',
-                                text: results[6]
+                                text: results[7]
                             }
                         ]
                     });
@@ -89,6 +88,7 @@ module.exports = function(controller) {
         var motivationCount = 0;
         var efficiencyCount = 0;
         var fulfillmentCount = 0;
+        var overallCount = 0;
 
         for (var j = 0; j < checkin.length; j++) {
             var checkinInstance = checkin[j];
@@ -96,6 +96,7 @@ module.exports = function(controller) {
             energyCount = energyCount + checkinInstance[1];
             moodCount = moodCount + checkinInstance[2];
             motivationCount = motivationCount + checkinInstance[3];
+            overallCount = overallCount + (checkinInstance[4] / 4);
         }
 
         for (var m = 0; m < checkout.length; m++) {
@@ -104,6 +105,7 @@ module.exports = function(controller) {
             energyCount = energyCount + checkoutInstance[1];
             moodCount = moodCount + checkoutInstance[2];
             fulfillmentCount = fulfillmentCount + checkoutInstance[3];
+            overallCount = overallCount + (checkinoutInstance[4] / 4);
         }
 
         var sleep = ((sleepCount / checkin.length) * 25).toFixed(2);
@@ -112,7 +114,7 @@ module.exports = function(controller) {
         var motivation = ((motivationCount / checkin.length) * 25).toFixed(2);
         var efficiency = ((efficiencyCount / checkout.length) * 25).toFixed(2);
         var fulfillment = ((fulfillmentCount / checkout.length) * 25).toFixed(2);
-        var overall = ((sleep + energy + mood + motivation + efficiency + fulfillment) / 6).toFixed(2);
+        var overall = ((overallCount / (checkin.length + checkout.length)) * 25).toFixed(2);
 
         if (overall < 50) {
             var overallAnalysis = 'Hmm.. It seems as though this week was not the best for you. I\'m sorry about that. There\'s always next week - Improve them scores!' 
@@ -128,7 +130,7 @@ module.exports = function(controller) {
         var fulfillmentMessage = 'Score: ' + fulfillment + '%';
         var overallMessage = 'Score: ' + overall + '%' + '\n' + overallAnalysis;
 
-        var returnArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, overallMessage];
+        var returnArray = [sleepMessage, sleep, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, overallMessage];
         return returnArray;
         
     }

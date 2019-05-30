@@ -5,7 +5,7 @@ module.exports  = function(controller) {
                 bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right now :thinking_face:');
             } else {
                 var results = getOutput(output);
-                if (isNaN(results[0])) {
+                if (isNaN(results[1])) {
                     bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right now :thinking_face:');
                 } else {
                     bot.reply(message, {
@@ -21,37 +21,37 @@ module.exports  = function(controller) {
                                 title: 'Energy',
                                 color: '#2A02FF',
                                 attachment_type: 'default',
-                                text: results[1] + '\n'
+                                text: results[2] + '\n'
                             },
                             {
                                 title: 'Mood',
                                 color: '#8A02FF',
                                 attachment_type: 'default',
-                                text: results[2] + '\n'
+                                text: results[3] + '\n'
                             },
                             {
                                 title: 'Motivation',
                                 color: '#CF02FF',
                                 attachment_type: 'default',
-                                text: results[3] + '\n'
+                                text: results[4] + '\n'
                             },
                             {
                                 title: 'Efficiency',
                                 color: '#FF029D',
                                 attachment_type: 'default',
-                                text: results[4] + '\n'
+                                text: results[5] + '\n'
                             },
                             {
                                 title: 'Fulfillment',
                                 color: '#FF8402',
                                 attachment_type: 'default',
-                                text: results[5] + '\n'
+                                text: results[6] + '\n'
                             },
                             {
                                 title: 'Overall',
                                 color: '#02FF57',
                                 attachment_type: 'default',
-                                text: results[6]
+                                text: results[7]
                             }
                         ]
                     });
@@ -144,7 +144,7 @@ module.exports  = function(controller) {
             var overallWeek = 'Score: *' + overall + '%*\nThe overall emotional fitness this week was *negative*';
         }
   
-        var weeklyReport = [sleepWeek, energyWeek, moodWeek, motivationWeek, efficiencyWeek, fulfillmentWeek, overallWeek];
+        var weeklyReport = [sleepWeek, sleep, energyWeek, moodWeek, motivationWeek, efficiencyWeek, fulfillmentWeek, overallWeek];
         return weeklyReport;
 
     }
