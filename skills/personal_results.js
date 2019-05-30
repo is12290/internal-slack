@@ -2,9 +2,10 @@ module.exports = function(controller) {
     controller.hears(['Personal Results', 'Personal Result', 'Personal results', 'Personal result', 'personal results', 'personal result'], 'direct_message', function(bot, message) {
         controller.storage.personal.find({id: message.user}, function(error, output) {
             if (!output) {
-                bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right :thinking_face:');
+                bot.reply(message, 'Sorry, something has gone wrong :thinking_face:');
             } else {
                 results = getOutput(output);
+                console.log(results);
                 if (isNaN(results[0])) {
                     bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right :thinking_face:');
                 } else {

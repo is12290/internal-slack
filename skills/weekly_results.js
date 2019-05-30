@@ -5,7 +5,7 @@ module.exports  = function(controller) {
                 bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right now :thinking_face:');
             } else {
                 var results = getOutput(output);
-                if (isNan(results[0])) {
+                if (isNaN(results[0])) {
                     bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right now :thinking_face:');
                 } else {
                     bot.reply(message, {
