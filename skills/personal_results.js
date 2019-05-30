@@ -122,13 +122,13 @@ module.exports = function(controller) {
             var overallAnalysis = 'Way to have a positive week! Shoot to keep it up :)'
         }
 
-        var sleepMessage = 'Score: ' + sleep + '%';
-        var energyMessage = 'Score: ' + energy + '%';
-        var moodMessage = 'Score: ' + mood + '%';
-        var motivationMessage = 'Score: ' + motivation + '%';
-        var efficiencyMessage = 'Score: ' + efficiency + '%';
-        var fulfillmentMessage = 'Score: ' + fulfillment + '%';
-        var overallMessage = 'Score: ' + overall + '%' + '\n' + overallAnalysis;
+        var sleepMessage = 'Score: *' + sleep + '%*';
+        var energyMessage = 'Score: *' + energy + '%*';
+        var moodMessage = 'Score: *' + mood + '%*';
+        var motivationMessage = 'Score: *' + motivation + '%*';
+        var efficiencyMessage = 'Score: *' + efficiency + '%*';
+        var fulfillmentMessage = 'Score: *' + fulfillment + '%*';
+        var overallMessage = 'Score: *' + overall + '%*' + '\n' + overallAnalysis;
 
         var returnArray = [sleepMessage, sleep, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, overallMessage];
         return returnArray;
