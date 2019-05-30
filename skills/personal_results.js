@@ -105,7 +105,7 @@ module.exports = function(controller) {
             energyCount = energyCount + checkoutInstance[1];
             moodCount = moodCount + checkoutInstance[2];
             fulfillmentCount = fulfillmentCount + checkoutInstance[3];
-            overallCount = overallCount + (checkinoutInstance[4] / 4);
+            overallCount = overallCount + (checkoutInstance[4] / 4);
         }
 
         var sleep = ((sleepCount / checkin.length) * 25).toFixed(2);
