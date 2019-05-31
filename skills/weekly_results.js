@@ -93,6 +93,8 @@ module.exports  = function(controller) {
             overallCount = overallCount + instance[12];
         }
 
+        console.log(overallCount);
+        console.log(mainArrayLength);
         var sleep = (sleepCount / mainArrayLength).toFixed(2);
         var energy = (energyCount / mainArrayLength).toFixed(2);
         var mood = (moodCount / mainArrayLength).toFixed(2);
