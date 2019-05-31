@@ -160,8 +160,8 @@ module.exports = function(controller) {
         var fulfillmentPositiveOutcome = (fulfillmentPositive / totalLength) * 100;
         var fulfillmentNegativeOutcome = (fulfillmentNegative / totalLength) * 100;
 
-        var positiveOutcome = sleepPositive + energyPositive + moodPositive + motivationPositive + efficiencyPositive + fulfillmentPositive;
-        var negativeOutcome = totalLength - positiveOutcome;
+        var positiveOutcome = (sleepPositive + energyPositive + moodPositive + motivationPositive + efficiencyPositive + fulfillmentPositive / 6).toFixed(2);
+        var negativeOutcome = 100 - positiveOutcome;
 
         var percentArray = [sleepPositiveOutcome, sleepNegativeOutcome, energyPositiveOutcome, energyNegativeOutcome, moodPositiveOutcome, moodNegativeOutcome, motivationPositiveOutcome, motivationNegativeOutcome, efficiencyPositiveOutcome, efficiencyNegativeOutcome, fulfillmentPositiveOutcome, fulfillmentNegativeOutcome, positiveOutcome, negativeOutcome];
     
