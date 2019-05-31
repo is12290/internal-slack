@@ -85,16 +85,14 @@ module.exports  = function(controller) {
         for (var i = 0; i < mainArrayLength; i++) {
             var instance = mainArray[i];
             sleepCount = sleepCount + instance[0];
-            energyCount = energyCount + instance [2];
-            moodCount = moodCount + instance[4];
-            motivationCount = motivationCount + instance[6];
-            efficiencyCount = efficiencyCount + instance[8];
-            fulfillmentCount = fulfillmentCount + instance[10];
-            overallCount = overallCount + instance[12];
+            energyCount = energyCount + instance [1];
+            moodCount = moodCount + instance[2];
+            motivationCount = motivationCount + instance[3];
+            efficiencyCount = efficiencyCount + instance[4];
+            fulfillmentCount = fulfillmentCount + instance[5];
+            overallCount = overallCount + instance[6];
         }
 
-        console.log(overallCount);
-        console.log(mainArrayLength);
         var sleep = (sleepCount / mainArrayLength).toFixed(2);
         var energy = (energyCount / mainArrayLength).toFixed(2);
         var mood = (moodCount / mainArrayLength).toFixed(2);
