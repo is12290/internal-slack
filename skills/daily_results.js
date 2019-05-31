@@ -128,38 +128,38 @@ module.exports = function(controller) {
             var sleepMessage = 'Score: *' + input[0] + '%*\nAverage: *Negative*';
         }
     
-        if (input[2] > 50) {
+        if (input[1] > 50) {
             var energyMessage = 'Score: *' + input[1] + '%*\nAverage: *Positive*';
         } else {
             var energyMessage = 'Score: *' + input[1] + '%*\nAverage: *Negative*';
         }
     
-        if (input[4] > 50) {
+        if (input[2] > 50) {
             var moodMessage = 'Score: *' + input[2] + '%*\nAverage: *Positive*';
         } else {
             var moodMessage = 'Score: *' + input[2] + '%*\nAverage: *Negative*';
         }
     
-        if (input[6] > 50) {
+        if (input[3] > 50) {
             var motivationMessage = 'Score: *' + input[3] + '%*\nAverage: *Positive*';
         } else {
             var motivationMessage = 'Score: *' + input[3] + '%*\nAverage: *Negative*';
         }
     
-        if (input[8] > 50) {
+        if (input[4] > 50) {
             var efficiencyMessage = 'Score: *' + input[4] + '%*\nAverage: *Positive*';
         } else {
             var efficiencyMessage = 'Score: *' + input[4] + '%*\nAverage: *Negative*';
         }
     
-        if (input[10] > 50) {
+        if (input[5] > 50) {
             var fulfillmentMessage = 'Score: *' + input[5] + '%*\nAverage: *Positive*';
         } else {
             var fulfillmentMessage = 'Score: *' + input[5] + '%*\nAverage: *Negative*';
         }
     
-        if (input[12] > 50) {
-            var overallMessage = 'Score: *' + input[6] + '%*\nThe overall emotional fitness was *_positive_* today';
+        if (input[6] > 50) {
+            var overallMessage = 'Score: *' + input[6] + '%*\nThe overall emotional fitness was *positive* today';
         } else {
             var overallMessage = 'Score: *' + input[6] + '%*\nThe overall emotional fitness was *_negative_* today';
         }
