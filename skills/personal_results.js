@@ -2,11 +2,11 @@ module.exports = function(controller) {
     controller.hears(['Personal Results', 'Personal Result', 'Personal results', 'Personal result', 'personal results', 'personal result'], 'direct_message', function(bot, message) {
         controller.storage.personal.find({id: message.user}, function(error, output) {
             if (!output) {
-                bot.reply(message, 'Sorry, something has gone wrong :thinking_face:');
+                bot.reply(message, 'Nothing to report! I don\'t seem to have any logs to report from :thinking_face:\nTry doing your `Check In` and `Check Out` logs or email support@getinternal.co for help!');
             } else {
                 results = getOutput(output);
                 if (isNaN(results[1])) {
-                    bot.reply(message, 'Sorry, for some reason I don\'t have the inputs to report this right :thinking_face:');
+                    bot.reply(message, 'I apologize, but I do not have anything to report - I need at least one day\'s worth of logs to report results\nIf I\'m wrong, please email support@getinternal.co for help!');
                 } else {
                     bot.reply(message, {
                         text: 'Hey there! Here are is you personal report for the week. Scores are out of 100%...\n',

@@ -2,11 +2,11 @@ module.exports = function(controller) {
     controller.hears(['^daily result', '^daily results', '^daily Results', '^daily Result'], 'direct_message', function(bot, message){
         controller.storage.results.find({team: message.team}, function(error, output){
             if (!output) {
-                bot.reply(message, 'Sorry, for some reason I can\'t display today\'s results right now.')
+                bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
             } else {
                 var percent = getPercentage(output);
                 if (isNaN(percent[0])) {
-                    bot.reply(message, 'Sorry, for some reason I can\'t display today\'s results right now.')
+                    bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
                 } else {
                     var average = getAverage(percent);
 

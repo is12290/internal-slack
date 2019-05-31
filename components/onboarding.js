@@ -8,7 +8,7 @@ module.exports = function(controller) {
             if (err) {
             console.log(err);
             } else {
-            convo.say('I am Internal - A bot you use daily to log how you\'re feeling!\nGet started with `Check in`, `Check out`, or `Results` :thumbsup:\n\nI\'d also really appreciate it if you invited me to the relevant channel (i.e. #general or #everyone) so that I can send some reminders!');
+            convo.say('I am Internal - A bot you use daily to log how you\'re feeling!\nGet started with `Check in`, `Check out`, or report insights with `Daily Results`, `Weekly Results`, or `Personal Results` :thumbsup:\n\nI\'d also really appreciate it if you invited me to the relevant channel (i.e. #general or #everyone) so that I can send some reminders!');
             }
         });
     });

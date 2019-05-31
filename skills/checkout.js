@@ -305,6 +305,18 @@ module.exports = function(controller) {
                         user[n].push(score);
                         controller.storage.personal.save(user);
                     });
+
+                    controller.storage.full.get(message.user, function (err, user) {
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth()+1).padStart(2, '0');
+                        var yyyy = today.getFullYear();
+
+                        today = mm + '/' + dd + '/' + yyyy;
+
+                        user[today].push(score);
+                        controller.storage.full.save(user);
+                    })
                 }
 
 

@@ -317,6 +317,27 @@ module.exports = function(controller) {
                             user[n] = [score];
                             controller.storage.personal.save(user);
                         }
+                    });
+
+                    controller.storage.full.get(message.user, function(err, user) {
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0');
+                        var yyyy = today.getFullYear();
+
+                        today = mm + '/' + dd + '/' + yyyy;
+
+                        if (!user) {
+                            user = {};
+                            user.id = message.user,
+                            user.team = message.team,
+                            user[today] = score;
+                            controller.storage.full.save(user);
+                        } else {
+                            user[today] = score;
+                            controller.storage.full.save(user);
+                        }
+
                     })
 
                     
