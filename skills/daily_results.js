@@ -67,7 +67,7 @@ module.exports = function(controller) {
                                 title: 'Overall',
                                 color: '#02FF57',
                                 attachment_type: 'default',
-                                text: average[6]
+                                text: 'Score: *' + percent[12] + '%*\n' + average[6]
                             }
                         ]
                     });
