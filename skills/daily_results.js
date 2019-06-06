@@ -122,49 +122,28 @@ module.exports = function(controller) {
     }
 
     function getMessages(input) {
-        if (input[0] > 50) {
-            var sleepMessage = 'Score: *' + input[0] + '%*\nAverage: *Positive*';
+        var messageArray = [];
+
+        for (var i = 0; i < input.length; i++) {
+            if (input[i] > 50) {
+                var message = 'Score: *' + input[i] + '%*\nAverage: *Positive*';
+                messageArray.push(message);
+            } else {
+                var message = 'Score: *' + input[i] + '%*\nAverage: *Negative*';
+                messageArray.push(message);
+            }
+        }
+
+        var lastVal = input.length - 1;
+    
+        if (input[lastVal] > 50) {
+            var overallMessage = 'Score: *' + input[lastVal] + '%*\nThe overall emotional fitness was *positive* today';
+            messageArray.push(overallMessage);
         } else {
-            var sleepMessage = 'Score: *' + input[0] + '%*\nAverage: *Negative*';
+            var overallMessage = 'Score: *' + input[lastVal] + '%*\nThe overall emotional fitness was *_negative_* today';
+            messageArray.push(overallMessage);
         }
     
-        if (input[1] > 50) {
-            var energyMessage = 'Score: *' + input[1] + '%*\nAverage: *Positive*';
-        } else {
-            var energyMessage = 'Score: *' + input[1] + '%*\nAverage: *Negative*';
-        }
-    
-        if (input[2] > 50) {
-            var moodMessage = 'Score: *' + input[2] + '%*\nAverage: *Positive*';
-        } else {
-            var moodMessage = 'Score: *' + input[2] + '%*\nAverage: *Negative*';
-        }
-    
-        if (input[3] > 50) {
-            var motivationMessage = 'Score: *' + input[3] + '%*\nAverage: *Positive*';
-        } else {
-            var motivationMessage = 'Score: *' + input[3] + '%*\nAverage: *Negative*';
-        }
-    
-        if (input[4] > 50) {
-            var efficiencyMessage = 'Score: *' + input[4] + '%*\nAverage: *Positive*';
-        } else {
-            var efficiencyMessage = 'Score: *' + input[4] + '%*\nAverage: *Negative*';
-        }
-    
-        if (input[5] > 50) {
-            var fulfillmentMessage = 'Score: *' + input[5] + '%*\nAverage: *Positive*';
-        } else {
-            var fulfillmentMessage = 'Score: *' + input[5] + '%*\nAverage: *Negative*';
-        }
-    
-        if (input[6] > 50) {
-            var overallMessage = 'Score: *' + input[6] + '%*\nThe overall emotional fitness was *positive* today';
-        } else {
-            var overallMessage = 'Score: *' + input[6] + '%*\nThe overall emotional fitness was *_negative_* today';
-        }
-    
-        var averageArray = [sleepMessage, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, overallMessage];
-        return averageArray;
+        return messageArray;
     }
 }

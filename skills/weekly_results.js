@@ -5,7 +5,7 @@ module.exports  = function(controller) {
                 bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!');
             } else {
                 var results = getOutput(output);
-                if (isNaN(results[1])) {
+                if (isNaN(results[0])) {
                     bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!');
                 } else {
                     bot.reply(message, {
@@ -15,7 +15,7 @@ module.exports  = function(controller) {
                                 title: 'Sleep',
                                 color: '#02D2FF',
                                 attachment_type: 'default',
-                                text: results[0] + '\n'
+                                text: results[1] + '\n'
                             },
                             {
                                 title: 'Energy',
@@ -101,50 +101,29 @@ module.exports  = function(controller) {
         var fulfillment = (fulfillmentCount / mainArrayLength).toFixed(2);
         var overall = (overallCount / mainArrayLength).toFixed(2);
 
-        if (sleep > 50) {
-            var sleepWeek = 'Score: *' + sleep + '%*\nAverage: *Positive*';
-        } else {
-            var sleepWeek = 'Score: *' + sleep + '%*\nAverage: *Negative*';
-        }
-  
-        if (energy > 50) {
-            var energyWeek = 'Score: *' + energy + '%*\nAverage: *Positive*';
-        } else {
-            var energyWeek = 'Score: *' + energy + '%*\nAverage: *Negative*';
-        }
-  
-        if (mood > 50) {
-            var moodWeek = 'Score: *' + mood + '%*\nAverage: *Positive*';
-        } else {
-            var moodWeek = 'Score: *' + mood + '%*\nAverage: *Negative*';
-        }
-  
-        if (motivation > 50) {
-            var motivationWeek = 'Score: *' + motivation + '%*\nAverage: *Positive*';
-        } else {
-            var motivationWeek = 'Score: *' + motivation + '%*\nAverage: *Negative*';
-        }
-  
-        if (efficiency > 50) {
-            var efficiencyWeek = 'Score: *' + efficiency + '%*\nAverage: *Positive*';
-        } else {
-            var efficiencyWeek = 'Score: *' + efficiency + '%*\nAverage: *Negative*';
-        }
-  
-        if (fulfillment > 50) {
-            var fulfillmentWeek = 'Score: *' + fulfillment + '%*\nAverage: *Positive*';
-        } else {
-            var fulfillmentWeek = 'Score: *' + fulfillment + '%*\nAverage: *Negative*';
+        var loopArray = [sleep, energy, mood, motivation, efficiency, fulfillment];
+
+        var weeklyReport = [];
+        weeklyReport.push(sleep);
+        for (var z = 0; z < loopArray.length; z++) {
+            if (loopArray[z] > 50) {
+                var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Positive*';
+                weeklyReport.push(message);
+            } else {
+                var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Negative*';
+                weeklyReport.push(message);
+            }
         }
   
         if (overall > 50) {
             var overallWeek = 'Score: *' + overall + '%*\nThe overall emotional fitness this week was *positive*!';
+            weeklyReport.push(overallWeek);
         }
         else {
             var overallWeek = 'Score: *' + overall + '%*\nThe overall emotional fitness this week was *negative*';
+            weeklyReport.push(overallWeek);
         }
   
-        var weeklyReport = [sleepWeek, sleep, energyWeek, moodWeek, motivationWeek, efficiencyWeek, fulfillmentWeek, overallWeek];
         return weeklyReport;
 
     }
