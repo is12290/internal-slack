@@ -222,27 +222,27 @@ module.exports = function(controller) {
                         color: '#CF02FF',
                         actions: [
                             {
-                                'name': 'sprint-button',
-                                'value': 'Sprint',
-                                'text': 'Sprint',
+                                'name': 'complete-button',
+                                'value': 'Complete',
+                                'text': 'Complete',
                                 'type': 'button'
                             },
                             {
-                                'name': 'jog-button',
-                                'value': 'Jog',
-                                'text': 'Jog',
+                                'name': 'present-button',
+                                'value': 'Present',
+                                'text': 'Present',
                                 'type': 'button'
                             },
                             {
-                                'name': 'walk-button',
-                                'value': 'Walk',
-                                'text': 'Walk',
+                                'name': 'searching-button',
+                                'value': 'Searching',
+                                'text': 'Searching',
                                 'type': 'button'
                             },
                             {
-                                'name': 'crawl-button',
-                                'value': 'Crawl',
-                                'text': 'Crawl',
+                                'name': 'nonExistent-button',
+                                'value': 'Non-Existent',
+                                'text': 'Non-Existent',
                                 'type': 'button'
                             },
                         ]
@@ -250,28 +250,28 @@ module.exports = function(controller) {
                 ]
             },[
                 {
-                    pattern: 'Sprint',
+                    pattern: 'Complete',
                     callback: function(reply, convo) {
                         score.push(4);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Jog',
+                    pattern: 'Present',
                     callback: function(reply, convo) {
                         score.push(3);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Walk',
+                    pattern: 'Searching',
                     callback: function(reply, convo) {
                         score.push(2);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Crawl',
+                    pattern: 'Non-Existent',
                     callback: function(reply, convo) {
                         score.push(1);
                         convo.next();
