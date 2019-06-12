@@ -1,11 +1,10 @@
 module.exports = function (controller) {
     // Morning
-var morning = schedule.scheduleJob('0 11 * * 1-5', 'America/New_York', function () {
     controller.storage.teams.all(function (err, all_teams) {
         // Check in
         var no_data = [];
         var clean_data = [];
-  
+
         for (var i = 0; i < all_teams.length; i++) {
             var instance = all_teams[i];
             if (!instance.channel) {
@@ -13,9 +12,9 @@ var morning = schedule.scheduleJob('0 11 * * 1-5', 'America/New_York', function 
             } else {
                 clean_data.push([instance.bot.token, instance.channel]);
             }
-  
+
         }
-  
+
         for (var i = 0; i < clean_data.length; i++) {
             controller.spawn({ token: clean_data[i][0] }, function (bot) {
                 bot.say({
@@ -24,7 +23,7 @@ var morning = schedule.scheduleJob('0 11 * * 1-5', 'America/New_York', function 
                 });
             });
         }
-  
+
         for (var z = 0; z < no_data.length; z++) {
             controller.spawn({ token: no_data[i][0] }, function (bot) {
                 bot.say({
