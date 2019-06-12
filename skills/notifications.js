@@ -1,14 +1,17 @@
 module.exports = function (controller) {
 
+    var no_data= [];
     var clean_data = [];
     controller.storage.teams.all(function (err, all_teams) {
         
         for (var i = 0; i < all_teams.length; i++) {
             var instance = all_teams[i];
-            var channel = instance.channel;
-            var oauth = instance.bot.token;
-            var output = [oauth, channel];
-            clean_data.push(output);
+            if (!instance.channel) {
+                no_data.push([instance.bot.token, instance.createdBy])
+            } else {
+                clean_data.push([instance.bot.token, instance.channel]);
+            }
+            
         }
     });
 
@@ -26,6 +29,15 @@ module.exports = function (controller) {
                 bot.say({
                     text: 'Good morning! Don\'t forget to check in with @internal today! (Send me `Check In` over DM)',
                     channel: clean_data[i][1]
+                });
+            });
+        }
+
+        for (var z = 0; z < no_data.length; z++) {
+            controller.spawn({ token: no_data[i][0] }, function (err, bot) {
+                bot.say({
+                    text: 'Add me to a company wide channel so that I can send daily reminders to fill out logs! You can do this by mentioning me in the channel, or clicking \'Show Channel Details\' -> \'App\' -> \'Add app\'',
+                    user: no_data[i][1]
                 });
             });
         }
