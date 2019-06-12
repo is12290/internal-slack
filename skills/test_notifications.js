@@ -17,7 +17,7 @@ module.exports = function (controller) {
         console.log('CLEAN DATA: ', clean_data);
         console.log('NO DATA: ', no_data);
 
-        controller.spawn({ token: clean_data[0][0] }, function (err, bot) {
+        controller.spawn({ token: clean_data[0][0] }, function (bot) {
             bot.say({
                 text: 'haeyy!',
                 channel: clean_data[0][1]

@@ -14,7 +14,7 @@ module.exports = function (controller) {
         }
 
         for (var i = 0; i < clean_data.length; i++) {
-            controller.spawn({ token: clean_data[i][0] }, function (err, bot) {
+            controller.spawn({ token: clean_data[i][0] }, function (bot) {
                 var d = new Date();
                 var n = d.getDay();
 

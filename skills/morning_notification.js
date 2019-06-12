@@ -16,7 +16,7 @@ module.exports = function (controller) {
     });
 
     for (var i = 0; i < clean_data.length; i++) {
-        controller.spawn({ token: clean_data[i][0] }, function (err, bot) {
+        controller.spawn({ token: clean_data[i][0] }, function (bot) {
             bot.say({
                 text: 'Good morning! Don\'t forget to check in with @internal today! (Send me `Check In` over DM)',
                 channel: clean_data[i][1]
