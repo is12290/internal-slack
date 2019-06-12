@@ -129,3 +129,108 @@ Honeybadger.configure({
   apiKey: process.env.HONEYBADGER_API_KEY
 });
 
+// Notifications
+const schedule = require('node-schedule-tz');
+
+// Test
+var test = schedule.scheduleJob('*/5 * * * *', 'America/New_York', function () {
+  controller.storage.teams.all(function (err, all_teams) {
+      //test
+      var no_data = [];
+      var clean_data = [];
+
+      for (var i = 0; i < all_teams.length; i++) {
+          var instance = all_teams[i];
+          if (!instance.channel) {
+              no_data.push([instance.bot.token, instance.createdBy])
+          } else {
+              clean_data.push([instance.bot.token, instance.channel]);
+          }
+
+      }
+
+      controller.spawn({ token: clean_data[0][0] }, function (bot) {
+          bot.say({
+              text: 'haeyy!',
+              channel: clean_data[0][1]
+          });
+      });
+  });
+});
+
+// Morning
+var morning = schedule.scheduleJob('0 11 * * 1-5', 'America/New_York', function () {
+  controller.storage.teams.all(function (err, all_teams) {
+      // Check in
+      var no_data = [];
+      var clean_data = [];
+
+      for (var i = 0; i < all_teams.length; i++) {
+          var instance = all_teams[i];
+          if (!instance.channel) {
+              no_data.push([instance.bot.token, instance.createdBy])
+          } else {
+              clean_data.push([instance.bot.token, instance.channel]);
+          }
+
+      }
+
+      for (var i = 0; i < clean_data.length; i++) {
+          controller.spawn({ token: clean_data[i][0] }, function (bot) {
+              bot.say({
+                  text: 'Good morning! Don\'t forget to check in with @internal today! (Send me `Check In` over DM)',
+                  channel: clean_data[i][1]
+              });
+          });
+      }
+
+      for (var z = 0; z < no_data.length; z++) {
+          controller.spawn({ token: no_data[i][0] }, function (bot) {
+              bot.say({
+                  text: 'Add me to a company wide channel so that I can send daily reminders to fill out logs! You can do this by mentioning me in the channel, or clicking \'Show Channel Details\' -> \'App\' -> \'Add app\'',
+                  user: no_data[i][1]
+              });
+          });
+      }
+  });
+});
+
+// Evening
+var evening = schedule.scheduleJob('0 17 * * 1-5', 'America/New_York', function () {
+  controller.storage.teams.all(function (err, all_teams) {
+
+      // Check out
+      var clean_data = [];
+
+      for (var i = 0; i < all_teams.length; i++) {
+          var instance = all_teams[i];
+          if (!instance.channel) {
+              //pass
+          } else {
+              clean_data.push([instance.bot.token, instance.channel]);
+          }
+
+      }
+
+      for (var i = 0; i < clean_data.length; i++) {
+          controller.spawn({ token: clean_data[i][0] }, function (bot) {
+              var d = new Date();
+              var n = d.getDay();
+
+              if (n === 5) {
+                  bot.say({
+                      text: 'Way to make it through the week! Remember to check out with me and view your organization\'s emotional fitness for the week with `Weekly Results`',
+                      channel: clean_data[i][1]
+                  });
+              } else {
+                  bot.say({
+                      text: 'Good afternoon! Don\'t forget to check out with me *and* report daily results today! (Send me `Check Out` or `Daily Results` over DM)',
+                      channel: clean_data[i][1]
+                  });
+              }
+
+          });
+      }
+  });
+});
+
