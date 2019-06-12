@@ -1,6 +1,6 @@
 module.exports = function(controller) {
     controller.on('bot_channel_join', function(bot, message) {
-        controller.storage.team.get(message.team, function(err, team) {
+        controller.storage.teams.get(message.team, function(err, team) {
             team[channel] = message.channel;
             controller.storage.team.save(team);
         });
