@@ -1,10 +1,12 @@
 {
-  "name": "botkit-starter-slack",
+  "name": "internal-bot",
   "version": "0.0.2",
-  "description": "A starter kit for building a custom Slack bot with Botkit",
+  "description": "Monitor team emotional fitness in Slack",
   "main": "bot.js",
   "scripts": {
-    "start": "node bot.js"
+    "start": "node bot.js",
+    "notify_morning": "node notify/morning.js",
+    "notify_evening": "node notify/evening.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -31,12 +33,12 @@
   "bugs": {
     "url": "https://github.com/howdyai/botkit-starter-slack/issues"
   },
-  "homepage": "https://github.com/howdyai/botkit-starter-slack",
+  "homepage": "https://getinternal.co",
   "keywords": [
     "bots",
     "chatbots",
     "slack"
   ],
-  "author": "ben@howdy.ai",
-  "license": "MIT"
+  "author": "ian@getinternal.co",
+  "license": "ISC"
 }
