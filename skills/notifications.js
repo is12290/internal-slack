@@ -1,29 +1,30 @@
 module.exports = function (controller) {
 
-    var no_data= [];
-    var clean_data = [];
-    controller.storage.teams.all(function (err, all_teams) {
-        
-        for (var i = 0; i < all_teams.length; i++) {
-            var instance = all_teams[i];
-            if (!instance.channel) {
-                no_data.push([instance.bot.token, instance.createdBy])
-            } else {
-                clean_data.push([instance.bot.token, instance.channel]);
-            }
-            
-        }
-    });
-
-    const schedule = require('node-schedule');
+    const schedule = require('node-schedule-tz');
 
     // Check in
     var checkin_rule = new schedule.RecurrenceRule();
     checkin_rule.dayOfWeek = [1, 2, 3, 4, 5];
-    checkin_rule.hour = 10;
-    checkin_rule.minute = 30;
+    checkin_rule.hour = 11;
+    checkin_rule.minute = 0;
+    checkin_rule.tz = 'America/New_York';
 
     var checkin_notification = schedule.scheduleJob(checkin_rule, function () {
+        var no_data= [];
+        var clean_data = [];
+        controller.storage.teams.all(function (err, all_teams) {
+
+            for (var i = 0; i < all_teams.length; i++) {
+                var instance = all_teams[i];
+                if (!instance.channel) {
+                    no_data.push([instance.bot.token, instance.createdBy])
+                } else {
+                    clean_data.push([instance.bot.token, instance.channel]);
+                }
+            
+            }
+        });
+
         for (var i = 0; i < clean_data.length; i++) {
             controller.spawn({ token: clean_data[i][0] }, function (err, bot) {
                 bot.say({
@@ -48,8 +49,23 @@ module.exports = function (controller) {
     dayend_rule.dayOfWeek = [1, 2, 3, 4, 5];
     dayend_rule.hour = 17;
     dayend_rule.minute = 0;
+    dayend_rule.tz = 'America/New_York';
 
     var dayend_notification = schedule.scheduleJob(dayend_rule, function () {
+        var clean_data = [];
+        controller.storage.teams.all(function (err, all_teams) {
+
+            for (var i = 0; i < all_teams.length; i++) {
+                var instance = all_teams[i];
+                if (!instance.channel) {
+                    //pass
+                } else {
+                    clean_data.push([instance.bot.token, instance.channel]);
+                }
+            
+            }
+        });
+
         for (var i = 0; i < clean_data.length; i++) {
             controller.spawn({ token: clean_data[i][0] }, function (err, bot) {
                 bot.say({
@@ -64,9 +80,24 @@ module.exports = function (controller) {
     var weekend_rule = new schedule.RecurrenceRule();
     weekend_rule.dayOfWeek = 5;
     weekend_rule.hour = 18;
-    weekend_rule.hour = 15;
+    weekend_rule.minute = 15;
+    weekend_rule.tz = 'America/New_York';
 
     var weekend_notification = schedule.scheduleJob(weekend_rule, function () {
+        var clean_data = [];
+        controller.storage.teams.all(function (err, all_teams) {
+
+            for (var i = 0; i < all_teams.length; i++) {
+                var instance = all_teams[i];
+                if (!instance.channel) {
+                    //pass
+                } else {
+                    clean_data.push([instance.bot.token, instance.channel]);
+                }
+            
+            }
+        });
+
         for (var i = 0; i < clean_data.length; i++) {
             controller.spawn({ token: clean_data[i][0] }, function (err, bot) {
                 bot.say({
