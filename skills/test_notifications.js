@@ -20,7 +20,7 @@ module.exports = function (controller) {
         controller.spawn({ token: clean_data[0][0] }, function (err, bot) {
             bot.say({
                 text: 'haeyy!',
-                channel: clean_data[1][1]
+                channel: clean_data[0][1]
             });
         });
     });
