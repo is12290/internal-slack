@@ -1,15 +1,36 @@
 module.exports = function (controller) {
 
     const schedule = require('node-schedule-tz');
+    // Test
+    var test = schedule.scheduleJob('*/5 * * * *', 'America/New_York', function () {
+        var no_data= [];
+        var clean_data = [];
+        controller.storage.teams.all(function (err, all_teams) {
+
+            for (var i = 0; i < all_teams.length; i++) {
+                var instance = all_teams[i];
+                if (!instance.channel) {
+                    no_data.push([instance.bot.token, instance.createdBy])
+                } else {
+                    clean_data.push([instance.bot.token, instance.channel]);
+                }
+            
+            }
+        });
+
+        console.log('CLEAN DATA: ', clean_data);
+        console.log('NO DATA: ', no_data);
+
+        bot.spawn({ token: clean_data[1][0] }, function (err, bot) {
+            bot.say({
+                text: 'haeyy!',
+                channel: clean_data[1][1]
+            });
+        });
+    });
 
     // Check in
-    var checkin_rule = new schedule.RecurrenceRule();
-    checkin_rule.dayOfWeek = [1, 2, 3, 4, 5];
-    checkin_rule.hour = 11;
-    checkin_rule.minute = 0;
-    checkin_rule.tz = 'America/New_York';
-
-    var checkin_notification = schedule.scheduleJob(checkin_rule, function () {
+    var checkin_notification = schedule.scheduleJob('0 11 * * 1-5', 'America/New_York', function () {
         var no_data= [];
         var clean_data = [];
         controller.storage.teams.all(function (err, all_teams) {
@@ -45,13 +66,7 @@ module.exports = function (controller) {
     });
 
     // Check out
-    var dayend_rule = new schedule.RecurrenceRule();
-    dayend_rule.dayOfWeek = [1, 2, 3, 4, 5];
-    dayend_rule.hour = 17;
-    dayend_rule.minute = 0;
-    dayend_rule.tz = 'America/New_York';
-
-    var dayend_notification = schedule.scheduleJob(dayend_rule, function () {
+    var dayend_notification = schedule.scheduleJob('0 17 * * 1-5', 'America/New_York', function () {
         var clean_data = [];
         controller.storage.teams.all(function (err, all_teams) {
 
@@ -77,13 +92,7 @@ module.exports = function (controller) {
     });
 
     // End of week
-    var weekend_rule = new schedule.RecurrenceRule();
-    weekend_rule.dayOfWeek = 5;
-    weekend_rule.hour = 18;
-    weekend_rule.minute = 15;
-    weekend_rule.tz = 'America/New_York';
-
-    var weekend_notification = schedule.scheduleJob(weekend_rule, function () {
+    var weekend_notification = schedule.scheduleJob('15 18 * * 5', 'America/New_York', function () {
         var clean_data = [];
         controller.storage.teams.all(function (err, all_teams) {
 
