@@ -1,6 +1,7 @@
 module.exports = function (controller) {
     controller.storage.teams.all(function (err, all_teams) {
 
+        console.log('ALL TEAMS: ', all_teams);
         // Check out
         var clean_data = [];
   
@@ -13,6 +14,7 @@ module.exports = function (controller) {
             }
   
         }
+        console.log('CLEAN DATA: ', clean_data);
   
         for (var i = 0; i < clean_data.length; i++) {
             controller.spawn({ token: clean_data[i][0] }, function (bot) {
