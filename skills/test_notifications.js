@@ -3,6 +3,7 @@ module.exports = function (controller) {
     var no_data = [];
     var clean_data = [];
     controller.storage.teams.all(function (err, all_teams) {
+        console.log(all_teams)
 
         for (var i = 0; i < all_teams.length; i++) {
             var instance = all_teams[i];
