@@ -43,10 +43,11 @@ controller.storage.teams.all(function (err, all_teams) {
 
     for (var z = 0; z < no_data.length; z++) {
         controller.spawn({ token: no_data[i][0] }, function (bot) {
-            bot.say({
-                text: 'Add me to a company wide channel so that I can send daily reminders to fill out logs! You can do this by mentioning me in the channel, or clicking \'Show Channel Details\' -> \'App\' -> \'Add app\'',
-                user: no_data[i][1]
+            bot.startPrivateConversation({ user: no_date[i][1] }, function (err, dm) {
+                dm.say('Add me to a company wide channel so that I can send daily reminders to fill out logs! You can do this by mentioning me in the channel, or clicking \'Show Channel Details\' -> \'App\' -> \'Add app\'');
             });
         });
     }
 });
+
+controller.shutdown();
