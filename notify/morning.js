@@ -39,6 +39,7 @@ controller.storage.teams.all(function (err, all_teams) {
                 channel: clean_data[i][1]
             });
         });
+        controller.shutdown();
     }
 
     for (var z = 0; z < no_data.length; z++) {
@@ -47,7 +48,7 @@ controller.storage.teams.all(function (err, all_teams) {
                 dm.say('Add me to a company wide channel so that I can send daily reminders to fill out logs! You can do this by mentioning me in the channel, or clicking \'Show Channel Details\' -> \'App\' -> \'Add app\'');
             });
         });
+
+        controller.shutdown();
     }
 });
-
-controller.shutdown();

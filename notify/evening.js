@@ -50,7 +50,6 @@ controller.storage.teams.all(function (err, all_teams) {
             }
 
         });
+        controller.shutdown();
     }
 });
-
-controller.shutdown();
