@@ -47,7 +47,6 @@ function notification() {
             }
         });
 
-        controller.storage.close();
         controller.shutdown();
 
     }
