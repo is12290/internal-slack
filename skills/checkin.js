@@ -222,27 +222,27 @@ module.exports = function(controller) {
                         color: '#CF02FF',
                         actions: [
                             {
-                                'name': 'complete-button',
-                                'value': 'Complete',
-                                'text': 'Complete',
+                                'name': 'conquer-button',
+                                'value': 'Conquer',
+                                'text': 'Conquer',
                                 'type': 'button'
                             },
                             {
-                                'name': 'present-button',
-                                'value': 'Present',
-                                'text': 'Present',
+                                'name': 'excel-button',
+                                'value': 'Excel',
+                                'text': 'Excel',
                                 'type': 'button'
                             },
                             {
-                                'name': 'searching-button',
-                                'value': 'Searching',
-                                'text': 'Searching',
+                                'name': 'cope-button',
+                                'value': 'Cope',
+                                'text': 'Cope',
                                 'type': 'button'
                             },
                             {
-                                'name': 'nonExistent-button',
-                                'value': 'Non-Existent',
-                                'text': 'Non-Existent',
+                                'name': 'nap-button',
+                                'value': 'Nap',
+                                'text': 'Nap',
                                 'type': 'button'
                             },
                         ]
@@ -250,28 +250,28 @@ module.exports = function(controller) {
                 ]
             },[
                 {
-                    pattern: 'Complete',
+                    pattern: 'Conquer',
                     callback: function(reply, convo) {
                         score.push(4);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Present',
+                    pattern: 'Excel',
                     callback: function(reply, convo) {
                         score.push(3);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Searching',
+                    pattern: 'Cope',
                     callback: function(reply, convo) {
                         score.push(2);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Non-Existent',
+                    pattern: 'Nap',
                     callback: function(reply, convo) {
                         score.push(1);
                         convo.next();

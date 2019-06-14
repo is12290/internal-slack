@@ -39,17 +39,19 @@ controller.storage.teams.all(function (err, all_teams) {
 
             if (n === 5) {
                 bot.say({
-                    text: 'Way to make it through the week! Remember to check out with me and view your organization\'s emotional fitness for the week with `Weekly Results`',
+                    text: "Congrats on another week of existing on Earth as a sentient being! Take a gander at your `Weekly Results` after you `Check Out`. Have a great weekend!",
                     channel: clean_data[i][1]
                 });
             } else {
                 bot.say({
-                    text: 'Good afternoon! Don\'t forget to check out with me *and* report daily results today! (Send me `Check Out` or `Daily Results` over DM)',
+                    text: "Way to make it through the day! Be sure to report your team’s `Daily Results` after you `Check Out`",
                     channel: clean_data[i][1]
                 });
             }
 
         });
-        controller.shutdown();
     }
 });
+
+controller.storage.close();
+controller.shutdown();
