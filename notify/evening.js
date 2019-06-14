@@ -45,7 +45,7 @@ function notification() {
 
                     if (n === 5) {
                         bot.say({
-                            text: "Congrats on another week of existing on Earth as a sentient being! Take a gander at your `Weekly Results` after you `Check Out`. Have a great weekend!",
+                            text: "Congrats on successfully existing another week on Earth as a sentient being! Take a gander at your `Weekly Results` after you `Check Out`. Have a great weekend!",
                             channel: clean_data[i][1]
                         });
                     } else {
@@ -58,8 +58,6 @@ function notification() {
                 });
             }
         });
-
-        controller.shutdown();
     }
 }
 
