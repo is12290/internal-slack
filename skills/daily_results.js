@@ -1,6 +1,6 @@
-module.exports = function(controller) { 
-    controller.hears(['^daily result', '^daily results', '^daily Results', '^daily Result'], 'direct_message,direct_mention', function(bot, message){
-        controller.storage.results.find({team: message.team}, function(error, output){
+module.exports = function (controller) {
+    controller.hears(['^daily result', '^daily results', '^daily Results', '^daily Result'], 'direct_message,direct_mention', function (bot, message) {
+        controller.storage.results.find({ team: message.team }, function (error, output) {
             console.log(output);
             if (!output) {
                 bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
@@ -11,14 +11,14 @@ module.exports = function(controller) {
                 } else {
                     var resultMessage = getMessages(percent);
 
-                    controller.storage.week.get(message.team, function(err, input) {
+                    controller.storage.week.get(message.team, function (err, input) {
                         var d = new Date();
                         var n = d.getDay();
                         if (!input) {
                             input = {};
                             input.team = message.team,
-                            input[n] = percent,
-                            controller.storage.week.save(input);
+                                input[n] = percent,
+                                controller.storage.week.save(input);
                         } else {
                             input[n] = percent;
                             controller.storage.week.save(input)
@@ -73,7 +73,7 @@ module.exports = function(controller) {
                         ]
                     });
                 }
-                
+
             }
 
         });
@@ -128,7 +128,7 @@ module.exports = function(controller) {
         } else {
             return errorArray;
         }
-        
+
     }
 
     function getMessages(input) {
@@ -145,7 +145,7 @@ module.exports = function(controller) {
         }
 
         var lastVal = input.length - 1;
-    
+
         if (input[lastVal] > 50) {
             var overallMessage = 'Score: *' + input[lastVal] + '%*\nThe overall emotional fitness was *positive* today';
             messageArray.push(overallMessage);
@@ -153,7 +153,7 @@ module.exports = function(controller) {
             var overallMessage = 'Score: *' + input[lastVal] + '%*\nThe overall emotional fitness was *_negative_* today';
             messageArray.push(overallMessage);
         }
-    
+
         return messageArray;
     }
 }
