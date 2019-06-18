@@ -1,6 +1,7 @@
 module.exports = function(controller) { 
     controller.hears(['^daily result', '^daily results', '^daily Results', '^daily Result'], 'direct_message,direct_mention', function(bot, message){
         controller.storage.results.find({team: message.team}, function(error, output){
+            console.log(output);
             if (!output) {
                 bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
             } else {
