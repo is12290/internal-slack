@@ -6,6 +6,7 @@ module.exports = function (controller) {
                 bot.reply(message, 'Hmmmmm')
             } else {
                 var percent = getPercentage(output);
+                console.log(percent);
                 if (percent[0] === 404) {
                     bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do both their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
                 } else {
@@ -93,11 +94,8 @@ module.exports = function (controller) {
         for (var i = 0; i < arrayLength; i++) {
             // Housekeeping variables
             var instance = input[i];
-            console.log('INSTANCE', instance);
             var checkIn = instance.checkin;
-            console.log('CHECKIN: ', checkIn);
             var checkOut = instance.checkout;
-            console.log('CHECKOUT', checkOut);
 
             if (isNaN(checkIn) || isNaN(checkOut)) {
                 var errorArray = [404];
@@ -109,6 +107,7 @@ module.exports = function (controller) {
                 overallCount = overallCount + (checkIn[4] / 4);
 
                 efficiencyCount = efficiencyCount + checkOut[0];
+                console.log(efficiencyCount);
                 energyCount = energyCount + checkOut[1];
                 moodCount = moodCount + checkOut[2];
                 fulfillmentCount = fulfillmentCount + checkOut[3];
