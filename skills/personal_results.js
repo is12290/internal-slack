@@ -73,22 +73,22 @@ module.exports = function(controller) {
                 mainArray.push(result[key]);
             }
         }
-        console.log("MAIN ARRAY: ", mainArray);
 
         var checkin = [];
         var checkout = [];
         var mainArrayLength = mainArray.length;
         for (var i = 0; i < mainArrayLength; i++) {
             var iteration = mainArray[i];
-            if (iteration.length == 2) {
-                checkin.push(iteration[0]);
-                checkout.push(iteration[1]);
+            if (iteration.length == 6) {
+                checkin.push([iteration[0], iteration[1], iteration[2], iteration[3], iteration[4]]);
+                checkout.push(iteration[5]);
             } else {
                 // Pass
             }
         }
 
-
+        console.log("CHECKIN: ", checkin);
+        console.log("CHECKOUT: ", checkout);
         var sleepCount = 0;
         var energyCount = 0;
         var moodCount = 0;
