@@ -1,7 +1,6 @@
 module.exports = function (controller) {
     controller.hears(['^daily result', '^daily results', '^daily Results', '^daily Result'], 'direct_message,direct_mention', function (bot, message) {
         controller.storage.results.find({ team: message.team }, function (error, output) {
-            console.log(output);
             if (!output) {
                 bot.reply(message, 'Hmmmmm')
             } else {
@@ -95,6 +94,7 @@ module.exports = function (controller) {
             // Housekeeping variables
             var instance = input[i];
             var checkIn = instance.checkin;
+            console.log("Checkin[0]: ", checkIn[0]);
             var checkOut = instance.checkout;
 
             if (isNaN(checkIn) || isNaN(checkOut)) {
@@ -107,13 +107,13 @@ module.exports = function (controller) {
                 overallCount = overallCount + (checkIn[4] / 4);
 
                 efficiencyCount = efficiencyCount + checkOut[0];
-                console.log(efficiencyCount);
                 energyCount = energyCount + checkOut[1];
                 moodCount = moodCount + checkOut[2];
                 fulfillmentCount = fulfillmentCount + checkOut[3];
                 overallCount = overallCount + (checkOut[4] / 4);
             }
         }
+        console.log("Efficiency Count: ", efficiencyCount);
 
         if (sleepCount > 0) {
             var sleep = ((sleepCount / arrayLength) * 25).toFixed(2);
