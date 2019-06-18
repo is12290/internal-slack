@@ -3,7 +3,7 @@ module.exports = function (controller) {
         controller.storage.results.find({ team: message.team }, function (error, output) {
             console.log(output);
             if (!output) {
-                bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
+                bot.reply(message, 'Hmmmmm')
             } else {
                 var percent = getPercentage(output);
                 if (percent[0] === 404) {
@@ -93,8 +93,11 @@ module.exports = function (controller) {
         for (var i = 0; i < arrayLength; i++) {
             // Housekeeping variables
             var instance = input[i];
+            console.log('INSTANCE', instance);
             var checkIn = instance.checkin;
+            console.log('CHECKIN: ', checkIn);
             var checkOut = instance.checkout;
+            console.log('CHECKOUT', checkOut);
 
             if (isNaN(checkIn) || isNaN(checkOut)) {
                 var errorArray = [404];
