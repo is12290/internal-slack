@@ -62,6 +62,7 @@ module.exports = function(controller) {
     });
 
     function getOutput(results) {
+        console.log("RESULTS: ", results);
         var result = results[0];
 
         var mainArray = [];
@@ -72,6 +73,7 @@ module.exports = function(controller) {
                 mainArray.push(result[key]);
             }
         }
+        console.log("MAIN ARRAY: ", mainArray);
 
         var checkin = [];
         var checkout = [];
@@ -84,8 +86,8 @@ module.exports = function(controller) {
             } else {
                 // Pass
             }
-
         }
+
 
         var sleepCount = 0;
         var energyCount = 0;
@@ -112,6 +114,7 @@ module.exports = function(controller) {
             fulfillmentCount = fulfillmentCount + checkoutInstance[3];
             overallCount = overallCount + (checkoutInstance[4] / 4);
         }
+        console.log("EFFICIENCY: ", efficiencyCount);
 
         var sleep = ((sleepCount / checkin.length) * 25).toFixed(2);
         var energy = ((energyCount / (checkin.length + checkout.length)) * 25).toFixed(2);
