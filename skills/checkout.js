@@ -18,7 +18,7 @@ module.exports = function(controller) {
                         title: "Efficiency",
                         callback_id: 'checkout-efficiency',
                         attachment_type: 'deafult',
-                        color: '#02D2FF',
+                        color: '#FF029D',
                         actions: [
                             {
                                 'name': 'overdrive-button',
@@ -219,7 +219,7 @@ module.exports = function(controller) {
                         title: "Fulfillment",
                         callback_id: 'checkin-motivation',
                         attachment_type: 'deafult',
-                        color: '#CF02FF',
+                        color: '#FF8402',
                         actions: [
                             {
                                 'name': 'complete-button',

@@ -5,8 +5,8 @@ module.exports = function(controller) {
                 bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
             } else {
                 var percent = getPercentage(output);
-                if (isNaN(percent[0])) {
-                    bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
+                if (percent[0] === 404) {
+                    bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do both their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
                 } else {
                     var resultMessage = getMessages(percent);
 
@@ -94,31 +94,40 @@ module.exports = function(controller) {
             var instance = input[i];
             var checkIn = instance.checkin;
             var checkOut = instance.checkout;
-    
-            sleepCount = sleepCount + checkIn[0];
-            energyCount = energyCount + checkIn[1];
-            moodCount = moodCount + checkIn[2];
-            motivationCount = motivationCount + checkIn[3];
-            overallCount = overallCount + (checkIn[4] / 4);
 
-            efficiencyCount = efficiencyCount + checkOut[0];
-            energyCount = energyCount + checkOut[1];
-            moodCount = moodCount + checkOut[2];
-            fulfillmentCount = fulfillmentCount + checkOut[3];
-            overallCount = overallCount + (checkOut[4] / 4);
+            if (isNaN(checkIn) || isNaN(checkOut)) {
+                var errorArray = [404];
+            } else {
+                sleepCount = sleepCount + checkIn[0];
+                energyCount = energyCount + checkIn[1];
+                moodCount = moodCount + checkIn[2];
+                motivationCount = motivationCount + checkIn[3];
+                overallCount = overallCount + (checkIn[4] / 4);
+
+                efficiencyCount = efficiencyCount + checkOut[0];
+                energyCount = energyCount + checkOut[1];
+                moodCount = moodCount + checkOut[2];
+                fulfillmentCount = fulfillmentCount + checkOut[3];
+                overallCount = overallCount + (checkOut[4] / 4);
+            }
         }
 
-        var sleep = ((sleepCount / arrayLength) * 25).toFixed(2);
-        var energy = ((energyCount / (arrayLength * 2)) * 25).toFixed(2);
-        var mood = ((moodCount / (arrayLength * 2)) * 25).toFixed(2);
-        var motivation = ((motivationCount / arrayLength) * 25).toFixed(2);
-        var efficiency = ((efficiencyCount / arrayLength) * 25).toFixed(2);
-        var fulfillment = ((fulfillmentCount / arrayLength) * 25).toFixed(2);
-        var overall = ((overallCount / (arrayLength * 2)) * 25).toFixed(2);
+        if (sleepCount > 0) {
+            var sleep = ((sleepCount / arrayLength) * 25).toFixed(2);
+            var energy = ((energyCount / (arrayLength * 2)) * 25).toFixed(2);
+            var mood = ((moodCount / (arrayLength * 2)) * 25).toFixed(2);
+            var motivation = ((motivationCount / arrayLength) * 25).toFixed(2);
+            var efficiency = ((efficiencyCount / arrayLength) * 25).toFixed(2);
+            var fulfillment = ((fulfillmentCount / arrayLength) * 25).toFixed(2);
+            var overall = ((overallCount / (arrayLength * 2)) * 25).toFixed(2);
 
-        var percentArray = [sleep, energy, mood, motivation, efficiency, fulfillment, overall];
-    
-        return percentArray;  
+            var percentArray = [sleep, energy, mood, motivation, efficiency, fulfillment, overall];
+
+            return percentArray;
+        } else {
+            return errorArray;
+        }
+        
     }
 
     function getMessages(input) {
