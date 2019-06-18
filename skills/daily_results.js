@@ -2,12 +2,11 @@ module.exports = function (controller) {
     controller.hears(['^daily result', '^daily results', '^daily Results', '^daily Result'], 'direct_message,direct_mention', function (bot, message) {
         controller.storage.results.find({ team: message.team }, function (error, output) {
             if (!output) {
-                bot.reply(message, 'Hmmmmm')
+                bot.reply(message, 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!')
             } else {
                 var percent = getPercentage(output);
-                console.log("OUTCOME: ", percent);
                 if (percent[0] === 404) {
-                    bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do both their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
+                    bot.reply(message, 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!')
                 } else {
                     var resultMessage = getMessages(percent);
 
@@ -112,7 +111,6 @@ module.exports = function (controller) {
                 overallCount = overallCount + (checkOut[4] / 4);
             }
         }
-        console.log("Efficiency Count: ", efficiencyCount);
 
         if (sleepCount > 0) {
             var sleep = ((sleepCount / arrayLength) * 25).toFixed(2);

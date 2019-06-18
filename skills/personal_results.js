@@ -76,10 +76,15 @@ module.exports = function(controller) {
         var checkin = [];
         var checkout = [];
         var mainArrayLength = mainArray.length;
-        for (var i = 0; i < mainArrayLength; i ++) {
+        for (var i = 0; i < mainArrayLength; i++) {
             var iteration = mainArray[i];
-            checkin.push(iteration[0]);
-            checkout.push(iteration[1]);
+            if (iteration.length == 2) {
+                checkin.push(iteration[0]);
+                checkout.push(iteration[1]);
+            } else {
+                // Pass
+            }
+
         }
 
         var sleepCount = 0;
