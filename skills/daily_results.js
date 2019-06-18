@@ -5,7 +5,7 @@ module.exports = function (controller) {
                 bot.reply(message, 'Hmmmmm')
             } else {
                 var percent = getPercentage(output);
-                console.log(percent);
+                console.log("OUTCOME: ", percent);
                 if (percent[0] === 404) {
                     bot.reply(message, 'I don\'t have any results to report!\nI need at least one team member to do both their logs in order to properly report today\'s results\nIf I\'m wrong, email support@getinternal.co for help!')
                 } else {
@@ -96,6 +96,7 @@ module.exports = function (controller) {
             var checkIn = instance.checkin;
             console.log("Checkin[0]: ", checkIn[0]);
             var checkOut = instance.checkout;
+            console.log("Checkout[0]: ", checkOut[0]);
 
             if (isNaN(checkIn) || isNaN(checkOut)) {
                 var errorArray = [404];
