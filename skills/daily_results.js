@@ -94,11 +94,9 @@ module.exports = function (controller) {
             // Housekeeping variables
             var instance = input[i];
             var checkIn = instance.checkin;
-            console.log("Checkin[0]: ", checkIn[0]);
             var checkOut = instance.checkout;
-            console.log("Checkout[0]: ", checkOut[0]);
 
-            if (isNaN(checkIn) || isNaN(checkOut)) {
+            if (typeof checkIn == 'undefined' || typeof checkOut == 'undefined') {
                 var errorArray = [404];
             } else {
                 sleepCount = sleepCount + checkIn[0];
