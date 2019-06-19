@@ -94,15 +94,15 @@ module.exports = function(controller) {
                                 'type': 'button'
                             },
                             {
-                                'name': 'half-button',
-                                'value': 'Half',
-                                'text': 'Half',
+                                'name': 'alright-button',
+                                'value': 'Alright',
+                                'text': 'Alright',
                                 'type': 'button'
                             },
                             {
-                                'name': 'dying-button',
-                                'value': 'Dying',
-                                'text': 'Dying',
+                                'name': 'hangingOn-button',
+                                'value': 'Hanging-On',
+                                'text': 'Hanging On',
                                 'type': 'button'
                             },
                             {
@@ -123,14 +123,14 @@ module.exports = function(controller) {
                     }
                 },
                 {
-                    pattern: 'Half',
+                    pattern: 'Alright',
                     callback: function(reply, convo) {
                         score.push(3);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Dying',
+                    pattern: 'Hanging-On',
                     callback: function(reply, convo) {
                         score.push(2);
                         convo.next();
@@ -155,6 +155,12 @@ module.exports = function(controller) {
                         color: '#8A02FF',
                         actions: [
                             {
+                                'name': 'ecstatic-button',
+                                'value': 'Ecstatic',
+                                'text': 'Ecstatic',
+                                'type': 'button'
+                            },
+                            {
                                 'name': 'positive-button',
                                 'value': 'Positive',
                                 'text': 'Positive',
@@ -167,15 +173,9 @@ module.exports = function(controller) {
                                 'type': 'button'
                             },
                             {
-                                'name': 'anxious-button',
-                                'value': 'Anxious',
-                                'text': 'Anxious',
-                                'type': 'button'
-                            },
-                            {
-                                'name': 'negative-button',
-                                'value': 'Negative',
-                                'text': 'Negative',
+                                'name': 'miserable-button',
+                                'value': 'Miserable',
+                                'text': 'Miserable',
                                 'type': 'button'
                             },
                         ]
@@ -183,28 +183,28 @@ module.exports = function(controller) {
                 ]
             },[
                 {
-                    pattern: 'Positive',
+                    pattern: 'Ecstatic',
                     callback: function(reply, convo) {
                         score.push(4);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Indifferent',
+                    pattern: 'Positive',
                     callback: function(reply, convo) {
                         score.push(3);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Anxious',
+                    pattern: 'Indifferent',
                     callback: function(reply, convo) {
                         score.push(2);
                         convo.next();
                     }
                 },
                 {
-                    pattern: 'Negative',
+                    pattern: 'Miserable',
                     callback: function(reply, convo) {
                         score.push(1);
                         convo.next();

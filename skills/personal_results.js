@@ -120,19 +120,29 @@ module.exports = function(controller) {
         var fulfillment = ((fulfillmentCount / checkout.length) * 25).toFixed(2);
         var overall = ((overallCount / (checkin.length + checkout.length)) * 25).toFixed(2);
 
+        var analysisOutcome = [];
+        var analysisArray =[sleep, energy, mood, motivation, efficiency, fulfillment];
+        for (var a = 0; a < analysisArray.length; a++) {
+            if (analysisArray[a] < 50) {
+                analysisOutcome.push('Average: *Negative*');
+            } else {
+                analysisOutcome.push('Average: *Positive*');
+            }
+        }
+
         if (overall < 50) {
             var overallAnalysis = 'Hmm.. It seems as though this week was not the best for you. I\'m sorry about that. There\'s always next week - Improve them scores!' 
         } else {
             var overallAnalysis = 'Way to have a positive week! Shoot to keep it up :)'
         }
 
-        var sleepMessage = 'Score: *' + sleep + '%*';
-        var energyMessage = 'Score: *' + energy + '%*';
-        var moodMessage = 'Score: *' + mood + '%*';
-        var motivationMessage = 'Score: *' + motivation + '%*';
-        var efficiencyMessage = 'Score: *' + efficiency + '%*';
-        var fulfillmentMessage = 'Score: *' + fulfillment + '%*';
-        var overallMessage = 'Score: *' + overall + '%*' + '\n' + overallAnalysis;
+        var sleepMessage = 'Score: *' + sleep + '%*\n' + analysisOutcome[0];
+        var energyMessage = 'Score: *' + energy + '%*\n' + analysisOutcome[1];
+        var moodMessage = 'Score: *' + mood + '%*\n' + analysisOutcome[2];
+        var motivationMessage = 'Score: *' + motivation + '%*\n' + analysisOutcome[3];
+        var efficiencyMessage = 'Score: *' + efficiency + '%*\n' + analysisOutcome[4];
+        var fulfillmentMessage = 'Score: *' + fulfillment + '%*\n' + analysisOutcome[5];
+        var overallMessage = 'Score: *' + overall + '%*\n' + overallAnalysis;
 
         var returnArray = [sleepMessage, sleep, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, overallMessage];
         return returnArray;
