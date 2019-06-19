@@ -5,12 +5,12 @@ module.exports = function (controller) {
     controller.on('onboard', function (bot) {
         debug('Starting an onboarding experience!');
 
-        controller.storage.teams.get(bot.config.createdBy, function (err, team) {
-            bot.api.users.info({ user: bot.config.createdBy }, function (err, response) {
-                team.email = response.user.profile.email;
-                controller.storage.teams.save(team);
-            });
-        });
+        // controller.storage.teams.get(bot.config.createdBy, function (err, team) {
+        //     bot.api.users.info({ user: bot.config.createdBy }, function (err, response) {
+        //         team.email = response.user.profile.email;
+        //         controller.storage.teams.save(team);
+        //     });
+        // });
 
         bot.startPrivateConversation({ user: bot.config.createdBy }, function (err, convo) {
             if (err) {
