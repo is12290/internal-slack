@@ -302,8 +302,12 @@ module.exports = function(controller) {
                     controller.storage.personal.get(message.user, function (err, user) {
                         var d = new Date();
                         var n = d.getDay();
-                        user[n].push(score);
-                        controller.storage.personal.save(user);
+                        if (typeof user[n] == 'undefined') {
+                            user[n] = score;
+                        } else {
+                            user[n].push(score);
+                            controller.storage.personal.save(user);
+                        }
                     });
 
                     controller.storage.full.get(message.user, function (err, user) {

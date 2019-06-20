@@ -5,7 +5,7 @@ module.exports = function (controller) {
     controller.on('onboard', function (bot) {
         debug('Starting an onboarding experience!');
 
-        controller.storage.teams.find({id: bot.config.id}, function (err, team) {
+        controller.storage.teams.find( { id: bot.config.id }, function (err, team) {
             if (typeof team == 'undefined') {
                 // pass
             } else {
