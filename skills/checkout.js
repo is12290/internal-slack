@@ -17,7 +17,7 @@ module.exports = function(controller) {
                     {
                         title: "Efficiency",
                         callback_id: 'checkout-efficiency',
-                        attachment_type: 'deafult',
+                        attachment_type: 'default',
                         color: '#FF029D',
                         actions: [
                             {
@@ -84,7 +84,7 @@ module.exports = function(controller) {
                     {
                         title: "Energy",
                         callback_id: 'checkout-energy',
-                        attachment_type: 'deafult',
+                        attachment_type: 'default',
                         color: '#2A02FF',
                         actions: [
                             {
@@ -151,7 +151,7 @@ module.exports = function(controller) {
                     {
                         title: "Mood",
                         callback_id: 'checkout-mood',
-                        attachment_type: 'deafult',
+                        attachment_type: 'default',
                         color: '#8A02FF',
                         actions: [
                             {
@@ -218,7 +218,7 @@ module.exports = function(controller) {
                     {
                         title: "Fulfillment",
                         callback_id: 'checkin-motivation',
-                        attachment_type: 'deafult',
+                        attachment_type: 'default',
                         color: '#FF8402',
                         actions: [
                             {

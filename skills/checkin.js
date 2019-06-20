@@ -17,7 +17,7 @@ module.exports = function(controller) {
                     {
                         title: "Sleep",
                         callback_id: 'checkin-sleep',
-                        attachment_type: 'deafult',
+                        attachment_type: 'default',
                         color: '#02D2FF',
                         actions: [
                             {
@@ -84,7 +84,7 @@ module.exports = function(controller) {
                     {
                         title: "Energy",
                         callback_id: 'checkin-energy',
-                        attachment_type: 'deafult',
+                        attachment_type: 'default',
                         color: '#2A02FF',
                         actions: [
                             {
@@ -151,7 +151,7 @@ module.exports = function(controller) {
                     {
                         title: "Mood",
                         callback_id: 'checkin-mood',
-                        attachment_type: 'deafult',
+                        attachment_type: 'default',
                         color: '#8A02FF',
                         actions: [
                             {
@@ -218,7 +218,7 @@ module.exports = function(controller) {
                     {
                         title: "Motivation",
                         callback_id: 'checkin-motivation',
-                        attachment_type: 'deafult',
+                        attachment_type: 'default',
                         color: '#CF02FF',
                         actions: [
                             {
