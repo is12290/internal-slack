@@ -109,13 +109,13 @@ module.exports = function (controller) {
         }
 
         if (sleepCount > 0) {
-            var sleep = ((sleepCount / arrayLength) * 25).toFixed(2);
-            var energy = ((energyCount / (arrayLength * 2)) * 25).toFixed(2);
-            var mood = ((moodCount / (arrayLength * 2)) * 25).toFixed(2);
-            var motivation = ((motivationCount / arrayLength) * 25).toFixed(2);
-            var efficiency = ((efficiencyCount / arrayLength) * 25).toFixed(2);
-            var fulfillment = ((fulfillmentCount / arrayLength) * 25).toFixed(2);
-            var overall = ((overallCount / (arrayLength * 2)) * 25).toFixed(2);
+            var sleep = ((sleepCount / input.length) * 25).toFixed(2);
+            var energy = ((energyCount / (input.length * 2)) * 25).toFixed(2);
+            var mood = ((moodCount / (input.length * 2)) * 25).toFixed(2);
+            var motivation = ((motivationCount / input.length) * 25).toFixed(2);
+            var efficiency = ((efficiencyCount / input.length) * 25).toFixed(2);
+            var fulfillment = ((fulfillmentCount / input.length) * 25).toFixed(2);
+            var overall = ((overallCount / (input.length * 2)) * 25).toFixed(2);
 
             var percentArray = [sleep, energy, mood, motivation, efficiency, fulfillment, overall];
 
