@@ -52,6 +52,45 @@ module.exports = function(controller) {
                     pattern: 'Overdrive',
                     callback: function(reply, convo) {
                         score.push(4);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Efficiency",
+                                        callback_id: 'checkout-efficiency',
+                                        attachment_type: 'default',
+                                        color: '#FF029D',
+                                        actions: [
+                                            {
+                                                'name': 'overdrive-button',
+                                                'value': 'Overdrive',
+                                                'style': 'primary',
+                                                'text': 'Overdrive',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'normal-button',
+                                                'value': 'Normal',
+                                                'text': 'Normal',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'slow-button',
+                                                'value': 'Slow',
+                                                'text': 'Slow',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'dragging-button',
+                                                'value': 'Dragging',
+                                                'text': 'Dragging',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 },
@@ -59,6 +98,45 @@ module.exports = function(controller) {
                     pattern: 'Normal',
                     callback: function(reply, convo) {
                         score.push(3);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Efficiency",
+                                        callback_id: 'checkout-efficiency',
+                                        attachment_type: 'default',
+                                        color: '#FF029D',
+                                        actions: [
+                                            {
+                                                'name': 'overdrive-button',
+                                                'value': 'Overdrive',
+                                                'text': 'Overdrive',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'normal-button',
+                                                'value': 'Normal',
+                                                'style': 'primary',
+                                                'text': 'Normal',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'slow-button',
+                                                'value': 'Slow',
+                                                'text': 'Slow',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'dragging-button',
+                                                'value': 'Dragging',
+                                                'text': 'Dragging',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 },
@@ -66,6 +144,45 @@ module.exports = function(controller) {
                     pattern: 'Slow',
                     callback: function(reply, convo) {
                         score.push(2);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Efficiency",
+                                        callback_id: 'checkout-efficiency',
+                                        attachment_type: 'default',
+                                        color: '#FF029D',
+                                        actions: [
+                                            {
+                                                'name': 'overdrive-button',
+                                                'value': 'Overdrive',
+                                                'text': 'Overdrive',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'normal-button',
+                                                'value': 'Normal',
+                                                'text': 'Normal',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'slow-button',
+                                                'value': 'Slow',
+                                                'style': 'primary',
+                                                'text': 'Slow',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'dragging-button',
+                                                'value': 'Dragging',
+                                                'text': 'Dragging',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 },
@@ -73,6 +190,45 @@ module.exports = function(controller) {
                     pattern: 'Dragging',
                     callback: function(reply, convo) {
                         score.push(1);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Efficiency",
+                                        callback_id: 'checkout-efficiency',
+                                        attachment_type: 'default',
+                                        color: '#FF029D',
+                                        actions: [
+                                            {
+                                                'name': 'overdrive-button',
+                                                'value': 'Overdrive',
+                                                'text': 'Overdrive',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'normal-button',
+                                                'value': 'Normal',
+                                                'text': 'Normal',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'slow-button',
+                                                'value': 'Slow',
+                                                'text': 'Slow',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'dragging-button',
+                                                'value': 'Dragging',
+                                                'style': 'primary',
+                                                'text': 'Dragging',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 }
@@ -119,6 +275,45 @@ module.exports = function(controller) {
                     pattern: 'Full',
                     callback: function(reply, convo) {
                         score.push(4);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Energy",
+                                        callback_id: 'checkout-energy',
+                                        attachment_type: 'default',
+                                        color: '#2A02FF',
+                                        actions: [
+                                            {
+                                                'name': 'full-button',
+                                                'value': 'Full',
+                                                'style': 'primary',
+                                                'text': 'Full',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'alright-button',
+                                                'value': 'Alright',
+                                                'text': 'Alright',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'hangingOn-button',
+                                                'value': 'Hanging-On',
+                                                'text': 'Hanging On',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'dead-button',
+                                                'value': 'Dead',
+                                                'text': 'Dead',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 },
@@ -126,6 +321,45 @@ module.exports = function(controller) {
                     pattern: 'Alright',
                     callback: function(reply, convo) {
                         score.push(3);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Energy",
+                                        callback_id: 'checkout-energy',
+                                        attachment_type: 'default',
+                                        color: '#2A02FF',
+                                        actions: [
+                                            {
+                                                'name': 'full-button',
+                                                'value': 'Full',
+                                                'text': 'Full',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'alright-button',
+                                                'value': 'Alright',
+                                                'style': 'primary',
+                                                'text': 'Alright',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'hangingOn-button',
+                                                'value': 'Hanging-On',
+                                                'text': 'Hanging On',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'dead-button',
+                                                'value': 'Dead',
+                                                'text': 'Dead',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 },
@@ -133,6 +367,45 @@ module.exports = function(controller) {
                     pattern: 'Hanging-On',
                     callback: function(reply, convo) {
                         score.push(2);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Energy",
+                                        callback_id: 'checkout-energy',
+                                        attachment_type: 'default',
+                                        color: '#2A02FF',
+                                        actions: [
+                                            {
+                                                'name': 'full-button',
+                                                'value': 'Full',
+                                                'text': 'Full',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'alright-button',
+                                                'value': 'Alright',
+                                                'text': 'Alright',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'hangingOn-button',
+                                                'value': 'Hanging-On',
+                                                'text': 'Hanging On',
+                                                'style': 'primary',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'dead-button',
+                                                'value': 'Dead',
+                                                'text': 'Dead',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 },
@@ -140,6 +413,45 @@ module.exports = function(controller) {
                     pattern: 'Dead',
                     callback: function(reply, convo) {
                         score.push(1);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Energy",
+                                        callback_id: 'checkout-energy',
+                                        attachment_type: 'default',
+                                        color: '#2A02FF',
+                                        actions: [
+                                            {
+                                                'name': 'full-button',
+                                                'value': 'Full',
+                                                'text': 'Full',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'alright-button',
+                                                'value': 'Alright',
+                                                'text': 'Alright',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'hangingOn-button',
+                                                'value': 'Hanging-On',
+                                                'text': 'Hanging On',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'dead-button',
+                                                'value': 'Dead',
+                                                'style': 'primary',
+                                                'text': 'Dead',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 }
@@ -186,6 +498,45 @@ module.exports = function(controller) {
                     pattern: 'Ecstatic',
                     callback: function(reply, convo) {
                         score.push(4);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Mood",
+                                        callback_id: 'checkout-mood',
+                                        attachment_type: 'default',
+                                        color: '#8A02FF',
+                                        actions: [
+                                            {
+                                                'name': 'ecstatic-button',
+                                                'value': 'Ecstatic',
+                                                'style': 'primary',
+                                                'text': 'Ecstatic',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'positive-button',
+                                                'value': 'Positive',
+                                                'text': 'Positive',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'indifferent-button',
+                                                'value': 'Indifferent',
+                                                'text': 'Indifferent',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'miserable-button',
+                                                'value': 'Miserable',
+                                                'text': 'Miserable',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 },
@@ -193,6 +544,45 @@ module.exports = function(controller) {
                     pattern: 'Positive',
                     callback: function(reply, convo) {
                         score.push(3);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Mood",
+                                        callback_id: 'checkout-mood',
+                                        attachment_type: 'default',
+                                        color: '#8A02FF',
+                                        actions: [
+                                            {
+                                                'name': 'ecstatic-button',
+                                                'value': 'Ecstatic',
+                                                'text': 'Ecstatic',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'positive-button',
+                                                'value': 'Positive',
+                                                'style': 'primary',
+                                                'text': 'Positive',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'indifferent-button',
+                                                'value': 'Indifferent',
+                                                'text': 'Indifferent',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'miserable-button',
+                                                'value': 'Miserable',
+                                                'text': 'Miserable',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 },
@@ -200,6 +590,45 @@ module.exports = function(controller) {
                     pattern: 'Indifferent',
                     callback: function(reply, convo) {
                         score.push(2);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Mood",
+                                        callback_id: 'checkout-mood',
+                                        attachment_type: 'default',
+                                        color: '#8A02FF',
+                                        actions: [
+                                            {
+                                                'name': 'ecstatic-button',
+                                                'value': 'Ecstatic',
+                                                'text': 'Ecstatic',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'positive-button',
+                                                'value': 'Positive',
+                                                'text': 'Positive',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'indifferent-button',
+                                                'value': 'Indifferent',
+                                                'style': 'primary',
+                                                'text': 'Indifferent',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'miserable-button',
+                                                'value': 'Miserable',
+                                                'text': 'Miserable',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 },
@@ -207,6 +636,45 @@ module.exports = function(controller) {
                     pattern: 'Miserable',
                     callback: function(reply, convo) {
                         score.push(1);
+                        bot.replyInteractive(reply, 
+                            {
+                                attachments: [
+                                    {
+                                        title: "Mood",
+                                        callback_id: 'checkout-mood',
+                                        attachment_type: 'default',
+                                        color: '#8A02FF',
+                                        actions: [
+                                            {
+                                                'name': 'ecstatic-button',
+                                                'value': 'Ecstatic',
+                                                'text': 'Ecstatic',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'positive-button',
+                                                'value': 'Positive',
+                                                'text': 'Positive',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'indifferent-button',
+                                                'value': 'Indifferent',
+                                                'text': 'Indifferent',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'miserable-button',
+                                                'value': 'Miserable',
+                                                'style': 'primary',
+                                                'text': 'Miserable',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
                         convo.next();
                     }
                 }
@@ -253,6 +721,45 @@ module.exports = function(controller) {
                     pattern: 'Complete',
                     callback: function(reply, convo) {
                         score.push(4);
+                        bot.replyInteractive(reply,
+                            {
+                                attachments: [
+                                    {
+                                        title: "Fulfillment",
+                                        callback_id: 'checkin-motivation',
+                                        attachment_type: 'default',
+                                        color: '#FF8402',
+                                        actions: [
+                                            {
+                                                'name': 'complete-button',
+                                                'value': 'Complete',
+                                                'style': 'primary',
+                                                'text': 'Complete',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'present-button',
+                                                'value': 'Present',
+                                                'text': 'Present',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'searching-button',
+                                                'value': 'Searching',
+                                                'text': 'Searching',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'nonExistent-button',
+                                                'value': 'Non-Existent',
+                                                'text': 'Non-Existent',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            } 
+                        );
                         convo.next();
                     }
                 },
@@ -260,6 +767,45 @@ module.exports = function(controller) {
                     pattern: 'Present',
                     callback: function(reply, convo) {
                         score.push(3);
+                        bot.replyInteractive(reply,
+                            {
+                                attachments: [
+                                    {
+                                        title: "Fulfillment",
+                                        callback_id: 'checkin-motivation',
+                                        attachment_type: 'default',
+                                        color: '#FF8402',
+                                        actions: [
+                                            {
+                                                'name': 'complete-button',
+                                                'value': 'Complete',
+                                                'text': 'Complete',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'present-button',
+                                                'value': 'Present',
+                                                'style': 'primary',
+                                                'text': 'Present',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'searching-button',
+                                                'value': 'Searching',
+                                                'text': 'Searching',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'nonExistent-button',
+                                                'value': 'Non-Existent',
+                                                'text': 'Non-Existent',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            } 
+                        );
                         convo.next();
                     }
                 },
@@ -267,6 +813,45 @@ module.exports = function(controller) {
                     pattern: 'Searching',
                     callback: function(reply, convo) {
                         score.push(2);
+                        bot.replyInteractive(reply,
+                            {
+                                attachments: [
+                                    {
+                                        title: "Fulfillment",
+                                        callback_id: 'checkin-motivation',
+                                        attachment_type: 'default',
+                                        color: '#FF8402',
+                                        actions: [
+                                            {
+                                                'name': 'complete-button',
+                                                'value': 'Complete',
+                                                'text': 'Complete',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'present-button',
+                                                'value': 'Present',
+                                                'text': 'Present',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'searching-button',
+                                                'value': 'Searching',
+                                                'style': 'primary',
+                                                'text': 'Searching',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'nonExistent-button',
+                                                'value': 'Non-Existent',
+                                                'text': 'Non-Existent',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            } 
+                        );
                         convo.next();
                     }
                 },
@@ -274,6 +859,45 @@ module.exports = function(controller) {
                     pattern: 'Non-Existent',
                     callback: function(reply, convo) {
                         score.push(1);
+                        bot.replyInteractive(reply,
+                            {
+                                attachments: [
+                                    {
+                                        title: "Fulfillment",
+                                        callback_id: 'checkin-motivation',
+                                        attachment_type: 'default',
+                                        color: '#FF8402',
+                                        actions: [
+                                            {
+                                                'name': 'complete-button',
+                                                'value': 'Complete',
+                                                'text': 'Complete',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'present-button',
+                                                'value': 'Present',
+                                                'text': 'Present',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'searching-button',
+                                                'value': 'Searching',
+                                                'text': 'Searching',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'nonExistent-button',
+                                                'value': 'Non-Existent',
+                                                'style': 'primary',
+                                                'text': 'Non-Existent',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            } 
+                        );
                         convo.next();
                     }
                 }
@@ -292,35 +916,39 @@ module.exports = function(controller) {
                     var sum = score.reduce(function(a, b) { return a+b; }, 0);
                     score.push(sum);
 
-                    controller.storage.results.get(message.user, function(err, user) {
-                        user.checkout = score;
-                        controller.storage.results.save(user);
+                    controller.storage.users.get(message.user, function(err, user) {
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = today.getFullYear();
+
+                        today = mm + '/' + dd + '/' + yyyy;
+                        
+                        if (!user) {
+                            user = {};
+                            user.id = message.user,
+                            user.team = message.team,
+                            user.channels = [message.channel]
+                            user.logs = {
+                                [today]: {
+                                    check_out: score,
+                                }
+                            };
+                            controller.storage.users.save(user);
+                        } else if(!user.logs[today]) {
+                            user.logs[today] = {
+                                check_out: score,
+                            };
+                            controller.storage.users.save(user);
+                        } else {
+                            user.logs[today].check_out = score;
+                            controller.storage.users.save(user);
+                        }
                     });
                 
                     bot.reply(message, 'Thanks for checking out!');
 
-                    controller.storage.personal.get(message.user, function (err, user) {
-                        var d = new Date();
-                        var n = d.getDay();
-                        if (typeof user[n] == 'undefined') {
-                            user[n] = score;
-                        } else {
-                            user[n].push(score);
-                            controller.storage.personal.save(user);
-                        }
-                    });
-
-                    controller.storage.full.get(message.user, function (err, user) {
-                        var today = new Date();
-                        var dd = String(today.getDate()).padStart(2, '0');
-                        var mm = String(today.getMonth()+1).padStart(2, '0');
-                        var yyyy = today.getFullYear();
-
-                        today = mm + '/' + dd + '/' + yyyy;
-
-                        user[today].push(score);
-                        controller.storage.full.save(user);
-                    })
+                    
                 }
 
 

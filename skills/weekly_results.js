@@ -62,15 +62,14 @@ module.exports  = function(controller) {
     })
 
     function getOutput(results) {
-        var result = results[0];
+        const moment = require('moment');
+        var startOfWeek = moment().startOf('isoWeek');
+        var endOfWeek = moment().endOf('isoWeek');
 
-        var mainArray = [];
-        for (var key in result) {
-            if (isNaN(parseInt(key))) {
-                //pass
-            } else {
-                mainArray.push(result[key]);
-            }
+        var days = [];
+        while (startOfWeek <= endOfWeek) {
+            days.push(day.format('L'));
+            day = day.clone().add(1, 'd');
         }
 
         var sleepCount = 0;
@@ -80,26 +79,52 @@ module.exports  = function(controller) {
         var efficiencyCount = 0;
         var fulfillmentCount = 0;
         var overallCount = 0;
+        var logTally = 0;
 
-        var mainArrayLength = mainArray.length;
-        for (var i = 0; i < mainArrayLength; i++) {
-            var instance = mainArray[i];
-            sleepCount = sleepCount + instance[0];
-            energyCount = energyCount + instance [1];
-            moodCount = moodCount + instance[2];
-            motivationCount = motivationCount + instance[3];
-            efficiencyCount = efficiencyCount + instance[4];
-            fulfillmentCount = fulfillmentCount + instance[5];
-            overallCount = overallCount + instance[6];
+        for (var i = 0; i < results.length; i++) {
+            var instance = results[i];
+            var checkin = [];
+            var checkout = [];
+
+            for (var j = 0; j < days.length; j++) {
+                if (days[j] in instance.logs) {
+                    if (typeof instance.logs[days[j]].check_in == 'undefined' || instance.logs[days[j]].check_out == 'undefined') {
+                        // Pass
+                    } else {
+                        checkin.push(instance.logs[days[j]].check_in);
+                        checkout.push(instance.logs[days[j]].check_out);
+                    }
+                }
+            }
+
+            for (var k = 0; k < checkin.length; k++) {
+                var specific = checkin[k];
+                sleepCount = sleepCount + specific[0];
+                energyCount = energyCount + specific[1];
+                moodCount = moodCount + specific[2];
+                motivationCount = motivationCount + specific[3];
+                overallCount = overallCount + (specific[4] / 4);
+            }
+
+            for (var l = 0; l < checkout.length; l++) {
+                var specific = checkout[l];
+                efficiencyCount = efficiencyCount + specific[0];
+                energyCount = energyCount + specific[1];
+                moodCount = moodCount + specific[2];
+                fulfillmentCount = fulfillmentCount + specific[3];
+                overallCount = overallCount + (specific[4] / 4);
+            }
+
+            logTally = logTally + 1;
         }
 
-        var sleep = (sleepCount / mainArrayLength).toFixed(2);
-        var energy = (energyCount / mainArrayLength).toFixed(2);
-        var mood = (moodCount / mainArrayLength).toFixed(2);
-        var motivation = (motivationCount / mainArrayLength).toFixed(2);
-        var efficiency = (efficiencyCount / mainArrayLength).toFixed(2);
-        var fulfillment = (fulfillmentCount / mainArrayLength).toFixed(2);
-        var overall = (overallCount / mainArrayLength).toFixed(2);
+        var sleep = (sleepCount / logTally).toFixed(2);
+        var energy = (energyCount / (logTally * 2)).toFixed(2);
+        var mood = (moodCount / (logTally * 2)).toFixed(2);
+        var motivation = (motivationCount / logTally).toFixed(2);
+        var efficiency = (efficiencyCount / logTally).toFixed(2);
+        var fulfillment = (fulfillmentCount / logTally).toFixed(2);
+        var overall = (overallCount / (logTally * 2)).toFixed(2);
 
         var loopArray = [sleep, energy, mood, motivation, efficiency, fulfillment];
 

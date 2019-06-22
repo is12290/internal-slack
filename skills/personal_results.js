@@ -1,6 +1,6 @@
 module.exports = function(controller) {
     controller.hears(['Personal Results', 'Personal Result', 'Personal results', 'Personal result', 'personal results', 'personal result'], 'direct_message', function(bot, message) {
-        controller.storage.personal.find({id: message.user}, function(error, output) {
+        controller.storage.users.get(message.user, function(error, output) {
             if (!output) {
                 bot.reply(message, 'Nothing to report! I don\'t seem to have any logs to report from :thinking_face:\nTry doing your `Check In` and `Check Out` logs or email support@getinternal.co for help!');
             } else {
@@ -62,25 +62,26 @@ module.exports = function(controller) {
     });
 
     function getOutput(results) {
-        var result = results[0];
+        const moment = require('moment');
+        var startOfWeek = moment().startOf('isoWeek');
+        var endOfWeek = moment().endOf('isoWeek');
 
-        var mainArray = [];
-        for (var key in result) {
-            if (isNaN(parseInt(key))) {
-                // pass
-            } else {
-                mainArray.push(result[key]);
-            }
+        var days = [];
+        while (startOfWeek <= endOfWeek) {
+            days.push(day.format('L'));
+            day = day.clone().add(1, 'd');
         }
 
         var checkin = [];
         var checkout = [];
-        var mainArrayLength = mainArray.length;
-        for (var i = 0; i < mainArrayLength; i++) {
-            var iteration = mainArray[i];
-            if (iteration.length == 6) {
-                checkin.push([iteration[0], iteration[1], iteration[2], iteration[3], iteration[4]]);
-                checkout.push(iteration[5]);
+        for (var a = 0; a < days.length; a++) {
+            if (days[a] in results.logs) {
+                if (typeof results.logs.days[a].check_in == 'undefined' || typeof results.logs[days[a]].check_out == 'undefined') {
+                    // Pass
+                } else {
+                    checkin.push(results.logs[days[a]].check_in);
+                    checkout.push(results.logs[days[a]].check_out);
+                }                
             } else {
                 // Pass
             }

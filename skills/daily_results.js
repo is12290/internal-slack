@@ -1,6 +1,6 @@
 module.exports = function (controller) {
     controller.hears(['^daily result', '^daily results', '^daily Results', '^daily Result'], 'direct_message,direct_mention', function (bot, message) {
-        controller.storage.results.find({ team: message.team }, function (error, output) {
+        controller.storage.users.find({ team: message.team }, function (error, output) {
             if (!output) {
                 bot.reply(message, 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!')
             } else {
@@ -9,20 +9,6 @@ module.exports = function (controller) {
                     bot.reply(message, 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!')
                 } else {
                     var resultMessage = getMessages(percent);
-
-                    controller.storage.week.get(message.team, function (err, input) {
-                        var d = new Date();
-                        var n = d.getDay();
-                        if (!input) {
-                            input = {};
-                            input.team = message.team,
-                                input[n] = percent,
-                                controller.storage.week.save(input);
-                        } else {
-                            input[n] = percent;
-                            controller.storage.week.save(input)
-                        }
-                    });
 
                     bot.reply(message, {
                         text: 'Hey there! Here are your results for the day...\n',
@@ -88,28 +74,38 @@ module.exports = function (controller) {
         var fulfillmentCount = 0;
         var overallCount = 0;
 
-        var arrayLength = input.length;
-        for (var i = 0; i < arrayLength; i++) {
-            // Housekeeping variables
+        for (var i = 0; i < input.length; i++) {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            today = mm + '/' + dd + '/' + yyyy;
+
             var instance = input[i];
-            var checkIn = instance.checkin;
-            var checkOut = instance.checkout;
-
-            if (typeof checkIn == 'undefined' || typeof checkOut == 'undefined') {
-                var errorArray = [404];
+            if (typeof instance.logs[today] == 'undefined') {
+                var errorArray = [404]
             } else {
-                sleepCount = sleepCount + checkIn[0];
-                energyCount = energyCount + checkIn[1];
-                moodCount = moodCount + checkIn[2];
-                motivationCount = motivationCount + checkIn[3];
-                overallCount = overallCount + (checkIn[4] / 4);
+                var checkIn = instance.logs[today].check_in;
+                var checkOut = instance.logs[today].check_out;
+                
+                if (typeof checkIn == 'undefined' || typeof checkOut == 'undefined') {
+                    var errorArray = [404];
+                } else {
+                    sleepCount = sleepCount + checkIn[0];
+                    energyCount = energyCount + checkIn[1];
+                    moodCount = moodCount + checkIn[2];
+                    motivationCount = motivationCount + checkIn[3];
+                    overallCount = overallCount + (checkIn[4] / 4);
 
-                efficiencyCount = efficiencyCount + checkOut[0];
-                energyCount = energyCount + checkOut[1];
-                moodCount = moodCount + checkOut[2];
-                fulfillmentCount = fulfillmentCount + checkOut[3];
-                overallCount = overallCount + (checkOut[4] / 4);
+                    efficiencyCount = efficiencyCount + checkOut[0];
+                    energyCount = energyCount + checkOut[1];
+                    moodCount = moodCount + checkOut[2];
+                    fulfillmentCount = fulfillmentCount + checkOut[3];
+                    overallCount = overallCount + (checkOut[4] / 4);
+                }
             }
+
         }
 
         if (sleepCount > 0) {
