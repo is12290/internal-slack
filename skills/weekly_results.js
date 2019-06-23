@@ -120,13 +120,13 @@ module.exports  = function(controller) {
             logTally = logTally + 1;
         }
 
-        var sleep = (sleepCount / logTally).toFixed(2);
-        var energy = (energyCount / (logTally * 2)).toFixed(2);
-        var mood = (moodCount / (logTally * 2)).toFixed(2);
-        var motivation = (motivationCount / logTally).toFixed(2);
-        var efficiency = (efficiencyCount / logTally).toFixed(2);
-        var fulfillment = (fulfillmentCount / logTally).toFixed(2);
-        var overall = (overallCount / (logTally * 2)).toFixed(2);
+        var sleep = ((sleepCount / logTally) * 25).toFixed(2);
+        var energy = ((energyCount / (logTally * 2)) * 25).toFixed(2);
+        var mood = ((moodCount / (logTally * 2)) * 25).toFixed(2);
+        var motivation = ((motivationCount / logTally) * 25).toFixed(2);
+        var efficiency = ((efficiencyCount / logTally) * 25).toFixed(2);
+        var fulfillment = ((fulfillmentCount / logTally) * 25).toFixed(2);
+        var overall = ((overallCount / (logTally * 2)) * 25).toFixed(2);
 
         var loopArray = [sleep, energy, mood, motivation, efficiency, fulfillment];
 

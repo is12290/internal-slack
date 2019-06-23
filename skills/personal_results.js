@@ -77,7 +77,7 @@ module.exports = function(controller) {
         var checkout = [];
         for (var a = 0; a < days.length; a++) {
             if (days[a] in results.logs) {
-                if (typeof results.logs.days[a].check_in == 'undefined' || typeof results.logs[days[a]].check_out == 'undefined') {
+                if (typeof results.logs[days[a]].check_in == 'undefined' || typeof results.logs[days[a]].check_out == 'undefined') {
                     // Pass
                 } else {
                     checkin.push(results.logs[days[a]].check_in);
