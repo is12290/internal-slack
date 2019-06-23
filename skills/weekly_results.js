@@ -66,8 +66,10 @@ module.exports  = function(controller) {
         var startOfWeek = moment().startOf('isoWeek');
         var endOfWeek = moment().endOf('isoWeek');
 
+        var day = startOfWeek;
+
         var days = [];
-        while (startOfWeek <= endOfWeek) {
+        while (day <= endOfWeek) {
             days.push(day.format('L'));
             day = day.clone().add(1, 'd');
         }
