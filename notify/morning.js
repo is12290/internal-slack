@@ -1,4 +1,12 @@
 function notification() {
+    var messages = {
+        '1': [],
+        '2': [],
+        '3': [],
+        '4': [],
+        '5': []
+    };
+
     var d = new Date();
     var n = d.getDay();
     if (n === 6 || n === 0) {
@@ -37,10 +45,14 @@ function notification() {
 
             }
 
+            var min = Math.ceil(0);
+            var max = Math.floor(3);
+            var msg = Math.floor(Math.random() * (max - min + 1)) + min;
+
             for (var i = 0; i < clean_data.length; i++) {
                 controller.spawn({ token: clean_data[i][0] }, function (bot) {
                     bot.say({
-                        text: "Good morning, humans! Don’t forget to `Check In` with me today :heart:",
+                        text: messages[n][msg],
                         channel: clean_data[i][1]
                     });
                 });
