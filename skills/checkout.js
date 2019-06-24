@@ -11,7 +11,7 @@ module.exports = function(controller) {
                 text: "Hey, here's your check out questionnaire! Just choose which option vibes best for each of the 4 topics..."
             });
 
-            // Sleep
+            // Efficiency
             convo.addQuestion({
                 attachments: [
                     {
@@ -234,37 +234,37 @@ module.exports = function(controller) {
                 }
             ]);
 
-            // Energy
+            // Confidence
             convo.addQuestion({
                 attachments: [
                     {
-                        title: "Energy",
-                        callback_id: 'checkout-energy',
+                        title: "Confidence",
+                        callback_id: 'checkin-confidence',
                         attachment_type: 'default',
-                        color: '#2A02FF',
+                        color: '#CF02FF',
                         actions: [
                             {
-                                'name': 'full-button',
-                                'value': 'Full',
-                                'text': 'Full',
+                                'name': 'crushing-button',
+                                'value': 'Crushing-It',
+                                'text': 'Crushing It',
                                 'type': 'button'
                             },
                             {
-                                'name': 'alright-button',
-                                'value': 'Alright',
-                                'text': 'Alright',
+                                'name': 'okay-button',
+                                'value': 'Okay',
+                                'text': 'Okay',
                                 'type': 'button'
                             },
                             {
-                                'name': 'hangingOn-button',
-                                'value': 'Hanging-On',
-                                'text': 'Hanging On',
+                                'name': 'managing-button',
+                                'value': 'Managing',
+                                'text': 'Managing',
                                 'type': 'button'
                             },
                             {
-                                'name': 'dead-button',
-                                'value': 'Dead',
-                                'text': 'Dead',
+                                'name': 'overwhelmed-button',
+                                'value': 'Overwhelmed',
+                                'text': 'Overwhelmed',
                                 'type': 'button'
                             },
                         ]
@@ -272,41 +272,41 @@ module.exports = function(controller) {
                 ]
             },[
                 {
-                    pattern: 'Full',
+                    pattern: 'Crushing-It',
                     callback: function(reply, convo) {
                         score.push(4);
                         bot.replyInteractive(reply, 
                             {
                                 attachments: [
                                     {
-                                        title: "Energy",
-                                        callback_id: 'checkout-energy',
+                                        title: "Confidence",
+                                        callback_id: 'checkin-confidence',
                                         attachment_type: 'default',
-                                        color: '#2A02FF',
+                                        color: '#CF02FF',
                                         actions: [
                                             {
-                                                'name': 'full-button',
-                                                'value': 'Full',
+                                                'name': 'crushing-button',
+                                                'value': 'Crushing-It',
                                                 'style': 'primary',
-                                                'text': 'Full',
+                                                'text': 'Crushing It',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'alright-button',
-                                                'value': 'Alright',
-                                                'text': 'Alright',
+                                                'name': 'okay-button',
+                                                'value': 'Okay',
+                                                'text': 'Okay',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'hangingOn-button',
-                                                'value': 'Hanging-On',
-                                                'text': 'Hanging On',
+                                                'name': 'managing-button',
+                                                'value': 'Managing',
+                                                'text': 'Managing',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'dead-button',
-                                                'value': 'Dead',
-                                                'text': 'Dead',
+                                                'name': 'overwhelmed-button',
+                                                'value': 'Overwhelmed',
+                                                'text': 'Overwhelmed',
                                                 'type': 'button'
                                             },
                                         ]
@@ -318,41 +318,41 @@ module.exports = function(controller) {
                     }
                 },
                 {
-                    pattern: 'Alright',
+                    pattern: 'Okay',
                     callback: function(reply, convo) {
                         score.push(3);
                         bot.replyInteractive(reply, 
                             {
                                 attachments: [
                                     {
-                                        title: "Energy",
-                                        callback_id: 'checkout-energy',
+                                        title: "Confidence",
+                                        callback_id: 'checkin-confidence',
                                         attachment_type: 'default',
-                                        color: '#2A02FF',
+                                        color: '#CF02FF',
                                         actions: [
                                             {
-                                                'name': 'full-button',
-                                                'value': 'Full',
-                                                'text': 'Full',
+                                                'name': 'crushing-button',
+                                                'value': 'Crushing-It',
+                                                'text': 'Crushing It',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'alright-button',
-                                                'value': 'Alright',
+                                                'name': 'okay-button',
+                                                'value': 'Okay',
                                                 'style': 'primary',
-                                                'text': 'Alright',
+                                                'text': 'Okay',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'hangingOn-button',
-                                                'value': 'Hanging-On',
-                                                'text': 'Hanging On',
+                                                'name': 'managing-button',
+                                                'value': 'Managing',
+                                                'text': 'Managing',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'dead-button',
-                                                'value': 'Dead',
-                                                'text': 'Dead',
+                                                'name': 'overwhelmed-button',
+                                                'value': 'Overwhelmed',
+                                                'text': 'Overwhelmed',
                                                 'type': 'button'
                                             },
                                         ]
@@ -364,41 +364,41 @@ module.exports = function(controller) {
                     }
                 },
                 {
-                    pattern: 'Hanging-On',
+                    pattern: 'Managing',
                     callback: function(reply, convo) {
                         score.push(2);
                         bot.replyInteractive(reply, 
                             {
                                 attachments: [
                                     {
-                                        title: "Energy",
-                                        callback_id: 'checkout-energy',
+                                        title: "Confidence",
+                                        callback_id: 'checkin-confidence',
                                         attachment_type: 'default',
-                                        color: '#2A02FF',
+                                        color: '#CF02FF',
                                         actions: [
                                             {
-                                                'name': 'full-button',
-                                                'value': 'Full',
-                                                'text': 'Full',
+                                                'name': 'crushing-button',
+                                                'value': 'Crushing-It',
+                                                'text': 'Crushing It',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'alright-button',
-                                                'value': 'Alright',
-                                                'text': 'Alright',
+                                                'name': 'okay-button',
+                                                'value': 'Okay',
+                                                'text': 'Okay',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'hangingOn-button',
-                                                'value': 'Hanging-On',
-                                                'text': 'Hanging On',
+                                                'name': 'managing-button',
+                                                'value': 'Managing',
                                                 'style': 'primary',
+                                                'text': 'Managing',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'dead-button',
-                                                'value': 'Dead',
-                                                'text': 'Dead',
+                                                'name': 'overwhelmed-button',
+                                                'value': 'Overwhelmed',
+                                                'text': 'Overwhelmed',
                                                 'type': 'button'
                                             },
                                         ]
@@ -410,41 +410,41 @@ module.exports = function(controller) {
                     }
                 },
                 {
-                    pattern: 'Dead',
+                    pattern: 'Overwhelmed',
                     callback: function(reply, convo) {
                         score.push(1);
                         bot.replyInteractive(reply, 
                             {
                                 attachments: [
                                     {
-                                        title: "Energy",
-                                        callback_id: 'checkout-energy',
+                                        title: "Confidence",
+                                        callback_id: 'checkin-confidence',
                                         attachment_type: 'default',
-                                        color: '#2A02FF',
+                                        color: '#CF02FF',
                                         actions: [
                                             {
-                                                'name': 'full-button',
-                                                'value': 'Full',
-                                                'text': 'Full',
+                                                'name': 'crushing-button',
+                                                'value': 'Crushing-It',
+                                                'text': 'Crushing It',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'alright-button',
-                                                'value': 'Alright',
-                                                'text': 'Alright',
+                                                'name': 'okay-button',
+                                                'value': 'Okay',
+                                                'text': 'Okay',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'hangingOn-button',
-                                                'value': 'Hanging-On',
-                                                'text': 'Hanging On',
+                                                'name': 'managing-button',
+                                                'value': 'Managing',
+                                                'text': 'Managing',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'dead-button',
-                                                'value': 'Dead',
+                                                'name': 'overwhelmed-button',
+                                                'value': 'Overwhelmed',
                                                 'style': 'primary',
-                                                'text': 'Dead',
+                                                'text': 'Overwhelmed',
                                                 'type': 'button'
                                             },
                                         ]
@@ -680,7 +680,7 @@ module.exports = function(controller) {
                 }
             ]);
 
-            // Motivation
+            // Fulfillment
             convo.addQuestion({
                 attachments: [
                     {

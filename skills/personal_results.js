@@ -91,7 +91,7 @@ module.exports = function(controller) {
         var sleepCount = 0;
         var energyCount = 0;
         var moodCount = 0;
-        var motivationCount = 0;
+        var confidenceCount = 0;
         var efficiencyCount = 0;
         var fulfillmentCount = 0;
         var overallCount = 0;
@@ -101,29 +101,29 @@ module.exports = function(controller) {
             sleepCount = sleepCount + checkinInstance[0];
             energyCount = energyCount + checkinInstance[1];
             moodCount = moodCount + checkinInstance[2];
-            motivationCount = motivationCount + checkinInstance[3];
+            confidenceCount = confidenceCount + checkinInstance[3];
             overallCount = overallCount + (checkinInstance[4] / 4);
         }
 
         for (var m = 0; m < checkout.length; m++) {
             var checkoutInstance = checkout[m];
             efficiencyCount = efficiencyCount + checkoutInstance[0];
-            energyCount = energyCount + checkoutInstance[1];
+            confidenceCount = confidenceCount + checkoutInstance[1];
             moodCount = moodCount + checkoutInstance[2];
             fulfillmentCount = fulfillmentCount + checkoutInstance[3];
             overallCount = overallCount + (checkoutInstance[4] / 4);
         }
 
         var sleep = ((sleepCount / checkin.length) * 25).toFixed(2);
-        var energy = ((energyCount / (checkin.length + checkout.length)) * 25).toFixed(2);
+        var energy = ((energyCount / checkin.length) * 25).toFixed(2);
         var mood = ((moodCount / (checkin.length + checkout.length)) * 25).toFixed(2);
-        var motivation = ((motivationCount / checkin.length) * 25).toFixed(2);
+        var confidence = ((confidenceCount / (checkin.length * 2)) * 25).toFixed(2);
         var efficiency = ((efficiencyCount / checkout.length) * 25).toFixed(2);
         var fulfillment = ((fulfillmentCount / checkout.length) * 25).toFixed(2);
         var overall = ((overallCount / (checkin.length + checkout.length)) * 25).toFixed(2);
 
         var analysisOutcome = [];
-        var analysisArray =[sleep, energy, mood, motivation, efficiency, fulfillment];
+        var analysisArray =[sleep, energy, mood, confidence, efficiency, fulfillment];
         for (var a = 0; a < analysisArray.length; a++) {
             if (analysisArray[a] < 50) {
                 analysisOutcome.push('Average: *Negative*');
@@ -141,12 +141,12 @@ module.exports = function(controller) {
         var sleepMessage = 'Score: *' + sleep + '%*\n' + analysisOutcome[0];
         var energyMessage = 'Score: *' + energy + '%*\n' + analysisOutcome[1];
         var moodMessage = 'Score: *' + mood + '%*\n' + analysisOutcome[2];
-        var motivationMessage = 'Score: *' + motivation + '%*\n' + analysisOutcome[3];
+        var confidenceMessage = 'Score: *' + confidence + '%*\n' + analysisOutcome[3];
         var efficiencyMessage = 'Score: *' + efficiency + '%*\n' + analysisOutcome[4];
         var fulfillmentMessage = 'Score: *' + fulfillment + '%*\n' + analysisOutcome[5];
         var overallMessage = 'Score: *' + overall + '%*\n' + overallAnalysis;
 
-        var returnArray = [sleepMessage, sleep, energyMessage, moodMessage, motivationMessage, efficiencyMessage, fulfillmentMessage, overallMessage];
+        var returnArray = [sleepMessage, sleep, energyMessage, moodMessage, confidenceMessage, efficiencyMessage, fulfillmentMessage, overallMessage];
         return returnArray;
         
     }

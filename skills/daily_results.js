@@ -32,7 +32,7 @@ module.exports = function (controller) {
                                 text: resultMessage[2] + '\n'
                             },
                             {
-                                title: 'Motivation',
+                                title: 'Confidence',
                                 color: '#CF02FF',
                                 attachment_type: 'default',
                                 text: resultMessage[3] + '\n'
@@ -69,7 +69,7 @@ module.exports = function (controller) {
         var sleepCount = 0;
         var energyCount = 0;
         var moodCount = 0;
-        var motivationCount = 0;
+        var confidenceCount = 0;
         var efficiencyCount = 0;
         var fulfillmentCount = 0;
         var overallCount = 0;
@@ -95,11 +95,11 @@ module.exports = function (controller) {
                     sleepCount = sleepCount + checkIn[0];
                     energyCount = energyCount + checkIn[1];
                     moodCount = moodCount + checkIn[2];
-                    motivationCount = motivationCount + checkIn[3];
+                    confidenceCount = confidenceCount + checkIn[3];
                     overallCount = overallCount + (checkIn[4] / 4);
 
                     efficiencyCount = efficiencyCount + checkOut[0];
-                    energyCount = energyCount + checkOut[1];
+                    confidenceCount = confidenceCount + checkOut[1];
                     moodCount = moodCount + checkOut[2];
                     fulfillmentCount = fulfillmentCount + checkOut[3];
                     overallCount = overallCount + (checkOut[4] / 4);
@@ -110,14 +110,14 @@ module.exports = function (controller) {
 
         if (sleepCount > 0) {
             var sleep = ((sleepCount / input.length) * 25).toFixed(2);
-            var energy = ((energyCount / (input.length * 2)) * 25).toFixed(2);
+            var energy = ((energyCount / input.length) * 25).toFixed(2);
             var mood = ((moodCount / (input.length * 2)) * 25).toFixed(2);
-            var motivation = ((motivationCount / input.length) * 25).toFixed(2);
+            var confidence = ((confidenceCount / (input.length * 2)) * 25).toFixed(2);
             var efficiency = ((efficiencyCount / input.length) * 25).toFixed(2);
             var fulfillment = ((fulfillmentCount / input.length) * 25).toFixed(2);
             var overall = ((overallCount / (input.length * 2)) * 25).toFixed(2);
 
-            var percentArray = [sleep, energy, mood, motivation, efficiency, fulfillment, overall];
+            var percentArray = [sleep, energy, mood, confidence, efficiency, fulfillment, overall];
 
             return percentArray;
         } else {

@@ -680,37 +680,37 @@ module.exports = function(controller) {
                 }
             ]);
 
-            // Motivation
+            // Confidence
             convo.addQuestion({
                 attachments: [
                     {
-                        title: "Motivation",
-                        callback_id: 'checkin-motivation',
+                        title: "Confidence",
+                        callback_id: 'checkin-confidence',
                         attachment_type: 'default',
                         color: '#CF02FF',
                         actions: [
                             {
-                                'name': 'conquer-button',
-                                'value': 'Conquer',
-                                'text': 'Conquer',
+                                'name': 'crushing-button',
+                                'value': 'Crushing-It',
+                                'text': 'Crushing It',
                                 'type': 'button'
                             },
                             {
-                                'name': 'excel-button',
-                                'value': 'Excel',
-                                'text': 'Excel',
+                                'name': 'okay-button',
+                                'value': 'Okay',
+                                'text': 'Okay',
                                 'type': 'button'
                             },
                             {
-                                'name': 'cope-button',
-                                'value': 'Cope',
-                                'text': 'Cope',
+                                'name': 'managing-button',
+                                'value': 'Managing',
+                                'text': 'Managing',
                                 'type': 'button'
                             },
                             {
-                                'name': 'nap-button',
-                                'value': 'Nap',
-                                'text': 'Nap',
+                                'name': 'overwhelmed-button',
+                                'value': 'Overwhelmed',
+                                'text': 'Overwhelmed',
                                 'type': 'button'
                             },
                         ]
@@ -718,41 +718,41 @@ module.exports = function(controller) {
                 ]
             },[
                 {
-                    pattern: 'Conquer',
+                    pattern: 'Crushing-It',
                     callback: function(reply, convo) {
                         score.push(4);
                         bot.replyInteractive(reply, 
                             {
                                 attachments: [
                                     {
-                                        title: "Motivation",
-                                        callback_id: 'checkin-motivation',
+                                        title: "Confidence",
+                                        callback_id: 'checkin-confidence',
                                         attachment_type: 'default',
                                         color: '#CF02FF',
                                         actions: [
                                             {
-                                                'name': 'conquer-button',
-                                                'value': 'Conquer',
+                                                'name': 'crushing-button',
+                                                'value': 'Crushing-It',
                                                 'style': 'primary',
-                                                'text': 'Conquer',
+                                                'text': 'Crushing It',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'excel-button',
-                                                'value': 'Excel',
-                                                'text': 'Excel',
+                                                'name': 'okay-button',
+                                                'value': 'Okay',
+                                                'text': 'Okay',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'cope-button',
-                                                'value': 'Cope',
-                                                'text': 'Cope',
+                                                'name': 'managing-button',
+                                                'value': 'Managing',
+                                                'text': 'Managing',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'nap-button',
-                                                'value': 'Nap',
-                                                'text': 'Nap',
+                                                'name': 'overwhelmed-button',
+                                                'value': 'Overwhelmed',
+                                                'text': 'Overwhelmed',
                                                 'type': 'button'
                                             },
                                         ]
@@ -764,41 +764,41 @@ module.exports = function(controller) {
                     }
                 },
                 {
-                    pattern: 'Excel',
+                    pattern: 'Okay',
                     callback: function(reply, convo) {
                         score.push(3);
                         bot.replyInteractive(reply, 
                             {
                                 attachments: [
                                     {
-                                        title: "Motivation",
-                                        callback_id: 'checkin-motivation',
+                                        title: "Confidence",
+                                        callback_id: 'checkin-confidence',
                                         attachment_type: 'default',
                                         color: '#CF02FF',
                                         actions: [
                                             {
-                                                'name': 'conquer-button',
-                                                'value': 'Conquer',
-                                                'text': 'Conquer',
+                                                'name': 'crushing-button',
+                                                'value': 'Crushing-It',
+                                                'text': 'Crushing It',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'excel-button',
-                                                'value': 'Excel',
+                                                'name': 'okay-button',
+                                                'value': 'Okay',
                                                 'style': 'primary',
-                                                'text': 'Excel',
+                                                'text': 'Okay',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'cope-button',
-                                                'value': 'Cope',
-                                                'text': 'Cope',
+                                                'name': 'managing-button',
+                                                'value': 'Managing',
+                                                'text': 'Managing',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'nap-button',
-                                                'value': 'Nap',
-                                                'text': 'Nap',
+                                                'name': 'overwhelmed-button',
+                                                'value': 'Overwhelmed',
+                                                'text': 'Overwhelmed',
                                                 'type': 'button'
                                             },
                                         ]
@@ -810,41 +810,41 @@ module.exports = function(controller) {
                     }
                 },
                 {
-                    pattern: 'Cope',
+                    pattern: 'Managing',
                     callback: function(reply, convo) {
                         score.push(2);
                         bot.replyInteractive(reply, 
                             {
                                 attachments: [
                                     {
-                                        title: "Motivation",
-                                        callback_id: 'checkin-motivation',
+                                        title: "Confidence",
+                                        callback_id: 'checkin-confidence',
                                         attachment_type: 'default',
                                         color: '#CF02FF',
                                         actions: [
                                             {
-                                                'name': 'conquer-button',
-                                                'value': 'Conquer',
-                                                'text': 'Conquer',
+                                                'name': 'crushing-button',
+                                                'value': 'Crushing-It',
+                                                'text': 'Crushing It',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'excel-button',
-                                                'value': 'Excel',
-                                                'text': 'Excel',
+                                                'name': 'okay-button',
+                                                'value': 'Okay',
+                                                'text': 'Okay',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'cope-button',
-                                                'value': 'Cope',
+                                                'name': 'managing-button',
+                                                'value': 'Managing',
                                                 'style': 'primary',
-                                                'text': 'Cope',
+                                                'text': 'Managing',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'nap-button',
-                                                'value': 'Nap',
-                                                'text': 'Nap',
+                                                'name': 'overwhelmed-button',
+                                                'value': 'Overwhelmed',
+                                                'text': 'Overwhelmed',
                                                 'type': 'button'
                                             },
                                         ]
@@ -856,41 +856,41 @@ module.exports = function(controller) {
                     }
                 },
                 {
-                    pattern: 'Nap',
+                    pattern: 'Overwhelmed',
                     callback: function(reply, convo) {
                         score.push(1);
                         bot.replyInteractive(reply, 
                             {
                                 attachments: [
                                     {
-                                        title: "Motivation",
-                                        callback_id: 'checkin-motivation',
+                                        title: "Confidence",
+                                        callback_id: 'checkin-confidence',
                                         attachment_type: 'default',
                                         color: '#CF02FF',
                                         actions: [
                                             {
-                                                'name': 'conquer-button',
-                                                'value': 'Conquer',
-                                                'text': 'Conquer',
+                                                'name': 'crushing-button',
+                                                'value': 'Crushing-It',
+                                                'text': 'Crushing It',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'excel-button',
-                                                'value': 'Excel',
-                                                'text': 'Excel',
+                                                'name': 'okay-button',
+                                                'value': 'Okay',
+                                                'text': 'Okay',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'cope-button',
-                                                'value': 'Cope',
-                                                'text': 'Cope',
+                                                'name': 'managing-button',
+                                                'value': 'Managing',
+                                                'text': 'Managing',
                                                 'type': 'button'
                                             },
                                             {
-                                                'name': 'nap-button',
-                                                'value': 'Nap',
+                                                'name': 'overwhelmed-button',
+                                                'value': 'Overwhelmed',
                                                 'style': 'primary',
-                                                'text': 'Nap',
+                                                'text': 'Overwhelmed',
                                                 'type': 'button'
                                             },
                                         ]
