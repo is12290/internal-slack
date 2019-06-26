@@ -1,10 +1,10 @@
 function notification() {
     var messages = {
-        '1': [],
-        '2': [],
-        '3': [],
-        '4': [],
-        '5': []
+        '1': ["Way to make it through the day! Be sure to report your team’s `Daily Results` after you `Check Out`"],
+        '2': ["Wait! Don’t forget your `Check Out`!", "Way to make it through the day! Be sure to report your team’s `Daily Results` after you `Check Out`"],
+        '3': ["You’re over halfway there! Don’t forget to `Check Out`!", "Way to make it through the day! Be sure to report your team’s `Daily Results` after you `Check Out`"],
+        '4': ["4 down, 1 to go. `Check Out` and it’ll be the weekend before you know it!", "Final item on your to-do list? `Check Out`.", "Way to make it through the day! Be sure to report your team’s `Daily Results` after you `Check Out`"],
+        '5': ["`Check Out` and let the weekend begin!", "Woohoo! You made it through the week! `Check Out` and enjoy your weekend", "Weekly results: up next! All that’s left is your `Check Out`", "Congrats on successfully existing another week on Earth as a sentient being! Take a gander at your `Weekly Results` after you `Check Out`. Have a great weekend!"]
     };
 
     var d = new Date();
@@ -48,7 +48,7 @@ function notification() {
 
 
             var min = Math.ceil(0);
-            var max = Math.floor(3);
+            var max = Math.floor(messages[n].length);
             var msg = Math.floor(Math.random() * (max - min + 1)) + min;
 
             for (var i = 0; i < clean_data.length; i++) {

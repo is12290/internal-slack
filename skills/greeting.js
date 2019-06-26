@@ -1,7 +1,17 @@
 module.exports = function(controller) {
 
-    controller.hears(['^hi', '^help', '^info', '^hello', '^yo'], 'direct_message,direct_mention', function(bot, message) {
-        bot.reply(message, "Hi there! \n\nI'm not the greatest at human conversation, but I'm somehow pretty emotionally intelligent.\n\nIt'd be greatly appreciated if you used `Check in` or `Check out` to log how you're doing. \n Also, use `Daily Results` to get an insight into your organization's overall emotional fitness for the day or `Weekly Results` for the week. Don't forget about `Personal Results`, as well, to check out your own emotional fitness scores for the week! \n\nEmail us at support@getinternal.co if you need further assistance!")
+    controller.hears(['^hi', '^hello', '^yo'], 'direct_message,direct_mention', function(bot, message) {
+        
+        var messages = ["Greetings! I hope you’re doing well today. If you’re looking for help, reply with `Help`",
+        "Yoyo! Let me know if I can help you out with `Help`",
+        "Whaaaats up?! Respond with `Help` for some things I can do. Have a great day!",
+        "How’s it goin today? I sure hope well! Let me know if I can `Help` with anything…"];
+
+        var min = Math.ceil(0);
+        var max = Math.floor(3);
+        var msg = Math.floor(Math.random() * (max - min + 1)) + min;
+
+        bot.reply(message, messages[msg]);
     });
 
 

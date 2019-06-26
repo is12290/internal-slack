@@ -1,10 +1,10 @@
 function notification() {
     var messages = {
-        '1': [],
-        '2': [],
-        '3': [],
-        '4': [],
-        '5': []
+        '1': ["Let's start this week off right with a quick `Check In`!", "Wohoo! Reward yourself for getting out of bed this morning with a `Check In`", "New day, new week, fresh start… `Check In!`", "Start your week off on a good note with a `Check In`", "`Check In` to start this week off strong"],
+        '2': ["Don't forget your `Check In` - It's for your own good!!", "Good morning! Take a moment to `Check In`", "How are you feeling on this fine Tuesday? Remember to log it in your `Check In`"],
+        '3': ["The week is halfway done already?! Freeze time for a minute to `Check In`", "Time to log how you're feeling on this glorious hump day! :star_struck:", "Push past that mid-week slump with your daily `Check In`!", "Happy hump day! `Check In` and you’re officially halfway through the week"],
+        '4': ["You’re on a roll… not much longer now! `Check In` and let's get this day going"],
+        '5': ["Finish this week off strong beginning with your `Check In`"]
     };
 
     var d = new Date();
@@ -46,7 +46,7 @@ function notification() {
             }
 
             var min = Math.ceil(0);
-            var max = Math.floor(3);
+            var max = Math.floor(messages[n].length);
             var msg = Math.floor(Math.random() * (max - min + 1)) + min;
 
             for (var i = 0; i < clean_data.length; i++) {
