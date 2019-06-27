@@ -1,5 +1,5 @@
 module.exports = function (controller) {
-    controller.hears(['^set ^up ^logs', '^custom ^logs', '^customize ^logs', '^set ^up ^log', '^custom ^log', '^customize ^log'], 'direct_message,direct_mention', function (bot, message) {
+    controller.hears(['^set ^up ^personal ^reports', '^custom ^personal ^reports', '^customize ^personal ^reports', '^set ^up ^personal ^reports', '^custom ^personal ^reports', '^customize ^personal ^reports'], 'direct_message,direct_mention', function (bot, message) {
         controller.storage.users.get(message.user, function (err, info) {
             if (info.customization.reporting) {
                 bot.startConversation(message, function (err, convo) {
@@ -778,12 +778,11 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
 
-                            convo.say("Roger that! I will send check in logs on weekdays at " + data.time + " and check out logs on weekdays at " + data.check_out_time + ", " + data.timezone + " time");
+                            convo.say("Roger that! I will send personal reports on Fridyas at " + data.time + ", " + data.timezone + " time");
 
                             info.customization.reporting = {
                                 timezone: data.timezone,
                                 time: data.time,
-                                check_out_time: data.check_out.time
                             };
                             controller.storage.users.save(info);
 
@@ -1484,12 +1483,11 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
 
-                            convo.say("Roger that! I will send check in logs on weekdays at " + data.time + " and check out logs on weekdays at " + data.check_out_time + ", " + data.timezone + " time");
+                            convo.say("Roger that! I will send personal reports on Fridays at " + data.time + ", " + data.timezone + " time");
 
                             info.customization.reporting = {
                                 timezone: data.timezone,
-                                time: data.time,
-                                check_out_time: data.check_out.time
+                                time: data.time
                             };
                             controller.storage.users.save(info);
 

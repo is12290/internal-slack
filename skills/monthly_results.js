@@ -1,18 +1,18 @@
 module.exports  = function(controller) {
-    controller.hears(['Week results', 'week results', 'Weekly results', 'weekly results'], 'direct_message,direct_mention', function (bot, message) {
+    controller.hears(['Monthly results', 'monthly results', 'Month results', 'month results'], 'direct_message,direct_mention', function (bot, message) {
         controller.storage.users.find({team: message.team}, function(error, output) {
             if (!output) {
-                bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!');
+                bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!');
             } else {
                 var results = getOutput(output);
                 if (isNaN(results[0])) {
-                    bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!');
+                    bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!');
                 } else {
                     if (resultMessage.length == 8) {
                         controller.storage.teams.get(message.team, function (err, info) {
                             var topic = info.customization.question.topic;
                             bot.reply(message, {
-                                text: 'Hey there! Here are your weekly organization averages...\n',
+                                text: 'Hey there! Here is you organization\'s monthly report...\n',
                                 attachments: [
                                     {
                                         title: 'Sleep',
@@ -67,7 +67,7 @@ module.exports  = function(controller) {
                         });
                     } else {
                         bot.reply(message, {
-                            text: 'Hey there! Here are your weekly organization averages...\n',
+                            text: 'Hey there! Here is you organization\'s monthly report...\n',
                             attachments: [
                                 {
                                     title: 'Sleep',
@@ -121,13 +121,13 @@ module.exports  = function(controller) {
 
     function getOutput(results) {
         const moment = require('moment');
-        var startOfWeek = moment().startOf('isoWeek');
-        var endOfWeek = moment().endOf('isoWeek');
+        const startOfMonth = moment().startOf('month').format('DD-MM-YYYY');
+        const endOfMonth = moment().endOf('month').format('DD-MM-YYYY');
 
-        var day = startOfWeek;
+        var day = startOfMonth;
 
         var days = [];
-        while (day <= endOfWeek) {
+        while (day <= endOfMonth) {
             days.push(day.format('L'));
             day = day.clone().add(1, 'd');
         }
@@ -215,28 +215,28 @@ module.exports  = function(controller) {
 
             var loopArray = [sleep, energy, mood, confidence, efficiency, fulfillment, custom];
 
-            var weeklyReport = [];
-            weeklyReport.push(sleep);
+            var monthlyReport = [];
+            monthlyReport.push(sleep);
             for (var z = 0; z < loopArray.length; z++) {
                 if (loopArray[z] > 50) {
                     var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Positive*';
-                    weeklyReport.push(message);
+                    monthlyReport.push(message);
                 } else {
                     var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Negative*';
-                    weeklyReport.push(message);
+                    monthlyReport.push(message);
                 }
             }
 
             if (overall > 50) {
-                var overallWeek = 'Score: *' + overall + '%*\nThe overall emotional fitness this week was *positive*!';
-                weeklyReport.push(overallWeek);
+                var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *positive*!';
+                monthlyReport.push(overallMonth);
             }
             else {
-                var overallWeek = 'Score: *' + overall + '%*\nThe overall emotional fitness this week was *negative*';
-                weeklyReport.push(overallWeek);
+                var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *negative*';
+                monthlyReport.push(overallMonth);
             }
 
-            return weeklyReport;
+            return monthlyReport;
 
         } else {
             var sleep = ((sleepCount / logTally) * 25).toFixed(2);
@@ -249,28 +249,28 @@ module.exports  = function(controller) {
 
             var loopArray = [sleep, energy, mood, confidence, efficiency, fulfillment];
 
-            var weeklyReport = [];
-            weeklyReport.push(sleep);
+            var monthlyReport = [];
+            monthlyReport.push(sleep);
             for (var z = 0; z < loopArray.length; z++) {
                 if (loopArray[z] > 50) {
                     var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Positive*';
-                    weeklyReport.push(message);
+                    monthlyReport.push(message);
                 } else {
                     var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Negative*';
-                    weeklyReport.push(message);
+                    monthlyReport.push(message);
                 }
             }
 
             if (overall > 50) {
-                var overallWeek = 'Score: *' + overall + '%*\nThe overall emotional fitness this week was *positive*!';
-                weeklyReport.push(overallWeek);
+                var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *positive*!';
+                monthlyReport.push(overallMonth);
             }
             else {
-                var overallWeek = 'Score: *' + overall + '%*\nThe overall emotional fitness this week was *negative*';
-                weeklyReport.push(overallWeek);
+                var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *negative*';
+                monthlyReport.push(overallMonth);
             }
 
-            return weeklyReport;
+            return monthlyReport;
         }
     }
 }

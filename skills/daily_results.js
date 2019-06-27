@@ -10,121 +10,247 @@ module.exports = function (controller) {
                 } else {
                     var resultMessage = getMessages(percent);
 
-                    bot.reply(message, {
-                        text: 'Hey there! Here are your results for the day...\n',
-                        attachments: [
-                            {
-                                title: 'Sleep',
-                                color: '#02D2FF',
-                                attachment_type: 'default',
-                                text: resultMessage[0] + '\n'
-                            },
-                            {
-                                title: 'Energy',
-                                color: '#2A02FF',
-                                attachment_type: 'default',
-                                text: resultMessage[1] + '\n'
-                            },
-                            {
-                                title: 'Mood',
-                                color: '#8A02FF',
-                                attachment_type: 'default',
-                                text: resultMessage[2] + '\n'
-                            },
-                            {
-                                title: 'Confidence',
-                                color: '#CF02FF',
-                                attachment_type: 'default',
-                                text: resultMessage[3] + '\n'
-                            },
-                            {
-                                title: 'Efficiency',
-                                color: '#FF029D',
-                                attachment_type: 'default',
-                                text: resultMessage[4] + '\n'
-                            },
-                            {
-                                title: 'Fulfillment',
-                                color: '#FF8402',
-                                attachment_type: 'default',
-                                text: resultMessage[5] + '\n'
-                            },
-                            {
-                                title: 'Overall',
-                                color: '#02FF57',
-                                attachment_type: 'default',
-                                text: resultMessage[6]
-                            }
-                        ]
-                    });
+                    if (resultMessage.length == 8) {
+                        controller.storage.teams.get(message.team, function (err, info) {
+                            var topic = info.customization.question.topic;
+
+                            bot.reply(message, {
+                                text: 'Hey there! Here are your results for the day...\n',
+                                attachments: [
+                                    {
+                                        title: 'Sleep',
+                                        color: '#02D2FF',
+                                        attachment_type: 'default',
+                                        text: resultMessage[0] + '\n'
+                                    },
+                                    {
+                                        title: 'Energy',
+                                        color: '#2A02FF',
+                                        attachment_type: 'default',
+                                        text: resultMessage[1] + '\n'
+                                    },
+                                    {
+                                        title: 'Mood',
+                                        color: '#8A02FF',
+                                        attachment_type: 'default',
+                                        text: resultMessage[2] + '\n'
+                                    },
+                                    {
+                                        title: 'Confidence',
+                                        color: '#CF02FF',
+                                        attachment_type: 'default',
+                                        text: resultMessage[3] + '\n'
+                                    },
+                                    {
+                                        title: 'Efficiency',
+                                        color: '#FF029D',
+                                        attachment_type: 'default',
+                                        text: resultMessage[4] + '\n'
+                                    },
+                                    {
+                                        title: 'Fulfillment',
+                                        color: '#FF8402',
+                                        attachment_type: 'default',
+                                        text: resultMessage[5] + '\n'
+                                    },
+                                    {
+                                        title: topic,
+                                        color: '#FDFF02',
+                                        attachment_type: 'default',
+                                        text: resultMessage[6] + '\n',
+                                    },
+                                    {
+                                        title: 'Overall',
+                                        color: '#02FF57',
+                                        attachment_type: 'default',
+                                        text: resultMessage[7]
+                                    }
+                                ]
+                            });
+                        });
+                    } else {
+                        bot.reply(message, {
+                            text: 'Hey there! Here are your results for the day...\n',
+                            attachments: [
+                                {
+                                    title: 'Sleep',
+                                    color: '#02D2FF',
+                                    attachment_type: 'default',
+                                    text: resultMessage[0] + '\n'
+                                },
+                                {
+                                    title: 'Energy',
+                                    color: '#2A02FF',
+                                    attachment_type: 'default',
+                                    text: resultMessage[1] + '\n'
+                                },
+                                {
+                                    title: 'Mood',
+                                    color: '#8A02FF',
+                                    attachment_type: 'default',
+                                    text: resultMessage[2] + '\n'
+                                },
+                                {
+                                    title: 'Confidence',
+                                    color: '#CF02FF',
+                                    attachment_type: 'default',
+                                    text: resultMessage[3] + '\n'
+                                },
+                                {
+                                    title: 'Efficiency',
+                                    color: '#FF029D',
+                                    attachment_type: 'default',
+                                    text: resultMessage[4] + '\n'
+                                },
+                                {
+                                    title: 'Fulfillment',
+                                    color: '#FF8402',
+                                    attachment_type: 'default',
+                                    text: resultMessage[5] + '\n'
+                                },
+                                {
+                                    title: 'Overall',
+                                    color: '#02FF57',
+                                    attachment_type: 'default',
+                                    text: resultMessage[6]
+                                }
+                            ]
+                        });
+                    }
                 }
-
             }
-
         });
     });
 
     function getPercentage(input) {
-        // Necessary variables
-        var sleepCount = 0;
-        var energyCount = 0;
-        var moodCount = 0;
-        var confidenceCount = 0;
-        var efficiencyCount = 0;
-        var fulfillmentCount = 0;
-        var overallCount = 0;
+        if (input[0].logs[today].check_in.length == 6) {
+            // Necessary variables
+            var sleepCount = 0;
+            var energyCount = 0;
+            var moodCount = 0;
+            var confidenceCount = 0;
+            var efficiencyCount = 0;
+            var fulfillmentCount = 0;
+            var customCount = 0;
+            var overallCount = 0;
 
-        for (var i = 0; i < input.length; i++) {
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            var yyyy = today.getFullYear();
+            for (var i = 0; i < input.length; i++) {
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
 
-            today = mm + '/' + dd + '/' + yyyy;
+                today = mm + '/' + dd + '/' + yyyy;
 
-            var instance = input[i];
-            if (typeof instance.logs[today] == 'undefined') {
-                var errorArray = [404]
-            } else {
-                var checkIn = instance.logs[today].check_in;
-                var checkOut = instance.logs[today].check_out;
-                
-                if (typeof checkIn == 'undefined' || typeof checkOut == 'undefined') {
-                    var errorArray = [404];
+                var instance = input[i];
+                if (typeof instance.logs[today] == 'undefined') {
+                    var errorArray = [404]
                 } else {
-                    sleepCount = sleepCount + checkIn[0];
-                    energyCount = energyCount + checkIn[1];
-                    moodCount = moodCount + checkIn[2];
-                    confidenceCount = confidenceCount + checkIn[3];
-                    overallCount = overallCount + (checkIn[4] / 4);
+                    var checkIn = instance.logs[today].check_in;
+                    var checkOut = instance.logs[today].check_out;
 
-                    efficiencyCount = efficiencyCount + checkOut[0];
-                    confidenceCount = confidenceCount + checkOut[1];
-                    moodCount = moodCount + checkOut[2];
-                    fulfillmentCount = fulfillmentCount + checkOut[3];
-                    overallCount = overallCount + (checkOut[4] / 4);
+                    if (typeof checkIn == 'undefined' || typeof checkOut == 'undefined') {
+                        var errorArray = [404];
+                    } else {
+                        sleepCount = sleepCount + checkIn[0];
+                        energyCount = energyCount + checkIn[1];
+                        moodCount = moodCount + checkIn[2];
+                        confidenceCount = confidenceCount + checkIn[3];
+                        customCount = customCount + checkIn[4]
+                        overallCount = overallCount + (checkIn[5] / 5);
+
+                        efficiencyCount = efficiencyCount + checkOut[0];
+                        confidenceCount = confidenceCount + checkOut[1];
+                        moodCount = moodCount + checkOut[2];
+                        fulfillmentCount = fulfillmentCount + checkOut[3];
+                        customCount = customCount + checkOut[4];
+                        overallCount = overallCount + (checkOut[5] / 5);
+                    }
                 }
+
+            }
+
+            if (sleepCount > 0) {
+                var sleep = ((sleepCount / input.length) * 25).toFixed(2);
+                var energy = ((energyCount / input.length) * 25).toFixed(2);
+                var mood = ((moodCount / (input.length * 2)) * 25).toFixed(2);
+                var confidence = ((confidenceCount / (input.length * 2)) * 25).toFixed(2);
+                var efficiency = ((efficiencyCount / input.length) * 25).toFixed(2);
+                var fulfillment = ((fulfillmentCount / input.length) * 25).toFixed(2);
+                var custom = ((customCount / (input.length * 2)) * 25).toFixed(2);
+                var overall = ((overallCount / (input.length * 2)) * 25).toFixed(2);
+
+                var percentArray = [sleep, energy, mood, confidence, efficiency, fulfillment, custom, overall];
+
+                return percentArray;
+            } else {
+                return errorArray;
+            }
+
+
+        } else {
+            // Necessary variables
+            var sleepCount = 0;
+            var energyCount = 0;
+            var moodCount = 0;
+            var confidenceCount = 0;
+            var efficiencyCount = 0;
+            var fulfillmentCount = 0;
+            var overallCount = 0;
+
+            for (var i = 0; i < input.length; i++) {
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+
+                today = mm + '/' + dd + '/' + yyyy;
+
+                var instance = input[i];
+                if (typeof instance.logs[today] == 'undefined') {
+                    var errorArray = [404]
+                } else {
+                    var checkIn = instance.logs[today].check_in;
+                    var checkOut = instance.logs[today].check_out;
+
+                    if (typeof checkIn == 'undefined' || typeof checkOut == 'undefined') {
+                        var errorArray = [404];
+                    } else {
+                        sleepCount = sleepCount + checkIn[0];
+                        energyCount = energyCount + checkIn[1];
+                        moodCount = moodCount + checkIn[2];
+                        confidenceCount = confidenceCount + checkIn[3];
+                        overallCount = overallCount + (checkIn[4] / 4);
+
+                        efficiencyCount = efficiencyCount + checkOut[0];
+                        confidenceCount = confidenceCount + checkOut[1];
+                        moodCount = moodCount + checkOut[2];
+                        fulfillmentCount = fulfillmentCount + checkOut[3];
+                        overallCount = overallCount + (checkOut[4] / 4);
+                    }
+                }
+
+            }
+
+            if (sleepCount > 0) {
+                var sleep = ((sleepCount / input.length) * 25).toFixed(2);
+                var energy = ((energyCount / input.length) * 25).toFixed(2);
+                var mood = ((moodCount / (input.length * 2)) * 25).toFixed(2);
+                var confidence = ((confidenceCount / (input.length * 2)) * 25).toFixed(2);
+                var efficiency = ((efficiencyCount / input.length) * 25).toFixed(2);
+                var fulfillment = ((fulfillmentCount / input.length) * 25).toFixed(2);
+                var overall = ((overallCount / (input.length * 2)) * 25).toFixed(2);
+
+                var percentArray = [sleep, energy, mood, confidence, efficiency, fulfillment, overall];
+
+                return percentArray;
+            } else {
+                return errorArray;
             }
 
         }
-
-        if (sleepCount > 0) {
-            var sleep = ((sleepCount / input.length) * 25).toFixed(2);
-            var energy = ((energyCount / input.length) * 25).toFixed(2);
-            var mood = ((moodCount / (input.length * 2)) * 25).toFixed(2);
-            var confidence = ((confidenceCount / (input.length * 2)) * 25).toFixed(2);
-            var efficiency = ((efficiencyCount / input.length) * 25).toFixed(2);
-            var fulfillment = ((fulfillmentCount / input.length) * 25).toFixed(2);
-            var overall = ((overallCount / (input.length * 2)) * 25).toFixed(2);
-
-            var percentArray = [sleep, energy, mood, confidence, efficiency, fulfillment, overall];
-
-            return percentArray;
-        } else {
-            return errorArray;
-        }
-
     }
+        
 
     function getMessages(input) {
         var messageArray = [];

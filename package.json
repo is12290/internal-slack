@@ -1,12 +1,16 @@
 {
   "name": "internal-bot",
   "version": "0.0.2",
-  "description": "Monitor team emotional fitness in Slack",
+  "description": "Monitor emotional fitness in Slack",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
-    "notify_morning": "node notify/morning.js",
-    "notify_evening": "node notify/evening.js"
+    "notify_morning": "node run notify/morning.js",
+    "notify_evening": "node run notify/evening.js",
+    "auto_checkin": "node run automacy/check_in_logs.js",
+    "auto_checkout": "node run automacy/check_out_logs.js",
+    "auto_team_report": "node run automacy/reports.js",
+    "auto_personal_report": "node run automacy/personal_reports.js"
   },
   "dependencies": {
     "body-parser": "^1.15.2",

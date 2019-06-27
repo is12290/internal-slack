@@ -19,7 +19,7 @@ if (n === 6 || n === 0) {
         studio_command_uri: process.env.studio_command_uri
     };
 
-    var mongoStorage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGODB_URI, useNewUrlParser: true, tables: ['results', 'week', 'personal', 'full'] });
+    var mongoStorage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGODB_URI, useNewUrlParser: true });
     bot_options.storage = mongoStorage;
 
     var controller = Botkit.slackbot(bot_options);
@@ -35,7 +35,13 @@ if (n === 6 || n === 0) {
                 // Pass
             } else {
                 if (user.customization.logging.check_in_time == now.tz(user.customization.logging.timezone).format('HH:mm')) {
-                    data.push([user.bot.token, user.id, user.channel]);
+                    user_data = [];
+                    controller.storage.team.get(user.team, function (err, team_info) {
+                        user_data.push(team_info.bot.token);
+                    });
+                    user_data.push(user.id);
+                    user_data.push(user.channel);
+                    data.push(user_data);
                 } else {
                     // Pass
                 }
@@ -1222,13 +1228,10 @@ if (n === 6 || n === 0) {
             
             
                             }
-            
-            
                         });
                     })
                 })
             }
         )
-
     });
 }

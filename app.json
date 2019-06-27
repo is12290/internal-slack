@@ -1,5 +1,5 @@
 {
-  "name": "Internal Bot",
+  "name": "Internal Bot-Mid",
   "description": "Monitor team emotional fitness in Slack",
   "repository": "https://github.com/is12290/internal-bot",
   "keywords": ["node", "bots", "slack","botkit"],
