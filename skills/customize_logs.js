@@ -1,5 +1,5 @@
 module.exports = function (controller) {
-    controller.hears(['^set ^up ^logs', '^custom ^logs', '^customize ^logs', '^set ^up ^log', '^custom ^log', '^customize ^log'], 'direct_message,direct_mention', function(bot, message) {
+    controller.hears(['^set up logs', '^custom ^logs', '^customize ^logs', '^set ^up ^log', '^custom ^log', '^customize ^log'], 'direct_message,direct_mention', function(bot, message) {
         controller.storage.users.get(message.user, function(err, info) {
             if (info.customization.logging) {
                 bot.startConversation(message, function (err, convo) {
@@ -97,13 +97,14 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Timezone',
+                                text: 'What timezone are you in?',
                                 callback_id: 'timezone',
                                 attachment_type: 'default',
                                 color: '#FDFF02',
                                 actions: [
                                     {
                                         "name": "timezone",
-                                        "text": "What timezone are you in?",
+                                        "text": "Timezone",
                                         "type": "select",
                                         "options": [
                                             {
@@ -228,13 +229,14 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Check In Time',
+                                text: 'What time would be best for check ins?',
                                 callback_id: 'time',
                                 attachment_type: 'default',
                                 color: '#FF02DA',
                                 actions: [
                                     {
                                         "name": "time",
-                                        "text": "What time would be best for check ins?",
+                                        "text": "Time",
                                         "type": "select",
                                         "options": [
                                             {
@@ -777,13 +779,14 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Check Out Time',
+                                text: 'What time would be best for check outs?',
                                 callback_id: 'time',
                                 attachment_type: 'default',
                                 color: '#FF02DA',
                                 actions: [
                                     {
                                         "name": "time",
-                                        "text": "What time would be best for check outs?",
+                                        "text": "Time",
                                         "type": "select",
                                         "options": [
                                             {
@@ -1352,13 +1355,14 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Timezone',
+                                text: 'What timezone are you in?',
                                 callback_id: 'timezone',
                                 attachment_type: 'default',
                                 color: '#FDFF02',
                                 actions: [
                                     {
                                         "name": "timezone",
-                                        "text": "What timezone are you in?",
+                                        "text": "Timezone",
                                         "type": "select",
                                         "options": [
                                             {
@@ -1485,13 +1489,14 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Check In Time',
+                                text: 'What time would be best for check ins?',
                                 callback_id: 'time',
                                 attachment_type: 'default',
                                 color: '#FF02DA',
                                 actions: [
                                     {
                                         "name": "time",
-                                        "text": "What time would be best for check ins?",
+                                        "text": "Time",
                                         "type": "select",
                                         "options": [
                                             {
@@ -2034,13 +2039,14 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Check Out Time',
+                                text: "What time would be best for check outs?",
                                 callback_id: 'time',
                                 attachment_type: 'default',
                                 color: '#FF02DA',
                                 actions: [
                                     {
                                         "name": "time",
-                                        "text": "What time would be best for check outs?",
+                                        "text": 'Time',
                                         "type": "select",
                                         "options": [
                                             {

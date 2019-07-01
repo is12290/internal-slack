@@ -49,7 +49,7 @@ This bot demonstrates many of the core features of Botkit:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 const dotenv = require('dotenv');
 dotenv.config();
-const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY).slack;
+// const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY).slack;
 
 
 if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
@@ -64,10 +64,9 @@ var bot_options = {
     clientId: process.env.clientId,
     clientSecret: process.env.clientSecret,
     clientSigningSecret: process.env.clientSigningSecret,
+    redirectUri: 'https://f725e3b7.ngrok.io/oauth',
     // debug: true,
     scopes: ['bot'],
-    studio_token: process.env.studio_token,
-    studio_command_uri: process.env.studio_command_uri
 };
 
 // Use a mongo database if specified, otherwise store in a JSON file local to the app.
@@ -82,8 +81,8 @@ if (process.env.MONGODB_URI) {
 // Create the Botkit controller, which controls all instances of the bot.
 var controller = Botkit.slackbot(bot_options);
 
-controller.middleware.receive.use(dashbot.receive);
-controller.middleware.send.use(dashbot.send);
+// controller.middleware.receive.use(dashbot.receive);
+// controller.middleware.send.use(dashbot.send);
 
 controller.startTicking();
 
@@ -124,7 +123,7 @@ if (!process.env.clientId || !process.env.clientSecret) {
   });
 }
 
-var Honeybadger = require('honeybadger');
-Honeybadger.configure({
-  apiKey: process.env.HONEYBADGER_API_KEY
-});
+// var Honeybadger = require('honeybadger');
+// Honeybadger.configure({
+//   apiKey: process.env.HONEYBADGER_API_KEY
+// });

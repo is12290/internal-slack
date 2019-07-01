@@ -97,13 +97,14 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Timezone',
+                                text: 'What timezone are you in?',
                                 callback_id: 'timezone',
                                 attachment_type: 'default',
                                 color: '#FDFF02',
                                 actions: [
                                     {
                                         "name": "timezone",
-                                        "text": "What timezone are you in?",
+                                        "text": "Timezone",
                                         "type": "select",
                                         "options": [
                                             {
@@ -228,13 +229,14 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Time',
+                                text: 'What timezone are you in?',
                                 callback_id: 'time',
                                 attachment_type: 'default',
                                 color: '#FF02DA',
                                 actions: [
                                     {
                                         "name": "time",
-                                        "text": "What time would be best?",
+                                        "text": "Time",
                                         "type": "select",
                                         "options": [
                                             {
@@ -802,13 +804,14 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Timezone',
+                                text: 'What timezone are you in?',
                                 callback_id: 'timezone',
                                 attachment_type: 'default',
                                 color: '#FDFF02',
                                 actions: [
                                     {
                                         "name": "timezone",
-                                        "text": "What timezone are you in?",
+                                        "text": "Timezone",
                                         "type": "select",
                                         "options": [
                                             {
@@ -935,13 +938,14 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Time',
+                                text: 'What time would be best?',
                                 callback_id: 'time',
                                 attachment_type: 'default',
                                 color: '#FF02DA',
                                 actions: [
                                     {
                                         "name": "time",
-                                        "text": "What time would be best?",
+                                        "text": "Time",
                                         "type": "select",
                                         "options": [
                                             {
