@@ -1,7 +1,7 @@
 module.exports = function (controller) {
-    controller.hears(['^delete ^question', '^delete ^custom ^question'], 'direct_message,direct_mention', function (message, bot) {
+    controller.hears(['^delete question', '^delete Question', '^delete custom question', '^delete Custom Question'], 'direct_message,direct_mention', function (message, bot) {
         controller.storage.teams.get(message.team, function (err, info) {
-            if (info.customization.question) {
+            if (typeof info.customization.question != 'undefined') {
                 bot.startConversation(message, function (err, convo){
                     convo.addQuestion({
                         attachments: [{

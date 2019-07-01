@@ -1,7 +1,7 @@
 module.exports = function (controller) {
-    controller.hears(['^set ^up ^personal ^reports', '^custom ^personal ^reports', '^customize ^personal ^reports', '^set ^up ^personal ^reports', '^custom ^personal ^reports', '^customize ^personal ^reports'], 'direct_message,direct_mention', function (bot, message) {
+    controller.hears(['^set up personal reports', '^set Up Personal Reports', '^custom personal reports', '^customize personal reports', '^set up personal reports', '^custom personal reports', '^customize personal reports'], 'direct_message,direct_mention', function (bot, message) {
         controller.storage.users.get(message.user, function (err, info) {
-            if (info.customization.reporting) {
+            if (typeof info.customization.reporting != 'undefined') {
                 bot.startConversation(message, function (err, convo) {
                     convo.addQuestion({
                         attachments: [{

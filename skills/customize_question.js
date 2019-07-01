@@ -1,7 +1,7 @@
 module.exports = function (controller) {
-    controller.hears(['^question', '^question ^customization', '^custom ^question', '^customize ^question'], 'direct_message, direct_mention', function (message, bot) {
+    controller.hears(['^set Up Question', '^question', '^question customization', '^custom question', '^customize question'], 'direct_message, direct_mention', function (message, bot) {
         controller.storage.teams.get(message.team, function (err, info) {
-            if (info.customization.question) {
+            if (typeof info.customization.question != 'undefined') {
                 bot.startConversation(message, function (err, convo) {
                     var data = {};
 
