@@ -64,7 +64,6 @@ var bot_options = {
     clientId: process.env.clientId,
     clientSecret: process.env.clientSecret,
     clientSigningSecret: process.env.clientSigningSecret,
-    redirectUri: 'https://f725e3b7.ngrok.io/oauth',
     // debug: true,
     scopes: ['bot'],
 };
