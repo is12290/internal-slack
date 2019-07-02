@@ -71,7 +71,7 @@ module.exports = function (controller) {
                             pattern: "America_New_York",
                             callback: function(convo) {
                                 data.timezone = "America/New_York";
-                                convo.next();
+                                // convo.next();
                             }
                         },
                         {
