@@ -69,70 +69,70 @@ module.exports = function (controller) {
                     }, [
                             {
                                 pattern: "America_New_York",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "America/New_York";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "America_Los_Angeles",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "America/Los_Angeles";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "America_Denver",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "America/Denver";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Australia_Sydney",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Australia/Sydney";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Australia_Perth",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Australia/Perth";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Asia",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Asia/Hong_Kong";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Asia_Seoul",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Asia/Seoul";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Europe_London",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Europe/London";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Europe_Madrid",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Europe/Madrid";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Europe_Kiev",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Europe/Kiev";
                                         convo.next();
                                 }
@@ -353,336 +353,336 @@ module.exports = function (controller) {
                     }, [
                             {
                                 pattern: "00:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "00:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "00:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "00:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "01:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "01:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "01:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "01:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "02:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "02:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "02:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "02:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "03:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "03:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "03:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "03:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "04:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "04:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "04:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "04:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "05:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "05:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "05:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "05:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "06:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "06:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "06:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "06:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "07:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "07:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "07:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "07:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "08:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "08:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "08:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "08:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "09:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "09:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "09:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "09:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "10:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "10:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "10:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "10:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "11:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "11:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "11:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "11:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "12:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "12:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "12:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "12:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "13:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "13:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "13:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "13:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "14:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "14:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "14:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "14:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "15:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "15:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "15:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "15:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "16:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "16:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "16:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "16:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "17:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "17:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "17:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "17:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "18:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "18:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "18:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "18:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "19:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "19:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "19:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "19:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "20:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "20:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "20:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "20:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "21:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "21:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "21:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "21:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "22:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "22:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "22:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "22:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "23:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "23:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "23:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "23:30";
                                         convo.next();
                                 }
@@ -691,7 +691,7 @@ module.exports = function (controller) {
 
                     convo.activate();
 
-                    convo.on('end', function (convo) {
+                    convo.on('end', function (reply, convo) {
                         if (convo.successful()) {
 
                             convo.say("Roger that! I will send personal reports on Fridays at " + data.time + ", " + data.timezone + " time");
@@ -861,70 +861,70 @@ module.exports = function (controller) {
                     }, [
                             {
                                 pattern: "America_New_York",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "America/New_York";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "America_Los_Angeles",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "America/Los_Angeles";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "America_Denver",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "America/Denver";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Australia_Sydney",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Australia/Sydney";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Australia_Perth",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Australia/Perth";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Asia",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Asia/Hong_Kong";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Asia_Seoul",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Asia/Seoul";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Europe_London",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Europe/London";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Europe_Madrid",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Europe/Madrid";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "Europe_Kiev",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.timezone = "Europe/Kiev";
                                         convo.next();
                                 }
@@ -1145,336 +1145,336 @@ module.exports = function (controller) {
                     }, [
                             {
                                 pattern: "00:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "00:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "00:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "00:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "01:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "01:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "01:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "01:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "02:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "02:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "02:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "02:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "03:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "03:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "03:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "03:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "04:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "04:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "04:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "04:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "05:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "05:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "05:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "05:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "06:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "06:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "06:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "06:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "07:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "07:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "07:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "07:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "08:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "08:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "08:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "08:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "09:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "09:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "09:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "09:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "10:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "10:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "10:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "10:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "11:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "11:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "11:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "11:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "12:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "12:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "12:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "12:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "13:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "13:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "13:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "13:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "14:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "14:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "14:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "14:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "15:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "15:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "15:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "15:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "16:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "16:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "16:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "16:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "17:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "17:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "17:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "17:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "18:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "18:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "18:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "18:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "19:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "19:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "19:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "19:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "20:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "20:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "20:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "20:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "21:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "21:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "21:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "21:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "22:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "22:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "22:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "22:30";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "23:00",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "23:00";
                                         convo.next();
                                 }
                             },
                             {
                                 pattern: "23:30",
-                                callback: function (convo) {
+                                callback: function (reply, convo) {
                                     data.time = "23:30";
                                         convo.next();
                                 }
@@ -1483,7 +1483,7 @@ module.exports = function (controller) {
 
                     convo.activate();
 
-                    convo.on('end', function (convo) {
+                    convo.on('end', function (reply, convo) {
                         if (convo.successful()) {
 
                             convo.say("Roger that! I will send personal reports on Fridyas at " + data.time + ", " + data.timezone + " time");
