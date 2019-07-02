@@ -1,7 +1,9 @@
 module.exports = function (controller) {
     controller.hears(['^delete question', '^delete Question', '^delete custom question', '^delete Custom Question'], 'direct_message,direct_mention', function (message, bot) {
         controller.storage.teams.get(message.team, function (err, info) {
-            if (typeof info.customization.question != 'undefined') {
+            if (!info || info.customization.question == 'undefined') {
+                bot.reply(message, "I'm sorry, there's no custom question for me to delete!\nIf I'm wrong, please tell my human counterparts at support@getinternal.co");
+            } else if (typeof info.customization.question != 'undefined') {
                 bot.startConversation(message, function (err, convo){
                     convo.addQuestion({
                         attachments: [{
@@ -92,7 +94,7 @@ module.exports = function (controller) {
                     ]);
                 });
             } else {
-                bot.reply(message, "I'm sorry, there's no custom question for me to delete!\nIf I'm wrong, please tell my human counterparts at support@getinternal.co");
+                bot.reply(message, "Would you mind sending me that message again?");
             }
         });
     });
