@@ -14,7 +14,7 @@ module.exports = function (controller) {
                                 text: 'What timezone are you in?',
                                 callback_id: 'timezone',
                                 attachment_type: 'default',
-                                color: '#FDFF02',
+                                color: '#02C6FF',
                                 actions: [
                                     {
                                         "name": "timezone",
@@ -148,7 +148,7 @@ module.exports = function (controller) {
                                 text: 'What time would be best for check ins?',
                                 callback_id: 'time',
                                 attachment_type: 'default',
-                                color: '#FF02DA',
+                                color: '#02FF92',
                                 actions: [
                                     {
                                         "name": "time",
@@ -698,7 +698,7 @@ module.exports = function (controller) {
                                 text: "What time would be best for check outs?",
                                 callback_id: 'time',
                                 attachment_type: 'default',
-                                color: '#FF02DA',
+                                color: '#C902FF',
                                 actions: [
                                     {
                                         "name": "time",
@@ -1361,7 +1361,7 @@ module.exports = function (controller) {
                                 text: 'What timezone are you in?',
                                 callback_id: 'timezone',
                                 attachment_type: 'default',
-                                color: '#FDFF02',
+                                color: '#02FF92',
                                 actions: [
                                     {
                                         "name": "timezone",
@@ -2043,7 +2043,7 @@ module.exports = function (controller) {
                                 text: 'What time would be best for check outs?',
                                 callback_id: 'time',
                                 attachment_type: 'default',
-                                color: '#FF02DA',
+                                color: '#C902FF',
                                 actions: [
                                     {
                                         "name": "time",
