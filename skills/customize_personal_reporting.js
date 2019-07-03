@@ -1,7 +1,7 @@
 module.exports = function (controller) {
     controller.hears(['^set up personal reports', '^set Up Personal Reports', '^custom personal reports', '^customize personal reports', '^set up personal reports', '^custom personal reports', '^customize personal reports'], 'direct_message,direct_mention', function (bot, message) {
         controller.storage.users.get(message.user, function (err, info) {
-            if (!info || typeof info.customization.reporting == 'undefined') {
+            if (!info || typeof info.customization != 'undefined' || typeof info.customization.reporting == 'undefined') {
                 bot.startConversation(message, function (err, convo) {
                     var data = {};
 
@@ -707,7 +707,7 @@ module.exports = function (controller) {
                         }
                     });
                 });
-            } else if (typeof info.customization.reporting != 'undefined') {
+            } else if (typeof info.customization != 'undefined' && typeof info.customization.reporting != 'undefined') {
                 bot.startConversation(message, function (err, convo) {
                     convo.addQuestion({
                         attachments: [{

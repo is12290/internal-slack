@@ -1,7 +1,7 @@
 module.exports = function (controller) {
     controller.hears(['^set up logs', '^set Up Logs', '^custom logs', '^customize logs', '^set up log', '^custom log', '^customize log'], 'direct_message,direct_mention', function(bot, message) {
         controller.storage.users.get(message.user, function(err, info) {
-            if (!info || typeof info.customization.logging == 'undefined') {
+            if (!info || typeof info.customization == 'undefined' || typeof info.customization.logging == 'undefined') {
                 bot.startConversation(message, function (err, convo) {
                     var data = {};
 
@@ -1262,7 +1262,7 @@ module.exports = function (controller) {
                     });
                 });
             }
-            else if (typeof info.customization.logging != 'undefined') {
+            else if (typeof info.customization != 'undefined' && typeof info.customization.logging != 'undefined') {
                 bot.startConversation(message, function (err, convo) {
                     convo.addQuestion({
                         attachments: [{
