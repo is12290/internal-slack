@@ -6,10 +6,11 @@ module.exports = function (controller) {
                     var data = {};
 
                     convo.addQuestion("What topic would you like to add?", function (response, convo) {
+                        console.log("RESPONSE: ", reponse);
                         data.topic = response.text;
                         bot.api.reactions.add({
                             name: 'thumbsup',
-                            channel: message.channel,
+                            channel: response.channel,
                             timestamp: message.ts
                         });
                         convo.next();
@@ -19,9 +20,10 @@ module.exports = function (controller) {
                         data.choices = response.text.split(" ");
                         bot.api.reactions.add({
                             name: 'thumbsup',
-                            channel: message.channel,
-                            timestamp: message.ts
+                            channel: response.channel,
+                            timestamp: response.ts
                         });
+                        convo.next();
                     });
 
                     convo.activate();
