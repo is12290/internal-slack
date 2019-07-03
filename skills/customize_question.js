@@ -6,7 +6,7 @@ module.exports = function (controller) {
                     var data = {};
 
                     convo.addQuestion("What topic would you like to add?", function (response, convo) {
-                        console.log("RESPONSE: ", reponse);
+                        console.log("RESPONSE: ", response);
                         data.topic = response.text;
                         bot.api.reactions.add({
                             name: 'thumbsup',
