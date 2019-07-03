@@ -9,7 +9,6 @@ module.exports = function (controller) {
                     bot.reply(message, 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!')
                 } else {
                     var resultMessage = getMessages(percent);
-                    console.log("RESULTS MESSAGE", resultMessage);
 
                     if (resultMessage.length == 9) {
                         controller.storage.teams.get(message.team, function (err, info) {
