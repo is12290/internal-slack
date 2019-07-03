@@ -144,6 +144,7 @@ module.exports = function (controller) {
                         ]);
 
                     convo.addQuestion("What topic would you like to add?", function (response, convo) {
+                        console.log(data)
                         data.topic = response.event.text;
                         console.log("RESPONSE EVENT Text: ", response.event.text);
                         bot.api.reactions.add({
@@ -158,7 +159,7 @@ module.exports = function (controller) {
                         data.choices = response.event.text.split(" ");
                         bot.api.reactions.add({
                             name: 'thumbsup',
-                            channel: reponse.channel,
+                            channel: response.channel,
                             timestamp: response.ts
                         });
                         convo.next();
