@@ -6,10 +6,7 @@ module.exports = function (controller) {
                     var data = {};
 
                     convo.addQuestion("What topic would you like to add?", function (response, convo) {
-                        console.log("RESPONSE Text: ", response.text);
-                        console.log("RESPONSE EVENT Text: ", response.event.text);
                         data.topic = response.event.text;
-                        console.log("DATA ", data)
                         bot.api.reactions.add({
                             name: 'thumbsup',
                             channel: response.channel,
@@ -19,7 +16,7 @@ module.exports = function (controller) {
                     });
 
                     convo.addQuestion("And what are the four choices related to '" + data.topic + "'? (Formatted from greatest to least - No new lines or commas, just spaces)", function (response, convo) {
-                        data.choices = response.text.split(" ");
+                        data.choices = response.event.text.split(" ");
                         bot.api.reactions.add({
                             name: 'thumbsup',
                             channel: response.channel,
@@ -64,6 +61,7 @@ module.exports = function (controller) {
                             text: "You've already set your question to be " + info.customization.question.topic + "!\nWould you like to change this?",
                             callback_id: 'question-customization',
                             attachment_type: 'default',
+                            color: "#02C6FF",
                             actions: [
                                 {
                                     'name': 'yes-button',
@@ -89,6 +87,7 @@ module.exports = function (controller) {
                                             attachments: [{
                                                 text: "You've already set your question to be " + info.customization.question.topic + "!\nWould you like to change this?",
                                                 callback_id: 'question-customization',
+                                                color: "#02C6FF",
                                                 attachment_type: 'default',
                                                 actions: [
                                                     {
@@ -119,6 +118,7 @@ module.exports = function (controller) {
                                             attachments: [{
                                                 text: "You've already set your question to be " + info.customization.question.topic + "!\nWould you like to change this?",
                                                 callback_id: 'question-customization',
+                                                color: "#02C6FF",
                                                 attachment_type: 'default',
                                                 actions: [
                                                     {
@@ -144,22 +144,24 @@ module.exports = function (controller) {
                         ]);
 
                     convo.addQuestion("What topic would you like to add?", function (response, convo) {
-                        data.topic = response.text;
+                        data.topic = response.event.text;
+                        console.log("RESPONSE EVENT Text: ", response.event.text);
                         bot.api.reactions.add({
                             name: 'thumbsup',
-                            channel: message.channel,
-                            timestamp: message.ts
+                            channel: response.channel,
+                            timestamp: response.ts
                         });
                         convo.next();
                     });
 
                     convo.addQuestion("And what are the four choices related to '" + data.topic + "'? (Formatted from greatest to least - No new lines or commas, just spaces)", function (response, convo) {
-                        data.choices = response.text.split(" ");
+                        data.choices = response.event.text.split(" ");
                         bot.api.reactions.add({
                             name: 'thumbsup',
-                            channel: message.channel,
-                            timestamp: message.ts
+                            channel: reponse.channel,
+                            timestamp: response.ts
                         });
+                        convo.next();
                     });
 
                     convo.activate();
