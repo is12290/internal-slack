@@ -904,7 +904,7 @@ module.exports = function (controller) {
                 ]);
 
             controller.storage.teams.get(message.team, function (err, info) {
-                if (info.customization.question) {
+                if (typeof info.customization.question != 'undefined') {
                     var custom = info.customization.question;
                     // Confidence
                     convo.addQuestion({
