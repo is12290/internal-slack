@@ -123,6 +123,12 @@ module.exports = function (controller) {
     });
 
     function getPercentage(input) {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = mm + '/' + dd + '/' + yyyy;
         if (input[0].logs[today].check_in.length == 6) {
             // Necessary variables
             var sleepCount = 0;
@@ -135,13 +141,6 @@ module.exports = function (controller) {
             var overallCount = 0;
 
             for (var i = 0; i < input.length; i++) {
-                var today = new Date();
-                var dd = String(today.getDate()).padStart(2, '0');
-                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = today.getFullYear();
-
-                today = mm + '/' + dd + '/' + yyyy;
-
                 var instance = input[i];
                 if (typeof instance.logs[today] == 'undefined') {
                     var errorArray = [404]
