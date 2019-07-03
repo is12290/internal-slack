@@ -1251,7 +1251,7 @@ module.exports = function (controller) {
                             info.customization.logging = {
                                 timezone: data.timezone,
                                 check_in_time: data.check_in_time,
-                                check_out_time: data.check_out.time,
+                                check_out_time: data.check_out_time,
                                 channel: message.channel
                             };
                             controller.storage.users.save(info);
@@ -2596,7 +2596,7 @@ module.exports = function (controller) {
                             info.customization.logging = {
                                 timezone: data.check_in_timezone,
                                 check_in_time: data.check_in_time,
-                                check_out_time: data.check_out.time
+                                check_out_time: data.check_out_time
                             };
                             controller.storage.users.save(info);
 
