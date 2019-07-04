@@ -30,8 +30,8 @@ module.exports = function (controller) {
                     [
                         {
                             pattern: 'Yes',
-                            callback : function (reply, convo) {
-                                bot.replyInteractive(reply,
+                            callback : function (response, convo) {
+                                bot.replyInteractive(response,
                                     {
                                         attachments: [{
                                             text: "The current question you have set is: '" + info.customization.question.topic + "', are you sure you want to delete it?",                                            callback_id: 'question-deletion-check',
@@ -57,13 +57,13 @@ module.exports = function (controller) {
                                 );
                                 delete info.customization.question;
                                 controller.storage.teams.save(info);
-                                convo.say("You got it! Question has been removed.")
+                                bot.reply(response, "You got it! Question has been removed.")
                             }
                         },
                         {
                             pattern: 'No',
-                            callback : function (reply, convo) {
-                                bot.replyInteractive(reply,
+                            callback : function (response, convo) {
+                                bot.replyInteractive(response,
                                     {
                                         attachments: [{
                                             text: "The current question you have set is: '" + info.customization.question.topic + "', are you sure you want to delete it?",                                            callback_id: 'question-deletion-check',
@@ -87,7 +87,7 @@ module.exports = function (controller) {
                                         }]
                                     }
                                 );
-                                convo.say("Well, okay then... Enjoy the rest of your day! :sunglasses:");
+                                bot.reply(response, "Well, okay then... Enjoy the rest of your day! :sunglasses:");
 
                                 
                             }
