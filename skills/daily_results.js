@@ -55,7 +55,7 @@ module.exports = function (controller) {
                                     },
                                     {
                                         title: topic,
-                                        color: '#FDFF02',
+                                        color: '#02FF92',
                                         attachment_type: 'default',
                                         text: resultMessage[6] + '\n',
                                     },

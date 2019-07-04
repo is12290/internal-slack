@@ -104,7 +104,7 @@ if (today == endOfMonth) {
                                                 },
                                                 {
                                                     title: topic,
-                                                    color: '#FDFF02',
+                                                    color: '#02FF92',
                                                     attachment_type: 'default',
                                                     text: results[7] + '\n'
                                                 },

@@ -101,7 +101,7 @@ if (today != endOfMonth && n === 6 || n === 0) {
                                                 },
                                                 {
                                                     title: topic,
-                                                    color: '#FDFF02',
+                                                    color: '#02FF92',
                                                     attachment_type: 'default',
                                                     text: results[7] + '\n'
                                                 },
@@ -225,7 +225,7 @@ if (today != endOfMonth && n === 6 || n === 0) {
                                                     },
                                                     {
                                                         title: topic,
-                                                        color: '#FDFF02',
+                                                        color: '#02FF92',
                                                         attachment_type: 'default',
                                                         text: results[7] + '\n'
                                                     },
@@ -353,7 +353,7 @@ if (today != endOfMonth && n === 6 || n === 0) {
                                                     },
                                                     {
                                                         title: topic,
-                                                        color: '#FDFF02',
+                                                        color: '#02FF92',
                                                         attachment_type: 'default',
                                                         text: resultMessage[6] + '\n',
                                                     },

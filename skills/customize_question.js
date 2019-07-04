@@ -154,7 +154,7 @@ module.exports = function (controller) {
                         convo.next();
                     });
 
-                    convo.addQuestion("And what are the four choices related to '" + data.topic + "'? (Formatted from greatest to least - No new lines or commas, just spaces)", function (response, convo) {
+                    convo.addQuestion("And what are the four choices? (Formatted from greatest to least - No new lines, just commas and spaces)", function (response, convo) {
                         data.choices = response.event.text.split(" ");
                         bot.api.reactions.add({
                             name: 'thumbsup',

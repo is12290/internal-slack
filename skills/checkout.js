@@ -913,7 +913,7 @@ module.exports = function (controller) {
                                 title: custom.topic,
                                 callback_id: 'checkin-' + custom.topic,
                                 attachment_type: 'default',
-                                color: '#FDFF02',
+                                color: '#02FF92',
                                 actions: [
                                     {
                                         'name': custom.choices[0] + '-button',
@@ -954,7 +954,7 @@ module.exports = function (controller) {
                                                     title: custom.topic,
                                                     callback_id: 'checkin-' + custom.topic,
                                                     attachment_type: 'default',
-                                                    color: '#FDFF02',
+                                                    color: '#02FF92',
                                                     actions: [
                                                         {
                                                             'name': custom.choices[0] + '-button',
@@ -1000,7 +1000,7 @@ module.exports = function (controller) {
                                                     title: custom.topic,
                                                     callback_id: 'checkin-' + custom.topic,
                                                     attachment_type: 'default',
-                                                    color: '#FDFF02',
+                                                    color: '#02FF92',
                                                     actions: [
                                                         {
                                                             'name': custom.choices[0] + '-button',
@@ -1046,7 +1046,7 @@ module.exports = function (controller) {
                                                     title: custom.topic,
                                                     callback_id: 'checkin-' + custom.topic,
                                                     attachment_type: 'default',
-                                                    color: '#FDFF02',
+                                                    color: '#02FF92',
                                                     actions: [
                                                         {
                                                             'name': custom.choices[0] + '-button',
@@ -1092,7 +1092,7 @@ module.exports = function (controller) {
                                                     title: custom.topic,
                                                     callback_id: 'checkin-' + custom.topic,
                                                     attachment_type: 'default',
-                                                    color: '#FDFF02',
+                                                    color: '#02FF92',
                                                     actions: [
                                                         {
                                                             'name': custom.choices[0] + '-button',
