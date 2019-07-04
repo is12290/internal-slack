@@ -96,7 +96,7 @@ module.exports = function (controller) {
                     convo.activate();
 
                     convo.on('end', function (convo) {
-                        if (convo.sucessful()) {
+                        if (convo.successful()) {
                             if (outcome[0] == 1) {
                                 delete info.customization.question;
                                 controller.storage.teams.save(info);
