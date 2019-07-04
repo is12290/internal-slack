@@ -7,8 +7,9 @@ module.exports = function (controller) {
                 bot.startConversation(message, function (err, convo){
                     convo.addQuestion({
                         attachments: [{
-                                text: "The current question you have set is: '" + info.customization.logging.question.topic + "', are you sure you want to delete it?",
+                                text: "The current question you have set is: '" + info.customization.question.topic + "', are you sure you want to delete it?",
                                 callback_id: 'question-deletion-check',
+                                color: '#02C6FF',
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -34,7 +35,8 @@ module.exports = function (controller) {
                                     {
                                         attachments: [{
                                             text: "Your logs are already set to be automatically sent at " + info.customization.logging.check_in_time + " and " + info.customization.logging.check_out_time + ", " + info.customization.logging.timezone +" time!\nWould you like to change this?",
-                                            callback_id: 'automatic-logs-check',
+                                            callback_id: 'question-deletion-check',
+                                            color: '#02C6FF',
                                             attachment_type: 'default',
                                             actions: [
                                                 {
@@ -66,7 +68,8 @@ module.exports = function (controller) {
                                     {
                                         attachments: [{
                                             text: "Your logs are already set to be automatically sent at " + info.customization.logging.check_in_time + " and " + info.customization.logging.check_out_time + ", " + info.customization.logging.timezone +" time!\nWould you like to change this?",
-                                            callback_id: 'automatic-logs-check',
+                                            callback_id: 'question-deletion-check',
+                                            color: '#02C6FF',
                                             attachment_type: 'default',
                                             actions: [
                                                 {
