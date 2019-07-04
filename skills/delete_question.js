@@ -56,7 +56,8 @@ module.exports = function (controller) {
                                         }]
                                     }
                                 );
-                                outcome.push(1)
+                                outcome.push(1);
+                                convo.next();
                             }
                         },
                         {
@@ -87,7 +88,7 @@ module.exports = function (controller) {
                                     }
                                 );
                                 outcome.push(0);
-                                
+                                convo.next();
                             }
                         }
                     ]);
