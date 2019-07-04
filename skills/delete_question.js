@@ -100,9 +100,9 @@ module.exports = function (controller) {
                             if (outcome[0] == 1) {
                                 delete info.customization.question;
                                 controller.storage.teams.save(info);
-                                bot.reply(response, "You got it! Question has been removed.")
+                                bot.reply(message, "You got it! Question has been removed.")
                             } else if( outcome[0] == 0) {
-                                bot.reply(response, "Well, okay then... Enjoy the rest of your day! :sunglasses:");
+                                bot.reply(message, "Well, okay then... Enjoy the rest of your day! :sunglasses:");
                             }
                         } else {
                             bot.reply(message, "Would you mind sending me that message again?");
