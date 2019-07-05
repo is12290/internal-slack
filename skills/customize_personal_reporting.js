@@ -694,7 +694,7 @@ module.exports = function (controller) {
                     convo.on('end', function (reply, convo) {
                         if (convo.successful()) {
 
-                            convo.say("Roger that! I will send personal reports on Fridays at " + data.time + ", " + data.timezone + " time");
+                            bot.reply(message, "Roger that! I will send personal reports on Fridays at " + data.time + ", " + data.timezone + " time");
 
                             info.customization.reporting = {
                                 timezone: data.timezone,
@@ -703,7 +703,7 @@ module.exports = function (controller) {
                             controller.storage.users.save(info);
 
                         } else {
-                            convo.say("Whoops! I wasn't able to save this. Would you mind trying again?");
+                            bot.reply(message, "Whoops! I wasn't able to save this. Would you mind trying again?");
                         }
                     });
                 });
@@ -1483,10 +1483,10 @@ module.exports = function (controller) {
 
                     convo.activate();
 
-                    convo.on('end', function (reply, convo) {
+                    convo.on('end', function (convo) {
                         if (convo.successful()) {
 
-                            convo.say("Roger that! I will send personal reports on Fridyas at " + data.time + ", " + data.timezone + " time");
+                            bot.reply(message, "Roger that! I will send personal reports on Fridyas at " + data.time + ", " + data.timezone + " time");
 
                             info.customization.reporting = {
                                 timezone: data.timezone,
@@ -1495,7 +1495,7 @@ module.exports = function (controller) {
                             controller.storage.users.save(info);
 
                         } else {
-                            convo.say("Whoops! I wasn't able to save this. Would you mind trying again?");
+                            bot.reply(message, "Whoops! I wasn't able to save this. Would you mind trying again?");
                         }
                     });
 

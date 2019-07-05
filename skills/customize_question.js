@@ -15,8 +15,8 @@ module.exports = function (controller) {
                         convo.next();
                     });
 
-                    convo.addQuestion("And what are the four choices related to '" + data.topic + "'? (Formatted from greatest to least - No new lines or commas, just spaces)", function (response, convo) {
-                        data.choices = response.event.text.split(" ");
+                    convo.addQuestion("And what are the four choices? Formatted from greatest to least (Ex. Highest, Okay, Mid, Low)", function (response, convo) {
+                        data.choices = response.event.text.split(", ");
                         bot.api.reactions.add({
                             name: 'thumbsup',
                             channel: response.channel,
@@ -30,7 +30,7 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
 
-                            convo.say("You're all set! Your custom question will be added to all team logs from now on\nIf you want to delete the question at any point just tell me `Delete Custom Question`");
+                            bot.reply(message, "You're all set! Your custom question will be added to all team logs from now on\nIf you want to delete the question at any point just tell me `Delete Custom Question`");
 
                             if (!info.customization) {
                                 info.customization = {
@@ -48,7 +48,7 @@ module.exports = function (controller) {
                                 controller.storage.teams.save(info);
                             }
                         } else {
-                            convo.say("Whoops! I wasn't able to save this. Would you mind trying again?");
+                            bot.reply(message, "Whoops! I wasn't able to save this. Would you mind trying again?");
                         }
                     });
                 });
@@ -145,7 +145,6 @@ module.exports = function (controller) {
 
                     convo.addQuestion("What topic would you like to add?", function (response, convo) {
                         data.topic = response.event.text;
-                        console.log("DAATA.TOPIC: ", data.topic);
                         bot.api.reactions.add({
                             name: 'thumbsup',
                             channel: response.channel,
@@ -169,13 +168,13 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
 
-                            convo.say("You're all set! Your custom question will be added to all team logs from now on\nIf you want to delete the question at any point just tell me `Delete Custom Question`");
+                            bot.reply(message, "You're all set! Your custom question will be added to all team logs from now on\nIf you want to delete the question at any point just tell me `Delete Custom Question`");
 
                             info.customization.question.topic = data.topic;
                             info.customization.question.choices = data.choices;
                             controller.storage.teams.save(info);
                         } else {
-                            convo.say("Whoops! I wasn't able to save this. Would you mind trying again?");
+                            bot.reply(message, "Whoops! I wasn't able to save this. Would you mind trying again?");
                         }
                     });
                 });

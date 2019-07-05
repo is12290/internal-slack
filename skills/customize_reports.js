@@ -800,9 +800,8 @@ module.exports = function (controller) {
                                         }]
                                     }
                                 );
-                                convo.say("Well, okay then... Enjoy the rest of your day! :sunglasses:");
-
-                                
+                                bot.reply("Well, okay then... Enjoy the rest of your day! :sunglasses:");
+                                convo.stop();
                             }
                         }
                     ]);
