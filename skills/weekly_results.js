@@ -8,7 +8,7 @@ module.exports  = function(controller) {
                 if (isNaN(results[0])) {
                     bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!');
                 } else {
-                    if (resultMessage.length == 9) {
+                    if (results.length == 9) {
                         controller.storage.teams.get(message.team, function (err, info) {
                             var topic = info.customization.question.topic;
                             bot.reply(message, {

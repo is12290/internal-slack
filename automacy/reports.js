@@ -57,7 +57,7 @@ if (today != endOfMonth && n === 6 || n === 0) {
                                     channel: instance[2]
                                 });
                             } else {
-                                if (resultMessage.length == 9) {
+                                if (results.length == 9) {
                                     controller.storage.teams.get(message.team, function (err, info) {
                                         var topic = info.customization.question.topic;
                                         bot.say({
