@@ -129,7 +129,6 @@ module.exports  = function(controller) {
         var endOfMonth = moment().endOf('month');
 
         var day = startOfMonth;
-        console.log(day);
 
         var days = [];
         while (day <= endOfMonth) {
