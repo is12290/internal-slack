@@ -1,6 +1,6 @@
-module.exports  = function(controller) {
+module.exports = function (controller) {
     controller.hears(['Monthly results', 'monthly results', 'Month results', 'month results'], 'direct_message,direct_mention', function (bot, message) {
-        controller.storage.users.find({team: message.team}, function(error, output) {
+        controller.storage.users.find({ team: message.team }, function (error, output) {
             if (!output) {
                 bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!');
             } else {
@@ -181,8 +181,8 @@ module.exports  = function(controller) {
                     overallCount = overallCount + (specific[5] / 5);
                     logTally = logTally + 1;
                 }
-    
-                
+
+
             } else {
                 for (var k = 0; k < checkin.length; k++) {
                     var specific = checkin[k];
@@ -191,7 +191,7 @@ module.exports  = function(controller) {
                     moodCount = moodCount + specific[2];
                     confidenceCount = confidenceCount + specific[3];
                     overallCount = overallCount + (specific[4] / 4);
-                    
+
                     var specific = checkout[l];
                     efficiencyCount = efficiencyCount + specific[0];
                     confidenceCount = confidenceCount + specific[1];
@@ -199,80 +199,81 @@ module.exports  = function(controller) {
                     fulfillmentCount = fulfillmentCount + specific[3];
                     overallCount = overallCount + (specific[4] / 4);
                     logTally = logTally + 1;
-                
-            }
-        }
 
-        if (customCount > 0) {
-            var sleep = ((sleepCount / logTally) * 25).toFixed(2);
-            var energy = ((energyCount / logTally) * 25).toFixed(2);
-            var mood = ((moodCount / (logTally * 2)) * 25).toFixed(2);
-            var confidence = ((confidenceCount / (logTally * 2)) * 25).toFixed(2);
-            var efficiency = ((efficiencyCount / logTally) * 25).toFixed(2);
-            var fulfillment = ((fulfillmentCount / logTally) * 25).toFixed(2);
-            var custom = ((customCount / (logTally * 2)) * 25).toFixed(2);
-            var overall = ((overallCount / (logTally * 2)) * 25).toFixed(2);
-
-            var loopArray = [sleep, energy, mood, confidence, efficiency, fulfillment, custom];
-
-            var monthlyReport = [];
-            monthlyReport.push(sleep);
-            for (var z = 0; z < loopArray.length; z++) {
-                if (loopArray[z] > 50) {
-                    var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Positive*';
-                    monthlyReport.push(message);
-                } else {
-                    var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Negative*';
-                    monthlyReport.push(message);
                 }
             }
 
-            if (overall > 50) {
-                var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *positive*!';
-                monthlyReport.push(overallMonth);
-            }
-            else {
-                var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *negative*';
-                monthlyReport.push(overallMonth);
-            }
+            if (customCount > 0) {
+                var sleep = ((sleepCount / logTally) * 25).toFixed(2);
+                var energy = ((energyCount / logTally) * 25).toFixed(2);
+                var mood = ((moodCount / (logTally * 2)) * 25).toFixed(2);
+                var confidence = ((confidenceCount / (logTally * 2)) * 25).toFixed(2);
+                var efficiency = ((efficiencyCount / logTally) * 25).toFixed(2);
+                var fulfillment = ((fulfillmentCount / logTally) * 25).toFixed(2);
+                var custom = ((customCount / (logTally * 2)) * 25).toFixed(2);
+                var overall = ((overallCount / (logTally * 2)) * 25).toFixed(2);
 
-            return monthlyReport;
+                var loopArray = [sleep, energy, mood, confidence, efficiency, fulfillment, custom];
 
-        } else if (customCount == 0 && sleepCount > 0) {
-            var sleep = ((sleepCount / logTally) * 25).toFixed(2);
-            var energy = ((energyCount / logTally) * 25).toFixed(2);
-            var mood = ((moodCount / (logTally * 2)) * 25).toFixed(2);
-            var confidence = ((confidenceCount / (logTally * 2)) * 25).toFixed(2);
-            var efficiency = ((efficiencyCount / logTally) * 25).toFixed(2);
-            var fulfillment = ((fulfillmentCount / logTally) * 25).toFixed(2);
-            var overall = ((overallCount / (logTally * 2)) * 25).toFixed(2);
-
-            var loopArray = [sleep, energy, mood, confidence, efficiency, fulfillment];
-
-            var monthlyReport = [];
-            monthlyReport.push(sleep);
-            for (var z = 0; z < loopArray.length; z++) {
-                if (loopArray[z] > 50) {
-                    var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Positive*';
-                    monthlyReport.push(message);
-                } else {
-                    var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Negative*';
-                    monthlyReport.push(message);
+                var monthlyReport = [];
+                monthlyReport.push(sleep);
+                for (var z = 0; z < loopArray.length; z++) {
+                    if (loopArray[z] > 50) {
+                        var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Positive*';
+                        monthlyReport.push(message);
+                    } else {
+                        var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Negative*';
+                        monthlyReport.push(message);
+                    }
                 }
-            }
 
-            if (overall > 50) {
-                var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *positive*!';
-                monthlyReport.push(overallMonth);
-            }
-            else {
-                var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *negative*';
-                monthlyReport.push(overallMonth);
-            }
+                if (overall > 50) {
+                    var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *positive*!';
+                    monthlyReport.push(overallMonth);
+                }
+                else {
+                    var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *negative*';
+                    monthlyReport.push(overallMonth);
+                }
 
-            return monthlyReport;
-        } else {
-            return 404;
+                return monthlyReport;
+
+            } else if (customCount == 0 && sleepCount > 0) {
+                var sleep = ((sleepCount / logTally) * 25).toFixed(2);
+                var energy = ((energyCount / logTally) * 25).toFixed(2);
+                var mood = ((moodCount / (logTally * 2)) * 25).toFixed(2);
+                var confidence = ((confidenceCount / (logTally * 2)) * 25).toFixed(2);
+                var efficiency = ((efficiencyCount / logTally) * 25).toFixed(2);
+                var fulfillment = ((fulfillmentCount / logTally) * 25).toFixed(2);
+                var overall = ((overallCount / (logTally * 2)) * 25).toFixed(2);
+
+                var loopArray = [sleep, energy, mood, confidence, efficiency, fulfillment];
+
+                var monthlyReport = [];
+                monthlyReport.push(sleep);
+                for (var z = 0; z < loopArray.length; z++) {
+                    if (loopArray[z] > 50) {
+                        var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Positive*';
+                        monthlyReport.push(message);
+                    } else {
+                        var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Negative*';
+                        monthlyReport.push(message);
+                    }
+                }
+
+                if (overall > 50) {
+                    var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *positive*!';
+                    monthlyReport.push(overallMonth);
+                }
+                else {
+                    var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness this month was *negative*';
+                    monthlyReport.push(overallMonth);
+                }
+
+                return monthlyReport;
+            } else {
+                return 404;
+            }
         }
     }
 }
