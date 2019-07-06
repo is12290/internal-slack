@@ -162,7 +162,7 @@ module.exports = function (controller) {
                 }
             }
 
-            if (checkin[0].length == 5) {
+            if (checkin[0].length == 6) {
                 for (var k = 0; k < checkin.length; k++) {
                     var specific = checkin[k];
                     sleepCount = sleepCount + specific[0];
