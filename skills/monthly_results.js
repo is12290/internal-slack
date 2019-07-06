@@ -125,8 +125,8 @@ module.exports  = function(controller) {
 
     function getOutput(results) {
         const moment = require('moment');
-        var startOfMonth = moment().startOf('month').format('DD-MM-YYYY');
-        var endOfMonth = moment().endOf('month').format('DD-MM-YYYY');
+        var startOfMonth = moment().startOf('month');
+        var endOfMonth = moment().endOf('month');
 
         var day = startOfMonth;
 
