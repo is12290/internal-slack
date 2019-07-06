@@ -5,15 +5,18 @@ module.exports = function (controller) {
                 bot.reply(message, 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!')
             } else {
                 var percent = getPercentage(output);
-                if (percent[0] === 404) {
+                if (percent == 404) {
                     bot.reply(message, 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!')
                 } else {
                     var resultMessage = getMessages(percent);
 
                     if (resultMessage.length == 9) {
                         controller.storage.teams.get(message.team, function (err, info) {
-                            var topic = info.customization.question.topic;
-
+                            if (typeof info.customization.question.topic == 'undefined') {
+                                var topic = "Deleted Custom Topic"
+                            } else {
+                                var topic = info.customization.question.topic;
+                            }
                             bot.reply(message, {
                                 text: 'Hey there! Here are your results for the day...\n',
                                 attachments: [
@@ -129,124 +132,76 @@ module.exports = function (controller) {
         var yyyy = today.getFullYear();
 
         today = mm + '/' + dd + '/' + yyyy;
-        if (input[0].logs[today].check_in.length == 6) {
-            // Necessary variables
-            var sleepCount = 0;
-            var energyCount = 0;
-            var moodCount = 0;
-            var confidenceCount = 0;
-            var efficiencyCount = 0;
-            var fulfillmentCount = 0;
-            var customCount = 0;
-            var overallCount = 0;
 
-            for (var i = 0; i < input.length; i++) {
-                var instance = input[i];
-                if (typeof instance.logs[today] == 'undefined') {
-                    var errorArray = [404]
+        // Necessary variables
+        var sleepCount = 0;
+        var energyCount = 0;
+        var moodCount = 0;
+        var confidenceCount = 0;
+        var efficiencyCount = 0;
+        var fulfillmentCount = 0;
+        var customCount = 0;
+        var overallCount = 0;
+        var tally = 0
+        var customTally = 0
+
+        for (var i = 0; i < input.length; i++) {
+            var instance = input[i];
+            if (today in instance.logs) {
+                var checkIn = instance.logs[today].check_in;
+                var checkOut = instance.logs[today].check_out;
+
+                if (typeof checkIn == 'undefined' || typeof checkOut == 'undefined') {
+                    // Pass
                 } else {
-                    var checkIn = instance.logs[today].check_in;
-                    var checkOut = instance.logs[today].check_out;
-
-                    if (typeof checkIn == 'undefined' || typeof checkOut == 'undefined') {
-                        var errorArray = [404];
-                    } else {
-                        sleepCount = sleepCount + checkIn[0];
-                        energyCount = energyCount + checkIn[1];
-                        moodCount = moodCount + checkIn[2];
-                        confidenceCount = confidenceCount + checkIn[3];
+                    sleepCount = sleepCount + checkIn[0];
+                    energyCount = energyCount + checkIn[1];
+                    moodCount = moodCount + checkIn[2];
+                    confidenceCount = confidenceCount + checkIn[3];
+                    if (checkIn.length == 5) {
                         customCount = customCount + checkIn[4]
                         overallCount = overallCount + (checkIn[5] / 5);
+                        tally = tally + 1
+                        customTally = customTally + 1
+                    } else {
+                        overallCount = overallCount + (checkIn[4] / 4);
+                        tally = tally + 1
+                    }
 
-                        efficiencyCount = efficiencyCount + checkOut[0];
-                        confidenceCount = confidenceCount + checkOut[1];
-                        moodCount = moodCount + checkOut[2];
-                        fulfillmentCount = fulfillmentCount + checkOut[3];
+
+                    efficiencyCount = efficiencyCount + checkOut[0];
+                    confidenceCount = confidenceCount + checkOut[1];
+                    moodCount = moodCount + checkOut[2];
+                    fulfillmentCount = fulfillmentCount + checkOut[3];
+                    if (checkOut.length == 5) {
                         customCount = customCount + checkOut[4];
                         overallCount = overallCount + (checkOut[5] / 5);
-                    }
-                }
-
-            }
-
-            if (sleepCount > 0) {
-                var sleep = ((sleepCount / input.length) * 25).toFixed(2);
-                var energy = ((energyCount / input.length) * 25).toFixed(2);
-                var mood = ((moodCount / (input.length * 2)) * 25).toFixed(2);
-                var confidence = ((confidenceCount / (input.length * 2)) * 25).toFixed(2);
-                var efficiency = ((efficiencyCount / input.length) * 25).toFixed(2);
-                var fulfillment = ((fulfillmentCount / input.length) * 25).toFixed(2);
-                var custom = ((customCount / (input.length * 2)) * 25).toFixed(2);
-                var overall = ((overallCount / (input.length * 2)) * 25).toFixed(2);
-
-                var percentArray = [sleep, energy, mood, confidence, efficiency, fulfillment, custom, overall];
-
-                return percentArray;
-            } else {
-                return errorArray;
-            }
-
-
-        } else {
-            // Necessary variables
-            var sleepCount = 0;
-            var energyCount = 0;
-            var moodCount = 0;
-            var confidenceCount = 0;
-            var efficiencyCount = 0;
-            var fulfillmentCount = 0;
-            var overallCount = 0;
-
-            for (var i = 0; i < input.length; i++) {
-                var today = new Date();
-                var dd = String(today.getDate()).padStart(2, '0');
-                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = today.getFullYear();
-
-                today = mm + '/' + dd + '/' + yyyy;
-
-                var instance = input[i];
-                if (typeof instance.logs[today] == 'undefined') {
-                    var errorArray = [404]
-                } else {
-                    var checkIn = instance.logs[today].check_in;
-                    var checkOut = instance.logs[today].check_out;
-
-                    if (typeof checkIn == 'undefined' || typeof checkOut == 'undefined') {
-                        var errorArray = [404];
                     } else {
-                        sleepCount = sleepCount + checkIn[0];
-                        energyCount = energyCount + checkIn[1];
-                        moodCount = moodCount + checkIn[2];
-                        confidenceCount = confidenceCount + checkIn[3];
-                        overallCount = overallCount + (checkIn[4] / 4);
-
-                        efficiencyCount = efficiencyCount + checkOut[0];
-                        confidenceCount = confidenceCount + checkOut[1];
-                        moodCount = moodCount + checkOut[2];
-                        fulfillmentCount = fulfillmentCount + checkOut[3];
                         overallCount = overallCount + (checkOut[4] / 4);
                     }
                 }
-
             }
+        }
 
-            if (sleepCount > 0) {
-                var sleep = ((sleepCount / input.length) * 25).toFixed(2);
-                var energy = ((energyCount / input.length) * 25).toFixed(2);
-                var mood = ((moodCount / (input.length * 2)) * 25).toFixed(2);
-                var confidence = ((confidenceCount / (input.length * 2)) * 25).toFixed(2);
-                var efficiency = ((efficiencyCount / input.length) * 25).toFixed(2);
-                var fulfillment = ((fulfillmentCount / input.length) * 25).toFixed(2);
-                var overall = ((overallCount / (input.length * 2)) * 25).toFixed(2);
+        if (tally > 0) {
+            var sleep = ((sleepCount / tally) * 25).toFixed(2);
+            var energy = ((energyCount / tally) * 25).toFixed(2);
+            var mood = ((moodCount / (tally * 2)) * 25).toFixed(2);
+            var confidence = ((confidenceCount / (tally * 2)) * 25).toFixed(2);
+            var efficiency = ((efficiencyCount / tally) * 25).toFixed(2);
+            var fulfillment = ((fulfillmentCount / tally) * 25).toFixed(2);
+            var overall = ((overallCount / (tally * 2)) * 25).toFixed(2);
 
-                var percentArray = [sleep, energy, mood, confidence, efficiency, fulfillment, overall];
-
+            if (customTally > 0) {
+                var custom = ((customCount / (tally * 2)) * 25).toFixed(2);
+                var percentArray = [sleep, energy, mood, confidence, efficiency, fulfillment, custom, overall];
                 return percentArray;
             } else {
-                return errorArray;
+                var percentArray = [sleep, energy, mood, confidence, efficiency, fulfillment, overall];
+                return percentArray;
             }
-
+        } else {
+            return 404
         }
     }
         

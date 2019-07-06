@@ -10,7 +10,11 @@ module.exports = function(controller) {
                 } else {
                     if (results.length == 9) {
                         controller.storage.teams.get(message.team, function (err, info) {
-                            var topic = info.customization.question.topic;
+                            if (typeof info.customization.question.topic == 'undefined') {
+                                var topic = "Deleted Custom Topic"
+                            } else {
+                                var topic = info.customization.question.topic;
+                            }
                             bot.reply(message, {
                                 text: 'Hey there! Here are is you personal report for the week. Scores are out of 100%...\n',
                                 attachments: [

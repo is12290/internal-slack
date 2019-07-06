@@ -153,8 +153,8 @@ module.exports = function (controller) {
                         convo.next();
                     });
 
-                    convo.addQuestion("And what are the four choices? (Formatted from greatest to least - No new lines, just commas and spaces)", function (response, convo) {
-                        data.choices = response.event.text.split(" ");
+                    convo.addQuestion("And what are the four choices? Formatted from greatest to least (Ex. Highest, Okay, Mid, Low)", function (response, convo) {
+                        data.choices = response.event.text.split(", ");
                         bot.api.reactions.add({
                             name: 'thumbsup',
                             channel: response.channel,
