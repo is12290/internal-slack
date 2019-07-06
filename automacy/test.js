@@ -19,10 +19,10 @@ bot_options.storage = mongoStorage;
 var controller = Botkit.slackbot(bot_options);
 
 controller.storage.teams.all(function (err, allTeams) {
-    controller.spawn({ token: allTeams[0].bot.token }, function (bot) {
+    controller.spawn({ token: 'xoxb-611368649089-668826712322-H4tJJAesxtf8iJFXAFJ27bCw' }, function (bot) {
 
         bot.startPrivateConversation({ user: 'UHZAUK473' }, function (err, dm) {
-            dm.say("Hi!");
+            dm.addMessage({message: 'hi'});
         });
     })
 })
