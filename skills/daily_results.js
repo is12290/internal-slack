@@ -161,11 +161,11 @@ module.exports = function (controller) {
                     if (checkIn.length == 5) {
                         customCount = customCount + checkIn[4]
                         overallCount = overallCount + (checkIn[5] / 5);
-                        tally = tally + 1
-                        customTally = customTally + 1
+                        tally = tally + 1;
+                        customTally = customTally + 1;
                     } else {
                         overallCount = overallCount + (checkIn[4] / 4);
-                        tally = tally + 1
+                        tally = tally + 1;
                     }
 
 
@@ -193,7 +193,7 @@ module.exports = function (controller) {
             var overall = ((overallCount / (tally * 2)) * 25).toFixed(2);
 
             if (customTally > 0) {
-                var custom = ((customCount / (tally * 2)) * 25).toFixed(2);
+                var custom = ((customCount / (customTally * 2)) * 25).toFixed(2);
                 var percentArray = [sleep, energy, mood, confidence, efficiency, fulfillment, custom, overall];
                 return percentArray;
             } else {
