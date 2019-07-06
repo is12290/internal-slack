@@ -171,9 +171,7 @@ module.exports  = function(controller) {
                     confidenceCount = confidenceCount + specific[3];
                     customCount = customCount + specific[4];
                     overallCount = overallCount + (specific[5] / 5);
-                }
-    
-                for (var l = 0; l < checkout.length; l++) {
+                
                     var specific = checkout[l];
                     efficiencyCount = efficiencyCount + specific[0];
                     confidenceCount = confidenceCount + specific[1];
@@ -181,9 +179,10 @@ module.exports  = function(controller) {
                     fulfillmentCount = fulfillmentCount + specific[3];
                     customCount = customCount + specific[4];
                     overallCount = overallCount + (specific[5] / 5);
+                    logTally = logTally + 1;
                 }
     
-                logTally = logTally + 1;
+                
             } else {
                 for (var k = 0; k < checkin.length; k++) {
                     var specific = checkin[k];
@@ -192,18 +191,15 @@ module.exports  = function(controller) {
                     moodCount = moodCount + specific[2];
                     confidenceCount = confidenceCount + specific[3];
                     overallCount = overallCount + (specific[4] / 4);
-                }
-    
-                for (var l = 0; l < checkout.length; l++) {
+                
                     var specific = checkout[l];
                     efficiencyCount = efficiencyCount + specific[0];
                     confidenceCount = confidenceCount + specific[1];
                     moodCount = moodCount + specific[2];
                     fulfillmentCount = fulfillmentCount + specific[3];
                     overallCount = overallCount + (specific[4] / 4);
+                    logTally = logTally + 1;
                 }
-
-                logTally = logTally + 1;
             }
         }
 
