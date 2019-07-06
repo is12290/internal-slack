@@ -5,16 +5,12 @@ module.exports  = function(controller) {
                 bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!');
             } else {
                 var results = getOutput(output);
-                if (isNaN(results[0])) {
+                if (results == 404) {
                     bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!');
                 } else {
                     if (results.length == 9) {
                         controller.storage.teams.get(message.team, function (err, info) {
-                            if (typeof info.customization.question.topic == 'undefined') {
-                                var topic = "Deleted Custom Topic"
-                            } else {
-                                var topic = info.customization.question.topic;
-                            }
+                            var topic = info.customization.question;
                             bot.reply(message, {
                                 text: 'Hey there! Here are your weekly organization averages...\n',
                                 attachments: [
@@ -242,7 +238,7 @@ module.exports  = function(controller) {
 
             return weeklyReport;
 
-        } else {
+        } else if (customCount == 0 && sleepCount > 0) {
             var sleep = ((sleepCount / logTally) * 25).toFixed(2);
             var energy = ((energyCount / logTally) * 25).toFixed(2);
             var mood = ((moodCount / (logTally * 2)) * 25).toFixed(2);
@@ -275,6 +271,8 @@ module.exports  = function(controller) {
             }
 
             return weeklyReport;
+        } else {
+            return 404;
         }
     }
 }

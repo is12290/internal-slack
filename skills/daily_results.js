@@ -12,7 +12,7 @@ module.exports = function (controller) {
 
                     if (resultMessage.length == 9) {
                         controller.storage.teams.get(message.team, function (err, info) {
-                            if (typeof info.customization.question.topic == 'undefined') {
+                            if (typeof info.customization.question == 'undefined') {
                                 var topic = "Deleted Custom Topic"
                             } else {
                                 var topic = info.customization.question.topic;
@@ -201,7 +201,7 @@ module.exports = function (controller) {
                 return percentArray;
             }
         } else {
-            return 404
+            return 404;
         }
     }
         

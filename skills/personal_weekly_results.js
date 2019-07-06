@@ -5,12 +5,12 @@ module.exports = function(controller) {
                 bot.reply(message, 'Nothing to report! I don\'t seem to have any logs to report from :thinking_face:\nTry doing your `Check In` and `Check Out` logs or email support@getinternal.co for help!');
             } else {
                 results = getOutput(output);
-                if (isNaN(results[1])) {
+                if (results == 404) {
                     bot.reply(message, 'I apologize, but I do not have anything to report - I need at least one day\'s worth of logs to report results\nIf I\'m wrong, please email support@getinternal.co for help!');
                 } else {
                     if (results.length == 9) {
                         controller.storage.teams.get(message.team, function (err, info) {
-                            if (typeof info.customization.question.topic == 'undefined') {
+                            if (typeof info.customization.question == 'undefined') {
                                 var topic = "Deleted Custom Topic"
                             } else {
                                 var topic = info.customization.question.topic;
@@ -239,7 +239,7 @@ module.exports = function(controller) {
             var returnArray = [sleepMessage, sleep, energyMessage, moodMessage, confidenceMessage, efficiencyMessage, fulfillmentMessage, customMessage, overallMessage];
             return returnArray;
 
-        } else {
+        } else if (customCount == 0 && sleepCount > 0) {
             var sleep = ((sleepCount / checkin.length) * 25).toFixed(2);
             var energy = ((energyCount / checkin.length) * 25).toFixed(2);
             var mood = ((moodCount / (checkin.length + checkout.length)) * 25).toFixed(2);
@@ -274,6 +274,8 @@ module.exports = function(controller) {
 
             var returnArray = [sleepMessage, sleep, energyMessage, moodMessage, confidenceMessage, efficiencyMessage, fulfillmentMessage, overallMessage];
             return returnArray;
+        } else {
+            return 404;
         }
     }
 }

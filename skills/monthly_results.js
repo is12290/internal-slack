@@ -5,12 +5,12 @@ module.exports  = function(controller) {
                 bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!');
             } else {
                 var results = getOutput(output);
-                if (isNaN(results[0])) {
+                if (results == 404) {
                     bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!');
                 } else {
                     if (results.length == 9) {
                         controller.storage.teams.get(message.team, function (err, info) {
-                            if (typeof info.customization.question.topic == 'undefined') {
+                            if (typeof info.customization.question == 'undefined') {
                                 var topic = "Deleted Custom Topic"
                             } else {
                                 var topic = info.customization.question.topic;
@@ -242,7 +242,7 @@ module.exports  = function(controller) {
 
             return monthlyReport;
 
-        } else {
+        } else if (customCount == 0 && sleepCount > 0) {
             var sleep = ((sleepCount / logTally) * 25).toFixed(2);
             var energy = ((energyCount / logTally) * 25).toFixed(2);
             var mood = ((moodCount / (logTally * 2)) * 25).toFixed(2);
@@ -275,6 +275,8 @@ module.exports  = function(controller) {
             }
 
             return monthlyReport;
+        } else {
+            return 404;
         }
     }
 }
