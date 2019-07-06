@@ -172,7 +172,7 @@ module.exports  = function(controller) {
                     customCount = customCount + specific[4];
                     overallCount = overallCount + (specific[5] / 5);
                 
-                    var specific = checkout[l];
+                    var specific = checkout[k];
                     efficiencyCount = efficiencyCount + specific[0];
                     confidenceCount = confidenceCount + specific[1];
                     moodCount = moodCount + specific[2];
@@ -192,7 +192,7 @@ module.exports  = function(controller) {
                     confidenceCount = confidenceCount + specific[3];
                     overallCount = overallCount + (specific[4] / 4);
                 
-                    var specific = checkout[l];
+                    var specific = checkout[k];
                     efficiencyCount = efficiencyCount + specific[0];
                     confidenceCount = confidenceCount + specific[1];
                     moodCount = moodCount + specific[2];
