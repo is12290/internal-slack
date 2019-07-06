@@ -158,7 +158,7 @@ module.exports = function (controller) {
                     energyCount = energyCount + checkIn[1];
                     moodCount = moodCount + checkIn[2];
                     confidenceCount = confidenceCount + checkIn[3];
-                    if (checkIn.length == 5) {
+                    if (checkIn.length == 6) {
                         customCount = customCount + checkIn[4]
                         overallCount = overallCount + (checkIn[5] / 5);
                         tally = tally + 1;
@@ -173,7 +173,7 @@ module.exports = function (controller) {
                     confidenceCount = confidenceCount + checkOut[1];
                     moodCount = moodCount + checkOut[2];
                     fulfillmentCount = fulfillmentCount + checkOut[3];
-                    if (checkOut.length == 5) {
+                    if (checkOut.length == 6) {
                         customCount = customCount + checkOut[4];
                         overallCount = overallCount + (checkOut[5] / 5);
                     } else {
