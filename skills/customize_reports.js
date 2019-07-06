@@ -1509,7 +1509,7 @@ module.exports = function (controller) {
                             controller.storage.teams.save(info);
 
                         } else {
-                            bot.reply(message, "Whoops! I wasn't able to save this. Would you mind trying again?");
+                            // Pass
                         }
                     });
 

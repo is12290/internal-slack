@@ -1343,9 +1343,8 @@ module.exports = function (controller) {
                                         }]
                                     }
                                 );
-                                convo.say("Well, okay then... Enjoy the rest of your day! :sunglasses:");
-
-                                
+                                bot.reply(message, "Well, okay then... Enjoy the rest of your day! :sunglasses:");
+                                convo.stop();
                             }
                         }
                     ]);
@@ -2601,7 +2600,7 @@ module.exports = function (controller) {
                             controller.storage.users.save(info);
 
                         } else {
-                            convo.say("Whoops! I wasn't able to save this. Would you mind trying again?");
+                            // Pass
                         }
                     });
 
