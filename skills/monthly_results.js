@@ -208,6 +208,9 @@ module.exports  = function(controller) {
         }
 
         if (customCount > 0) {
+            console.log(sleepCount);
+            console.log(logTally);
+            console.log(customCount)
             var sleep = ((sleepCount / logTally) * 25).toFixed(2);
             var energy = ((energyCount / logTally) * 25).toFixed(2);
             var mood = ((moodCount / (logTally * 2)) * 25).toFixed(2);
