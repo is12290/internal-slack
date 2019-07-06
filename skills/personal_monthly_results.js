@@ -1,5 +1,5 @@
 module.exports = function(controller) {
-    controller.hears(['Personal  Monthly Results', 'Personal Monthly Result', 'Personal monthly results', 'Personal monthly result', 'personal monthly results', 'personal monthly result'], 'direct_message', function(bot, message) {
+    controller.hears(['Personal Monthly Results', 'Personal Monthly Result', 'Personal monthly results', 'Personal monthly result', 'personal monthly results', 'personal monthly result'], 'direct_message', function(bot, message) {
         controller.storage.users.get(message.user, function(error, output) {
             if (!output) {
                 bot.reply(message, 'Nothing to report! I don\'t seem to have any logs to report from :thinking_face:\nTry doing your `Check In` and `Check Out` logs or email support@getinternal.co for help!');
@@ -125,9 +125,9 @@ module.exports = function(controller) {
     });
 
     function getOutput(results) {
-        const moment = require('moment');
-        const startOfMonth = moment().startOf('month').format('DD-MM-YYYY');
-        const endOfMonth = moment().endOf('month').format('DD-MM-YYYY');
+        var moment = require('moment');
+        var startOfMonth = moment().startOf('month').format('DD-MM-YYYY');
+        var endOfMonth = moment().endOf('month').format('DD-MM-YYYY');
 
         var day = startOfMonth;
 
