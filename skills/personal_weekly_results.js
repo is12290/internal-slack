@@ -148,12 +148,12 @@ module.exports = function(controller) {
         var customTally = 0;
 
         for (var j = 0; j < days.length; j++) {
-            if (days[j] in instance.logs) {
-                if (typeof instance.logs[days[j]].check_in == 'undefined' || instance.logs[days[j]].check_out == 'undefined') {
+            if (days[j] in results.logs) {
+                if (typeof results.logs[days[j]].check_in == 'undefined' || results.logs[days[j]].check_out == 'undefined') {
                     // Pass
                 } else {
-                    var checkIn = instance.logs[days[j]].check_in;
-                    var checkOut = instance.logs[days[j]].check_out;
+                    var checkIn = results.logs[days[j]].check_in;
+                    var checkOut = results.logs[days[j]].check_out;
 
                     sleepCount = sleepCount + checkIn[0];
                     energyCount = energyCount + checkIn[1];
