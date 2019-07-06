@@ -183,8 +183,8 @@ module.exports = function (controller) {
             }
         }
 
-        console.log(tally);
-        console.log(sleepCount);
+        console.log(customTally);
+        console.log(customCount);
         if (tally > 0) {
             var sleep = ((sleepCount / tally) * 25).toFixed(2);
             var energy = ((energyCount / tally) * 25).toFixed(2);
