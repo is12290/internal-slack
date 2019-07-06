@@ -697,7 +697,7 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
 
-                            convo.say("Roger that! I will send results on weekdays at " + data.time + ", " + data.timezone + " time\nAlso please make sure I've been added to the public channel you want me to report the results in!");
+                            bot.reply(message, "Roger that! I will send results on weekdays at " + data.time + ", " + data.timezone + " time\nAlso please make sure I've been added to the public channel you want me to report the results in!");
 
                             if (!info.customization) {
                                 info.customization = {
@@ -715,7 +715,7 @@ module.exports = function (controller) {
                                 controller.storage.teams.save(info);
                             }
                         } else {
-                            convo.say("Whoops! I wasn't able to save this. Would you mind trying again?");
+                            bot.reply(message, "Whoops! I wasn't able to save this. Would you mind trying again?");
                         }
                     });
                 });
@@ -723,8 +723,9 @@ module.exports = function (controller) {
                 bot.startConversation(message, function (err, convo) {
                     convo.addQuestion({
                         attachments: [{
-                                text: "Your reports are already set to automatically send at " + info.customization.reporting.time + ", " + info.customization.reporting.timezone + " time!\nWould you like to change this?",
+                                text: "Your reports are already set to automatically send at " + info.customization.reporting.time + "!\nWould you like to change this?",
                                 callback_id: 'automatic-reports-check',
+                                color: '#FF02FF',
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -751,6 +752,7 @@ module.exports = function (controller) {
                                         attachments: [{
                                             text: "Your reports are already set to automatically send at " + info.report_time + "!\nWould you like to change this?",
                                             callback_id: 'automatic-reports-check',
+                                            color: '#FF02FF',
                                             attachment_type: 'default',
                                             actions: [
                                                 {
@@ -781,6 +783,7 @@ module.exports = function (controller) {
                                         attachments: [{
                                             text: "Your reports are already set to automatically send at " + info.report_time + "!\nWould you like to change this?",
                                             callback_id: 'automatic-reports-check',
+                                            color: '#FF02FF',
                                             attachment_type: 'default',
                                             actions: [
                                                 {
@@ -800,7 +803,7 @@ module.exports = function (controller) {
                                         }]
                                     }
                                 );
-                                bot.reply("Well, okay then... Enjoy the rest of your day! :sunglasses:");
+                                bot.reply(message, "Well, okay then... Enjoy the rest of your day! :sunglasses:");
                                 convo.stop();
                             }
                         }
@@ -946,7 +949,7 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 title: 'Time',
-                                text: 'What timezone are you in?',
+                                text: 'What time do you want the team reports sent?',
                                 callback_id: 'time',
                                 attachment_type: 'default',
                                 color: '#02FF92',
@@ -1497,7 +1500,7 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
 
-                            convo.say("Roger that! I will send results on weekdays at " + data.time + ", " + data.timezone + " time");
+                            bot.reply(message, "Roger that! I will send results on weekdays at " + data.time + ", " + data.timezone + " time");
 
                             info.customization.reporting = {
                                 timezone: data.timezone,
@@ -1506,7 +1509,7 @@ module.exports = function (controller) {
                             controller.storage.teams.save(info);
 
                         } else {
-                            convo.say("Whoops! I wasn't able to save this. Would you mind trying again?");
+                            bot.reply(message, "Whoops! I wasn't able to save this. Would you mind trying again?");
                         }
                     });
 
