@@ -1248,14 +1248,25 @@ module.exports = function (controller) {
 
                             convo.say("Roger that! I will send check in logs on weekdays at " + data.check_in_time + " and check out logs on weekdays at " + data.check_out_time + ", " + data.timezone + " time");
 
-                            info.customization.logging = {
-                                timezone: data.timezone,
-                                check_in_time: data.check_in_time,
-                                check_out_time: data.check_out_time,
-                                channel: message.channel
-                            };
-                            controller.storage.users.save(info);
-
+                            if (!info.customization) {
+                                info.customization = {
+                                    logging: {
+                                        timezone: data.timezone,
+                                        check_in_time: data.check_in_time,
+                                        check_out_time: data.check_out_time,
+                                        channel: message.channel
+                                    }
+                                }
+                                controller.storage.users.save(info);
+                            } else {
+                                info.customization.logging = {
+                                    timezone: data.timezone,
+                                    check_in_time: data.check_in_time,
+                                    check_out_time: data.check_out_time,
+                                    channel: message.channel
+                                };
+                                controller.storage.users.save(info);
+                            }
                         } else {
                             convo.say("Whoops! I wasn't able to save this. Would you mind trying again?");
                         }
