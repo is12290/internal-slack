@@ -696,12 +696,21 @@ module.exports = function (controller) {
 
                             bot.reply(message, "Roger that! I will send personal reports on Fridays at " + data.time + ", " + data.timezone + " time");
 
-                            info.customization.reporting = {
-                                timezone: data.timezone,
-                                time: data.time
-                            };
-                            controller.storage.users.save(info);
-
+                            if (!info.customization) {
+                                info.customization = {
+                                    reporting: {
+                                        timezone: data.timezone,
+                                        time: data.time
+                                    }
+                                }
+                                controller.storage.users.save(info);
+                            } else {
+                                info.customization.reporting = {
+                                    timezone: data.timezone,
+                                    time: data.time
+                                };
+                                controller.storage.users.save(info);
+                            }
                         } else {
                             bot.reply(message, "Whoops! I wasn't able to save this. Would you mind trying again?");
                         }

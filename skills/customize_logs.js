@@ -1246,7 +1246,7 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
 
-                            convo.say("Roger that! I will send check in logs on weekdays at " + data.check_in_time + " and check out logs on weekdays at " + data.check_out_time + ", " + data.timezone + " time");
+                            bot.reply(message, "Roger that! I will send check in logs on weekdays at " + data.check_in_time + " and check out logs on weekdays at " + data.check_out_time + ", " + data.timezone + " time");
 
                             if (!info.customization) {
                                 info.customization = {
@@ -1268,7 +1268,7 @@ module.exports = function (controller) {
                                 controller.storage.users.save(info);
                             }
                         } else {
-                            convo.say("Whoops! I wasn't able to save this. Would you mind trying again?");
+                            bot.reply(message, "Whoops! I wasn't able to save this. Would you mind trying again?");
                         }
                     });
                 });
@@ -2601,7 +2601,7 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
 
-                            convo.say("Roger that! I will send check in logs on weekdays at " + data.check_in_time + " and check out logs on weekdays at " + data.check_out_time + ", " + data.timezone + " time");
+                            bot.reply(message, "Roger that! I will send check in logs on weekdays at " + data.check_in_time + " and check out logs on weekdays at " + data.check_out_time + ", " + data.timezone + " time");
 
                             info.customization.logging = {
                                 timezone: data.check_in_timezone,
