@@ -37,7 +37,6 @@ controller.storage.teams.all(function (error, all_teams) {
             }
             console.log(res);
             bot.startConversation({
-              user: results[j].id,
               channel: res.channel.id,
               text: 'PLEASE WORK'
             }, (err, convo) => {
