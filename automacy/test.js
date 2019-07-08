@@ -28,6 +28,7 @@ controller.storage.teams.all(function (error, all_teams) {
       controller.storage.users.find({ team: all_teams[i].id }, function (error, results) {
         for (var j = 0; j < results.length; j++) {
           console.log("Looping through users");
+          console.log("ID: ", results[j].id);
           bot.startPrivateConversation({user: results[j].id }, function (err, conversation) {
             if(err) {
               console.log("ERROR: ", err);
