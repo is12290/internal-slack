@@ -34,23 +34,3 @@ controller.storage.teams.all(function (err, all) {
     })
   }
 })
-
-
-controller.spawn({ token: 'xoxb-611368649089-668826712322-H4tJJAesxtf8iJFXAFJ27bCw' }, function (bot) {
-
-    bot.startConversation({
-        user: 'UHZAUK473',
-        channel: 'DL074NQTS',
-        text: 'dummy'
-        }, function(err, convo) {
-          convo.ask({
-          channel: 'DL074NQTS',
-          text: 'Just what do you think you are doing, Dave?'
-           }, function(res, convo) {
-             convo.say(res.text + ' is not a good enough answer.')
-             convo.next()
-             }
-      )}
-    );
-})
-
