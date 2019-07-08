@@ -28,23 +28,15 @@ controller.storage.teams.all(function (error, all_teams) {
       controller.storage.users.find({ team: all_teams[i].id }, function (error, results) {
         for (var j = 0; j < results.length; j++) {
           console.log("Looping through users");
-          bot.api.im.open({
-            user: results[j].id
-          }, (err, res) => {
-            if (err) {
-              console.log('Failed to open IM with user', err)
+          bot.startPrivateConversation({user: all_users[j].id }, function (err, conversation) {
+            if(err) {
+              console.log("ERROR: ", err);
             }
-            console.log("Res: ", res);
-            bot.startConversation({
-              user: results[j].id,
-              channel: res.channel.id,
-              text: 'WOWZA... 1....2'
-            }, (err, convo) => {
-              if (err) {
-                console.log("ERROR: ", err);
-              }
-              convo.say('This is the shit')
-            });
+            conversation.say("PLEASE work");
+            conversation.ask("What is your favorite color?", function(response, conversation) {
+              conversation.say("Cool, I like " + response.text + " too!");
+              conversation.nect();
+            })
           })
         }
       })
