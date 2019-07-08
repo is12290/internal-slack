@@ -19,22 +19,23 @@ var controller = Botkit.slackbot(bot_options);
 
 controller.storage.teams.all(function (error, all_teams) {
   for (var i = 0; i < all_teams.length; i++) {
-    controller.spawn( {token: all_teams[i].bot.token}, function (bot) {
-      controller.storage.users.find( {team: all_teams[i]}, function (error, results) {
+    controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
+      controller.storage.users.find({ team: all_teams[i] }, function (error, results) {
         for (var j = 0; j < results.length; j++) {
-          bot.startConversation({channel: results[j].channels[0], text: 'hi'}, function (err, convo) {
+          bot.api.im.open({
+            user: results[j].id
+          }, (err, res) => {
             if (err) {
-              console.log("ERROR: ", err);
-            } else {
-              convo.say("Hey!");
-              convo.next();
-              convo.addQuestion("How are you?", function (response, convo) {
-                convo.say("cool, you said: " + response.text);
-                convo.next();
-              }, {}, 'default');
-
-              convo.activate();
+              console.log('Failed to open IM with user', err)
             }
+            console.log(res);
+            bot.startConversation({
+              user: results[j].id,
+              channel: res.channel.id,
+              text: 'WOWZA... 1....2'
+            }, (err, convo) => {
+              convo.say('This is the shit')
+            });
           })
         }
       })
