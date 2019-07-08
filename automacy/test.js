@@ -29,18 +29,26 @@ controller.storage.teams.all(function (error, all_teams) {
         for (var j = 0; j < results.length; j++) {
           console.log("Looping through users");
           console.log("ID: ", results[j].id);
-          bot.startPrivateConversation({user: results[j].id }, function (err, conversation) {
-            if(err) {
-              console.log("ERROR: ", err);
+          bot.api.im.open({
+            user: results[j].id
+          }, (err, res) => {
+            if (err) {
+              console.log('Failed to open IM with user', err);
             }
-            conversation.say("PLEASE work");
-            conversation.ask("What is your favorite color?", function(response, conversation) {
-              conversation.say("Cool, I like " + response.text + " too!");
-              conversation.nect();
-            })
-          })
+            console.log(res);
+            bot.startConversation({
+              user: results[j].id,
+              channel: res.channel.id,
+              text: 'PLEASE WORK'
+            }, (err, convo) => {
+              if(err) {
+                console.log("error: ", err);
+              }
+              convo.say('FINALLY');
+            });
+          });
         }
-      })
-    })
+      });
+    });
   }
 });
