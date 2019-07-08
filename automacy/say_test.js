@@ -20,16 +20,20 @@ var controller = Botkit.slackbot(bot_options);
 controller.storage.teams.all(function (error, all_teams) {
   for (var i = 0; i < all_teams.length; i++) {
     controller.spawn( {token: all_teams[i].bot.token}, function (bot) {
-        bot.say({
-            text: 'This is a test',
-            channel: all_teams[i].channel
-        }, function (err, response) {
-            if (err) {
-                console.log("error: ", err);
-            } else {
-                console.log("response: ", response);
+        controller.storage.users.find( { team: all_teams[i].id }, function (err, all_users) {
+            for (var j = 0; j < all_users.length; j++) {
+                bot.say({
+                    text: 'This is a test',
+                    channel: all_users[i].channels[0]
+                }, function (err, response) {
+                    if (err) {
+                        console.log("error: ", err);
+                    } else {
+                        console.log("response: ", response);
+                    }
+                });
             }
-        });
+        })
     })
   }
 });
