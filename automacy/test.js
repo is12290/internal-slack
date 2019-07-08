@@ -18,6 +18,7 @@ bot_options.storage = mongoStorage;
 var controller = Botkit.slackbot(bot_options);
 
 controller.storage.teams.all(function (error, all_teams) {
+  console.log("ALL TEAMS: ", all_teams);
   for (var team in all_teams) {
     controller.spawn( {token: team.bot.token}, function (bot) {
       controller.storage.users.find( {team: team}, function (error, results) {
