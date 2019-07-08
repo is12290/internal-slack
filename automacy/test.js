@@ -29,6 +29,7 @@ controller.storage.teams.all(function (error, all_teams) {
         for (var j = 0; j < results.length; j++) {
           console.log("Looping through users");
           console.log("ID: ", results[j].id);
+          const user_id = results[j].id;
           bot.api.im.open({
             user: results[j].id
           }, (err, res) => {
@@ -36,7 +37,7 @@ controller.storage.teams.all(function (error, all_teams) {
               console.log('Failed to open IM with user', err);
             }
             console.log(res);
-            var user_id = results[j].id;
+            
             bot.startConversation({
               user: user_id,
               channel: res.channel.id,
