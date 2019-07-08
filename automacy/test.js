@@ -25,7 +25,7 @@ controller.storage.teams.all(function (error, all_teams) {
     console.log("Looping through teams");
     controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
       console.log("Spawning Bot");
-      controller.storage.users.find({ team: all_teams[i] }, function (error, results) {
+      controller.storage.users.find({ team: all_teams[i].id }, function (error, results) {
         for (var j = 0; j < results.length; j++) {
           console.log("Looping through users");
           bot.api.im.open({
