@@ -30,6 +30,9 @@ controller.storage.teams.all(function (error, all_teams) {
                             console.log("error: ", err);
                         }
                         bot.startConversation(response, function (err, convo) {
+                            if (err) {
+                                console.log("ERROR: ", err)
+                            }
                             convo.ask("PLEASE WORK");
                             
                         }
