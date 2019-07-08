@@ -22,7 +22,7 @@ controller.storage.teams.all(function (error, all_teams) {
     controller.spawn( {token: all_teams[i].bot.token}, function (bot) {
       controller.storage.users.find( {team: all_teams[i]}, function (error, results) {
         for (var j = 0; j < results.length; j++) {
-          bot.startConversation({user: results[j].id, channel: results[j].channels[0], text: 'hi'}, function (err, convo) {
+          bot.startConversation({channel: results[j].channels[0], text: 'hi'}, function (err, convo) {
             if (err) {
               console.log("ERROR: ", err);
             } else {
