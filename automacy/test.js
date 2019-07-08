@@ -18,6 +18,23 @@ bot_options.storage = mongoStorage;
 
 var controller = Botkit.slackbot(bot_options);
 
+controller.storage.teams.all(function (err, all) {
+  for (var i = 0; i < all.length; i ++) {
+    var instance = all[i];
+    controller.spawn( {token: instance.bot.token}, function (bot) {
+      controller.storage.users.find( {team: instance.id }, function (err, result) {
+        for (var j = 0; j < result.length; j++) {
+          bot.startConversation({
+            user: result[j].id,
+            channel: result[j].channels[0],
+            text: 'Pleae work',
+          })
+        }
+      })
+    })
+  }
+})
+
 
 controller.spawn({ token: 'xoxb-611368649089-668826712322-H4tJJAesxtf8iJFXAFJ27bCw' }, function (bot) {
 
