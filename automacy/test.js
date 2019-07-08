@@ -36,7 +36,9 @@ controller.storage.teams.all(function (error, all_teams) {
               console.log('Failed to open IM with user', err);
             }
             console.log(res);
+            var user_id = results[j].id;
             bot.startConversation({
+              user: user_id,
               channel: res.channel.id,
               text: 'PLEASE WORK'
             }, (err, convo) => {
