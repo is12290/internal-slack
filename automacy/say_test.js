@@ -25,7 +25,6 @@ controller.spawn( {token: 'xoxb-611368649089-668826712322-H4tJJAesxtf8iJFXAFJ27b
           console.log('Failed to open IM with user', err);
         }
         console.log(res);
-        console.log(user_id);
         bot.startConversation({
           user: 'UHZAUK473',
           channel: res.channel.id,
