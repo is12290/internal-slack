@@ -35,7 +35,7 @@ controller.storage.teams.all(function (error, all_teams) {
             console.log('dm: ', dm);
             dm.say( {
               text: 'hey',
-              channel: dm.context.channel
+              channel: dm.context.user
             }, function (err, response) {
               console.log("ERROR: ", err);
               console.log("RESPONSE: ", response);
