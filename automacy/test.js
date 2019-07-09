@@ -31,7 +31,8 @@ controller.storage.teams.all(function (error, all_teams) {
           console.log("ID: ", results[j].id);
           bot.startPrivateConversation({user: results[j].id}, function (err, dm) {
             console.log("Starting Conversation");
-            bot.reply(dm, "hey");
+            dm.say("hi");
+            console.log("Skipped");
           });
         }
       });
