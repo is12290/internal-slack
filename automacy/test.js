@@ -32,10 +32,7 @@ controller.storage.teams.all(function (error, all_teams) {
           bot.startPrivateConversation({user: results[j].id}, function (err, dm) {
             console.log("Starting Conversation");
             console.log('dm: ', dm);
-            dm.say( {
-              text: 'hey',
-              channel: results[j].id
-            });
+            dm.say("hola");
           });
         }
       });
