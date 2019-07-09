@@ -35,6 +35,9 @@ controller.storage.teams.all(function (error, all_teams) {
             dm.say( {
               text: 'hey',
               channel: dm.context.channel
+            }, function (err, response) {
+              console.log("ERROR: ", err);
+              console.log("RESPONSE: ", response);
             });
           });
         }
