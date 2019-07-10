@@ -1,11 +1,12 @@
 module.exports = function (controller) {
-    controller.on('ambient', function(bot, message) {
+    controller.hears(['test'], 'direct_mention', function (bot, message) {
         bot.startConversation({
-            user: 'UHZAUK473',
-            channel: 'UHZAUK473',
+            user: message.user,
+            channel: message.user,
             text: 'hey'
         }, function (err, convo) {
-            convo.say("hola");
-        })
+            console.log(convo);
+            convo.say("hi");
+        });
     })
 }
