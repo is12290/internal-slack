@@ -33,7 +33,7 @@ controller.storage.teams.all(function (error, all_teams) {
               bot.botkit.log('Failed to open IM with user', err)
             }
 
-            bot.say({
+            bot.startConversation({
               text: "Here's your check in...",
               channel: res.channel.id,
               attachments: [
@@ -70,11 +70,8 @@ controller.storage.teams.all(function (error, all_teams) {
                   ]
                 }
               ]
-            }, function (err, response) {
-              if (err) {
-                console.log(err);
-              }
-              console.log(response);
+            }, function (err, convo) {
+              console.log("skipped?");
             });
 
           });
