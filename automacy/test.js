@@ -33,7 +33,7 @@ controller.storage.teams.all(function (error, all_teams) {
             text: 'dummy'
           }, function (err, convo) {
             console.log("In convo");
-            convo.ask({
+            err.ask({
               channel: user,
               text: 'Just what do you think you are doing, Dave?'
             }, function (res, convo) {
