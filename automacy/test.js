@@ -33,13 +33,10 @@ controller.storage.teams.all(function (error, all_teams) {
               bot.botkit.log('Failed to open IM with user', err)
             }
             console.log(res);
-            bot.startConversation({
-              user: test,
-              channel: res.channel.id,
-              text: 'WOWZA... 1....2'
-            }, (err, convo) => {
-              convo.say('This is the shit')
-            });
+            bot.say({
+              text: 'hey',
+              channel: res.channel.id
+            })
           })
 
 
