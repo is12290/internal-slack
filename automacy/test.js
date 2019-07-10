@@ -26,23 +26,11 @@ controller.storage.teams.all(function (error, all_teams) {
       controller.storage.users.find({ team: all_teams[i].id }, function (error, results) {
         for (var j = 0; j < results.length; j++) {
           var user = results[j].id
+          var sayHi = function(err, convo) {
+            convo.say("Hey!");
+          }
 
-          bot.api.im.open({
-            user: results[j].id
-          }, (err, res) => {
-            if (err) {
-              bot.botkit.log('Failed to open IM with user', err)
-            }
-
-            bot.startPrivateConversation({user: user}, function (err, convo) {
-              convo.say({
-                text: 'ayyyy lmao',
-                channel: res.channel.id
-              });
-
-              convo.activate();
-            })
-          });
+          bot.startPrivateConversation({user: user}, sayHi);
         }
       });
     });
