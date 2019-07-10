@@ -34,46 +34,19 @@ controller.storage.teams.all(function (error, all_teams) {
             }
 
             bot.startConversation({
-              text: "Here's your check in...",
-              channel: res.channel.id,
-              attachments: [
-                {
-                  title: "Sleep",
-                  callback_id: 'checkin-sleep',
-                  attachment_type: 'default',
-                  color: '#02D2FF',
-                  actions: [
-                    {
-                      'name': 'perfect-button',
-                      'value': 'Perfect',
-                      'text': 'Perfect',
-                      'type': 'button'
-                    },
-                    {
-                      'name': 'sufficient-button',
-                      'value': 'Sufficient',
-                      'text': 'Sufficient',
-                      'type': 'button'
-                    },
-                    {
-                      'name': 'restless-button',
-                      'value': 'Restless',
-                      'text': 'Restless',
-                      'type': 'button'
-                    },
-                    {
-                      'name': 'terrible-button',
-                      'value': 'Terrible',
-                      'text': 'Terrible',
-                      'type': 'button'
-                    },
-                  ]
-                }
-              ]
+              user: results[j].id,
+              channel: results[j].id,
+              text: 'dummy'
             }, function (err, convo) {
-              console.log("skipped?");
+              convo.ask({
+                channel: results[j].id,
+                text: 'Just what do you think you are doing, Dave?'
+              }, function (res, convo) {
+                convo.say(res.text + ' is not a good enough answer.')
+                convo.next()
+              }
+              )
             });
-
           });
         }
       });
