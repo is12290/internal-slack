@@ -1,7 +1,6 @@
 module.exports = function(controller) {
 
     controller.hears(['^hi', '^hello', '^yo'], 'direct_message,direct_mention', function(bot, message) {
-        console.log(message);
         
         var messages = ["Greetings! I hope you’re doing well today. If you’re looking for help, reply with `Help`",
         "Yoyo! Let me know if I can help you out with `Help`",

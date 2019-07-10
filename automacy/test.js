@@ -26,11 +26,13 @@ controller.storage.teams.all(function (error, all_teams) {
       controller.storage.users.find({ team: all_teams[i].id }, function (error, results) {
         for (var j = 0; j < results.length; j++) {
           var user = results[j].id
-          var sayHi = function(err, convo) {
-            convo.say("Hey!");
-          }
 
-          bot.startPrivateConversation({user: user}, sayHi);
+          bot.startPrivateConversation({user: user}, function (err, convo) {
+            convo.ask("how are you?", function (response, convo) {
+              console.log("RESPONSE: ", response);
+              console.log("CONVO: ", convo);
+            })
+          });
         }
       });
     });
