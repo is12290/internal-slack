@@ -31,7 +31,7 @@ controller.storage.teams.all(function (error, all_teams) {
             user: user,
             channel: user,
           }, function (err, convo) {
-            console.log("convo");
+            console.log(convo);
             
 
 
