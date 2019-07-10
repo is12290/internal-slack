@@ -35,11 +35,12 @@ controller.storage.teams.all(function (error, all_teams) {
             }
 
             bot.startPrivateConversation({user: user}, function (err, convo) {
-              convo.say('convo started');
-              bot.say({
-                text: 'yeezy',
+              console.log("BOT: ", bot);
+              console.log("CONVO: ", convo);
+              convo.say({
+                text: 'ayyyy lmao',
                 channel: res.channel.id
-              })
+              });
             })
           });
         }
