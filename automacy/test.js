@@ -30,17 +30,11 @@ controller.storage.teams.all(function (error, all_teams) {
           bot.startConversation({
             user: user,
             channel: user,
-            text: 'dummy'
           }, function (err, convo) {
-            console.log("In convo");
-            err.ask({
-              channel: user,
-              text: 'Just what do you think you are doing, Dave?'
-            }, function (res, convo) {
-              console.log("in convo.ask");
-              convo.say(res.text + ' is not a good enough answer.')
-              convo.next()
-            })
+            console.log("convo");
+            
+
+
           });
         }
       });
