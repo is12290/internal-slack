@@ -34,13 +34,13 @@ controller.storage.teams.all(function (error, all_teams) {
               bot.botkit.log('Failed to open IM with user', err)
             }
 
-            console.log("BOT: ", JSON.stringify(bot));
-            
             bot.startPrivateConversation({user: user}, function (err, convo) {
               convo.say({
                 text: 'ayyyy lmao',
                 channel: res.channel.id
               });
+
+              convo.activate();
             })
           });
         }
