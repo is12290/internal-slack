@@ -40,7 +40,7 @@ controller.storage.teams.all(function (error, all_teams) {
               text: 'dummy'
             }, function (err, convo) {
               convo.ask({
-                channel: user,
+                channel: res.channel.id,
                 text: 'Just what do you think you are doing, Dave?'
               }, function (res, convo) {
                 convo.say(res.text + ' is not a good enough answer.')
