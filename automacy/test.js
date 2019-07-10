@@ -18,21 +18,34 @@ bot_options.storage = mongoStorage;
 var controller = Botkit.slackbot(bot_options);
 
 controller.storage.teams.all(function (error, all_teams) {
-  if (!error) {
-    console.log("Got all teams");
+  if (error) {
+    console.log("ERROR: ", error);
   }
   for (var i = 0; i < all_teams.length; i++) {
-    console.log("Looping through teams");
     controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
-      console.log("Spawning Bot");
       controller.storage.users.find({ team: all_teams[i].id }, function (error, results) {
         for (var j = 0; j < results.length; j++) {
-          console.log("Looping through users");
-          console.log("ID: ", results[j].id);
+
+          bot.api.im.open({
+            user: results[j].id
+          }, (err, res) => {
+            if (err) {
+              bot.botkit.log('Failed to open IM with user', err)
+            }
+            console.log(res);
+            bot.startConversation({
+              user: test,
+              channel: res.channel.id,
+              text: 'WOWZA... 1....2'
+            }, (err, convo) => {
+              convo.say('This is the shit')
+            });
+          })
+
+
+
           bot.startPrivateConversation({user: results[j].id}, function (err, dm) {
-            console.log("Starting Conversation");
             dm.say("hi");
-            console.log("Skipped");
           });
         }
       });
