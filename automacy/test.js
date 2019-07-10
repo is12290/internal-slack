@@ -27,10 +27,19 @@ controller.storage.teams.all(function (error, all_teams) {
         for (var j = 0; j < results.length; j++) {
           var user = results[j].id
 
-          bot.startPrivateConversation({user: user}, function (err, convo) {
-            convo.ask("how are you?", function (response, convo) {
-              console.log("RESPONSE: ", response);
-              console.log("CONVO: ", convo);
+          bot.startConversation({
+            user: user,
+            channel: user,
+            text: 'dummy'
+          }, function (err, convo) {
+            console.log("In convo");
+            convo.ask({
+              channel: user,
+              text: 'Just what do you think you are doing, Dave?'
+            }, function (res, convo) {
+              console.log("in convo.ask");
+              convo.say(res.text + ' is not a good enough answer.')
+              convo.next()
             })
           });
         }
