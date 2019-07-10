@@ -36,7 +36,7 @@ controller.storage.teams.all(function (error, all_teams) {
 
             bot.startConversation({
               user: user,
-              channel: user,
+              channel: res.channel.id,
               text: 'dummy'
             }, function (err, convo) {
               convo.ask({
