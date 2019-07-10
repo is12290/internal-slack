@@ -36,11 +36,11 @@ controller.storage.teams.all(function (error, all_teams) {
 
             bot.startConversation({
               user: user,
-              channel: results[j].id,
+              channel: user,
               text: 'dummy'
             }, function (err, convo) {
               convo.ask({
-                channel: results[j].id,
+                channel: user,
                 text: 'Just what do you think you are doing, Dave?'
               }, function (res, convo) {
                 convo.say(res.text + ' is not a good enough answer.')
