@@ -32,17 +32,227 @@ controller.storage.teams.all(function (error, all_teams) {
             if (err) {
               bot.botkit.log('Failed to open IM with user', err)
             }
-            console.log(res);
+  
             bot.say({
-              text: 'hey',
-              channel: res.channel.id
-            })
-          })
+              text: "Here's your check in...",
+              channel: res.channel.id,
+              attachments: [
+                {
+                    title: "Sleep",
+                    callback_id: 'checkin-sleep',
+                    attachment_type: 'default',
+                    color: '#02D2FF',
+                    actions: [
+                        {
+                            'name': 'perfect-button',
+                            'value': 'Perfect',
+                            'text': 'Perfect',
+                            'type': 'button'
+                        },
+                        {
+                            'name': 'sufficient-button',
+                            'value': 'Sufficient',
+                            'text': 'Sufficient',
+                            'type': 'button'
+                        },
+                        {
+                            'name': 'restless-button',
+                            'value': 'Restless',
+                            'text': 'Restless',
+                            'type': 'button'
+                        },
+                        {
+                            'name': 'terrible-button',
+                            'value': 'Terrible',
+                            'text': 'Terrible',
+                            'type': 'button'
+                        },
+                    ]
+                }
+            ]
+        }, [
+                {
+                    pattern: 'Perfect',
+                    callback: function (err, reply) {
+                        score.push(4);
+                        bot.replyInteractive(reply,
+                            {
+                                attachments: [
+                                    {
+                                        title: "Sleep",
+                                        callback_id: 'checkin-sleep',
+                                        attachment_type: 'default',
+                                        color: '#02D2FF',
+                                        actions: [
+                                            {
+                                                'name': 'perfect-button',
+                                                'value': 'Perfect',
+                                                'style': 'primary',
+                                                'text': 'Perfect',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'sufficient-button',
+                                                'value': 'Sufficient',
+                                                'text': 'Sufficient',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'restless-button',
+                                                'value': 'Restless',
+                                                'text': 'Restless',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'terrible-button',
+                                                'value': 'Terrible',
+                                                'text': 'Terrible',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
+                    }
+                },
+                {
+                    pattern: 'Sufficient',
+                    callback: function (err, reply) {
+                        score.push(3);
+                        bot.replyInteractive(reply,
+                            {
+                                attachments: [
+                                    {
+                                        title: "Sleep",
+                                        callback_id: 'checkin-sleep',
+                                        attachment_type: 'default',
+                                        color: '#02D2FF',
+                                        actions: [
+                                            {
+                                                'name': 'perfect-button',
+                                                'value': 'Perfect',
+                                                'text': 'Perfect',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'sufficient-button',
+                                                'value': 'Sufficient',
+                                                'style': 'primary',
+                                                'text': 'Sufficient',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'restless-button',
+                                                'value': 'Restless',
+                                                'text': 'Restless',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'terrible-button',
+                                                'value': 'Terrible',
+                                                'text': 'Terrible',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
+                    }
+                },
+                {
+                    pattern: 'Restless',
+                    callback: function (err, reply) {
+                        score.push(2);
+                        bot.replyInteractive(reply,
+                            {
+                                attachments: [
+                                    {
+                                        title: "Sleep",
+                                        callback_id: 'checkin-sleep',
+                                        attachment_type: 'default',
+                                        color: '#02D2FF',
+                                        actions: [
+                                            {
+                                                'name': 'perfect-button',
+                                                'value': 'Perfect',
+                                                'text': 'Perfect',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'sufficient-button',
+                                                'value': 'Sufficient',
+                                                'text': 'Sufficient',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'restless-button',
+                                                'value': 'Restless',
+                                                'style': 'primary',
+                                                'text': 'Restless',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'terrible-button',
+                                                'value': 'Terrible',
+                                                'text': 'Terrible',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
+                    }
+                },
+                {
+                    pattern: 'Terrible',
+                    callback: function (err, reply) {
+                        score.push(1);
+                        bot.replyInteractive(reply,
+                            {
+                                attachments: [
+                                    {
+                                        title: "Sleep",
+                                        callback_id: 'checkin-sleep',
+                                        attachment_type: 'default',
+                                        color: '#02D2FF',
+                                        actions: [
+                                            {
+                                                'name': 'perfect-button',
+                                                'value': 'Perfect',
+                                                'text': 'Perfect',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'sufficient-button',
+                                                'value': 'Sufficient',
+                                                'text': 'Sufficient',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'restless-button',
+                                                'value': 'Restless',
+                                                'text': 'Restless',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'terrible-button',
+                                                'value': 'Terrible',
+                                                'style': 'primary',
+                                                'text': 'Terrible',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }
+                        );
+                    }
+                }
+            ]);
 
-
-
-          bot.startPrivateConversation({user: results[j].id}, function (err, dm) {
-            dm.say("hi");
           });
         }
       });
