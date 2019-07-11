@@ -32,6 +32,7 @@ controller.storage.teams.all(function (error, all_teams) {
             user: user,
             channel: user,
           }, function (err, convo) {
+            convo.say("Hi")
             console.log(convo);
             
 
