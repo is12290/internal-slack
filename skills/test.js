@@ -3,7 +3,6 @@ module.exports = function (controller) {
         bot.startConversation({
             user: message.user,
             channel: message.user,
-            text: 'hey'
         }, function (err, convo) {
             console.log(convo);
             convo.say("hi");

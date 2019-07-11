@@ -16,6 +16,7 @@ var mongoStorage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGO
 bot_options.storage = mongoStorage;
 
 var controller = Botkit.slackbot(bot_options);
+controller.startTicking();
 
 controller.storage.teams.all(function (error, all_teams) {
   if (error) {
