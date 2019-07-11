@@ -28,9 +28,9 @@ controller.storage.teams.all(function (error, all_teams) {
         for (var j = 0; j < results.length; j++) {
           var user = results[j].id
 
-          bot.startConversation({
+          bot.startPrivateConversation({
             user: user,
-            channel: user,
+
           }, function (err, convo) {
             convo.say("Hi")
             console.log(convo);
