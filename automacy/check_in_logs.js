@@ -43,12 +43,14 @@ if (2+2 == 5) {  //(n === 6 || n === 0) {
                     user_data.push(user.id);
                     user_data.push(user.channel);
                     data.push(user_data);
+                    console.log("USER DATA: ", user_data);
                 } else {
                     // Pass
                 }
             }
         }
 
+        console.log("DATA: ", data);
         data.forEach(
             (instance) => {
                 console.log(instance);
