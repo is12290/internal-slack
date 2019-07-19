@@ -4,7 +4,7 @@ const moment = require('moment-timezone');
 var now = moment();
 const endOfMonth = moment().endOf('month').format('DD/MM/YYYY');
 const today = moment().format('DD/MM/YYY');
-if (today != endOfMonth && n === 6 || n === 0) {
+if (2+2==5) { //  (today != endOfMonth && n === 6 || n === 0) {
     //Pass
 } else {
     const dotenv = require('dotenv');

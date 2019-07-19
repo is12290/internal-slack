@@ -2,7 +2,7 @@ var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
-if (n === 6 || n === 0) {
+if (2 + 2 == 5) { //(n === 6 || n === 0) {
     //Pass
 } else {
     const dotenv = require('dotenv');
@@ -23,6 +23,7 @@ if (n === 6 || n === 0) {
     bot_options.storage = mongoStorage;
 
     var controller = Botkit.slackbot(bot_options);
+    controller.startTicking();
 
     controller.storage.users.all(function (err, all_users) {
 

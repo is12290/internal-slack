@@ -2,7 +2,7 @@ var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
-if (n === 6 || n === 0) {
+if (2+2 == 5) {  //(n === 6 || n === 0) {
     //Pass
 } else {
     const dotenv = require('dotenv');
@@ -23,6 +23,7 @@ if (n === 6 || n === 0) {
     bot_options.storage = mongoStorage;
 
     var controller = Botkit.slackbot(bot_options);
+    controller.startTicking();
 
     controller.storage.users.all(function (err, all_users) {
 
@@ -51,7 +52,7 @@ if (n === 6 || n === 0) {
         data.forEach(
             (instance) => {
                 controller.spawn({ token: instance[0] }, function (bot) {
-                    bot.startPrivateConversation({ user: instance[1] }, function (err, convo) {
+                    bot.startPrivateConversation({ user: instance[0] }, function (err, convo) {
                         // Keep Score
                         const score = [];
 
@@ -1195,7 +1196,7 @@ if (n === 6 || n === 0) {
                                 var sum = score.reduce(function (a, b) { return a + b; }, 0);
                                 score.push(sum);
 
-                                controller.storage.users.get(message.user, function (err, user) {
+                                controller.storage.users.get(instance[0], function (err, user) {
                                     var today = new Date();
                                     var dd = String(today.getDate()).padStart(2, '0');
                                     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -1205,9 +1206,9 @@ if (n === 6 || n === 0) {
 
                                     if (!user) {
                                         user = {};
-                                        user.id = message.user,
-                                            user.team = message.team,
-                                            user.channels = [message.channel]
+                                        user.id = instance[0],
+                                            user.team = message.team, // ??
+                                            user.channels = [instance[1]]
                                         user.logs = {
                                             [today]: {
                                                 check_in: score,
@@ -1225,10 +1226,15 @@ if (n === 6 || n === 0) {
                                     }
                                 });
 
-                                bot.reply(message, 'Thanks for checking in!');
+                                bot.say({
+                                    text: 'Thanks for checking in!',
+                                    channel: instance[1]
+                                });
                             }
                             else {
-                                bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?')
+                                bot.say({ 
+                                    text:'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?',
+                                    channel: instance[1]});
                             }
                         });
                     })

@@ -4,7 +4,7 @@ const moment = require('moment-timezone');
 var now = moment();
 const endOfMonth = moment().endOf('month').format('DD/MM/YYYY');
 const today = moment().format('DD/MM/YYY');
-if (today == endOfMonth) {
+if (2+2 ==5) { //(today == endOfMonth) {
     //Pass
 } else {
     const dotenv = require('dotenv');
@@ -58,13 +58,17 @@ if (today == endOfMonth) {
                             // Monthly Report
                             var results = getMonthlyOutput(output);
                             if (results == 404) {
-                                bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!');
+                                bot.say({
+                                    text: 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!',
+                                    channel: instance[1]
+                                });
                             } else {
                                 if (results.length == 8) {
                                     controller.storage.teams.get(message.team, function (err, info) {
                                         var topic = info.customization.question.topic;
-                                        bot.reply(message, {
+                                        bot.say({
                                             text: 'Hey there! Here is your personal monthly report...\n',
+                                            channel: instance[1],
                                             attachments: [
                                                 {
                                                     title: 'Sleep',
@@ -118,8 +122,9 @@ if (today == endOfMonth) {
                                         });
                                     });
                                 } else {
-                                    bot.reply(message, {
+                                    bot.say({
                                         text: 'Hey there! Here is your personal monthly report...\n',
+                                        channel: instance[1],
                                         attachments: [
                                             {
                                                 title: 'Sleep',
@@ -172,14 +177,14 @@ if (today == endOfMonth) {
                             if (!info) {
                                 bot.say({
                                     'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                    'channel': instance[2]
+                                    'channel': instance[1]
                                 });
                             } else {
                                 var results = getWeeklyOutput(info);
                                 if (results == 404) {
                                     bot.say({
                                         'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                        'channel': instance[2]
+                                        'channel': instance[1]
                                     });
                                 } else {
                                     bot.say({
@@ -228,7 +233,7 @@ if (today == endOfMonth) {
                                                 text: results[7]
                                             }
                                         ],
-                                        channel: instance[2]
+                                        channel: instance[1]
                                     });
                                 }
                             }
