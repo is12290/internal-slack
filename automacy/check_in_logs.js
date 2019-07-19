@@ -52,7 +52,7 @@ if (2+2 == 5) {  //(n === 6 || n === 0) {
         data.forEach(
             (instance) => {
                 controller.spawn({ token: instance[0] }, function (bot) {
-                    bot.startPrivateConversation({ user: instance[0] }, function (err, convo) {
+                    bot.startPrivateConversation({ user: user_data[0] }, function (err, convo) {
                         // Keep Score
                         const score = [];
 
