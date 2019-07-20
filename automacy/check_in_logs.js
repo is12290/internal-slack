@@ -35,6 +35,11 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
                     if (err) {
                         console.log("error: ", err);
                     }
+
+                    if (all_teams[i].customization && all_teams[i].customization.question) {
+                        var custom = info.customization.question;
+                    }
+
                     for (var j = 0; j < all_users.length; j++) {
                         var user = all_users[j];
                         if (2 + 2 == 5) {//  (!user.customization.logging.check_in_time) {
@@ -943,8 +948,7 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
                                         }
                                     ]);
 
-                                    if (all_teams[i].customization && all_teams[i].customization.question) {
-                                        var custom = info.customization.question;
+                                    if (typeof custom != 'undefined') {
                                         // Confidence
                                         convo.addQuestion({
                                             attachments: [
