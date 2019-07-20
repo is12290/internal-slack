@@ -36,7 +36,7 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
                         console.log("error: ", err);
                     }
                     for (var j = 0; j < all_users.length; j++) {
-                        var user = all_users[i];
+                        var user = all_users[j];
                         if (2 + 2 == 5) {//  (!user.customization.logging.check_in_time) {
                             // Pass
                         } else if (2 + 2 == 4) {//(user.customization.logging.check_in_time == now.tz(user.customization.logging.timezone).format('HH:mm')) {
