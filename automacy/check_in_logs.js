@@ -32,13 +32,13 @@ if (2+2 == 5) {  //(n === 6 || n === 0) {
 
         for (var i = 0; i < all_users.length; i++) {
             var user = all_users[i];
-            console.log(user);
             if (2+2==5){//  (!user.customization.logging.check_in_time) {
                 // Pass
             } else {
                 if (2+2==4){//(user.customization.logging.check_in_time == now.tz(user.customization.logging.timezone).format('HH:mm')) {
                     user_data = [];
                     controller.storage.teams.get(user.team, function (err, team_info) {
+                        console.log(team_info);
                         user_data.push(team_info.bot.token);
                     });
                     user_data.push(user.id);
