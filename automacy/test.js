@@ -28,18 +28,18 @@ controller.storage.teams.all(function (error, all_teams) {
         for (var j = 0; j < results.length; j++) {
           var user = results[j].id
 
-          bot.startPrivateConversation({
-            user: user,
-
-          }, function (err, convo) {
-            convo.addQuestion('How are you?',function(response,convo) {
-
-              convo.say('Cool, you said: ' + response.text);
-              convo.next();
-        
-            },{},'default');
-            
-          });
+          bot.startConversation({
+            user: results[j].id,
+            channel: results[j].id
+            }, function(err, convo) {
+              convo.ask({
+              channel: user,
+              text: 'Just what do you think you are doing, Dave?'
+               }, function(res, convo) {
+                 convo.say(res.text + ' is not a good enough answer.')
+                 convo.next()
+                 }
+          )
         }
       });
     });
