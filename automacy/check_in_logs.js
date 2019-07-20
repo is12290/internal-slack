@@ -31,13 +31,12 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
         }
         for (var i = 0; i < all_teams.length; i++) {
             controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
+                if (all_teams[i].customization && all_teams[i].customization.question) {
+                    var custom = info.customization.question;
+                }
                 controller.storage.users.all(function (err, all_users) {
                     if (err) {
                         console.log("error: ", err);
-                    }
-
-                    if (all_teams[i].customization && all_teams[i].customization.question) {
-                        var custom = info.customization.question;
                     }
 
                     for (var j = 0; j < all_users.length; j++) {
