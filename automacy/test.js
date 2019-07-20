@@ -31,17 +31,18 @@ controller.storage.teams.all(function (error, all_teams) {
           bot.startConversation({
             user: results[j].id,
             channel: results[j].id
-            }, function(err, convo) {
-              convo.ask({
+          }, function (err, convo) {
+            convo.ask({
               channel: user,
               text: 'Just what do you think you are doing, Dave?'
-               }, function(res, convo) {
-                 convo.say(res.text + ' is not a good enough answer.')
-                 convo.next()
-                 }
-          )
+            }, function (res, convo) {
+              convo.say(res.text + ' is not a good enough answer.')
+              convo.next()
+            }
+            );
+          });
         }
       });
-    });
+    })
   }
 });
