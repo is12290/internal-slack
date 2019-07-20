@@ -40,7 +40,10 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
                         if (2 + 2 == 5) {//  (!user.customization.logging.check_in_time) {
                             // Pass
                         } else if (2 + 2 == 4) {//(user.customization.logging.check_in_time == now.tz(user.customization.logging.timezone).format('HH:mm')) {
-                            bot.startPrivateConversation({ user: user_data[0] }, function (err, convo) {
+                            bot.startPrivateConversation({ user: user.id }, function (err, convo) {
+                                if (err) {
+                                    console.log("error", err);
+                                }
                                 // Keep Score
                                 const score = [];
 
@@ -940,8 +943,7 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
                                         }
                                     ]);
 
-                                controller.storage.teams.get(message.team, function (err, info) {
-                                    if (info.customization.question) {
+                                    if (all_teams[i].customization && all_teams[i].customization.question) {
                                         var custom = info.customization.question;
                                         // Confidence
                                         convo.addQuestion({
@@ -1169,7 +1171,6 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
                                         // Pass
                                     }
 
-                                });
 
 
 
