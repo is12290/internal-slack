@@ -33,10 +33,32 @@ controller.storage.teams.all(function (error, all_teams) {
 
           }, function (err, convo) {
             convo.say("Hi")
-            console.log(convo);
-            
-
-
+            convo.addQuestion({
+              attachments: [
+                {
+                  title: "Hi",
+                  callback_id: "test",
+                  attachment_type: "default",
+                  color: "#02D2FF",
+                  actions: [
+                    {
+                      'name': 'yes-button',
+                      'value': 'Yes',
+                      'text': 'Yes',
+                      'type': 'button'
+                    },
+                    {
+                      'name': 'no-button',
+                      'value': 'No',
+                      'text': 'No',
+                      'type': 'button'
+                    }
+                  ]
+                }
+              ]
+            }, function (response, convo) {
+              console.log(response);
+            })
           });
         }
       });
