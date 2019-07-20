@@ -95,6 +95,7 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
                                         {
                                             pattern: 'Perfect',
                                             callback: function (reply, convo) {
+                                                console.log(reply);
                                                 score.push(4);
                                                 bot.replyInteractive(reply,
                                                     {
