@@ -4,30 +4,24 @@ module.exports = function (controller) {
             if (err) {
                 console.log("error: ", err);
             }
-            convo.addQuestion({
-                attachments: [
-                    {
-                        "type": "section",
-                        "block_id": "section1234",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Pick a date for the deadline."
-                        },
-                        "accessory": {
-                            "type": "datepicker",
-                            "action_id": "datepicker123",
-                            "initial_date": "1990-04-28",
-                            "placeholder": {
-                                "type": "plain_text",
-                                "text": "Select a date"
-                            }
-                        }
+            const datepicker = {
+                blocks: [{"type": "section",
+                "block_id": "section1234",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "Pick a date for the deadline."
+                },
+                "accessory": {
+                    "type": "datepicker",
+                    "action_id": "datepicker123",
+                    "initial_date": "1990-04-28",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Select a date"
                     }
-                ]
-            }, function (response, convo) {
-                console.log(response);
-                convo.next();
-            });
+                }}]
+            };
+            bot.reply(message, datepicker);
 
             convo.activate();
         })
