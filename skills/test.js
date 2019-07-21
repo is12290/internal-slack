@@ -5,7 +5,7 @@ module.exports = function (controller) {
                 console.log("error: ", err);
             }
             convo.addQuestion({
-                attachments: [
+                blocks: [
                     {
                         type: "section",
                         block_id: "section1234",
