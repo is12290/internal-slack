@@ -4,16 +4,16 @@ module.exports = function (controller) {
             if (err) {
                 console.log("error: ", err);
             }
-            convo.addQuestion({
+            bot.reply(message, {
                 blocks: [
                     {
-                        type: "section",
-                        block_id: "section1234",
-                        text: {
+                        "type": "section",
+                        "block_id": "section1234",
+                        "text": {
                             "type": "mrkdwn",
                             "text": "Pick a date for the deadline."
                         },
-                        accessory: {
+                        "accessory": {
                             "type": "datepicker",
                             "action_id": "datepicker123",
                             "initial_date": "1990-04-28",
@@ -23,12 +23,9 @@ module.exports = function (controller) {
                             }
                         }
                     }
-                ]}, function (response, convo) {
-                console.log(response);
-                convo.next();
-            });
+                ]
+            })
 
-            convo.activate();
         })
     })
 }
