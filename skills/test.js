@@ -5,19 +5,25 @@ module.exports = function (controller) {
                 console.log("error: ", err);
             }
             convo.addQuestion({
-                attachments: [{
-                    callback_id: 'end-date-picker',
-                    attachment_type: 'default',
-                    accesory: {
-                        type: 'datepicker',
-                        action_id: 'end-date',
-                        initial_date: '2019-07-07',
-                        placeholder: {
-                            type: 'plain_text',
-                            text: 'End date...'
+                attachments: [
+                    {
+                        "type": "section",
+                        "block_id": "section1234",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Pick a date for the deadline."
+                        },
+                        "accessory": {
+                            "type": "datepicker",
+                            "action_id": "datepicker123",
+                            "initial_date": "1990-04-28",
+                            "placeholder": {
+                                "type": "plain_text",
+                                "text": "Select a date"
+                            }
                         }
                     }
-                }]
+                ]
             }, function (response, convo) {
                 console.log(response);
                 convo.next();
