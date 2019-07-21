@@ -7,41 +7,25 @@ module.exports = function (controller) {
             convo.addQuestion({
                 attachments: [
                     {
-                    callback_id: 'end-date-picker',
-                    attachment_type: 'default',
-                    accesory: {
-                        'type': 'datepicker',
-                        'action_id': 'end-date',
-                        'initial_date': '2019-07-07',
-                        'placeholder': {
-                            'type': 'plain_text',
-                            'text': 'End date...'
+                        type: "section",
+                        block_id: "section1234",
+                        text: {
+                            "type": "mrkdwn",
+                            "text": "Pick a date for the deadline."
+                        },
+                        accessory: {
+                            "type": "datepicker",
+                            "action_id": "datepicker123",
+                            "initial_date": "1990-04-28",
+                            "placeholder": {
+                                "type": "plain_text",
+                                "text": "Select a date"
+                            }
                         }
                     }
-                }
-            ]}, function (response, convo) {
+                ]}, function (response, convo) {
                 console.log(response);
                 convo.next();
-            });
-
-            convo.addQuestion({
-                attachments: [
-                    {
-                        title: "Test",
-                        callback_id: 'checkin-sleep',
-                        attachment_type: 'default',
-                        color: '#02D2FF',
-                        actions: [
-                            {
-                                'name': 'perfect-button',
-                                'text': 'Perfect',
-                                'action_id': 'hello',
-                                'type': 'datepicker'
-                            },
-            
-                        ]
-                    }
-                ]
             });
 
             convo.activate();
