@@ -17,7 +17,7 @@ module.exports = function (controller) {
                         "accessory": {
                             "type": "datepicker",
                             "action_id": "datepicker123",
-                            "initial_date": "1990-04-28",
+                            "initial_date": "2019-04-20",
                             "placeholder": {
                                 "type": "plain_text",
                                 "text": "Select a date"
@@ -26,7 +26,7 @@ module.exports = function (controller) {
                     }
                 ]
             };
-            bot.reply(message, content);
+            convo.say(content);
 
         })
     })
