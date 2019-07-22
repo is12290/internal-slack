@@ -27,7 +27,7 @@ module.exports = function (controller) {
                     }
                 ]
             }, function (response, convo) {
-                console.log(response);
+                console.log(response.actions.selected_date);
                 convo.next();
             });
 
