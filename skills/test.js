@@ -5,6 +5,7 @@ module.exports = function (controller) {
                 console.log("error: ", err);
             }
 
+            var timeframe = [];
             convo.addQuestion({
                 text: 'hey',
                 blocks: [
@@ -39,11 +40,16 @@ module.exports = function (controller) {
                     }
                 ]
             }, function (response, convo) {
-                console.log(response);
-                // console.log(response.actions[0].selected_date);
+                timeframe.push(response.actions[0].selected_date);
             });
 
             convo.activate();
+
+            convo.on('end', function (convo) {
+                if (convo.successful()) {
+                    console.log(timeframe);
+                }
+            })
 
 
         })
