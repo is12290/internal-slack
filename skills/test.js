@@ -5,7 +5,7 @@ module.exports = function (controller) {
                 console.log("error: ", err);
             }
 
-            convo.addQuestion({
+            const content = {
                 blocks: [
                     {
                         "type": "section",
@@ -25,12 +25,8 @@ module.exports = function (controller) {
                         }
                     }
                 ]
-            }, function (response, convo) {
-                console.log(response);
-                convo.next();
-            });
-
-            convo.activate();
+            };
+            bot.reply(message, content);
 
         })
     })
