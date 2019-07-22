@@ -24,36 +24,16 @@ module.exports = function (controller) {
                                 "text": "Select a date"
                             }
                         }
-                    },
-                    {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Pick a date for the deadline."
-                        },
-                        "accessory": {
-                            "type": "datepicker",
-                            "initial_date": "2019-04-28",
-                            "placeholder": {
-                                "type": "plain_text",
-                                "text": "Select a date",
-                                "emoji": true
-                            }
-                        }
                     }
                 ]
             }, function (response, convo) {
+                console.log(response.actions[0].selected_date);
                 convo.next();
             });
 
             convo.activate();
 
-            convo.on('end', function (convo) {
-                if (convo.successful()) {
-                    var values = convo.extractResponses();
-                    console.log(values);
-                }
-            })
+
         })
     })
 }
