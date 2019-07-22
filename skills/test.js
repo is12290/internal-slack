@@ -5,7 +5,6 @@ module.exports = function (controller) {
                 console.log("error: ", err);
             }
 
-            const content 
             convo.addQuestion({
                 text: 'hey',
                 blocks: [
