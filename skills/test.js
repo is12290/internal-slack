@@ -13,7 +13,24 @@ module.exports = function (controller) {
                         "block_id": "section1234",
                         "text": {
                             "type": "mrkdwn",
-                            "text": "Pick a date for the deadline."
+                            "text": "Pick start date"
+                        },
+                        "accessory": {
+                            "type": "datepicker",
+                            "action_id": "datepicker123",
+                            "initial_date": "1990-04-28",
+                            "placeholder": {
+                                "type": "plain_text",
+                                "text": "Select a date"
+                            }
+                        }
+                    },
+                    {
+                        "type": "section",
+                        "block_id": "section1234",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "Pick end date"
                         },
                         "accessory": {
                             "type": "datepicker",
@@ -27,12 +44,17 @@ module.exports = function (controller) {
                     }
                 ]
             }, function (response, convo) {
-                console.log(response.actions.selected_date);
                 convo.next();
             });
 
             convo.activate();
 
+            convo.on('end', function (convo) {
+                if (convo.successful()) {
+                    var values = convo.extractResponses();
+                    console.log(values);
+                }
+            })
         })
     })
 }
