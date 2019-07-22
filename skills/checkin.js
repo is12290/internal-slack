@@ -1182,11 +1182,7 @@ module.exports = function (controller) {
                 else {
                     bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?')
                 }
-
-
             });
         });
-
     });
-
 };
