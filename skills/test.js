@@ -27,12 +27,30 @@ module.exports = function (controller) {
                                     "text": "Start Date",
                                     "emoji": true
                                 }
-                            },
+                            }
+                        ]
+                    }
+                ]
+            }, function (response, convo) {
+                timeframe.push(response.actions[0].selected_date);
+                convo.next();
+            });
+
+            convo.addQuestion({
+                text: 'hey',
+                blocks: [
+                    {
+                        "type": "section",
+                        "block_id": "section1235",
+                    },
+                    {
+                        "type": "actions",
+                        "elements": [
                             {
                                 "type": "datepicker",
                                 "placeholder": {
                                     "type": "plain_text",
-                                    "text": "End Date",
+                                    "text": "Start Date",
                                     "emoji": true
                                 }
                             }
@@ -41,6 +59,7 @@ module.exports = function (controller) {
                 ]
             }, function (response, convo) {
                 timeframe.push(response.actions[0].selected_date);
+                convo.next();
             });
 
             convo.activate();
