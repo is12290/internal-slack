@@ -5,7 +5,9 @@ module.exports = function (controller) {
                 console.log("error: ", err);
             }
 
-            const content = {
+            const content 
+            convo.addQuestion({
+                text: 'hey',
                 blocks: [
                     {
                         "type": "section",
@@ -17,7 +19,7 @@ module.exports = function (controller) {
                         "accessory": {
                             "type": "datepicker",
                             "action_id": "datepicker123",
-                            "initial_date": "2019-04-20",
+                            "initial_date": "1990-04-28",
                             "placeholder": {
                                 "type": "plain_text",
                                 "text": "Select a date"
@@ -25,8 +27,12 @@ module.exports = function (controller) {
                         }
                     }
                 ]
-            };
-            convo.say(content);
+            }, function (response, convo) {
+                console.log(response);
+                convo.next();
+            });
+
+            convo.activate();
 
         })
     })
