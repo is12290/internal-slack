@@ -7,18 +7,18 @@ module.exports = function (controller) {
 
             convo.addQuestion({
                 text: 'hey',
-                blocks: [
+                blocks:[
                     {
                         "type": "section",
                         "block_id": "section1234",
                         "text": {
                             "type": "mrkdwn",
-                            "text": "Pick start date"
+                            "text": "Pick a start date"
                         },
                         "accessory": {
                             "type": "datepicker",
                             "action_id": "datepicker123",
-                            "initial_date": "1990-04-28",
+                            "initial_date": "2019-04-28",
                             "placeholder": {
                                 "type": "plain_text",
                                 "text": "Select a date"
@@ -27,18 +27,17 @@ module.exports = function (controller) {
                     },
                     {
                         "type": "section",
-                        "block_id": "section1234",
                         "text": {
                             "type": "mrkdwn",
-                            "text": "Pick end date"
+                            "text": "Pick a date for the deadline."
                         },
                         "accessory": {
                             "type": "datepicker",
-                            "action_id": "datepicker123",
-                            "initial_date": "1990-04-28",
+                            "initial_date": "2019-04-28",
                             "placeholder": {
                                 "type": "plain_text",
-                                "text": "Select a date"
+                                "text": "Select a date",
+                                "emoji": true
                             }
                         }
                     }
