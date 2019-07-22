@@ -13,38 +13,34 @@ module.exports = function (controller) {
                         "block_id": "section1234",
                         "text": {
                             "type": "mrkdwn",
-                            "text": "Pick a start date"
-                        },
-                        "accessory": {
-                            "type": "datepicker",
-                            "action_id": "datepicker123",
-                            "initial_date": "2019-04-28",
-                            "placeholder": {
-                                "type": "plain_text",
-                                "text": "Select a date"
-                            }
+                            "text": "Would you be so kind as to select your custom timeframe?"
                         }
                     },
                     {
-                        "type": "section",
-                        "text": {
-                            "type": "mrkdwn",
-                            "text": "Pick a date for the deadline."
-                        },
-                        "accessory": {
-                            "type": "datepicker",
-                            "initial_date": "1990-04-28",
-                            "placeholder": {
-                                "type": "plain_text",
-                                "text": "Select a date",
-                                "emoji": true
+                        "type": "actions",
+                        "elements": [
+                            {
+                                "type": "datepicker",
+                                "placeholder": {
+                                    "type": "plain_text",
+                                    "text": "Start Date",
+                                    "emoji": true
+                                }
+                            },
+                            {
+                                "type": "datepicker",
+                                "placeholder": {
+                                    "type": "plain_text",
+                                    "text": "End Date",
+                                    "emoji": true
+                                }
                             }
-                        }
+                        ]
                     }
                 ]
             }, function (response, convo) {
                 console.log(response);
-                console.log(response.actions[0].selected_date);
+                // console.log(response.actions[0].selected_date);
                 convo.next();
             });
 
