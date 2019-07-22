@@ -42,6 +42,8 @@ module.exports = function (controller) {
                 console.log(response);
                 // console.log(response.actions[0].selected_date);
                 convo.next();
+            }, function (response, convo) {
+                console.log(response)
             });
 
             convo.activate();
