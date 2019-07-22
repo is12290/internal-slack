@@ -4,6 +4,9 @@ module.exports = function (controller) {
             if (err) {
                 console.log("error: ", err);
             }
+            convo.addMessage({text: "hey"}, function(res, convo) {
+                convo.gotoThread('date');
+            })
 
             var timeframe = [];
             convo.addQuestion({
@@ -41,7 +44,7 @@ module.exports = function (controller) {
                 ]
             }, function (response, convo) {
                 timeframe.push(response.actions[0].selected_date);
-            });
+            }, 'date');
 
             convo.activate();
 
