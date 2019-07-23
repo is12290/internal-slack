@@ -40,14 +40,14 @@ module.exports = function (controller) {
                     }
                 ]
             }, function (response, convo) {
-                timeframe.push(response.actions[0].selected_date);
                 if (timeframe.length == 2) {
                     convo.next();
                 } else {
-                    // Pass
+                    timeframe.push(response.actions[0].selected_date);
                 }
                 
             });
+            console.log("Outside of the callback");
 
             convo.activate();
 
