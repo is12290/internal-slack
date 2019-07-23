@@ -41,7 +41,10 @@ module.exports = function (controller) {
                 blocks: [
                     {
                         "type": "section",
-                        "block_id": "section1235"
+                        "block_id": "block2",
+                        "text": {
+                            "type": "mrkdwn"
+                        }
                     },
                     {
                         "type": "actions",
@@ -50,7 +53,7 @@ module.exports = function (controller) {
                                 "type": "datepicker",
                                 "placeholder": {
                                     "type": "plain_text",
-                                    "text": "Start Date",
+                                    "text": "End Date",
                                     "emoji": true
                                 }
                             }
