@@ -40,12 +40,13 @@ module.exports = function (controller) {
                     }
                 ]
             }, function (response, convo) {
-                if (timeframe.length == 2) {
-                    convo.next();
-                } else {
-                    timeframe.push(response.actions[0].selected_date);
+                while (timeframe.length < 2) {
+                    if (timeframe.length == 0 || response.actions[0].selected_date != timeframe[timeframe.length-1]) {
+                        timeframe.push(response.actions[0].selected_date);
+                    }
                 }
                 
+                convo.next();
             });
             console.log("Outside of the callback");
 
