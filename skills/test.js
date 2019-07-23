@@ -42,17 +42,11 @@ module.exports = function (controller) {
             }, function (response, convo) {
                 timeframe.push(response.actions[0].selected_date);
                 
-
-                convo.silentRepeat();
-                console.log("Timeframe: ", timeframe);
                 convo.next();
             });
 
-            convo.addMessage({
-                text: "Thanks!",
-            }, function (response, convo){
-                convo.next();
-            })
+            console.log("Timeframe: ", timeframe);
+            convo.silentRepeat();
             convo.activate();
 
         })
