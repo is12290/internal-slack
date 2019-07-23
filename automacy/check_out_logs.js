@@ -43,7 +43,7 @@ if (2 + 2 == 5) { //(n === 6 || n === 0) {
                         var user = [j];
                         if (typeof user.customization.logging.check_out_time == 'undefined') {
                             // Pass
-                        } else if (user.customization.logging.check_out_time == now.tz(user.customization.logging.timezone).format('HH:mm')) {
+                        } else if (user.customization.logging.check_out_time == moment.tz(now, user.customization.logging.timezone).format('HH:mm')) {
                             bot.startPrivateConversation({ user: user.id }, function (err, convo) {
                                 // Keep Score
                                 const score = [];

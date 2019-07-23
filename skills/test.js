@@ -41,7 +41,7 @@ module.exports = function (controller) {
                 blocks: [
                     {
                         "type": "section",
-                        "block_id": "section1235",
+                        "block_id": "section1235"
                     },
                     {
                         "type": "actions",

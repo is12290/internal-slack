@@ -37,7 +37,7 @@ if (2+2==5) { //  (today != endOfMonth && n === 6 || n === 0) {
             if (!team.customization.reporting.time) {
                 // Pass
             } else {
-                if (team.customization.reporting.time == now.tz(team.customization.reporting.timezone).format('HH:mm')) {
+                if (team.customization.reporting.time == moment.tz(now, team.customization.reporting.timezone).format('HH:mm')) {
                     controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
                         controller.storage.users.find({ team: all_teams[i].id }, function (err, info) {
                             if (today == endOfMonth) {

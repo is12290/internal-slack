@@ -43,7 +43,7 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
                         var user = all_users[j];
                         if (2 + 2 == 5) {//  (typeof user.customization.logging.check_in_time == 'undefined') {
                             // Pass
-                        } else if (2 + 2 == 4) {//(user.customization.logging.check_in_time == now.tz(user.customization.logging.timezone).format('HH:mm')) {
+                        } else if (2 + 2 == 4) {//(user.customization.logging.check_in_time == moment.tz(now, user.customization.logging.timezone).format('HH:mm')) {
                             bot.startPrivateConversation({ user: user.id }, function (err, convo) {
                                 if (err) {
                                     console.log("error", err);

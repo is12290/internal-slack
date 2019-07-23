@@ -38,7 +38,7 @@ if (2+2 ==5) { //(today == endOfMonth) {
                         var user = team_users[i];
                         if (!user.customization.reporting.time) {
                             // Pass
-                        } else if (user.customization.reporting.time == now.tz(user.customization.reporting.timezone).format('HH:mm')) {
+                        } else if (user.customization.reporting.time == moment.tz(now, user.customization.reporting.timezone).format('HH:mm')) {
                             if (today == endOfMonth) {
                                 // Monthly Report
                                 var results = getMonthlyOutput(output);
