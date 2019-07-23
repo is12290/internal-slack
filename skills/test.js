@@ -41,13 +41,14 @@ module.exports = function (controller) {
                 ]
             }, function (response, convo) {
                 timeframe.push(response.actions[0].selected_date);
-                console.log("Response 1: ", response);
+                console.log("Timeframe 1: ", timeframe)
 
                 convo.silentRepeat();
+                timeframe.push(response.actions[0].selected_date);
+                console.log("Timeframe 2: ", timeframe);
             });
 
             convo.activate();
-            console.log(timeframe);
 
         })
     })
