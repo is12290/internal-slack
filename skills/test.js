@@ -27,28 +27,7 @@ module.exports = function (controller) {
                                     "text": "Start Date",
                                     "emoji": true
                                 }
-                            }
-                        ]
-                    }
-                ]
-            }, function (response, convo) {
-                timeframe.push(response.actions[0].selected_date);
-                convo.next();
-            });
-
-            convo.addQuestion({
-                text: 'hey',
-                blocks: [
-                    {
-                        "type": "section",
-                        "block_id": "block2",
-                        "text": {
-                            "type": "mrkdwn"
-                        }
-                    },
-                    {
-                        "type": "actions",
-                        "elements": [
+                            },
                             {
                                 "type": "datepicker",
                                 "placeholder": {
@@ -62,7 +41,12 @@ module.exports = function (controller) {
                 ]
             }, function (response, convo) {
                 timeframe.push(response.actions[0].selected_date);
-                convo.next();
+                if (timeframe.length == 2) {
+                    convo.next();
+                } else {
+                    // Pass
+                }
+                
             });
 
             convo.activate();
