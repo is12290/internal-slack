@@ -28,9 +28,9 @@ if (2+2==5) { //  (today != endOfMonth && n === 6 || n === 0) {
     controller.startTicking()
 
     controller.storage.teams.all(function (err, all_teams) {
-
-        // Usable data
-        var data = [];
+        if (err) {
+            console.log("error: ", err);
+        }
 
         for (var i = 0; i < all_teams.length; i++) {
             var team = all_teams[i];
@@ -38,155 +38,22 @@ if (2+2==5) { //  (today != endOfMonth && n === 6 || n === 0) {
                 // Pass
             } else {
                 if (team.customization.reporting.time == now.tz(team.customization.reporting.timezone).format('HH:mm')) {
-                    data.push([team.bot.token, team.id, team.channel]);
-                } else {
-                    // Pass
-                }
-            }
-        }
-
-        data.forEach(
-            (instance) => {
-                controller.spawn({ token: instance[0] }, function (bot) {
-                    controller.storage.users.find({ team: instance[1] }, function (err, info) {
-                        if (today == endOfMonth) {
-                            // Monthly Report
-                            var results = getMonthlyOutput(output);
-                            if (results == 404) {
-                                bot.say({
-                                    text: 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                    channel: instance[2]
-                                });
-                            } else {
-                                if (results.length == 9) {
-                                    controller.storage.teams.get(message.team, function (err, info) {
-                                        var topic = info.customization.question.topic;
-                                        bot.say({
-                                            text: 'Hey there! Here is your organization\'s monthly report...\n',
-                                            attachments: [
-                                                {
-                                                    title: 'Sleep',
-                                                    color: '#02D2FF',
-                                                    attachment_type: 'default',
-                                                    text: results[1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Energy',
-                                                    color: '#2A02FF',
-                                                    attachment_type: 'default',
-                                                    text: results[2] + '\n'
-                                                },
-                                                {
-                                                    title: 'Mood',
-                                                    color: '#8A02FF',
-                                                    attachment_type: 'default',
-                                                    text: results[3] + '\n'
-                                                },
-                                                {
-                                                    title: 'Confidence',
-                                                    color: '#CF02FF',
-                                                    attachment_type: 'default',
-                                                    text: results[4] + '\n'
-                                                },
-                                                {
-                                                    title: 'Efficiency',
-                                                    color: '#FF029D',
-                                                    attachment_type: 'default',
-                                                    text: results[5] + '\n'
-                                                },
-                                                {
-                                                    title: 'Fulfillment',
-                                                    color: '#FF8402',
-                                                    attachment_type: 'default',
-                                                    text: results[6] + '\n'
-                                                },
-                                                {
-                                                    title: topic,
-                                                    color: '#02FF92',
-                                                    attachment_type: 'default',
-                                                    text: results[7] + '\n'
-                                                },
-                                                {
-                                                    title: 'Overall',
-                                                    color: '#02FF57',
-                                                    attachment_type: 'default',
-                                                    text: results[8]
-                                                }
-                                            ],
-                                            channel: instance[2]
-                                        });
-                                    });
-                                } else {
-                                    bot.say({
-                                        text: 'Hey there! Here is your organization\'s monthly report...\n',
-                                        attachments: [
-                                            {
-                                                title: 'Sleep',
-                                                color: '#02D2FF',
-                                                attachment_type: 'default',
-                                                text: results[1] + '\n'
-                                            },
-                                            {
-                                                title: 'Energy',
-                                                color: '#2A02FF',
-                                                attachment_type: 'default',
-                                                text: results[2] + '\n'
-                                            },
-                                            {
-                                                title: 'Mood',
-                                                color: '#8A02FF',
-                                                attachment_type: 'default',
-                                                text: results[3] + '\n'
-                                            },
-                                            {
-                                                title: 'Confidence',
-                                                color: '#CF02FF',
-                                                attachment_type: 'default',
-                                                text: results[4] + '\n'
-                                            },
-                                            {
-                                                title: 'Efficiency',
-                                                color: '#FF029D',
-                                                attachment_type: 'default',
-                                                text: results[5] + '\n'
-                                            },
-                                            {
-                                                title: 'Fulfillment',
-                                                color: '#FF8402',
-                                                attachment_type: 'default',
-                                                text: results[6] + '\n'
-                                            },
-                                            {
-                                                title: 'Overall',
-                                                color: '#02FF57',
-                                                attachment_type: 'default',
-                                                text: results[7]
-                                            }
-                                        ],
-                                        channel: instance[2]
-                                    });
-                                }
-                            }
-                        } else if (d == '5') {
-                            // Weekly report
-                            if (!info) {
-                                bot.say({
-                                    'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                    'channel': instance[2]
-                                });
-                            } else {
-                                var results = getWeeklyOutput(info);
+                    controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
+                        controller.storage.users.find({ team: all_teams[i].id }, function (err, info) {
+                            if (today == endOfMonth) {
+                                // Monthly Report
+                                var results = getMonthlyOutput(output);
                                 if (results == 404) {
                                     bot.say({
-                                        'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                        'channel': instance[2]
+                                        text: 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!',
+                                        channel: team.channel
                                     });
                                 } else {
                                     if (results.length == 9) {
                                         controller.storage.teams.get(message.team, function (err, info) {
                                             var topic = info.customization.question.topic;
                                             bot.say({
-                                                text: 'Hey there! Here are your weekly organization averages...\n',
+                                                text: 'Hey there! Here is your organization\'s monthly report...\n',
                                                 attachments: [
                                                     {
                                                         title: 'Sleep',
@@ -237,12 +104,12 @@ if (2+2==5) { //  (today != endOfMonth && n === 6 || n === 0) {
                                                         text: results[8]
                                                     }
                                                 ],
-                                                channel: instance[2]
+                                                channel: team.channel
                                             });
                                         });
                                     } else {
                                         bot.say({
-                                            text: 'Hey there! Here are your weekly organization averages...\n',
+                                            text: 'Hey there! Here is your organization\'s monthly report...\n',
                                             attachments: [
                                                 {
                                                     title: 'Sleep',
@@ -287,32 +154,212 @@ if (2+2==5) { //  (today != endOfMonth && n === 6 || n === 0) {
                                                     text: results[7]
                                                 }
                                             ],
-                                            channel: instance[2]
+                                            channel: team.channel
                                         });
                                     }
                                 }
-                            }
-                        } else if (d > 0 && d < 5) {
-                            // Daily report
-                            if (!info) {
-                                bot.say({
-                                    'text': 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!',
-                                    'channel': instance[2]
-                                });
-                            } else {
-                                var percent = getDailyPercentages(info);
-                                if (percent == 404) {
+                            } else if (d == '5') {
+                                // Weekly report
+                                if (!info) {
                                     bot.say({
-                                        'text': 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!',
-                                        'channel': instance[2]
+                                        'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
+                                        'channel': team.channel
                                     });
                                 } else {
-                                    var resultMessage = getDailyMessages(percent);
-
-                                    if (resultMessage.length == 9) {
-                                        controller.storage.teams.get(message.team, function (err, info) {
-                                            var topic = info.customization.question.topic;
-                
+                                    var results = getWeeklyOutput(info);
+                                    if (results == 404) {
+                                        bot.say({
+                                            'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
+                                            'channel': team.channel
+                                        });
+                                    } else {
+                                        if (results.length == 9) {
+                                            controller.storage.teams.get(message.team, function (err, info) {
+                                                var topic = info.customization.question.topic;
+                                                bot.say({
+                                                    text: 'Hey there! Here are your weekly organization averages...\n',
+                                                    attachments: [
+                                                        {
+                                                            title: 'Sleep',
+                                                            color: '#02D2FF',
+                                                            attachment_type: 'default',
+                                                            text: results[1] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Energy',
+                                                            color: '#2A02FF',
+                                                            attachment_type: 'default',
+                                                            text: results[2] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Mood',
+                                                            color: '#8A02FF',
+                                                            attachment_type: 'default',
+                                                            text: results[3] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Confidence',
+                                                            color: '#CF02FF',
+                                                            attachment_type: 'default',
+                                                            text: results[4] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Efficiency',
+                                                            color: '#FF029D',
+                                                            attachment_type: 'default',
+                                                            text: results[5] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Fulfillment',
+                                                            color: '#FF8402',
+                                                            attachment_type: 'default',
+                                                            text: results[6] + '\n'
+                                                        },
+                                                        {
+                                                            title: topic,
+                                                            color: '#02FF92',
+                                                            attachment_type: 'default',
+                                                            text: results[7] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Overall',
+                                                            color: '#02FF57',
+                                                            attachment_type: 'default',
+                                                            text: results[8]
+                                                        }
+                                                    ],
+                                                    channel: team.channel
+                                                });
+                                            });
+                                        } else {
+                                            bot.say({
+                                                text: 'Hey there! Here are your weekly organization averages...\n',
+                                                attachments: [
+                                                    {
+                                                        title: 'Sleep',
+                                                        color: '#02D2FF',
+                                                        attachment_type: 'default',
+                                                        text: results[1] + '\n'
+                                                    },
+                                                    {
+                                                        title: 'Energy',
+                                                        color: '#2A02FF',
+                                                        attachment_type: 'default',
+                                                        text: results[2] + '\n'
+                                                    },
+                                                    {
+                                                        title: 'Mood',
+                                                        color: '#8A02FF',
+                                                        attachment_type: 'default',
+                                                        text: results[3] + '\n'
+                                                    },
+                                                    {
+                                                        title: 'Confidence',
+                                                        color: '#CF02FF',
+                                                        attachment_type: 'default',
+                                                        text: results[4] + '\n'
+                                                    },
+                                                    {
+                                                        title: 'Efficiency',
+                                                        color: '#FF029D',
+                                                        attachment_type: 'default',
+                                                        text: results[5] + '\n'
+                                                    },
+                                                    {
+                                                        title: 'Fulfillment',
+                                                        color: '#FF8402',
+                                                        attachment_type: 'default',
+                                                        text: results[6] + '\n'
+                                                    },
+                                                    {
+                                                        title: 'Overall',
+                                                        color: '#02FF57',
+                                                        attachment_type: 'default',
+                                                        text: results[7]
+                                                    }
+                                                ],
+                                                channel: team.channel
+                                            });
+                                        }
+                                    }
+                                }
+                            } else if (d > 0 && d < 5) {
+                                // Daily report
+                                if (!info) {
+                                    bot.say({
+                                        'text': 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!',
+                                        'channel': team.channel
+                                    });
+                                } else {
+                                    var percent = getDailyPercentages(info);
+                                    if (percent == 404) {
+                                        bot.say({
+                                            'text': 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!',
+                                            'channel': team.channel
+                                        });
+                                    } else {
+                                        var resultMessage = getDailyMessages(percent);
+    
+                                        if (resultMessage.length == 9) {
+                                            controller.storage.teams.get(message.team, function (err, info) {
+                                                var topic = info.customization.question.topic;
+                    
+                                                bot.say({
+                                                    text: 'Hey there! Here are your results for the day...\n',
+                                                    attachments: [
+                                                        {
+                                                            title: 'Sleep',
+                                                            color: '#02D2FF',
+                                                            attachment_type: 'default',
+                                                            text: resultMessage[0] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Energy',
+                                                            color: '#2A02FF',
+                                                            attachment_type: 'default',
+                                                            text: resultMessage[1] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Mood',
+                                                            color: '#8A02FF',
+                                                            attachment_type: 'default',
+                                                            text: resultMessage[2] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Confidence',
+                                                            color: '#CF02FF',
+                                                            attachment_type: 'default',
+                                                            text: resultMessage[3] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Efficiency',
+                                                            color: '#FF029D',
+                                                            attachment_type: 'default',
+                                                            text: resultMessage[4] + '\n'
+                                                        },
+                                                        {
+                                                            title: 'Fulfillment',
+                                                            color: '#FF8402',
+                                                            attachment_type: 'default',
+                                                            text: resultMessage[5] + '\n'
+                                                        },
+                                                        {
+                                                            title: topic,
+                                                            color: '#02FF92',
+                                                            attachment_type: 'default',
+                                                            text: resultMessage[6] + '\n',
+                                                        },
+                                                        {
+                                                            title: 'Overall',
+                                                            color: '#02FF57',
+                                                            attachment_type: 'default',
+                                                            text: resultMessage[7]
+                                                        }
+                                                    ],
+                                                    channel: team.channel
+                                                });
+                                            });
+                                        } else {
                                             bot.say({
                                                 text: 'Hey there! Here are your results for the day...\n',
                                                 attachments: [
@@ -353,78 +400,25 @@ if (2+2==5) { //  (today != endOfMonth && n === 6 || n === 0) {
                                                         text: resultMessage[5] + '\n'
                                                     },
                                                     {
-                                                        title: topic,
-                                                        color: '#02FF92',
-                                                        attachment_type: 'default',
-                                                        text: resultMessage[6] + '\n',
-                                                    },
-                                                    {
                                                         title: 'Overall',
                                                         color: '#02FF57',
                                                         attachment_type: 'default',
-                                                        text: resultMessage[7]
+                                                        text: resultMessage[6]
                                                     }
                                                 ],
-                                                channel: instance[2]
+                                                channel: team.channel
                                             });
-                                        });
-                                    } else {
-                                        bot.say({
-                                            text: 'Hey there! Here are your results for the day...\n',
-                                            attachments: [
-                                                {
-                                                    title: 'Sleep',
-                                                    color: '#02D2FF',
-                                                    attachment_type: 'default',
-                                                    text: resultMessage[0] + '\n'
-                                                },
-                                                {
-                                                    title: 'Energy',
-                                                    color: '#2A02FF',
-                                                    attachment_type: 'default',
-                                                    text: resultMessage[1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Mood',
-                                                    color: '#8A02FF',
-                                                    attachment_type: 'default',
-                                                    text: resultMessage[2] + '\n'
-                                                },
-                                                {
-                                                    title: 'Confidence',
-                                                    color: '#CF02FF',
-                                                    attachment_type: 'default',
-                                                    text: resultMessage[3] + '\n'
-                                                },
-                                                {
-                                                    title: 'Efficiency',
-                                                    color: '#FF029D',
-                                                    attachment_type: 'default',
-                                                    text: resultMessage[4] + '\n'
-                                                },
-                                                {
-                                                    title: 'Fulfillment',
-                                                    color: '#FF8402',
-                                                    attachment_type: 'default',
-                                                    text: resultMessage[5] + '\n'
-                                                },
-                                                {
-                                                    title: 'Overall',
-                                                    color: '#02FF57',
-                                                    attachment_type: 'default',
-                                                    text: resultMessage[6]
-                                                }
-                                            ],
-                                            channel: instance[2]
-                                        });
+                                        }
                                     }
                                 }
                             }
-                        }
+                        })
                     })
-                })
+                } else {
+                    // Pass
+                }
             }
-        )
+        }
     });
 }
 
