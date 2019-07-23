@@ -40,20 +40,15 @@ module.exports = function (controller) {
                     }
                 ]
             }, function (response, convo) {
-                while (timeframe.length < 2) {
-                    if (timeframe.length == 0 || response.actions[0].selected_date != timeframe[timeframe.length-1]) {
-                        timeframe.push(response.actions[0].selected_date);
-                    }
-                }
-                
+                timeframe.push(response.actions[0].selected_date);
+                console.log("Response 1: ", response);
+
+                convo.silentRepeat()
+                console.log("Response 2: ", response)
                 convo.next();
             });
-            console.log("Outside of the callback");
 
             convo.activate();
-
-            console.log(timeframe);
-
 
         })
     })
