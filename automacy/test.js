@@ -36,8 +36,10 @@ controller.storage.teams.all(function (error, all_teams) {
               channel: user,
               text: 'Just what do you think you are doing, Dave?'
             }, function (res, convo) {
-              convo.say(res.text + ' is not a good enough answer.')
-              convo.next()
+              convo.say({
+                channel: user,
+                text: res.text + ' is not a good enough answer.'},
+              convo.next())
             }
             );
           });
