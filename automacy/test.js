@@ -42,6 +42,7 @@ controller.storage.teams.all(function (error, all_teams) {
               console.log('Went through message');
               convo.next();
             });
+            console.log("Out of message");
 
             convo.addQuestion({
               text: "How you be?"
@@ -56,10 +57,14 @@ controller.storage.teams.all(function (error, all_teams) {
               if (convo.sucessful()) {
                 console.log("Success!");
               }
-            })
+            });
+            console.log("Skipped convo.on('end')")
           })
+          console.log("Out of conversation");
         }
+        console.log("Out of for loop");
       });
     })
+    console.log("Out of spawned bot");
   }
 });
