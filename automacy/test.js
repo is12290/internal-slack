@@ -9,7 +9,8 @@ var bot_options = {
   // debug: true,
   scopes: ['bot'],
   studio_token: process.env.studio_token,
-  studio_command_uri: process.env.studio_command_uri
+  studio_command_uri: process.env.studio_command_uri,
+  interactive_replies: true
 };
 
 var mongoStorage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGODB_URI, useNewUrlParser: true, tables: ['teams', 'user'] });
