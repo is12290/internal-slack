@@ -22,16 +22,15 @@ controller.storage.teams.all(function (error, all_teams) {
   if (error) {
     console.log("ERROR: ", error);
   }
-  for (let team in all_teams) {
-    controller.spawn({ token: team.bot.token }, function (bot) {
-      controller.storage.users.find({ team: team.id }, function (error, results) {
+  for (var i = 0; i < all_teams.length; i++) {
+    controller.spawn({ token: team[i].bot.token }, function (bot) {
+      controller.storage.users.find({ team: team[i].id }, function (error, results) {
 
         if (error) {
           console.log("error: ", error);
         }
-        for (let result in results) {
-          console.log(result)
-          var user = result.id;
+        for (var j = 0; j < results.length; j++) {
+          var user = results[j].id;
 
           bot.say({
             text: "hey",
