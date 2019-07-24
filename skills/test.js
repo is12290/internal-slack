@@ -1,8 +1,8 @@
 module.exports = function (controller) {
   controller.hears(['test'], 'direct_message', function (bot, message) {
-    bot.startConversation(message, function (err, convo) {
-      convo.addQuestion({
+      bot.say({
         text: "Check in confirmation",
+        channel: message.channel,
         attachments: [
           {
             title: "Sleep",
@@ -93,6 +93,5 @@ module.exports = function (controller) {
           ]
         ]
       })
-    })
   })
 }
