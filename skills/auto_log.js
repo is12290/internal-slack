@@ -1,5 +1,5 @@
 module.exports = function (controller) {
-    controller.hears(['Yes-Test'], 'direct_message', function (message, bot) {
+    controller.on('interactive_message_callback', function (message, bot) {
 
         bot.startConversation(message, function (err, convo) {
             if (err) {
