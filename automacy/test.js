@@ -22,14 +22,16 @@ controller.storage.teams.all(function (error, all_teams) {
   if (error) {
     console.log("ERROR: ", error);
   }
-  for (var i = 0; i < all_teams.length; i++) {
-    controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
-      controller.storage.users.find({ team: all_teams[i].id }, function (error, results) {
+  all_teams.forEach((team) => {
+    console.log(team);
+    controller.spawn({ token: team.bot.token }, function (bot) {
+      controller.storage.users.find({ team: team.id }, function (error, results) {
         if (error) {
           console.log("error: ", error);
         }
-        for (var j = 0; j < results.length; j++) {
-          var user = results[j].id;
+        results.forEach((result) => {
+          console.log(result)
+          var user = result.id;
 
           bot.startPrivateConversation({user: user }, function (err, convo) {
             if (err) {
@@ -51,8 +53,8 @@ controller.storage.teams.all(function (error, all_teams) {
               }
             });
           })
-        }
+        })
       });
     })
-  }
+  })
 });
