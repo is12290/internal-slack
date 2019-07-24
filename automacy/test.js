@@ -18,48 +18,43 @@ bot_options.storage = mongoStorage;
 var controller = Botkit.slackbot(bot_options);
 controller.startTicking();
 
-var test = [];
-
 controller.storage.teams.all(function (error, all_teams) {
   if (error) {
     console.log("ERROR: ", error);
   }
-  all_teams.forEach((team) => {
-    console.log(team);
+  for (let team in all_teams) {
     controller.spawn({ token: team.bot.token }, function (bot) {
-
       controller.storage.users.find({ team: team.id }, function (error, results) {
-        test.push(results);
-      //   if (error) {
-      //     console.log("error: ", error);
-      //   }
-      //   results.forEach((result) => {
-      //     console.log(result)
-      //     var user = result.id;
 
-      //     bot.startPrivateConversation({user: user }, function (err, convo) {
-      //       if (err) {
-      //         console.log("error: ", err);
-      //       }
+        if (error) {
+          console.log("error: ", error);
+        }
+        for (let result in results) {
+          console.log(result)
+          var user = result.id;
 
-      //       convo.addQuestion({
-      //         text: "How you be?"
-      //       }, function (response, convo) {
-      //         console.log("Response: ", response)
-      //         convo.next();
-      //       });
+          bot.startPrivateConversation({user: user }, function (err, convo) {
+            if (err) {
+              console.log("error: ", err);
+            }
 
-      //       convo.activate();
+            convo.addQuestion({
+              text: "How you be?"
+            }, function (response, convo) {
+              console.log("Response: ", response)
+              convo.next();
+            });
 
-      //       convo.on('end', function (convo) {
-      //         if (convo.successful()) {
-      //           console.log("Success!");
-      //         }
-      //       });
-      //     })
-      //   })
+            convo.activate();
+
+            convo.on('end', function (convo) {
+              if (convo.successful()) {
+                console.log("Success!");
+              }
+            });
+          })
+        }
       });
-      console.log(test);
     })
-  })
+  }
 });

@@ -1,39 +1,45 @@
 module.exports = function (controller) {
-    controller.hears(['Test', 'test'], 'direct_message', function (bot, message) {
-        for (var j = 0; j < 3; j++) {
-            var user = message.user;
-  
-            bot.startPrivateConversation({user: user }, function (err, convo) {
-              if (err) {
-                console.log("error: ", err);
+  controller.hears(['test'], 'direct_message', function (bot, message) {
+    bot.startConversation(message, function (err, convo) {
+      convo.addQuestion({
+        text: "Check in confirmation",
+        blocks: [
+          {
+            "type": "section",
+            "text": {
+              "type": "mrkdwn",
+              "text": "Ready for your morning check in?"
+            }
+          },
+          {
+            "type": "actions",
+            "elements": [
+              {
+                "type": "button",
+                "style": "primary",
+                "text": {
+                  "type": "plain_text",
+                  "text": "Yes",
+                  "emoji": true
+                },
+                "value": "Yes-Test"
+              },
+              {
+                "type": "button",
+                "style": "danger",
+                "text": {
+                  "type": "plain_text",
+                  "text": "No",
+                  "emoji": true
+                },
+                "value": "No-Test"
               }
-  
-              convo.addMessage({
-                text: 'This is a conversation!'
-              }, function (response, convo) {
-                console.log('Went through message');
-                convo.next();
-              });
-              console.log("Out of message");
-  
-              convo.addQuestion({
-                text: "How you be?"
-              }, function (response, convo) {
-                console.log("went through question");
-                convo.next();
-              });
-  
-              convo.activate();
-  
-              convo.on('end', function (convo) {
-                if (convo.successful()) {
-                  console.log("Success!");
-                }
-              });
-              console.log("Skipped convo.on('end')")
-            })
-            console.log("Out of conversation");
+            ]
           }
-          console.log("Out of for loop");
+        ]
+      }, function (response, convo) {
+        console.log(response);
+      })
     })
+  })
 }
