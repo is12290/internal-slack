@@ -18,6 +18,8 @@ bot_options.storage = mongoStorage;
 var controller = Botkit.slackbot(bot_options);
 controller.startTicking();
 
+var test = [];
+
 controller.storage.teams.all(function (error, all_teams) {
   if (error) {
     console.log("ERROR: ", error);
@@ -25,36 +27,39 @@ controller.storage.teams.all(function (error, all_teams) {
   all_teams.forEach((team) => {
     console.log(team);
     controller.spawn({ token: team.bot.token }, function (bot) {
+
       controller.storage.users.find({ team: team.id }, function (error, results) {
-        if (error) {
-          console.log("error: ", error);
-        }
-        results.forEach((result) => {
-          console.log(result)
-          var user = result.id;
+        test.push(results);
+      //   if (error) {
+      //     console.log("error: ", error);
+      //   }
+      //   results.forEach((result) => {
+      //     console.log(result)
+      //     var user = result.id;
 
-          bot.startPrivateConversation({user: user }, function (err, convo) {
-            if (err) {
-              console.log("error: ", err);
-            }
+      //     bot.startPrivateConversation({user: user }, function (err, convo) {
+      //       if (err) {
+      //         console.log("error: ", err);
+      //       }
 
-            convo.addQuestion({
-              text: "How you be?"
-            }, function (response, convo) {
-              console.log("Response: ", response)
-              convo.next();
-            });
+      //       convo.addQuestion({
+      //         text: "How you be?"
+      //       }, function (response, convo) {
+      //         console.log("Response: ", response)
+      //         convo.next();
+      //       });
 
-            convo.activate();
+      //       convo.activate();
 
-            convo.on('end', function (convo) {
-              if (convo.successful()) {
-                console.log("Success!");
-              }
-            });
-          })
-        })
+      //       convo.on('end', function (convo) {
+      //         if (convo.successful()) {
+      //           console.log("Success!");
+      //         }
+      //       });
+      //     })
+      //   })
       });
+      console.log(test);
     })
   })
 });
