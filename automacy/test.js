@@ -33,26 +33,11 @@ controller.storage.teams.all(function (error, all_teams) {
           console.log(result)
           var user = result.id;
 
-          bot.startPrivateConversation({user: user }, function (err, convo) {
-            if (err) {
-              console.log("error: ", err);
-            }
-
-            convo.addQuestion({
-              text: "How you be?"
-            }, function (response, convo) {
-              console.log("Response: ", response)
-              convo.next();
-            });
-
-            convo.activate();
-
-            convo.on('end', function (convo) {
-              if (convo.successful()) {
-                console.log("Success!");
-              }
-            });
+          bot.say({
+            text: "hey",
+            channel: user
           })
+
         }
       });
     })
