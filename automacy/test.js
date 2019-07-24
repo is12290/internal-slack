@@ -36,35 +36,23 @@ controller.storage.teams.all(function (error, all_teams) {
               console.log("error: ", err);
             }
 
-            convo.addMessage({
-              text: 'This is a conversation!'
-            }, function (response, convo) {
-              console.log('Went through message');
-              convo.next();
-            });
-            console.log("Out of message");
-
             convo.addQuestion({
               text: "How you be?"
             }, function (response, convo) {
-              console.log("went through question");
+              console.log("Response: ", response)
               convo.next();
             });
 
             convo.activate();
 
             convo.on('end', function (convo) {
-              if (convo.sucessful()) {
+              if (convo.successful()) {
                 console.log("Success!");
               }
             });
-            console.log("Skipped convo.on('end')")
           })
-          console.log("Out of conversation");
         }
-        console.log("Out of for loop");
       });
     })
-    console.log("Out of spawned bot");
   }
 });

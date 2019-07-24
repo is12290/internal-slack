@@ -26,7 +26,7 @@ module.exports = function (controller) {
               convo.activate();
   
               convo.on('end', function (convo) {
-                if (convo.sucessful()) {
+                if (convo.successful()) {
                   console.log("Success!");
                 }
               });
