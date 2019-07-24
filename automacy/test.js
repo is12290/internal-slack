@@ -23,8 +23,8 @@ controller.storage.teams.all(function (error, all_teams) {
     console.log("ERROR: ", error);
   }
   for (var i = 0; i < all_teams.length; i++) {
-    controller.spawn({ token: team[i].bot.token }, function (bot) {
-      controller.storage.users.find({ team: team[i].id }, function (error, results) {
+    controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
+      controller.storage.users.find({ team: all_teams[i].id }, function (error, results) {
 
         if (error) {
           console.log("error: ", error);
