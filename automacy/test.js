@@ -25,24 +25,39 @@ controller.storage.teams.all(function (error, all_teams) {
   for (var i = 0; i < all_teams.length; i++) {
     controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
       controller.storage.users.find({ team: all_teams[i].id }, function (error, results) {
+        if (err) {
+          console.log("error: ", err);
+        }
         for (var j = 0; j < results.length; j++) {
           var user = results[j].id;
 
-          bot.startConversation({
-            user: results[j].id,
-            channel: results[j].id
-          }, function (err, convo) {
-            convo.ask({
-              channel: user,
-              text: 'Just what do you think you are doing, Dave?'
-            }, function (res, convo) {
-              convo.say({
-                channel: user,
-                text: res.text + ' is not a good enough answer.'});
-              convo.next()
+          bot.startPrivateConversation({user: user }, function (err, convo) {
+            if (err) {
+              console.log("error: ", err);
             }
-            );
-          });
+
+            convo.addMessage({
+              text: 'This is a conversation!'
+            }, function (response, convo) {
+              console.log('Went through message');
+              convo.next();
+            });
+
+            convo.addQuestion({
+              text: "How you be?"
+            }, function (response, convo) {
+              console.log("went through question");
+              convo.next();
+            });
+
+            convo.activate();
+
+            convo.on('end', function (convo) {
+              if (convo.sucessful()) {
+                console.log("Success!");
+              }
+            })
+          })
         }
       });
     })
