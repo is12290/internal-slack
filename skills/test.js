@@ -3,42 +3,95 @@ module.exports = function (controller) {
     bot.startConversation(message, function (err, convo) {
       convo.addQuestion({
         text: "Check in confirmation",
-        blocks: [
+        attachments: [
           {
-            "type": "section",
-            "text": {
-              "type": "mrkdwn",
-              "text": "Ready for your morning check in?"
-            }
-          },
-          {
-            "type": "actions",
-            "elements": [
+            title: "Sleep",
+            callback_id: 'checkin-sleep',
+            attachment_type: 'default',
+            actions: [
               {
-                "type": "button",
-                "style": "primary",
-                "text": {
-                  "type": "plain_text",
-                  "text": "Yes",
-                  "emoji": true
-                },
-                "value": "Yes-Test"
+                'name': 'yes-button',
+                'value': 'Yes-Test',
+                'text': 'Yes',
+                'type': 'button'
               },
               {
-                "type": "button",
-                "style": "danger",
-                "text": {
-                  "type": "plain_text",
-                  "text": "No",
-                  "emoji": true
-                },
-                "value": "No-Test"
+                'name': 'no-button',
+                'value': 'No-Test',
+                'text': 'No',
+                'type': 'button'
               }
             ]
-          }
+          },
+          [
+            {
+              pattern: 'Yes-Test',
+              callback: function (reply, convo) {
+                score.push(4);
+                bot.replyInteractive(reply,
+                  {
+                    attachments: [
+                      {
+                        title: "Sleep",
+                        callback_id: 'checkin-sleep',
+                        attachment_type: 'default',
+                        actions: [
+                          {
+                            'name': 'yes-button',
+                            'value': 'Yes-Test',
+                            "style": "primary",
+                            'text': 'Yes',
+                            'type': 'button'
+                          },
+                          {
+                            'name': 'no-button',
+                            'value': 'No-Test',
+                            'text': 'No',
+                            'type': 'button'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                );
+                convo.next();
+              }
+            }, {
+
+              pattern: 'No-Test',
+              callback: function (reply, convo) {
+                score.push(4);
+                bot.replyInteractive(reply,
+                  {
+                    attachments: [
+                      {
+                        title: "Sleep",
+                        callback_id: 'checkin-sleep',
+                        attachment_type: 'default',
+                        actions: [
+                          {
+                            'name': 'yes-button',
+                            'value': 'Yes-Test',
+                            'text': 'Yes',
+                            'type': 'button'
+                          },
+                          {
+                            'name': 'no-button',
+                            'value': 'No-Test',
+                            "style": "danger",
+                            'text': 'No',
+                            'type': 'button'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                );
+                convo.next();
+              }
+            }
+          ]
         ]
-      }, function (response, convo) {
-        console.log(response);
       })
     })
   })
