@@ -34,7 +34,25 @@ controller.storage.teams.all(function (error, all_teams) {
           var user = results[j].id;
 
           bot.say({
-            text: "hey",
+            attachments: [{
+              text: "Ready for your logs?",
+              callback_id: 'automatic-logs-check',
+              attachment_type: 'default',
+              actions: [
+                {
+                  'name': 'yes-button',
+                  'value': 'Yes-Test',
+                  'text': 'Yes',
+                  'type': 'button'
+                },
+                {
+                  'name': 'no-button',
+                  'value': 'No-Test',
+                  'text': 'No',
+                  'type': 'button'
+                }
+              ]
+            }],
             channel: user
           })
 
