@@ -38,8 +38,8 @@ controller.storage.teams.all(function (error, all_teams) {
             }, function (res, convo) {
               convo.say({
                 channel: user,
-                text: res.text + ' is not a good enough answer.'},
-              convo.next())
+                text: res.text + ' is not a good enough answer.'});
+              convo.next()
             }
             );
           });
