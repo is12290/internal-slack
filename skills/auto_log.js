@@ -1,5 +1,5 @@
 module.exports = function (controller) {
-    controller.hears(['Yes-Test'], function (message, bot) {
+    controller.hears(['Yes-Test'], 'direct_message', function (message, bot) {
 
         bot.startConversation(message, function (err, convo) {
             if (err) {
