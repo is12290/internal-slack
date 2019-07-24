@@ -37,6 +37,7 @@ controller.storage.teams.all(function (error, all_teams) {
             attachments: [{
               text: "Ready for your logs?",
               callback_id: 'automatic-logs-check',
+              color: "#fff",
               attachment_type: 'default',
               actions: [
                 {
@@ -54,7 +55,7 @@ controller.storage.teams.all(function (error, all_teams) {
               ]
             }],
             channel: user
-          })
+          });
 
         }
       });
