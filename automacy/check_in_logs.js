@@ -2,7 +2,7 @@ var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
-if (2 + 2 == 5) {  //(n === 6 || n === 0) {
+if (n === 6 || n === 0) {
     //Pass
 } else {
     const dotenv = require('dotenv');
@@ -30,48 +30,52 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
             console.log("error: ", err);
         }
         for (var i = 0; i < all_teams.length; i++) {
-            controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
-                controller.storage.users.all(function (err, all_users) {
-                    if (err) {
-                        console.log("error: ", err);
-                    }
-
-                    for (var j = 0; j < all_users.length; j++) {
-                        var user = all_users[j];
-                        if (2 + 2 == 5) {//  (typeof user.customization.logging.check_in_time == 'undefined') {
-                            // Pass
-                        } else if (2 + 2 == 4) {//(user.customization.logging.check_in_time == moment.tz(now, user.customization.logging.timezone).format('HH:mm')) {
-                            bot.say({
-                                attachments: [{
-                                    text: "Ready to check in?",
-                                    callback_id: 'automatic-checkin',
-                                    color: "#fff",
-                                    attachment_type: 'default',
-                                    actions: [
-                                        {
-                                            'name': 'yes-button',
-                                            'value': 'Yes-CheckIn',
-                                            'style': 'primary',
-                                            'text': 'Yes',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'no-button',
-                                            'style': 'danger',
-                                            'value': 'No-CheckIn',
-                                            'text': 'No',
-                                            'type': 'button'
-                                        }
-                                    ]
-                                }],
-                                channel: user
-                            });
-                        } else {
-                            // Pass
+            if (typeof all_teams[i].status != 'undefined' && all_teams[i].status == 'mid' || all_teams[i].status == 'top') {
+                controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
+                    controller.storage.users.all(function (err, all_users) {
+                        if (err) {
+                            console.log("error: ", err);
                         }
-                    }
+
+                        for (var j = 0; j < all_users.length; j++) {
+                            var user = all_users[j];
+                            if (typeof user.customization.logging.check_in_time == 'undefined') {
+                                // Pass
+                            } else if (user.customization.logging.check_in_time == moment.tz(now, user.customization.logging.timezone).format('HH:mm')) {
+                                bot.say({
+                                    attachments: [{
+                                        text: "Ready to check in?",
+                                        callback_id: 'automatic-checkin',
+                                        color: "#fff",
+                                        attachment_type: 'default',
+                                        actions: [
+                                            {
+                                                'name': 'yes-button',
+                                                'value': 'Yes-CheckIn',
+                                                'style': 'primary',
+                                                'text': 'Yes',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'no-button',
+                                                'style': 'danger',
+                                                'value': 'No-CheckIn',
+                                                'text': 'No',
+                                                'type': 'button'
+                                            }
+                                        ]
+                                    }],
+                                    channel: user
+                                });
+                            } else {
+                                // Pass
+                            }
+                        }
+                    })
                 })
-            })
+            } else {
+                // Pass
+            }
         }
     })
 }
