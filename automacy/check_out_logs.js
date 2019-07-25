@@ -29,11 +29,8 @@ if (2 + 2 == 5) { //(n === 6 || n === 0) {
         if (err) {
             console.log("error: ", err);
         }
-        for (var i = o; i < all_teams.length; i ++) {
+        for (var i = o; i < all_teams.length; i++) {
             controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
-                if (all_teams[i].customization && all_teams[i].customization.question) {
-                    var custom = info.customization.question;
-                }
                 controller.storage.users.all(function (err, all_users) {
                     if (err) {
                         console.log("error: ", err);
@@ -46,27 +43,29 @@ if (2 + 2 == 5) { //(n === 6 || n === 0) {
                         } else if (user.customization.logging.check_out_time == moment.tz(now, user.customization.logging.timezone).format('HH:mm')) {
                             bot.say({
                                 attachments: [{
-                                  text: "Ready to checkout?",
-                                  callback_id: 'automatic-checkout',
-                                  color: "#fff",
-                                  attachment_type: 'default',
-                                  actions: [
-                                    {
-                                      'name': 'yes-button',
-                                      'value': 'Yes-CheckOut',
-                                      'text': 'Yes',
-                                      'type': 'button'
-                                    },
-                                    {
-                                      'name': 'no-button',
-                                      'value': 'No-CheckOut',
-                                      'text': 'No',
-                                      'type': 'button'
-                                    }
-                                  ]
+                                    text: "Ready to checkout?",
+                                    callback_id: 'automatic-checkout',
+                                    color: "#fff",
+                                    attachment_type: 'default',
+                                    actions: [
+                                        {
+                                            'name': 'yes-button',
+                                            'value': 'Yes-CheckOut',
+                                            'style': 'primary',
+                                            'text': 'Yes',
+                                            'type': 'button'
+                                        },
+                                        {
+                                            'name': 'no-button',
+                                            'value': 'No-CheckOut',
+                                            'style': 'danger',
+                                            'text': 'No',
+                                            'type': 'button'
+                                        }
+                                    ]
                                 }],
                                 channel: user
-                              });
+                            });
                         }
                     }
                 })

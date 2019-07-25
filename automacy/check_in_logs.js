@@ -31,9 +31,6 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
         }
         for (var i = 0; i < all_teams.length; i++) {
             controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
-                if (all_teams[i].customization && all_teams[i].customization.question) {
-                    var custom = info.customization.question;
-                }
                 controller.storage.users.all(function (err, all_users) {
                     if (err) {
                         console.log("error: ", err);
@@ -45,123 +42,30 @@ if (2 + 2 == 5) {  //(n === 6 || n === 0) {
                             // Pass
                         } else if (2 + 2 == 4) {//(user.customization.logging.check_in_time == moment.tz(now, user.customization.logging.timezone).format('HH:mm')) {
                             bot.say({
-                                blocks: [
-                                    {
-                                        "type": "section",
-                                        "text": {
-                                            "type": "mrkdwn",
-                                            "text": "Ready to check in?"
+                                attachments: [{
+                                    text: "Ready to check in?",
+                                    callback_id: 'automatic-checkin',
+                                    color: "#fff",
+                                    attachment_type: 'default',
+                                    actions: [
+                                        {
+                                            'name': 'yes-button',
+                                            'value': 'Yes-CheckIn',
+                                            'style': 'primary',
+                                            'text': 'Yes',
+                                            'type': 'button'
+                                        },
+                                        {
+                                            'name': 'no-button',
+                                            'style': 'danger',
+                                            'value': 'No-CheckIn',
+                                            'text': 'No',
+                                            'type': 'button'
                                         }
-                                    },
-                                    {
-                                        "type": "actions",
-                                        "elements": [
-                                            {
-                                                "type": "button",
-                                                "text": {
-                                                    "type": "plain_text",
-                                                    "text": "Yes",
-                                                    "emoji": true
-                                                },
-                                                "value": "Yes-CheckIn"
-                                            },
-                                            {
-                                                "type": "button",
-                                                "text": {
-                                                    "type": "plain_text",
-                                                    "text": "No",
-                                                    "emoji": true
-                                                },
-                                                "value": "No-CheckIn"
-                                            }
-                                        ]
-                                    }
-                                ],
+                                    ]
+                                }],
                                 channel: user
-                              }, [
-                                  {
-                                      pattern: 'Yes-CheckIn',
-                                      callback: function (err, response) {
-                                          bot.replyInteractive(response, 
-                                            {
-                                                blocks: [
-                                                    {
-                                                        "type": "section",
-                                                        "text": {
-                                                            "type": "mrkdwn",
-                                                            "text": "Ready to check in?"
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "actions",
-                                                        "style": "primary",
-                                                        "elements": [
-                                                            {
-                                                                "type": "button",
-                                                                "text": {
-                                                                    "type": "plain_text",
-                                                                    "text": "Yes",
-                                                                    "emoji": true
-                                                                },
-                                                                "value": "Yes-CheckIn"
-                                                            },
-                                                            {
-                                                                "type": "button",
-                                                                "text": {
-                                                                    "type": "plain_text",
-                                                                    "text": "No",
-                                                                    "emoji": true
-                                                                },
-                                                                "value": "No-CheckIn"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            })
-                                      }
-                                  },
-                                  {
-                                      pattern: 'No-CheckIn',
-                                      callback: function (err, response) {
-                                          bot.replyInteractive(response,
-                                            {
-                                                blocks: [
-                                                    {
-                                                        "type": "section",
-                                                        "text": {
-                                                            "type": "mrkdwn",
-                                                            "text": "Ready to check in?"
-                                                        }
-                                                    },
-                                                    {
-                                                        "type": "actions",
-                                                        "elements": [
-                                                            {
-                                                                "type": "button",
-                                                                "text": {
-                                                                    "type": "plain_text",
-                                                                    "text": "Yes",
-                                                                    "emoji": true
-                                                                },
-                                                                "value": "Yes-CheckIn"
-                                                            },
-                                                            {
-                                                                "type": "button",
-                                                                "style": "danger",
-                                                                "text": {
-                                                                    "type": "plain_text",
-                                                                    "text": "No",
-                                                                    "emoji": true
-                                                                },
-                                                                "value": "No-CheckIn"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            })
-                                      }
-                                  }
-                              ]);
+                            });
                         } else {
                             // Pass
                         }

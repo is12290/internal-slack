@@ -45,7 +45,7 @@ if (2+2 ==5) { //(today == endOfMonth) {
                                 if (results == 404) {
                                     bot.say({
                                         text: 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                        channel: instance[1]
+                                        channel: user.channels[0]
                                     });
                                 } else {
                                     if (results.length == 8) {
@@ -53,7 +53,7 @@ if (2+2 ==5) { //(today == endOfMonth) {
                                             var topic = info.customization.question.topic;
                                             bot.say({
                                                 text: 'Hey there! Here is your personal monthly report...\n',
-                                                channel: instance[1],
+                                                channel: user.channels[0],
                                                 attachments: [
                                                     {
                                                         title: 'Sleep',
@@ -109,7 +109,7 @@ if (2+2 ==5) { //(today == endOfMonth) {
                                     } else {
                                         bot.say({
                                             text: 'Hey there! Here is your personal monthly report...\n',
-                                            channel: instance[1],
+                                            channel: user.channels[0],
                                             attachments: [
                                                 {
                                                     title: 'Sleep',
@@ -162,14 +162,14 @@ if (2+2 ==5) { //(today == endOfMonth) {
                                 if (!info) {
                                     bot.say({
                                         'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                        'channel': instance[1]
+                                        'channel': user.channels[0]
                                     });
                                 } else {
                                     var results = getWeeklyOutput(info);
                                     if (results == 404) {
                                         bot.say({
                                             'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                            'channel': instance[1]
+                                            'channel': user.channels[0]
                                         });
                                     } else {
                                         bot.say({
@@ -218,7 +218,7 @@ if (2+2 ==5) { //(today == endOfMonth) {
                                                     text: results[7]
                                                 }
                                             ],
-                                            channel: instance[1]
+                                            channel: user.channels[0]
                                         });
                                     }
                                 }
