@@ -5,6 +5,16 @@ module.exports = function (controller) {
                 if (message.command == '/report') {
                     var timeframe = message.text[0];
                     var users = [];
+                    var channel = '';
+
+                    for (var j = 1; j < message.text[0].length; j++) {
+                        if (string[j] == "|") {
+                            break;
+                        } else {
+                            channel = channel + string[j];
+                        }
+                    }
+
                     bot.api.channel.info({
                         channel: message.text[1]
                     }, function (err, res) {

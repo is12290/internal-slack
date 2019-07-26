@@ -205,7 +205,7 @@ module.exports = function (controller) {
                                     {
                                         pattern: "Custom",
                                         callback: function (reply, convo) {
-                                            convo.addQuestion({
+                                            convo.addMessage({
                                                 text: 'Please pick the dates you would like to compare against',
                                                 action: 'custom'
                                             });
@@ -219,7 +219,7 @@ module.exports = function (controller) {
 
                             convo.on('end', function (convo) {
                                 if (convo.successful()) {
-                                    var results = getOutput(all_users, startTimeframe, endTimeframe);
+                                    var results = getOutput(all_users, startTimeframe, endTimeframe)
 
                                     bot.reply(message, {
                                         text: 'Here is ' + results[2][0] + ' compared to ' + results[2][1] + '\n',
@@ -240,7 +240,7 @@ module.exports = function (controller) {
                                                 title: 'Comparison',
                                                 color: '#8A02FF',
                                                 attachment_type: 'default',
-                                                text: 'There was a *' + ((results[0] - results[1]) / results[1]) * 100 + '%* change in emotional health'
+                                                text: 'There has been a *' + ((results[0] - results[1]) / results[1]) * 100 + '%* change in emotional health'
                                             }
                                         ]
                                     });
@@ -333,9 +333,9 @@ function getOutput(results, start, end) {
             startOfYear = startOfYear.clone().add(1, 'd');
         }
         timeframeMessage.push('*Last Year*');
-    } else if (start[0] == 5) {
-        var customStart = start[1];
-        var customEnd = start[2];
+    } else if (end[0] == 5) {
+        var customStart = end[1];
+        var customEnd = end[2];
 
         var pastDays = [];
         while (customStart <= customEnd) {
