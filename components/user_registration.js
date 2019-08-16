@@ -21,7 +21,6 @@ module.exports = function(controller) {
                     createdBy: payload.identity.user_id,
                     url: payload.identity.url,
                     name: payload.identity.team,
-                    status: 'top',
                 };
                 var new_team= true;
             }

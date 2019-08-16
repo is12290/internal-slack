@@ -47,10 +47,8 @@ This bot demonstrates many of the core features of Botkit:
     -> http://howdy.ai/botkit
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 // const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY).slack;
-
 
 if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
   usage_tip();

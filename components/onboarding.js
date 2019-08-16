@@ -9,8 +9,17 @@ module.exports = function (controller) {
             if (!team) {
                 // pass
             } else {
-                bot.api.users.info({ user: bot.config.createdBy }, function (err, response) {
-                    team.email = response.user.profile.email;
+                bot.api.channels.create({ token: team.bot.app_token, name: "internal-vibe" }, function (err, response) {
+                    bot.api.channels.setPurpose({ token: team.bot.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share the daily overall emotional fitness scores of those who opt to share."}, function (err, response) {
+                        console.log("error: ", err);
+                    })
+                    bot.api.channels.setTopic({ token: team.bot.app_token, channel: response.channel.id, topic: "Know how your coworkers are doing today"}, function (err, response) {
+                        if (err) {
+                            console.log("error: ", err);
+                        }
+                    })
+
+                    team.bot.channel = response.channel.id;
                     controller.storage.teams.save(team);
                 });
             }

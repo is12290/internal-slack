@@ -3,6 +3,10 @@ module.exports = function (controller) {
         if (message.actions[0].value == "Yes-CheckIn") {
             // Check in convo
             bot.startConversation(message, function (err, convo) {
+                if (err) {
+                    console.log("error: ", err);
+                    bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
+                }
 
                 // Keep Score
                 const score = [];
@@ -467,27 +471,27 @@ module.exports = function (controller) {
                             color: '#8A02FF',
                             actions: [
                                 {
-                                    'name': 'ecstatic-button',
-                                    'value': 'Ecstatic',
-                                    'text': 'Ecstatic',
+                                    'name': 'happy-button',
+                                    'value': 'Happy',
+                                    'text': 'Happy',
                                     'type': 'button'
                                 },
                                 {
-                                    'name': 'positive-button',
-                                    'value': 'Positive',
-                                    'text': 'Positive',
+                                    'name': 'calm-button',
+                                    'value': 'Calm',
+                                    'text': 'Calm',
                                     'type': 'button'
                                 },
                                 {
-                                    'name': 'indifferent-button',
-                                    'value': 'Indifferent',
-                                    'text': 'Indifferent',
+                                    'name': 'tense-button',
+                                    'value': 'Tense',
+                                    'text': 'Tense',
                                     'type': 'button'
                                 },
                                 {
-                                    'name': 'miserable-button',
-                                    'value': 'Miserable',
-                                    'text': 'Miserable',
+                                    'name': 'upset-button',
+                                    'value': 'Upset',
+                                    'text': 'Upset',
                                     'type': 'button'
                                 },
                             ]
@@ -495,7 +499,7 @@ module.exports = function (controller) {
                     ]
                 }, [
                         {
-                            pattern: 'Ecstatic',
+                            pattern: 'Happy',
                             callback: function (reply, convo) {
                                 score.push(4);
                                 bot.replyInteractive(reply,
@@ -508,28 +512,28 @@ module.exports = function (controller) {
                                                 color: '#8A02FF',
                                                 actions: [
                                                     {
-                                                        'name': 'ecstatic-button',
-                                                        'value': 'Ecstatic',
+                                                        'name': 'happy-button',
                                                         'style': 'primary',
-                                                        'text': 'Ecstatic',
+                                                        'value': 'Happy',
+                                                        'text': 'Happy',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'positive-button',
-                                                        'value': 'Positive',
-                                                        'text': 'Positive',
+                                                        'name': 'calm-button',
+                                                        'value': 'Calm',
+                                                        'text': 'Calm',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'indifferent-button',
-                                                        'value': 'Indifferent',
-                                                        'text': 'Indifferent',
+                                                        'name': 'tense-button',
+                                                        'value': 'Tense',
+                                                        'text': 'Tense',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'miserable-button',
-                                                        'value': 'Miserable',
-                                                        'text': 'Miserable',
+                                                        'name': 'upset-button',
+                                                        'value': 'Upset',
+                                                        'text': 'Upset',
                                                         'type': 'button'
                                                     },
                                                 ]
@@ -541,7 +545,7 @@ module.exports = function (controller) {
                             }
                         },
                         {
-                            pattern: 'Positive',
+                            pattern: 'Calm',
                             callback: function (reply, convo) {
                                 score.push(3);
                                 bot.replyInteractive(reply,
@@ -554,28 +558,28 @@ module.exports = function (controller) {
                                                 color: '#8A02FF',
                                                 actions: [
                                                     {
-                                                        'name': 'ecstatic-button',
-                                                        'value': 'Ecstatic',
-                                                        'text': 'Ecstatic',
+                                                        'name': 'happy-button',
+                                                        'value': 'Happy',
+                                                        'text': 'Happy',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'positive-button',
-                                                        'value': 'Positive',
+                                                        'name': 'calm-button',
                                                         'style': 'primary',
-                                                        'text': 'Positive',
+                                                        'value': 'Calm',
+                                                        'text': 'Calm',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'indifferent-button',
-                                                        'value': 'Indifferent',
-                                                        'text': 'Indifferent',
+                                                        'name': 'tense-button',
+                                                        'value': 'Tense',
+                                                        'text': 'Tense',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'miserable-button',
-                                                        'value': 'Miserable',
-                                                        'text': 'Miserable',
+                                                        'name': 'upset-button',
+                                                        'value': 'Upset',
+                                                        'text': 'Upset',
                                                         'type': 'button'
                                                     },
                                                 ]
@@ -587,7 +591,7 @@ module.exports = function (controller) {
                             }
                         },
                         {
-                            pattern: 'Indifferent',
+                            pattern: 'Tense',
                             callback: function (reply, convo) {
                                 score.push(2);
                                 bot.replyInteractive(reply,
@@ -600,28 +604,28 @@ module.exports = function (controller) {
                                                 color: '#8A02FF',
                                                 actions: [
                                                     {
-                                                        'name': 'ecstatic-button',
-                                                        'value': 'Ecstatic',
-                                                        'text': 'Ecstatic',
+                                                        'name': 'happy-button',
+                                                        'value': 'Happy',
+                                                        'text': 'Happy',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'positive-button',
-                                                        'value': 'Positive',
-                                                        'text': 'Positive',
+                                                        'name': 'calm-button',
+                                                        'value': 'Calm',
+                                                        'text': 'Calm',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'indifferent-button',
-                                                        'value': 'Indifferent',
+                                                        'name': 'tense-button',
+                                                        'value': 'Tense',
                                                         'style': 'primary',
-                                                        'text': 'Indifferent',
+                                                        'text': 'Tense',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'miserable-button',
-                                                        'value': 'Miserable',
-                                                        'text': 'Miserable',
+                                                        'name': 'upset-button',
+                                                        'value': 'Upset',
+                                                        'text': 'Upset',
                                                         'type': 'button'
                                                     },
                                                 ]
@@ -633,7 +637,7 @@ module.exports = function (controller) {
                             }
                         },
                         {
-                            pattern: 'Miserable',
+                            pattern: 'Upset',
                             callback: function (reply, convo) {
                                 score.push(1);
                                 bot.replyInteractive(reply,
@@ -646,28 +650,28 @@ module.exports = function (controller) {
                                                 color: '#8A02FF',
                                                 actions: [
                                                     {
-                                                        'name': 'ecstatic-button',
-                                                        'value': 'Ecstatic',
-                                                        'text': 'Ecstatic',
+                                                        'name': 'happy-button',
+                                                        'value': 'Happy',
+                                                        'text': 'Happy',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'positive-button',
-                                                        'value': 'Positive',
-                                                        'text': 'Positive',
+                                                        'name': 'calm-button',
+                                                        'value': 'Calm',
+                                                        'text': 'Calm',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'indifferent-button',
-                                                        'value': 'Indifferent',
-                                                        'text': 'Indifferent',
+                                                        'name': 'tense-button',
+                                                        'value': 'Tense',
+                                                        'text': 'Tense',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'miserable-button',
-                                                        'value': 'Miserable',
+                                                        'name': 'upset-button',
                                                         'style': 'primary',
-                                                        'text': 'Miserable',
+                                                        'value': 'Upset',
+                                                        'text': 'Upset',
                                                         'type': 'button'
                                                     },
                                                 ]
@@ -857,9 +861,9 @@ module.exports = function (controller) {
                         },
                         {
                             pattern: 'Overwhelmed',
-                            callback: function (reply, convo) {
+                            callback: function (response, convo) {
                                 score.push(1);
-                                bot.replyInteractive(reply,
+                                bot.replyInteractive(response,
                                     {
                                         attachments: [
                                             {
@@ -898,242 +902,114 @@ module.exports = function (controller) {
                                         ]
                                     }
                                 );
+                                bot.reply(response, "Thanks for checking in!");
                                 convo.next();
                             }
                         }
                     ]);
 
-                controller.storage.teams.get(message.team, function (err, info) {
-                    if (typeof info.customization != 'undefined' && typeof info.customization.question != 'undefined') {
-                        var custom = info.customization.question;
-                        // Confidence
-                        convo.addQuestion({
-                            attachments: [
+                const permission = [];
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'permission',
+                            text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                            attachment_type: 'default',
+                            actions: [
                                 {
-                                    title: custom.topic,
-                                    callback_id: 'checkin-' + custom.topic,
-                                    attachment_type: 'default',
-                                    color: '#02FF92',
-                                    actions: [
-                                        {
-                                            'name': custom.choices[0] + '-button',
-                                            'value': custom.choices[0],
-                                            'text': custom.choices[0],
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': custom.choices[1] + '-button',
-                                            'value': custom.choices[1],
-                                            'text': custom.choices[1],
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': custom.choices[2] + '-button',
-                                            'value': custom.choices[2],
-                                            'text': custom.choices[2],
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': custom.choices[3] + '-button',
-                                            'value': custom.choices[3],
-                                            'text': custom.choices[3],
-                                            'type': 'button'
-                                        },
-                                    ]
+                                    'name': 'yes-button',
+                                    'value': 'Yes',
+                                    'text': 'Yes',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'no-button',
+                                    'value': 'No',
+                                    'text': 'No',
+                                    'type': 'button'
                                 }
                             ]
-                        }, [
-                                {
-                                    pattern: custom.choices[0],
-                                    callback: function (reply, convo) {
-                                        score.push(4);
-                                        bot.replyInteractive(reply,
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'Yes',
+                            callback: function (reply, convo) {
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
                                             {
-                                                attachments: [
+                                                callback_id: 'permission',
+                                                text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                                attachment_type: 'default',
+                                                actions: [
                                                     {
-                                                        title: custom.topic,
-                                                        callback_id: 'checkin-' + custom.topic,
-                                                        attachment_type: 'default',
-                                                        color: '#02FF92',
-                                                        actions: [
-                                                            {
-                                                                'name': custom.choices[0] + '-button',
-                                                                'value': custom.choices[0],
-                                                                'style': 'primary',
-                                                                'text': custom.choices[0],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[1] + '-button',
-                                                                'value': custom.choices[1],
-                                                                'text': custom.choices[1],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[2] + '-button',
-                                                                'value': custom.choices[2],
-                                                                'text': custom.choices[2],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[3] + '-button',
-                                                                'value': custom.choices[3],
-                                                                'text': custom.choices[3],
-                                                                'type': 'button'
-                                                            },
-                                                        ]
+                                                        'name': 'yes-button',
+                                                        'value': 'Yes',
+                                                        'style': 'primary',
+                                                        'text': 'Yes',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'no-button',
+                                                        'value': 'No',
+                                                        'text': 'No',
+                                                        'type': 'button'
                                                     }
                                                 ]
                                             }
-                                        );
-                                        convo.next();
+                                        ]
                                     }
-                                },
-                                {
-                                    pattern: custom.choices[1],
-                                    callback: function (reply, convo) {
-                                        score.push(3);
-                                        bot.replyInteractive(reply,
+                                )
+                                permission.push(true);
+                                bot.api.reactions.add({
+                                    name: 'thumbsup',
+                                    channel: message.channel,
+                                    timestamp: reply.ts
+                                });
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'No',
+                            callback: function (reply, convo) {
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
                                             {
-                                                attachments: [
+                                                callback_id: 'permission',
+                                                text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                                attachment_type: 'default',
+                                                actions: [
                                                     {
-                                                        title: custom.topic,
-                                                        callback_id: 'checkin-' + custom.topic,
-                                                        attachment_type: 'default',
-                                                        color: '#02FF92',
-                                                        actions: [
-                                                            {
-                                                                'name': custom.choices[0] + '-button',
-                                                                'value': custom.choices[0],
-                                                                'text': custom.choices[0],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[1] + '-button',
-                                                                'value': custom.choices[1],
-                                                                'style': 'primary',
-                                                                'text': custom.choices[1],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[2] + '-button',
-                                                                'value': custom.choices[2],
-                                                                'text': custom.choices[2],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[3] + '-button',
-                                                                'value': custom.choices[3],
-                                                                'text': custom.choices[3],
-                                                                'type': 'button'
-                                                            },
-                                                        ]
+                                                        'name': 'yes-button',
+                                                        'value': 'Yes',
+                                                        'text': 'Yes',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'no-button',
+                                                        'value': 'No',
+                                                        'style': 'danger',
+                                                        'text': 'No',
+                                                        'type': 'button'
                                                     }
                                                 ]
                                             }
-                                        );
-                                        convo.next();
+                                        ]
                                     }
-                                },
-                                {
-                                    pattern: custom.choices[2],
-                                    callback: function (reply, convo) {
-                                        score.push(2);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: custom.topic,
-                                                        callback_id: 'checkin-' + custom.topic,
-                                                        attachment_type: 'default',
-                                                        color: '#02FF92',
-                                                        actions: [
-                                                            {
-                                                                'name': custom.choices[0] + '-button',
-                                                                'value': custom.choices[0],
-                                                                'text': custom.choices[0],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[1] + '-button',
-                                                                'value': custom.choices[1],
-                                                                'text': custom.choices[1],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[2] + '-button',
-                                                                'value': custom.choices[2],
-                                                                'style': 'primary',
-                                                                'text': custom.choices[2],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[3] + '-button',
-                                                                'value': custom.choices[3],
-                                                                'text': custom.choices[3],
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: custom.choices[3],
-                                    callback: function (reply, convo) {
-                                        score.push(1);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: custom.topic,
-                                                        callback_id: 'checkin-' + custom.topic,
-                                                        attachment_type: 'default',
-                                                        color: '#02FF92',
-                                                        actions: [
-                                                            {
-                                                                'name': custom.choices[0] + '-button',
-                                                                'value': custom.choices[0],
-                                                                'text': custom.choices[0],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[1] + '-button',
-                                                                'value': custom.choices[1],
-                                                                'text': custom.choices[1],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[2] + '-button',
-                                                                'value': custom.choices[2],
-                                                                'text': custom.choices[2],
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': custom.choices[3] + '-button',
-                                                                'value': custom.choices[3],
-                                                                'style': 'primary',
-                                                                'text': custom.choices[3],
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                }
-                            ]);
-                    } else {
-                        // Pass
-                    }
-
-                });
-
+                                );
+                                permission.push(false);
+                                bot.api.reactions.add({
+                                    name: 'thumbsup',
+                                    channel: message.channel,
+                                    timestamp: reply.ts
+                                });
+                                convo.next();
+                            }
+                        }
+                    ]
+                );
 
 
                 convo.activate();
@@ -1147,37 +1023,54 @@ module.exports = function (controller) {
                         var sum = score.reduce(function (a, b) { return a + b; }, 0);
                         score.push(sum);
 
-                        controller.storage.users.get(message.user, function (err, user) {
-                            var today = new Date();
-                            var dd = String(today.getDate()).padStart(2, '0');
-                            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                            var yyyy = today.getFullYear();
+                        var today = new Date();
+                        var dd = String(today.getDate()).padStart(2, '0');
+                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                        var yyyy = today.getFullYear();
 
-                            today = mm + '/' + dd + '/' + yyyy;
+                        today = mm + '/' + dd + '/' + yyyy;
 
-                            if (!user) {
-                                user = {};
-                                user.id = message.user,
-                                    user.team = message.team,
-                                    user.channels = [message.channel]
-                                user.logs = {
-                                    [today]: {
-                                        check_in: score,
-                                    }
-                                };
-                                controller.storage.users.save(user);
-                            } else if (!user.logs[today]) {
-                                user.logs[today] = {
+                        if (!user) {
+                            user = {};
+                            user.id = message.user,
+                                user.team = message.team,
+                                user.channel = message.channel
+                            user.logs = {
+                                [today]: {
                                     check_in: score,
-                                };
-                                controller.storage.users.save(user);
-                            } else {
-                                user.logs[today].check_in = score;
-                                controller.storage.users.save(user);
-                            }
-                        });
+                                    permission: permission
+                                }
+                            };
+                            controller.storage.users.save(user);
+                        } else if (!user.logs || !user.logs[today]) {
+                            user.logs = {
+                                [today]: {
+                                    check_in: score,
+                                    permission: permission
+                                }
+                            };
+                            controller.storage.users.save(user);
+                        } else {
+                            user.logs[today].check_in = score;
+                            user.logs[today].permission = permission;
+                            controller.storage.users.save(user);
+                        }
 
-                        bot.reply(message, 'Thanks for checking in!');
+                        if (permission[0] == true) {
+                            controller.storage.teams.get(message.team, function (err, team) {
+                                const overall = GetOverall(score);
+                                if (err) {
+                                    console.log("error: ", err);
+                                }
+                                bot.say({
+                                    text: user.name + "'s is feeling around " + overall + "% today",
+                                    channel: team.bot.channel
+                                })
+                            })
+                        } else {
+                            // nuthin
+                        }
+                        bot.reply(message, 'Okay, that is all! Thank you');
                     }
                     else {
                         bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?')
@@ -1190,4 +1083,15 @@ module.exports = function (controller) {
             // Pass
         }
     })
+}
+
+function GetOverall(score) {
+    var scores = [];
+    for (var j = 0; j < score.length-1; j++) {
+        scores.push(score[j] * 25);
+    }
+    var sum = scores.reduce(function (a, b) { return a + b; }, 0);
+    var overall = sum / scores.length;
+    overall = Math.round(overall);
+    return overall
 }

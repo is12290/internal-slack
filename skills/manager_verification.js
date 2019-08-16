@@ -1,10 +1,6 @@
 module.exports = function (controller) {
-    controller.hears(['^help', '^info'], 'direct_message,direct_mention', function (bot, message) {
-        controller.storage.users.get(message.user, function (error, user) {
-            if (error) {
-                console.log("error: ", error);
-                bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
-            }
+    controller.hears(['^new Manager', '^new manager'], 'direct_message', function (bot, message) {
+        controller.storage.users.get(message.user, function (err, user) {
             if (!user || typeof user == 'undefined') {
                 bot.startPrivateConversation({ user: message.user }, function (err, convo) {
                     if (err) {
@@ -135,13 +131,35 @@ module.exports = function (controller) {
                                 controller.storage.users.save(newUser);
                             }
                         }
-                        
+
                     })
                 })
-
             } else {
-                bot.reply(message, "*General Functionality: *\n\n_Check Ups:_\nCheck In – Send me a message saying `Check In` to initiate the check in log\nReflections – End of day reflections can be initiated by sending me a message saying `Reflect`\nAutomatic Check Ups – Look at the ‘_Customizations_’ section to learn how to set up your check ups to be automatically initiated so you don’t have to remember to message me everyday :grinning:\n\n_Results Reporting:_\n*A Quick Note – Only you have the capability of accessing your exact scores, managers (if plugged in) view aggregate scores so as to ensure nothing is personally identifiable*\nMonthly Reports – Send me a message saying `Monthly Report` to view your personal scores over the past month, as well as the amount of times you chose each topic response\nWeekly Reports - Send me a message saying `Weekly Report` to view your personal scores over the past week, as well as the amount of times you chose each topic response\nAutomatic Reports - Look at the ‘_Customizations_’ section to learn how to set up your reports to be automatically sent at the end of each week and month :+1:\n\n_Slash Commands:_\nComparisons – Begin a score comparison by typing `/compare` which will initiate a private question where I’ll ask you what two time frames you want to compare, then report the outcome\nHistorical Searching - Begin a historical search by typing `/search` will initiate a private question where you will be asked to input the desired search time frame and I’ll report the outcome\n\n_Customizations:_\nCustom Check Ups – Send me a message saying `Customize Check Ups` where I will ask a few questions about your timezone and your desired times to be automatically sent Check In logs and the End of Day Question\nCustom Reporting – Send me a message saying `Customize Reports` where I will ask a few question about your timezone and your desired times to be automatically sent your reports\n\n*Manager-Specific Functionality: *\n\n_Team Results Reporting:_\n*A Quick Note – I need to be added to private channels in order to see what employees are within the channel*\nDaily – Send me a message saying `Daily Team Report` to where you’ll be asked whether you want to see your entire Slack team’s aggregate daily scores or a specific Channel’s aggregate daily scores\nWeekly - Send me a message saying `Weekly Team Report` to where you’ll be asked whether you want to see your entire Slack team’s aggregate weekly scores or a specific Channel’s aggregate weekly scores\nMonthly - Send me a message saying `Monthly Team Report` to where you’ll be asked whether you want to see your entire Slack team’s aggregate monthly scores or a specific Channel’s aggregate monthly scores\n\n_Customizations:_\nCustom Team Reports – Send me a message saying `Customize Team Reports` where I will ask a few question about your timezone, desired times, and channel info in order to automatically send you your desired team reports\n\n_Slash Commands:_\nChannel Specific Reporting – For a faster experience viewing a specific channel’s scores, type `/report` accompanied by a channel and time interval  (ie. `/report #design daily`) in the form of `/report #channel [day/week/month]`\nComparisons - Begin a score comparison by typing `/compare` which will initiate a private question where I’ll ask you what two time frames you want to compare, as well as whether or not you desire the entire Slack team scores or a specific Channel, then report the outcome\nHistorical Searching - Begin a historical search by typing `/search` will initiate a private question where you will be asked to input the desired search time frame, as well as whether or not you desire the entire Slack team scores or a specific Channel, and I’ll report the outcome\n\nIf you have any other questions or comments, feel free to reach out to my superiors at support@getinternal.co")
+                bot.startConversation(message, function (err, convo) {
+                    if (err) {
+                        console.log("error: ", err);
+                        bot.whisper(message, "My grandest of apologies, but I'm a bit popular right now and can't process your message. Say it again?");
+                    }
+                    convo.addQuestion("Awesome! What was the email you used to subscribe?", function (reply, convo) {
+                        bot.api.reactions.add({
+                            name: 'thumbsup',
+                            channel: message.channel,
+                            timestamp: reply.ts
+                        });
+                        convo.next();
+                    });
+
+                    convo.activate();
+
+                    convo.on('end', function (convo) {
+                        if (convo.successful()) {
+                            user.status = 'manager';
+                            controller.storage.users.save(user);
+                            bot.reply(message, "You're verified and free to do as you please!\nWelcome to the land of team insights :blush:");
+                        }
+                    })
+                })
             }
         })
-    });
-};
+    })
+}
