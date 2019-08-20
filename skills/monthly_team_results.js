@@ -1,18 +1,21 @@
 module.exports = function (controller) {
     controller.hears(['^monthly team result', '^monthly team results', '^monthly Team Results', '^monthly Team Result', '^monthly team report', '^monthly team Report', '^monthly Team Report'], 'direct_message', function (bot, message) {
-        controller.storage.users.get(message.user, function (error, role) {
+        controller.storage.users.find({team: message.team}, function (error, output) {
             if (error) {
                 console.log("error: ", error);
                 bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
             }
+            var role;
+            for (var z = 0; z < output.length; z++) {
+                var output_instance = output[z];
+                if (output_instance.id == message.user) {
+                    role = output_instance;
+                    break;
+                }
+            }
             if (typeof role.status == 'undefined' || role.status != 'manager') {
                 bot.reply(message, 'Slow down there, amigo! Monthly team reporting is only available to paid managers - you can upgrade your status here: https://getinternal.co');
             } else {
-                controller.storage.users.find({ team: message.team }, function (err, output) {
-                    if (err) {
-                        console.log("error: ", err);
-                        bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
-                    }
                     if (!output) {
                         bot.reply(message, 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!');
                     } else {
@@ -69,7 +72,6 @@ module.exports = function (controller) {
                             });
                         }
                     }
-                });
             }
 
         });
