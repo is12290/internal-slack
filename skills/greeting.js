@@ -19,6 +19,7 @@ module.exports = function (controller) {
                             {
                                 callback_id: 'new-user',
                                 text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                color: "#0294ff",
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -46,6 +47,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -78,6 +80,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {

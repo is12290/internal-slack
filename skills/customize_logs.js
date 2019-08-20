@@ -16,6 +16,7 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 callback_id: 'new-user',
+                                color: "#0294ff",
                                 text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
                                 attachment_type: 'default',
                                 actions: [
@@ -43,6 +44,7 @@ module.exports = function (controller) {
                                             attachments: [
                                                 {
                                                     callback_id: 'new-user',
+                                                    color: "#0294ff",
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
                                                     attachment_type: 'default',
                                                     actions: [
@@ -75,6 +77,7 @@ module.exports = function (controller) {
                                             attachments: [
                                                 {
                                                     callback_id: 'new-user',
+                                                    color: "#0294ff",
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
                                                     attachment_type: 'default',
                                                     actions: [
@@ -158,7 +161,7 @@ module.exports = function (controller) {
                                         text: 'What timezone are you in?',
                                         callback_id: 'timezone',
                                         attachment_type: 'default',
-                                        color: '#02C6FF',
+                                        color: "#0294ff",
                                         actions: [
                                             {
                                                 "name": "timezone",
@@ -222,7 +225,7 @@ module.exports = function (controller) {
                                         text: 'What time would be best for check ins?',
                                         callback_id: 'time',
                                         attachment_type: 'default',
-                                        color: '#02FF92',
+                                        color: "#0294ff",
                                         actions: [
                                             {
                                                 "name": "time",
@@ -439,7 +442,7 @@ module.exports = function (controller) {
                                         text: "What time would be best for reflections?",
                                         callback_id: 'time',
                                         attachment_type: 'default',
-                                        color: '#C902FF',
+                                        color: "#0294ff",
                                         actions: [
                                             {
                                                 "name": "time",
@@ -691,6 +694,7 @@ module.exports = function (controller) {
                                 attachments: [{
                                     text: "Your logs are already set to be automatically sent at " + user.customization.logging.check_in_time + " and " + user.customization.logging.reflection_time + ", " + user.customization.logging.timezone + " time!\nWould you like to change this?",
                                     callback_id: 'automatic-logs-check',
+                                    color: "#0294ff",
                                     attachment_type: 'default',
                                     actions: [
                                         {
@@ -717,6 +721,7 @@ module.exports = function (controller) {
                                                     attachments: [{
                                                         text: "Your logs are already set to be automatically sent at " + user.customization.logging.check_in_time + " and " + user.customization.logging.reflection_time + ", " + user.customization.logging.timezone + " time!\nWould you like to change this?",
                                                         callback_id: 'automatic-logs-check',
+                                                        color: "#0294ff",
                                                         attachment_type: 'default',
                                                         actions: [
                                                             {
@@ -747,6 +752,7 @@ module.exports = function (controller) {
                                                     attachments: [{
                                                         text: "Your logs are already set to be automatically sent at " + user.customization.logging.check_in_time + " and " + user.customization.logging.reflection_time + ", " + user.customization.logging.timezone + " time!\nWould you like to change this?",
                                                         callback_id: 'automatic-logs-check',
+                                                        color: "#0294ff",
                                                         attachment_type: 'default',
                                                         actions: [
                                                             {
@@ -783,7 +789,7 @@ module.exports = function (controller) {
                                         text: 'What timezone are you in?',
                                         callback_id: 'timezone',
                                         attachment_type: 'default',
-                                        color: '#02FF92',
+                                        color: "#0294ff",
                                         actions: [
                                             {
                                                 "name": "timezone",
@@ -848,7 +854,7 @@ module.exports = function (controller) {
                                         text: 'What time would be best for check ins?',
                                         callback_id: 'time',
                                         attachment_type: 'default',
-                                        color: '#FF02DA',
+                                        color: "#0294ff",
                                         actions: [
                                             {
                                                 "name": "time",
@@ -1065,7 +1071,7 @@ module.exports = function (controller) {
                                         text: 'What time would be best for reflections?',
                                         callback_id: 'time',
                                         attachment_type: 'default',
-                                        color: '#C902FF',
+                                        color: "#0294ff",
                                         actions: [
                                             {
                                                 "name": "time",

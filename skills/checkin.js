@@ -17,6 +17,7 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 callback_id: 'new-user',
+                                color: "#0294ff",
                                 text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
                                 attachment_type: 'default',
                                 actions: [
@@ -44,6 +45,7 @@ module.exports = function (controller) {
                                             attachments: [
                                                 {
                                                     callback_id: 'new-user',
+                                                    color: "#0294ff",
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
                                                     attachment_type: 'default',
                                                     actions: [
@@ -76,6 +78,7 @@ module.exports = function (controller) {
                                             attachments: [
                                                 {
                                                     callback_id: 'new-user',
+                                                    color: "#0294ff",
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
                                                     attachment_type: 'default',
                                                     actions: [
@@ -1053,6 +1056,7 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 callback_id: 'permission',
+                                color: "#0294ff",
                                 text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
                                 attachment_type: 'default',
                                 actions: [
@@ -1080,6 +1084,7 @@ module.exports = function (controller) {
                                             attachments: [
                                                 {
                                                     callback_id: 'permission',
+                                                    color: "#0294ff",
                                                     text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
                                                     attachment_type: 'default',
                                                     actions: [
@@ -1118,6 +1123,7 @@ module.exports = function (controller) {
                                             attachments: [
                                                 {
                                                     callback_id: 'permission',
+                                                    color: "#0294ff",
                                                     text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
                                                     attachment_type: 'default',
                                                     actions: [
@@ -1182,7 +1188,7 @@ module.exports = function (controller) {
                                     }
                                 };
                                 controller.storage.users.save(user);
-                            } else if (!user.logs || !user.logs[today]) {
+                            } else if (!user.logs) {
                                 user.logs = {
                                     [today]:  {
                                         check_in: score,
@@ -1191,8 +1197,10 @@ module.exports = function (controller) {
                                 };
                                 controller.storage.users.save(user);
                             } else {
-                                user.logs[today].check_in = score;
-                                user.logs[today].permission = permission;
+                                user.logs[today] = {
+                                    check_in: score,
+                                    permission: permission[0],
+                                }
                                 controller.storage.users.save(user);
                             }
 

@@ -1,5 +1,6 @@
 module.exports = function (controller) {
     controller.hears(['^new Manager', '^new manager'], 'direct_message', function (bot, message) {
+        // const stripe = require("stripe")(process.env.STRIPE_KEY);
         controller.storage.users.get(message.user, function (err, user) {
             if (!user || typeof user == 'undefined') {
                 bot.startPrivateConversation({ user: message.user }, function (err, convo) {
@@ -14,6 +15,7 @@ module.exports = function (controller) {
                             {
                                 callback_id: 'new-user',
                                 text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                color: "#0294ff",
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -41,6 +43,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -73,6 +76,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -141,6 +145,23 @@ module.exports = function (controller) {
                         bot.whisper(message, "My grandest of apologies, but I'm a bit popular right now and can't process your message. Say it again?");
                     }
                     convo.addQuestion("Awesome! What was the email you used to subscribe?", function (reply, convo) {
+                        // bot.reply(message, "One second while I check this..");
+                        // stripe.cusomters.list( { email: response.text }, function (err, customers) {
+                        //     if (err || !customers) {
+                        //         bot.reply(message, "I actually wasn't able to verify that email. Are you sure it is correct?");
+                        //         convo.stop();
+                        //     } else if (customers) {
+                        //         user.status = 'manager';
+                        //         controller.storage.users.save(user);
+                        //         bot.api.reactions.add({
+                        //             name: 'thumbsup',
+                        //             channel: message.channel,
+                        //             timestamp: reply.ts
+                        //         });
+                        //         bot.reply(message, "You're verified and free to do as you please!\nWelcome to the land of team insights :blush:");
+                        //         convo.stop();
+                        //     }
+                        // })
                         bot.api.reactions.add({
                             name: 'thumbsup',
                             channel: message.channel,

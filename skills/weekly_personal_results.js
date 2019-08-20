@@ -18,6 +18,7 @@ module.exports = function (controller) {
                             {
                                 callback_id: 'new-user',
                                 text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                color: "#0294ff",
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -45,6 +46,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -77,6 +79,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -156,43 +159,43 @@ module.exports = function (controller) {
                                     title: 'Sleep',
                                     color: '#02D2FF',
                                     attachment_type: 'default',
-                                    text: results[0][0] + '\n*Perfect:* ' + results[1][0][0] + ' | *Sufficient:* ' + results[1][0][1] + ' | *Restless:* ' + results[1][0][2] + ' | *Terrible:* ' + results[1][0][3] + '\n'
+                                    text: results[0][0] + '\n*Perfect:* ' + results[1][0][4] + ' | *Sufficient:* ' + results[1][0][3] + ' | *Restless:* ' + results[1][0][2] + ' | *Terrible:* ' + results[1][0][1] + '\n'
                                 },
                                 {
                                     title: 'Energy',
                                     color: '#2A02FF',
                                     attachment_type: 'default',
-                                    text: results[0][1] + '\n*Full:* ' + results[1][1][0] + ' | *Alright:* ' + results[1][1][1] + ' | *Hanging On:* ' + results[1][1][2] + ' | *Dead:* ' + results[1][1][3] + '\n'
+                                    text: results[0][1] + '\n*Full:* ' + results[1][1][4] + ' | *Alright:* ' + results[1][1][3] + ' | *Hanging On:* ' + results[1][1][2] + ' | *Dead:* ' + results[1][1][1] + '\n'
                                 },
                                 {
                                     title: 'Mood',
                                     color: '#8A02FF',
                                     attachment_type: 'default',
-                                    text: results[0][2] + '\n*Happy:* ' + results[1][2][0] + ' | *Calm:* ' + results[1][2][1] + ' | *Tense:* ' + results[1][2][2] + ' | *Upset:* ' + results[1][2][3] + '\n'
+                                    text: results[0][2] + '\n*Happy:* ' + results[1][2][4] + ' | *Calm:* ' + results[1][2][3] + ' | *Tense:* ' + results[1][2][2] + ' | *Upset:* ' + results[1][2][1] + '\n'
                                 },
                                 {
                                     title: 'Confidence',
                                     color: '#CF02FF',
                                     attachment_type: 'default',
-                                    text: results[0][3] + '\n*Crushing It:* ' + results[1][3][0] + ' | *Okay:* ' + results[1][3][1] + ' | *Managing:* ' + results[1][3][2] + ' | *Overwhelmed:* ' + results[1][3][3] + '\n'
+                                    text: results[0][3] + '\n*Crushing It:* ' + results[1][3][4] + ' | *Okay:* ' + results[1][3][3] + ' | *Managing:* ' + results[1][3][2] + ' | *Overwhelmed:* ' + results[1][3][1] + '\n'
                                 },
                                 {
                                     title: 'Presence',
                                     color: '#FF029D',
                                     attachment_type: 'default',
-                                    text: results[0][4] + '\n*Grounded:* ' + results[1][4][0] + ' | *Aware:* ' + results[1][4][1] + ' | *OUt of It:* ' + results[1][4][2] + ' | *Disconnected:* ' + results[1][4][3] + '\n'
+                                    text: results[0][4] + '\n*Grounded:* ' + results[1][4][4] + ' | *Aware:* ' + results[1][4][3] + ' | *Out of It:* ' + results[1][4][2] + ' | *Disconnected:* ' + results[1][4][1] + '\n'
                                 },
                                 {
                                     title: 'Fulfillment',
                                     color: '#FF8402',
                                     attachment_type: 'default',
-                                    text: results[0][5] + '\n*Complete:* ' + results[1][5][0] + ' | *Present:* ' + results[1][5][1] + ' | *Searching:* ' + results[1][5][2] + ' | *Non-Existent:* ' + results[1][5][3] + '\n'
+                                    text: results[0][5] + '\n*Complete:* ' + results[1][5][4] + ' | *Present:* ' + results[1][5][3] + ' | *Searching:* ' + results[1][5][2] + ' | *Non-Existent:* ' + results[1][5][1] + '\n'
                                 },
                                 {
                                     title: 'Overall',
                                     color: '#02FF57',
                                     attachment_type: 'default',
-                                    text: 'Logs Completed: ' + results[2] + '\n' + results[0][6]
+                                    text: results[0][6]
                                 }
                             ]
                         });
@@ -251,7 +254,7 @@ function getWeeklyOutput(results) {
                 overallCount.push(checkIn[4] / 4);
 
                 presenceCount.push(checkOut[0]);
-                confidenceCount.push(checkOut[1]);
+                energyCount.push(checkOut[1]);
                 moodCount.push(checkOut[2]);
                 fulfillmentCount.push(checkOut[3]);
                 overallCount.push(checkOut[4] / 4);
@@ -276,59 +279,71 @@ function getWeeklyOutput(results) {
     }
 
     if (overallCount.length > 0) {
-        var countArray = [sleepCount, moodCount, confidenceCount, presenceCount, fulfillmentCount];
+        var countArray = [sleepCount, energyCount, moodCount, confidenceCount, presenceCount, fulfillmentCount];
 
-        var sleep = (sleepCount.reduce(function (a, b) { return a + b; }, 0) * 25).toFixed(2);
-        var energy = (energyCount.reduce(function (a, b) { return a + b; }, 0) * 25).toFixed(2);
-        var mood = (moodCount.reduce(function (a, b) { return a + b; }, 0) * 25).toFixed(2);
-        var confidence = (confidenceCount.reduce(function (a, b) { return a + b; }, 0) * 25).toFixed(2);
-        var presence = (presenceCount.reduce(function (a, b) { return a + b; }, 0) * 25).toFixed(2);
-        var fulfillment = (fulfillmentCount.reduce(function (a, b) { return a + b; }, 0) * 25).toFixed(2);
-        var overall = (overallCount.reduce(function (a, b) { return a + b; }, 0) * 25).toFixed(2);
+        var sleep = ((sleepCount.reduce(function (a, b) { return a + b; }, 0) * 25) / sleepCount.length).toFixed(2);
+        var energy = ((energyCount.reduce(function (a, b) { return a + b; }, 0) * 25) / energyCount.length).toFixed(2);
+        var mood = ((moodCount.reduce(function (a, b) { return a + b; }, 0) * 25) / moodCount.length).toFixed(2);
+        var confidence = ((confidenceCount.reduce(function (a, b) { return a + b; }, 0) * 25) / confidenceCount.length).toFixed(2);
+        var presence = ((presenceCount.reduce(function (a, b) { return a + b; }, 0) * 25) / presenceCount.length).toFixed(2);
+        var fulfillment = ((fulfillmentCount.reduce(function (a, b) { return a + b; }, 0) * 25) / fulfillmentCount.length).toFixed(2);
+        var overall = ((overallCount.reduce(function (a, b) { return a + b; }, 0) * 25) / overallCount.length).toFixed(2);
+        overall = Math.round(overall);
+
         var inDepthArray = [];
-        for (val in countArray) {
-            inDepthArray.push(val.reduce((prev, curr) => (prev[curr] = ++prev[curr] || 1, prev), {}))
+        for (var i = 0; i < countArray.length; i++) {
+            var insight = countArray[i];
+            var map = { '1': 0, '2': 0, '3': 0, '4': 0 }
+            for (var x = 0; x < insight.length; x++) {
+                map[insight[x]] = map[insight[x]] + 1
+            }
+            inDepthArray.push(map);
         }
 
         var analysisOutcome = [];
         var analysisArray = [sleep, energy, mood, confidence, presence, fulfillment];
         for (var a = 0; a < analysisArray.length; a++) {
+            var analysisInstance = Math.round(analysisArray[a]);
             if (analysisArray[a] < 50) {
-                var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Positive*';
+                var message = 'Score: *' + analysisInstance + '%*\nAverage: *Positive*';
                 analysisOutcome.push(message);
             } else {
-                var message = 'Score: *' + loopArray[z] + '%*\nAverage: *Negative*';
+                var message = 'Score: *' + analysisInstance + '%*\nAverage: *Negative*';
                 analysisOutcome.push(message);
             }
         }
 
         if (lastWeekCount.length > 0) {
-            var lastWeek = (lastWeekCount.reduce(function (a, b) { return a + b; }, 0) * 25).toFixed(2);
+            var lastWeek = ((lastWeekCount.reduce(function (a, b) { return a + b; }, 0) * 25) / lastWeekCount.length).toFixed(2);
         }
 
         if (overall < 50) {
-            var overallAnalysis = 'Hmm.. It seems as though this week was not the best for you. I\'m sorry about that. There\'s always next week - Improve them scores!'
-            if (overall > lastWeek) {
+            var overallAnalysis = 'Score: ' + overall + '%\nYour overall emotional fitness this week was *negative*';
+            if (!lastWeek || typeof lastWeek == 'undefined' || lastWeek == 0) {
+                overallAnalysis = overallAnalysis +'\nNo logs last week to compare against :rowboat:';
+            } else if (overall > lastWeek) {
                 var difference = overall - lastWeek;
                 overallAnalysis = overallAnalysis + '\This week is up ' + difference + '% compared to last week';
             } else if (overall < lastWeek) {
                 var difference = overall - lastWeek;
                 overallAnalysis = overallAnalysis + '\This week is down ' + difference + '% compared to last week';
             }
-            analysisOutcome.push(overallAnalysis)
+            analysisOutcome.push(overallAnalysis);
         } else {
-            var overallAnalysis = 'Way to have a positive week! Shoot to keep it up :)'
-            if (overall > lastWeek) {
+            var overallAnalysis = 'Score: ' + overall + '%\nYour overall emotional fitness this week was *positive*!';
+            if (!lastWeek || typeof lastWeek == 'undefined' || lastWeek == 0) {
+                overallAnalysis = overallAnalysis +'\nNo logs last week to compare against :rowboat:';
+            } else if (overall > lastWeek) {
                 var difference = overall - lastWeek;
                 overallAnalysis = overallAnalysis + '\This week is up ' + difference + '% compared to last week';
             } else if (overall < lastWeek) {
                 var difference = overall - lastWeek;
                 overallAnalysis = overallAnalysis + '\This week is down ' + difference + '% compared to last week';
             }
-            analysisOutcome.push(overallAnalysis)
+            analysisOutcome.push(overallAnalysis);
         }
 
-        var returnArray = [analysisOutcome, inDepthArray, ((sleepCount.length + efficiencyCount) / 2)];
+        var returnArray = [analysisOutcome, inDepthArray];
 
         return returnArray;
     } else {

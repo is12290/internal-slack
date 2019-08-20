@@ -19,6 +19,7 @@ module.exports = function (controller) {
                             {
                                 callback_id: 'new-user',
                                 text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                color: "#0294ff",
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -46,6 +47,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -78,6 +80,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -1048,8 +1051,6 @@ module.exports = function (controller) {
                             }
                         ]);
 
-                    convo.addMessage("Reflection complete", {}, 'default');
-
                     convo.activate();
 
 
@@ -1089,6 +1090,8 @@ module.exports = function (controller) {
                                 user.logs[today].check_out = score;
                                 controller.storage.users.save(user);
                             }
+
+                            bot.reply(message, "Reflection complete!");
                         }
                         else {
                             bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?')

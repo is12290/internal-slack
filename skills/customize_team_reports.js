@@ -17,6 +17,7 @@ module.exports = function (controller) {
                             {
                                 callback_id: 'new-user',
                                 text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                color: "#0294ff",
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -44,6 +45,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -76,6 +78,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -158,7 +161,7 @@ module.exports = function (controller) {
                                     text: 'What timezone are you in?',
                                     callback_id: 'timezone',
                                     attachment_type: 'default',
-                                    color: '#02C6FF',
+                                    color: "#0294ff",
                                     actions: [
                                         {
                                             "name": "timezone",
@@ -222,7 +225,7 @@ module.exports = function (controller) {
                                     text: 'What time would be best for sending the team reports?',
                                     callback_id: 'time',
                                     attachment_type: 'default',
-                                    color: '#02FF92',
+                                    color: "#0294ff",
                                     actions: [
                                         {
                                             "name": "time",
@@ -469,6 +472,7 @@ module.exports = function (controller) {
                             attachments: [{
                                 text: "Team reports are already set to be automatically sent on weekdays at " + user.customization.team_reporting.time + ", " + user.customization.team_reporting.timezone + " time!\nWould you like to change this?",
                                 callback_id: 'team-reports-check',
+                                color: "#0294ff",
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -495,6 +499,7 @@ module.exports = function (controller) {
                                                 attachments: [{
                                                     text: "Team reports are already set to be automatically sent on weekdays at " + user.customization.team_reporting.time + ", " + user.customization.team_reporting.timezone + " time!\nWould you like to change this?",
                                                     callback_id: 'team-reports-check',
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -525,6 +530,7 @@ module.exports = function (controller) {
                                                 attachments: [{
                                                     text: "Team reports are already set to be automatically sent on weekdays at " + user.customization.team_reporting.time + ", " + user.customization.team_reporting.timezone + " time!\nWould you like to change this?",
                                                     callback_id: 'team-reports-check',
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -561,7 +567,7 @@ module.exports = function (controller) {
                                     text: 'What timezone are you in?',
                                     callback_id: 'timezone',
                                     attachment_type: 'default',
-                                    color: '#02C6FF',
+                                    color: "#0294ff",
                                     actions: [
                                         {
                                             "name": "timezone",
@@ -625,7 +631,7 @@ module.exports = function (controller) {
                                     text: 'What time would be best for sending reports?',
                                     callback_id: 'time',
                                     attachment_type: 'default',
-                                    color: '#02FF92',
+                                    color: "#0294ff",
                                     actions: [
                                         {
                                             "name": "time",

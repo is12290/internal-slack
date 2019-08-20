@@ -1,7 +1,7 @@
 {
-  "name": "Internal Bot-Mid",
+  "name": "Internal Slack Bot",
   "description": "Monitor team emotional fitness in Slack",
-  "repository": "https://github.com/is12290/internal-bot",
+  "repository": "https://github.com/is12290/internal-slack",
   "keywords": ["node", "bots", "slack","botkit"],
   "website": "https://getinternal.co",
   "success_url":"/",
