@@ -99,7 +99,7 @@ module.exports = function (controller) {
                                             ]
                                         }
                                     );
-                                    bot.reply(message, "Better luck next time, I suppose! Sadly, you won't really be able to use my features until you're in my memory :zipper_mouth_face:");
+                                    bot.reply(message, "Better luck next time, I suppose! Sadly, you won't really be able to use my features until you're in my memory :zipper-mouth-face:");
                                     convo.stop();
                                 }
                             }
@@ -141,9 +141,9 @@ module.exports = function (controller) {
                     })
                 })
 
-            }
-
-            else {
+            } else if (user.status != 'manager' || user.status == 'undefined') {
+                bot.reply(message, 'My deepest condolences, but you need to be a manager in order to report team fitness results! If you\'re interested in upgrading, visit our site: https://getinternal.co');
+            } else {
                 if (!user || typeof user.customization == 'undefined' || typeof user.customization.team_reporting == 'undefined') {
                     bot.startConversation(message, function (err, convo) {
                         if (err) {
