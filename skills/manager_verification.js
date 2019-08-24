@@ -146,7 +146,7 @@ module.exports = function (controller) {
                     }
                     convo.addQuestion("Awesome! What was the email you used to subscribe?", function (reply, convo) {
                         // bot.reply(message, "One second while I check this..");
-                        // stripe.cusomters.list( { email: response.text }, function (err, customers) {
+                        // stripe.customers.list( { email: response.text }, function (err, customers) {
                         //     if (err || !customers) {
                         //         bot.reply(message, "I actually wasn't able to verify that email. Are you sure it is correct?");
                         //         convo.stop();
