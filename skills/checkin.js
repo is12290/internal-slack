@@ -1124,7 +1124,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'permission',
                                                     color: "#0294ff",
-                                                    text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                                    text: "Would you like to share your overall score with your teammates on the public channel so that they know how you're doing today?",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {

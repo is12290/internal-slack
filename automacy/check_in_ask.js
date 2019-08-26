@@ -30,112 +30,109 @@ if (n === 6 || n === 0) {
             console.log("error: ", err);
         }
         for (var i = 0; i < all_teams.length; i++) {
-            if (typeof all_teams[i].status != 'undefined') {
-                controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
-                    controller.storage.users.all(function (err, all_users) {
-                        if (err) {
-                            console.log("error: ", err);
-                        }
+            var bot = controller.spawn({ token: all_teams[i].bot.token });
+            controller.storage.users.all(function (err, all_users) {
+                if (err) {
+                    console.log("error: ", err);
+                }
 
-                        for (var j = 0; j < all_users.length; j++) {
-                            var user = all_users[j];
-                            if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
-                                // Pass
-                            } else if (user.customization.logging.check_in_time == moment.tz(now, user.customization.logging.timezone).format('HH:mm')) {
-                                bot.say({
-                                    attachments: [{
-                                        text: "Ready to check in?",
-                                        color: "#0294ff",
-                                        callback_id: 'automatic-checkin',
-                                        attachment_type: 'default',
-                                        actions: [
+                for (var j = 0; j < all_users.length; j++) {
+                    var user = all_users[j];
+                    if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
+                        // Pass
+                    } else if (user.customization.logging.check_in_time == moment.tz(now, user.customization.logging.timezone).format('HH:mm')) {
+                        bot.say({
+                            attachments: [{
+                                text: "Ready to check in?",
+                                color: "#0294ff",
+                                callback_id: 'automatic-checkin',
+                                attachment_type: 'default',
+                                actions: [
+                                    {
+                                        'name': 'yes-button',
+                                        'value': 'Yes-CheckIn',
+                                        'text': 'Yes',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'no-button',
+                                        'value': 'No-CheckIn',
+                                        'text': 'No',
+                                        'type': 'button'
+                                    }
+                                ]
+                            }],
+                            channel: user.channel
+                        },
+                            [
+                                {
+                                    pattern: 'Yes',
+                                    callback: function (reply) {
+                                        bot.replyInteractive(reply,
                                             {
-                                                'name': 'yes-button',
-                                                'value': 'Yes-CheckIn',
-                                                'text': 'Yes',
-                                                'type': 'button'
-                                            },
-                                            {
-                                                'name': 'no-button',
-                                                'value': 'No-CheckIn',
-                                                'text': 'No',
-                                                'type': 'button'
+                                                attachments: [{
+                                                    text: "Ready to check in?",
+                                                    color: "#0294ff",
+                                                    callback_id: 'automatic-checkin',
+                                                    attachment_type: 'default',
+                                                    actions: [
+                                                        {
+                                                            'name': 'yes-button',
+                                                            'value': 'Yes-CheckIn',
+                                                            'style': 'primary',
+                                                            'text': 'Yes',
+                                                            'type': 'button'
+                                                        },
+                                                        {
+                                                            'name': 'no-button',
+                                                            'value': 'No-CheckIn',
+                                                            'text': 'No',
+                                                            'type': 'button'
+                                                        }
+                                                    ]
+                                                }]
                                             }
-                                        ]
-                                    }],
-                                    channel: user.channel
+                                        )
+                                    }
                                 },
-                                    [
-                                        {
-                                            pattern: 'Yes',
-                                            callback: function (reply) {
-                                                bot.replyInteractive(reply,
-                                                    {
-                                                        attachments: [{
-                                                            text: "Ready to check in?",
-                                                            color: "#0294ff",
-                                                            callback_id: 'automatic-checkin',
-                                                            attachment_type: 'default',
-                                                            actions: [
-                                                                {
-                                                                    'name': 'yes-button',
-                                                                    'value': 'Yes-CheckIn',
-                                                                    'style': 'primary',
-                                                                    'text': 'Yes',
-                                                                    'type': 'button'
-                                                                },
-                                                                {
-                                                                    'name': 'no-button',
-                                                                    'value': 'No-CheckIn',
-                                                                    'text': 'No',
-                                                                    'type': 'button'
-                                                                }
-                                                            ]
-                                                        }]
-                                                    }
-                                                )
+                                {
+                                    pattern: 'No',
+                                    callback: function (reply) {
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [{
+                                                    text: "Ready to check in?",
+                                                    color: "#0294ff",
+                                                    callback_id: 'automatic-checkin',
+                                                    attachment_type: 'default',
+                                                    actions: [
+                                                        {
+                                                            'name': 'yes-button',
+                                                            'value': 'Yes-CheckIn',
+                                                            'text': 'Yes',
+                                                            'type': 'button'
+                                                        },
+                                                        {
+                                                            'name': 'no-button',
+                                                            'style': 'danger',
+                                                            'value': 'No-CheckIn',
+                                                            'text': 'No',
+                                                            'type': 'button'
+                                                        }
+                                                    ]
+                                                }]
                                             }
-                                        },
-                                        {
-                                            pattern: 'No',
-                                            callback: function (reply) {
-                                                bot.replyInteractive(reply,
-                                                    {
-                                                        attachments: [{
-                                                            text: "Ready to check in?",
-                                                            color: "#0294ff",
-                                                            callback_id: 'automatic-checkin',
-                                                            attachment_type: 'default',
-                                                            actions: [
-                                                                {
-                                                                    'name': 'yes-button',
-                                                                    'value': 'Yes-CheckIn',
-                                                                    'text': 'Yes',
-                                                                    'type': 'button'
-                                                                },
-                                                                {
-                                                                    'name': 'no-button',
-                                                                    'style': 'danger',
-                                                                    'value': 'No-CheckIn',
-                                                                    'text': 'No',
-                                                                    'type': 'button'
-                                                                }
-                                                            ]
-                                                        }]
-                                                    }
-                                                );
-                                            }
-                                        }
-                                    ]);
-                            } else {
-                                // Pass
-                            }
-                        }
-                    })
-                })
-            } else {
-                // Pass
-            }
+                                        );
+                                    }
+                                }
+                            ]);
+                    } else {
+                        // Pass
+                    }
+                }
+            })
+
+            setTimeout(bot.destroy.bind(bot), 4000);
         }
     })
 }

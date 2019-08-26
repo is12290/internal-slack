@@ -32,27 +32,92 @@ if (today == endOfMonth) {
             console.log("error: ", err);
         }
         for (var i = 0; i < all_teams.length; i++) {
-            controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
-                controller.storage.users.find({ team: all_teams[i].id }, function (err, info) {
-                    if (err) {
-                        console.log("error: ", err);
-                    }
-                    for (var i = 0; i < info.length; i++) {
-                        var user = info[i];
-                        if (typeof user.status == 'undefined' || user.status != 'manager' || !user.customization || !user.customization.team_reporting || !user.customization.team_reporting.time) {
-                            // Pass
-                        } else if (user.customization.team_reporting.time == moment.tz(now, user.customization.team_reporting.timezone).format('HH:mm')) {
-                            if (today == endOfMonth) {
-                                // Monthly Report
-                                var results = getMonthlyOutput(info);
+            var bot = controller.spawn({ token: all_teams[i].bot.token });
+            controller.storage.users.find({ team: all_teams[i].id }, function (err, info) {
+                if (err) {
+                    console.log("error: ", err);
+                }
+                for (var i = 0; i < info.length; i++) {
+                    var user = info[i];
+                    if (typeof user.status == 'undefined' || user.status != 'manager' || !user.customization || !user.customization.team_reporting || !user.customization.team_reporting.time) {
+                        // Pass
+                    } else if (user.customization.team_reporting.time == moment.tz(now, user.customization.team_reporting.timezone).format('HH:mm')) {
+                        if (today == endOfMonth) {
+                            // Monthly Report
+                            var results = getMonthlyOutput(info);
+                            if (results == 404) {
+                                bot.say({
+                                    text: 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!',
+                                    channel: info[i].channel
+                                });
+                            } else {
+                                bot.say({
+                                    text: 'Hey there! Here is your team\'s monthly report...\n',
+                                    attachments: [
+                                        {
+                                            title: 'Sleep',
+                                            color: '#02D2FF',
+                                            attachment_type: 'default',
+                                            text: results[0][0] + '\n*Perfect:* ' + results[1][0][4] + ' | *Sufficient:* ' + results[1][0][3] + ' | *Restless:* ' + results[1][0][2] + ' | *Terrible:* ' + results[1][0][1] + '\n'
+                                        },
+                                        {
+                                            title: 'Energy',
+                                            color: '#2A02FF',
+                                            attachment_type: 'default',
+                                            text: results[0][1] + '\n*Full:* ' + results[1][1][4] + ' | *Alright:* ' + results[1][1][3] + ' | *Hanging On:* ' + results[1][1][2] + ' | *Dead:* ' + results[1][1][1] + '\n'
+                                        },
+                                        {
+                                            title: 'Mood',
+                                            color: '#8A02FF',
+                                            attachment_type: 'default',
+                                            text: results[0][2] + '\n*Happy:* ' + results[1][2][4] + ' | *Calm:* ' + results[1][2][3] + ' | *Tense:* ' + results[1][2][2] + ' | *Upset:* ' + results[1][2][1] + '\n'
+                                        },
+                                        {
+                                            title: 'Confidence',
+                                            color: '#CF02FF',
+                                            attachment_type: 'default',
+                                            text: results[0][3] + '\n*Crushing It:* ' + results[1][3][4] + ' | *Okay:* ' + results[1][3][3] + ' | *Managing:* ' + results[1][3][2] + ' | *Overwhelmed:* ' + results[1][3][1] + '\n'
+                                        },
+                                        {
+                                            title: 'Presence',
+                                            color: '#FF029D',
+                                            attachment_type: 'default',
+                                            text: results[0][4] + '\n*Grounded:* ' + results[1][4][4] + ' | *Aware:* ' + results[1][4][3] + ' | *Out of It:* ' + results[1][4][2] + ' | *Disconnected:* ' + results[1][4][1] + '\n'
+                                        },
+                                        {
+                                            title: 'Fulfillment',
+                                            color: '#FF8402',
+                                            attachment_type: 'default',
+                                            text: results[0][5] + '\n*Complete:* ' + results[1][5][4] + ' | *Present:* ' + results[1][5][3] + ' | *Searching:* ' + results[1][5][2] + ' | *Non-Existent:* ' + results[1][5][1] + '\n'
+                                        },
+                                        {
+                                            title: 'Overall',
+                                            color: '#02FF57',
+                                            attachment_type: 'default',
+                                            text: results[0][6]
+                                        }
+                                    ],
+                                    channel: info[i].channel
+                                });
+                            }
+                        } else if (n == '5') {
+                            // Weekly report
+                            if (!info) {
+                                bot.say({
+                                    'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
+                                    'channel': info[i].channel
+                                });
+                            } else {
+                                var results = getWeeklyOutput(info);
                                 if (results == 404) {
                                     bot.say({
-                                        text: 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                        channel: info[i].channel
+                                        'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
+                                        'channel': info[i].channel
                                     });
                                 } else {
                                     bot.say({
-                                        text: 'Hey there! Here is your team\'s monthly report...\n',
+                                        text: 'Hey there! Here are your weekly team averages...\n',
+                                        channel: info[i].channel,
                                         attachments: [
                                             {
                                                 title: 'Sleep',
@@ -96,145 +161,80 @@ if (today == endOfMonth) {
                                                 attachment_type: 'default',
                                                 text: results[0][6]
                                             }
-                                        ],
-                                        channel: info[i].channel
+                                        ]
                                     });
                                 }
-                            } else if (n == '5') {
-                                // Weekly report
-                                if (!info) {
-                                    bot.say({
-                                        'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                        'channel': info[i].channel
-                                    });
-                                } else {
-                                    var results = getWeeklyOutput(info);
-                                    if (results == 404) {
-                                        bot.say({
-                                            'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                            'channel': info[i].channel
-                                        });
-                                    } else {
-                                        bot.say({
-                                            text: 'Hey there! Here are your weekly team averages...\n',
-                                            channel: info[i].channel,
-                                            attachments: [
-                                                {
-                                                    title: 'Sleep',
-                                                    color: '#02D2FF',
-                                                    attachment_type: 'default',
-                                                    text: results[0][0] + '\n*Perfect:* ' + results[1][0][4] + ' | *Sufficient:* ' + results[1][0][3] + ' | *Restless:* ' + results[1][0][2] + ' | *Terrible:* ' + results[1][0][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Energy',
-                                                    color: '#2A02FF',
-                                                    attachment_type: 'default',
-                                                    text: results[0][1] + '\n*Full:* ' + results[1][1][4] + ' | *Alright:* ' + results[1][1][3] + ' | *Hanging On:* ' + results[1][1][2] + ' | *Dead:* ' + results[1][1][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Mood',
-                                                    color: '#8A02FF',
-                                                    attachment_type: 'default',
-                                                    text: results[0][2] + '\n*Happy:* ' + results[1][2][4] + ' | *Calm:* ' + results[1][2][3] + ' | *Tense:* ' + results[1][2][2] + ' | *Upset:* ' + results[1][2][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Confidence',
-                                                    color: '#CF02FF',
-                                                    attachment_type: 'default',
-                                                    text: results[0][3] + '\n*Crushing It:* ' + results[1][3][4] + ' | *Okay:* ' + results[1][3][3] + ' | *Managing:* ' + results[1][3][2] + ' | *Overwhelmed:* ' + results[1][3][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Presence',
-                                                    color: '#FF029D',
-                                                    attachment_type: 'default',
-                                                    text: results[0][4] + '\n*Grounded:* ' + results[1][4][4] + ' | *Aware:* ' + results[1][4][3] + ' | *Out of It:* ' + results[1][4][2] + ' | *Disconnected:* ' + results[1][4][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Fulfillment',
-                                                    color: '#FF8402',
-                                                    attachment_type: 'default',
-                                                    text: results[0][5] + '\n*Complete:* ' + results[1][5][4] + ' | *Present:* ' + results[1][5][3] + ' | *Searching:* ' + results[1][5][2] + ' | *Non-Existent:* ' + results[1][5][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Overall',
-                                                    color: '#02FF57',
-                                                    attachment_type: 'default',
-                                                    text: results[0][6]
-                                                }
-                                            ]
-                                        });
-                                    }
-                                }
-                            } else if (n > 0 && n < 5) {
-                                // Daily report
-                                if (!info) {
+                            }
+                        } else if (n > 0 && n < 5) {
+                            // Daily report
+                            if (!info) {
+                                bot.say({
+                                    'text': 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!',
+                                    'channel': info[i].channel
+                                });
+                            } else {
+                                var results = getDailyOutput(info);
+                                if (percent == 404) {
                                     bot.say({
                                         'text': 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!',
                                         'channel': info[i].channel
                                     });
                                 } else {
-                                    var results = getDailyOutput(info);
-                                    if (percent == 404) {
-                                        bot.say({
-                                            'text': 'I don\'t have any results to report!\n\nI need at least one team member to do both their logs in order to properly report today\'s results\n\nIf I\'m wrong, email support@getinternal.co for help!',
-                                            'channel': info[i].channel
-                                        });
-                                    } else {
-                                        bot.say({
-                                            text: 'Hey there! Here are your team results for the day...\n',
-                                            channel: info[i].channel,
-                                            attachments: [
-                                                {
-                                                    title: 'Sleep',
-                                                    color: '#02D2FF',
-                                                    attachment_type: 'default',
-                                                    text: results[0][0] + '\n*Perfect:* ' + results[1][0][4] + ' | *Sufficient:* ' + results[1][0][3] + ' | *Restless:* ' + results[1][0][2] + ' | *Terrible:* ' + results[1][0][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Energy',
-                                                    color: '#2A02FF',
-                                                    attachment_type: 'default',
-                                                    text: results[0][1] + '\n*Full:* ' + results[1][1][4] + ' | *Alright:* ' + results[1][1][3] + ' | *Hanging On:* ' + results[1][1][2] + ' | *Dead:* ' + results[1][1][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Mood',
-                                                    color: '#8A02FF',
-                                                    attachment_type: 'default',
-                                                    text: results[0][2] + '\n*Happy:* ' + results[1][2][4] + ' | *Calm:* ' + results[1][2][3] + ' | *Tense:* ' + results[1][2][2] + ' | *Upset:* ' + results[1][2][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Confidence',
-                                                    color: '#CF02FF',
-                                                    attachment_type: 'default',
-                                                    text: results[0][3] + '\n*Crushing It:* ' + results[1][3][4] + ' | *Okay:* ' + results[1][3][3] + ' | *Managing:* ' + results[1][3][2] + ' | *Overwhelmed:* ' + results[1][3][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Presence',
-                                                    color: '#FF029D',
-                                                    attachment_type: 'default',
-                                                    text: results[0][4] + '\n*Grounded:* ' + results[1][4][4] + ' | *Aware:* ' + results[1][4][3] + ' | *Out of It:* ' + results[1][4][2] + ' | *Disconnected:* ' + results[1][4][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Fulfillment',
-                                                    color: '#FF8402',
-                                                    attachment_type: 'default',
-                                                    text: results[0][5] + '\n*Complete:* ' + results[1][5][4] + ' | *Present:* ' + results[1][5][3] + ' | *Searching:* ' + results[1][5][2] + ' | *Non-Existent:* ' + results[1][5][1] + '\n'
-                                                },
-                                                {
-                                                    title: 'Overall',
-                                                    color: '#02FF57',
-                                                    attachment_type: 'default',
-                                                    text: results[0][6]
-                                                }
-                                            ]
-                                        });
-                                    }
+                                    bot.say({
+                                        text: 'Hey there! Here are your team results for the day...\n',
+                                        channel: info[i].channel,
+                                        attachments: [
+                                            {
+                                                title: 'Sleep',
+                                                color: '#02D2FF',
+                                                attachment_type: 'default',
+                                                text: results[0][0] + '\n*Perfect:* ' + results[1][0][4] + ' | *Sufficient:* ' + results[1][0][3] + ' | *Restless:* ' + results[1][0][2] + ' | *Terrible:* ' + results[1][0][1] + '\n'
+                                            },
+                                            {
+                                                title: 'Energy',
+                                                color: '#2A02FF',
+                                                attachment_type: 'default',
+                                                text: results[0][1] + '\n*Full:* ' + results[1][1][4] + ' | *Alright:* ' + results[1][1][3] + ' | *Hanging On:* ' + results[1][1][2] + ' | *Dead:* ' + results[1][1][1] + '\n'
+                                            },
+                                            {
+                                                title: 'Mood',
+                                                color: '#8A02FF',
+                                                attachment_type: 'default',
+                                                text: results[0][2] + '\n*Happy:* ' + results[1][2][4] + ' | *Calm:* ' + results[1][2][3] + ' | *Tense:* ' + results[1][2][2] + ' | *Upset:* ' + results[1][2][1] + '\n'
+                                            },
+                                            {
+                                                title: 'Confidence',
+                                                color: '#CF02FF',
+                                                attachment_type: 'default',
+                                                text: results[0][3] + '\n*Crushing It:* ' + results[1][3][4] + ' | *Okay:* ' + results[1][3][3] + ' | *Managing:* ' + results[1][3][2] + ' | *Overwhelmed:* ' + results[1][3][1] + '\n'
+                                            },
+                                            {
+                                                title: 'Presence',
+                                                color: '#FF029D',
+                                                attachment_type: 'default',
+                                                text: results[0][4] + '\n*Grounded:* ' + results[1][4][4] + ' | *Aware:* ' + results[1][4][3] + ' | *Out of It:* ' + results[1][4][2] + ' | *Disconnected:* ' + results[1][4][1] + '\n'
+                                            },
+                                            {
+                                                title: 'Fulfillment',
+                                                color: '#FF8402',
+                                                attachment_type: 'default',
+                                                text: results[0][5] + '\n*Complete:* ' + results[1][5][4] + ' | *Present:* ' + results[1][5][3] + ' | *Searching:* ' + results[1][5][2] + ' | *Non-Existent:* ' + results[1][5][1] + '\n'
+                                            },
+                                            {
+                                                title: 'Overall',
+                                                color: '#02FF57',
+                                                attachment_type: 'default',
+                                                text: results[0][6]
+                                            }
+                                        ]
+                                    });
                                 }
                             }
                         }
                     }
-                });
+                }
             });
+            setTimeout(bot.destroy.bind(bot), 4000);
         }
     });
 }
