@@ -232,6 +232,7 @@ if (today == endOfMonth) {
                             }
                         }
                     }
+                    sleep(400);
                 }
             });
             setTimeout(bot.destroy.bind(bot), 4000);
@@ -675,5 +676,14 @@ function getMonthlyOutput(results) {
         return returnArray;
     } else {
         return 404;
+    }
+}
+
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds) {
+            break;
+        }
     }
 }

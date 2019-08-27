@@ -126,6 +126,7 @@ if (n === 6 || n === 0) {
                                     }
                                 }
                             ]);
+                            sleep(400);
                     } else {
                         // Pass
                     }
@@ -137,3 +138,11 @@ if (n === 6 || n === 0) {
     })
 }
 
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+        if ((new Date().getTime() - start) > milliseconds) {
+            break;
+        }
+    }
+}
