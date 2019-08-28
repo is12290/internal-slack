@@ -1,6 +1,6 @@
 module.exports = function (controller) {
     controller.hears(['^new Manager', '^new manager'], 'direct_message', function (bot, message) {
-        // const stripe = require("stripe")(process.env.STRIPE_KEY);
+        const stripe = require("stripe")(process.env.STRIPE_KEY);
         controller.storage.users.get(message.user, function (err, user) {
             if (!user || typeof user == 'undefined') {
                 bot.startPrivateConversation({ user: message.user }, function (err, convo) {
@@ -145,38 +145,30 @@ module.exports = function (controller) {
                         bot.whisper(message, "My grandest of apologies, but I'm a bit popular right now and can't process your message. Say it again?");
                     }
                     convo.addQuestion("Awesome! What was the email you used to subscribe?", function (reply, convo) {
-                        // bot.reply(message, "One second while I check this..");
-                        // stripe.customers.list( { email: response.text }, function (err, customers) {
-                        //     if (err || !customers) {
-                        //         bot.reply(message, "I actually wasn't able to verify that email. Are you sure it is correct?");
-                        //         convo.stop();
-                        //     } else if (customers) {
-                        //         user.status = 'manager';
-                        //         controller.storage.users.save(user);
-                        //         bot.api.reactions.add({
-                        //             name: 'thumbsup',
-                        //             channel: message.channel,
-                        //             timestamp: reply.ts
-                        //         });
-                        //         bot.reply(message, "You're verified and free to do as you please!\nWelcome to the land of team insights :blush:");
-                        //         convo.stop();
-                        //     }
-                        // })
-                        bot.api.reactions.add({
-                            name: 'thumbsup',
-                            channel: message.channel,
-                            timestamp: reply.ts
-                        });
-                        convo.next();
+                        bot.reply(message, "One second while I check this..");
+                        stripe.customers.list( { email: response.text }, function (err, customers) {
+                            if (err || !customers) {
+                                bot.reply(message, "I actually wasn't able to verify that email. Are you sure it is correct?");
+                                convo.stop();
+                            } else if (customers) {
+                                user.status = 'manager';
+                                controller.storage.users.save(user);
+                                bot.api.reactions.add({
+                                    name: 'thumbsup',
+                                    channel: message.channel,
+                                    timestamp: reply.ts
+                                });
+                                bot.reply(message, "You're verified and free to do as you please!\nWelcome to the land of team insights :blush:");
+                                convo.stop();
+                            }
+                        })
                     });
 
                     convo.activate();
 
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
-                            user.status = 'manager';
-                            controller.storage.users.save(user);
-                            bot.reply(message, "You're verified and free to do as you please!\nWelcome to the land of team insights :blush:");
+                            bot.reply(message, "Could I do anything else for you?");
                         }
                     })
                 })
