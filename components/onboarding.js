@@ -2,7 +2,8 @@ var debug = require('debug')('botkit:onboarding');
 
 module.exports = function (controller) {
 
-    controller.on('onboard', function (bot) {
+    controller.on('onboard', function (bot, team_test) {
+        console.log("Is team included? ", team_test);
         debug('Starting an onboarding experience!');
 
         controller.storage.teams.get(bot.config.id, function (err, team) {
@@ -10,6 +11,7 @@ module.exports = function (controller) {
                 console.log("error: ", err);
                 // pass
             } else {
+                console.log("Team from storage: ", team);
                 bot.startPrivateConversation({ user: bot.config.createdBy }, function (err, convo) {
                     if (err) {
                         console.log(err);
@@ -72,7 +74,7 @@ module.exports = function (controller) {
                                     if (err) {
                                         console.log("error: ", err);
                                     }
-                                    console.log("response: ", response);
+                                    console.log("channel: ", response.channel.id);
                                     bot.api.channels.setPurpose({ token: bot.config.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share the daily overall emotional fitness scores of those who opt to share." }, function (err, response) {
                                         console.log("error: ", err);
                                     })
