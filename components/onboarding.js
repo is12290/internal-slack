@@ -53,7 +53,6 @@ module.exports = function (controller) {
                             ]
                         }, function (response, convo) {
                             channel_name = channel_name + response.text;
-                            team_name = team_name + response.team;
                             bot.api.reactions.add({
                                 name: 'thumbsup',
                                 channel: response.channel,
