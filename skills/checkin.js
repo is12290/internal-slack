@@ -18,7 +18,7 @@ module.exports = function (controller) {
                             {
                                 callback_id: 'new-user',
                                 color: "#0294ff",
-                                text: "This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                text: "This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -46,7 +46,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     color: "#0294ff",
-                                                    text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -79,7 +79,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     color: "#0294ff",
-                                                    text: "Hey! This is the first time we're meeting!! Would you mind if I ask two quick questions so I can properly add you to my memory?",
+                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -106,8 +106,7 @@ module.exports = function (controller) {
                             }
                         ]
                     );
-
-
+                    
                     convo.addQuestion("What's your favorite book?", function (response, convo) {
                         bot.api.users.info({ user: response.user }, (error, response) => {
                             if (error) {
@@ -1051,7 +1050,7 @@ module.exports = function (controller) {
                             }
                         ]);
 
-                    const permission = [];
+                    var permission;
                     convo.addQuestion({
                         attachments: [
                             {
@@ -1106,7 +1105,7 @@ module.exports = function (controller) {
                                             ]
                                         }
                                     )
-                                    permission.push(true);
+                                    permission = true;
                                     bot.api.reactions.add({
                                         name: 'thumbsup',
                                         channel: message.channel,
@@ -1145,7 +1144,7 @@ module.exports = function (controller) {
                                             ]
                                         }
                                     );
-                                    permission.push(false);
+                                    permission = false;
                                     bot.api.reactions.add({
                                         name: 'thumbsup',
                                         channel: message.channel,
@@ -1204,14 +1203,17 @@ module.exports = function (controller) {
                                 controller.storage.users.save(user);
                             }
 
-                            if (permission[0] == true) {
+                            if (permission == true) {
                                 controller.storage.teams.get(message.team, function (err, team) {
+                                    console.log("team: ", team);
+                                    console.log("Channel: ", team.bot.channel);
+                                    console.log("Name: ", user.name);
                                     const overall = GetOverall(score);
                                     if (err) {
                                         console.log("error: ", err);
                                     }
                                     bot.say({
-                                        text: user.name + "'s is feeling around " + overall + "% today",
+                                        text: user.name + " is feeling around " + overall + "% today",
                                         channel: team.bot.channel
                                     })
                                 })

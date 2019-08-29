@@ -67,9 +67,10 @@ module.exports = function (controller) {
                             if (err) {
                                 console.log("error: ", err);
                             }
-                            console.log("channel: ", response.channel.id);
                             bot.api.channels.setPurpose({ token: bot.config.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share the daily overall emotional fitness scores of those who opt to share." }, function (err, response) {
-                                console.log("error: ", err);
+                                if (err) {
+                                    console.log("error: ", err);
+                                }
                             })
                             bot.api.channels.setTopic({ token: bot.config.app_token, channel: response.channel.id, topic: "Know how your coworkers are doing today" }, function (err, response) {
                                 if (err) {
