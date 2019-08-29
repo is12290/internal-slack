@@ -106,7 +106,7 @@ module.exports = function (controller) {
                             }
                         ]
                     );
-                    
+
                     convo.addQuestion("What's your favorite book?", function (response, convo) {
                         bot.api.users.info({ user: response.user }, (error, response) => {
                             if (error) {
@@ -1215,12 +1215,14 @@ module.exports = function (controller) {
                                     bot.say({
                                         text: user.name + " is feeling around " + overall + "% today",
                                         channel: team.bot.channel
-                                    })
+                                    }, function(err, response) {
+                                        console.log("Erorr: ", err);
+                                    });
+                                    bot.reply(message, 'Okay, that is all!');
                                 })
                             } else {
-                                // nuthin
+                                bot.reply(message, 'Okay, no problem. That is all!');
                             }
-                            bot.reply(message, 'Okay, that is all! Thank you');
                         }
                         else {
                             bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?')
