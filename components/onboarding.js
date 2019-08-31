@@ -4,6 +4,12 @@ module.exports = function (controller) {
 
     controller.on('onboard', function (bot, team) {
         debug('Starting an onboarding experience!');
+        bot.api.users.info({ user: bot.config.createdBy }, function (err, response) {
+            team.installer_email = response.user.profile.email;
+            if (err) {
+                console.log("error: ", err);
+            }
+        });
 
         bot.startPrivateConversation({ user: bot.config.createdBy }, function (err, convo) {
             if (err) {
