@@ -6,6 +6,7 @@ module.exports = function (controller) {
         debug('Starting an onboarding experience!');
         bot.api.users.info({ user: bot.config.createdBy }, function (err, response) {
             team.installer_email = response.user.profile.email;
+            console.log("installer email: ", team.installer_email);
             if (err) {
                 console.log("error: ", err);
             }
@@ -17,11 +18,10 @@ module.exports = function (controller) {
             } else {
                 convo.say("Hey! I'm Internal and _you_ happen to be the first person to add me to this fresh, new Slack team. Due to this, you get a bit more power than your friends :)");
                 convo.say("For instance, I need to create a public channel where I will post you and your teammates overall check in scores (So long as I'm given permission)");
-                var channel_name = '';
                 convo.addQuestion({
                     attachments: [
                         {
-                            text: "What could and should the name of this channel be?",
+                            text: "What could the name of this channel be?",
                             callback_id: 'channel',
                             attachment_type: 'default',
                             color: '#0294ff',
@@ -52,8 +52,8 @@ module.exports = function (controller) {
                             ]
                         }
                     ]
-                }, function (response, convo) {
-                    bot.api.channels.create({ token: bot.config.app_token, name: channel_name }, function (err, response) {
+                }, function (reply, convo) {
+                    bot.api.channels.create({ token: bot.config.app_token, name: reply.text }, function (err, response) {
                         if (err) {
                             console.log("error: ", err);
                         }
@@ -73,11 +73,12 @@ module.exports = function (controller) {
                     });
                     bot.api.reactions.add({
                         name: 'thumbsup',
-                        channel: response.channel,
-                        timestamp: response.ts
+                        channel: reply.channel,
+                        timestamp: reply.ts
                     });
                     convo.next();
                 });
+
                 convo.say("Awesome! I'll create that right now...");
 
                 convo.say("Done! I need you to do one more thing for me, which is to add me to the channel that was just created. Would you mind navigating to the channel, then click the 'i' on top bar -> App -> Add App -> Select my name");
