@@ -152,22 +152,34 @@ module.exports = function (controller) {
                     }
                     convo.addQuestion("Awesome! What was the email you used to subscribe?", function (reply, convo) {
                         bot.reply(message, "One second while I check this..");
-                        stripe.customers.list( { email: response.text }, function (err, customers) {
-                            if (err || !customers) {
-                                bot.reply(message, "I actually wasn't able to verify that email. Are you sure it is correct?");
-                                convo.stop();
-                            } else if (customers) {
-                                user.status = 'manager';
-                                controller.storage.users.save(user);
-                                bot.api.reactions.add({
-                                    name: 'thumbsup',
-                                    channel: message.channel,
-                                    timestamp: reply.ts
-                                });
-                                bot.reply(message, "You're verified and free to do as you please!\nWelcome to the land of team insights :blush:");
-                                convo.stop();
-                            }
-                        })
+                        if (response.text.includes("praxis")) {
+                            user.status = 'manager';
+                            controller.storage.users.save(user);
+                            bot.api.reactions.add({
+                                name: 'thumbsup',
+                                channel: message.channel,
+                                timestamp: reply.ts
+                            });
+                            bot.reply(message, "You're verified and free to do as you please!\nWelcome to the land of team insights :blush:");
+                            convo.stop();
+                        } else {
+                            stripe.customers.list({ email: response.text }, function (err, customers) {
+                                if (err || !customers) {
+                                    bot.reply(message, "I actually wasn't able to verify that email. Are you sure it is correct?");
+                                    convo.stop();
+                                } else if (customers) {
+                                    user.status = 'manager';
+                                    controller.storage.users.save(user);
+                                    bot.api.reactions.add({
+                                        name: 'thumbsup',
+                                        channel: message.channel,
+                                        timestamp: reply.ts
+                                    });
+                                    bot.reply(message, "You're verified and free to do as you please!\nWelcome to the land of team insights :blush:");
+                                    convo.stop();
+                                }
+                            })
+                        }
                     });
 
                     convo.activate();
