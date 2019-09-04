@@ -1,150 +1,10 @@
 module.exports = function (controller) {
-    controller.hears(['^historic search', '^historic Search', '^historical search', '^historical Search', '^search'], 'direct_message', function (bot, message) {
-        controller.storage.users.get(message.user, function (error, user) {
-            if (error) {
-                bot.whisper(message, "Ah! I'm a bit popular right now. Could you say that again? I missed it");
-            }
-            if (!user || typeof user == 'undefined') {
-                bot.startPrivateConversation({ user: message.user }, function (err, convo) {
-                    if (err) {
-                        console.log("error: ", err);
-                        bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
-                    }
-                    const newUser = {};
-
-                    convo.addQuestion({
-                        attachments: [
-                            {
-                                callback_id: 'new-user',
-                                text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
-                                color: "#0294ff",
-                                attachment_type: 'default',
-                                actions: [
-                                    {
-                                        'name': 'yes-button',
-                                        'value': 'Yes',
-                                        'text': 'Yes',
-                                        'type': 'button'
-                                    },
-                                    {
-                                        'name': 'no-button',
-                                        'value': 'No',
-                                        'text': 'No',
-                                        'type': 'button'
-                                    }
-                                ]
-                            }
-                        ]
-                    }, [
-                            {
-                                pattern: 'Yes',
-                                callback: function (reply, convo) {
-                                    bot.replyInteractive(reply,
-                                        {
-                                            attachments: [
-                                                {
-                                                    callback_id: 'new-user',
-                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
-                                                    color: "#0294ff",
-                                                    attachment_type: 'default',
-                                                    actions: [
-                                                        {
-                                                            'name': 'yes-button',
-                                                            'value': 'Yes',
-                                                            'style': 'primary',
-                                                            'text': 'Yes',
-                                                            'type': 'button'
-                                                        },
-                                                        {
-                                                            'name': 'no-button',
-                                                            'value': 'No',
-                                                            'text': 'No',
-                                                            'type': 'button'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    )
-                                    convo.next()
-                                }
-                            },
-                            {
-                                pattern: 'No',
-                                callback: function (reply, convo) {
-                                    bot.replyInteractive(reply,
-                                        {
-                                            attachments: [
-                                                {
-                                                    callback_id: 'new-user',
-                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
-                                                    color: "#0294ff",
-                                                    attachment_type: 'default',
-                                                    actions: [
-                                                        {
-                                                            'name': 'yes-button',
-                                                            'value': 'Yes',
-                                                            'text': 'Yes',
-                                                            'type': 'button'
-                                                        },
-                                                        {
-                                                            'name': 'no-button',
-                                                            'value': 'No',
-                                                            'style': 'danger',
-                                                            'text': 'No',
-                                                            'type': 'button'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    );
-                                    bot.reply(message, "Better luck next time, I suppose! Sadly, you won't really be able to use my features until you're in my memory :zipper_mouth_face:");
-                                    convo.stop();
-                                }
-                            }
-                        ]
-                    );
-
-
-                    convo.addQuestion("What's your favorite book?", function (response, convo) {
-                        bot.api.users.info({ user: response.user }, (error, response) => {
-                            if (error) {
-                                console.log("error: ", error);
-                            }
-                            let { name, real_name } = response.user;
-                            newUser.name = real_name;
-                            newUser.email = response.user.profile.email;
-                        })
-                        newUser.channel = message.channel;
-                        newUser.team = message.team;
-                        newUser.status = 'employee';
-                        newUser.id = message.user;
-                        convo.next();
-                    }, 'default');
-
-                    convo.addQuestion("What's your role here?", function (response, convo) {
-                        newUser.role = response.text;
-                        convo.next();
-                    }, 'default');
-
-                    convo.say("Thanks for that!\n\nNow, what was it you were looking to do?");
-
-                    convo.activate();
-
-                    convo.on('end', function (convo) {
-                        if (convo.successful()) {
-                            if (typeof newUser.name != 'undefined') {
-                                controller.storage.users.save(newUser);
-                            }
-                        }
-
-                    })
-                })
-
-            }
-
-            else {
+    controller.on('interactive_message_callback', function (bot, message) {
+        if (message.actions[0].value == "Historic-Search") {
+            controller.storage.users.get(message.user, function (error, user) {
+                if (error) {
+                    bot.whisper(message, "Ah! I'm a bit popular right now. Could you say that again? I missed it");
+                }
                 bot.startConversation(message, function (err, convo) {
                     if (err) {
                         console.log("error: ", err);
@@ -255,8 +115,8 @@ module.exports = function (controller) {
                         }
                     })
                 });
-            }
-        })
+            })
+        }
     })
 }
 
@@ -290,16 +150,16 @@ function getPersonalSearchOutput(results, dates) {
                 var checkOut = results.logs[days[j]].check_out;
 
                 sleepCount.push(checkIn[0]);
-                    energyCount.push(checkIn[1]);
-                    moodCount.push(checkIn[2]);
-                    confidenceCount.push(checkIn[3]);
-                    overallCount.push(checkIn[4] / 4);
+                energyCount.push(checkIn[1]);
+                moodCount.push(checkIn[2]);
+                confidenceCount.push(checkIn[3]);
+                overallCount.push(checkIn[4] / 4);
 
-                    presenceCount.push(checkOut[0]);
-                    energyCount.push(checkOut[1]);
-                    moodCount.push(checkOut[2]);
-                    fulfillmentCount.push(checkOut[3]);
-                    overallCount.push(checkOut[4] / 4);
+                presenceCount.push(checkOut[0]);
+                energyCount.push(checkOut[1]);
+                moodCount.push(checkOut[2]);
+                fulfillmentCount.push(checkOut[3]);
+                overallCount.push(checkOut[4] / 4);
             }
         }
     }
@@ -340,7 +200,7 @@ function getPersonalSearchOutput(results, dates) {
             }
         }
 
-        var lastDay = days.length-1
+        var lastDay = days.length - 1
         if (overall > 50) {
             var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness between *' + days[0] + '* and *' + days[lastDay] + '* was *positive*!';
             searchReport.push(overallMonth);

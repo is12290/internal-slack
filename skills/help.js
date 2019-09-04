@@ -112,6 +112,7 @@ module.exports = function (controller) {
                             }
                             let { name, real_name } = response.user;
                             newUser.name = real_name;
+                            newUser.email = response.user.profile.email;
                         })
                         newUser.channel = message.channel;
                         newUser.team = message.team;
@@ -132,21 +133,229 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
                             if (typeof newUser.name != 'undefined') {
-                                bot.api.users.info({ user: bot.config.createdBy }, function (err, response) {
-                                    newUser.email = response.user.profile.email;
-                                    if (err) {
-                                        console.log("error: ", err);
-                                    }
-                                });
                                 controller.storage.users.save(newUser);
                             }
                         }
-                        
+
                     })
                 })
 
             } else {
-                bot.reply(message, "*General Functionality: *\n_Check Ups:_\nCheck In – Send me a message saying `Check In` to initiate the check in log\nReflections – End of day reflections can be initiated by sending me a message saying `Reflect`\nAutomatic Check Ups – Look at the ‘_Customizations_’ section to learn how to set up your check ups to be automatically initiated so you don’t have to remember to message me everyday :grinning:\n\n_Results Reporting:_\n_A Quick Note – Only you have the capability of accessing your exact scores, managers (if plugged in) view aggregate scores so as to ensure nothing is personally identifiable_\nMonthly Reports – Send me a message saying `Monthly Report` to view your personal scores over the past month, as well as the amount of times you chose each topic response\nWeekly Reports - Send me a message saying `Weekly Report` to view your personal scores over the past week, as well as the amount of times you chose each topic response\nAutomatic Reports - Look at the ‘_Customizations_’ section to learn how to set up your reports to be automatically sent at the end of each week and month :+1:\n\n_Special Commands:_\nComparisons – Begin a score comparison by typing `Compare` which will initiate a conversation where I’ll ask you what two time frames you want to compare, then report the outcome\nHistorical Searching - Begin a historical search by typing `Search`, which will initiate a conversation where you will be asked to input the desired search time frame and I’ll report the outcome\n\n_Customizations:_\nCustom Check Ups – Send me a message saying `Customize Check Ups` where I will ask a few questions about your timezone and your desired times to be automatically sent Check In logs and the End of Day Question\nCustom Reporting – Send me a message saying `Customize Reports` where I will ask a few question about your timezone and your desired times to be automatically sent your reports\n\n*Manager-Specific Functionality: *\n_Team Results Reporting:_\n_A Quick Note – I need to be added to private channels in order to see what employees are within the channel_\nDaily – Send me a message saying `Daily Team Report` to where you’ll be asked whether you want to see your entire Slack team’s aggregate daily scores or a specific Channel’s aggregate daily scores\nWeekly - Send me a message saying `Weekly Team Report` to where you’ll be asked whether you want to see your entire Slack team’s aggregate weekly scores or a specific Channel’s aggregate weekly scores\nMonthly - Send me a message saying `Monthly Team Report` to where you’ll be asked whether you want to see your entire Slack team’s aggregate monthly scores or a specific Channel’s aggregate monthly scores\n\n_Customizations:_\nCustom Team Reports – Send me a message saying `Customize Team Reports` where I will ask a few question about your timezone, desired times, and channel info in order to automatically send you your desired team reports\n\n_Special Commands:_\nChannel Specific Reporting – For a faster experience viewing a specific channel’s scores, send me a message saying `Specific Report` to initiate a conversation where I’ll ask for a few more details \nComparisons - Begin a score comparison by typing `Team Compare` which will initiate a conversation where I’ll ask you what two time frames you want to compare, as well as whether or not you desire the entire Slack team scores or a specific Channel, then report the outcome\nHistorical Searching - Begin a historical search by typing `Team Search`, which will initiate a conversation where you will be asked to input the desired search time frame, as well as whether or not you desire the entire Slack team scores or a specific Channel, and I’ll report the outcome\n\nIf you have any other questions or comments, feel free to reach out to my superiors at support@getinternal.co")
+                if (user.status == 'manager') {
+                    bot.reply(message, {
+                        text: "I'm here to help!",
+                        attachments: [
+                            {
+                                title: 'Questionnaires',
+                                color: '#02D2FF',
+                                attachment_type: 'default',
+                                text: "Record your headspace at the beginning and end of your workday",
+                                actions: [
+                                    {
+                                        'name': 'checkin-button',
+                                        'value': 'Yes-CheckIn',
+                                        'text': 'Check In',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'reflect-button',
+                                        'value': 'Yes-Reflect',
+                                        'text': 'Reflect',
+                                        'type': 'button'
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Reports',
+                                color: '#2A02FF',
+                                attachment_type: 'default',
+                                text: "Monitor you and your team's emotional well-being overtime",
+                                actions: [
+                                    {
+                                        'name': 'Weekly-Report-button',
+                                        'value': 'Weekly-Report',
+                                        'text': 'Weekly Report',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Monthly-Report-button',
+                                        'value': 'Monthly-Report',
+                                        'text': 'Monthly Report',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Daily-Team-Report-button',
+                                        'value': 'Daily-Team-Report',
+                                        'text': 'Daily Team Report',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Weekly-Team-Report-button',
+                                        'value': 'Weekly-Team-Report',
+                                        'text': 'Weekly Team Report',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Monthly-Team-Report-button',
+                                        'value': 'Monthly-Team-Report',
+                                        'text': 'Monthly Team Report',
+                                        'type': 'button'
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Special Actions',
+                                color: '#8A02FF',
+                                attachment_type: 'default',
+                                text: "Get the insights you're curious about",
+                                actions: [
+                                    {
+                                        'name': 'Compare-Scores-button',
+                                        'value': 'Compare-Scores',
+                                        'text': 'Compare Scores',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Historic-Search-button',
+                                        'value': 'Historic-Search',
+                                        'text': 'Historic Search',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Compare-Team-Scores-button',
+                                        'value': 'Compare-Team-Scores',
+                                        'text': 'Compare Team Scores',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Historic-Team-Search-button',
+                                        'value': 'Historic-Team-Search',
+                                        'text': 'Historic Team Search',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Channel-Specific-Report-button',
+                                        'value': 'Channel-Specific-Report',
+                                        'text': 'Channel-Specific Report',
+                                        'type': 'button'
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Customizations',
+                                color: '#CF02FF',
+                                attachment_type: 'default',
+                                text: "Choose times to be automatically sent reports and questionnaires",
+                                actions: [
+                                    {
+                                        'name': 'Customize-Questionnaires-button',
+                                        'value': 'Customize-Questionnaires',
+                                        'text': 'Customize Questionnaires',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Customize-Reports-button',
+                                        'value': 'Customize-Reports',
+                                        'text': 'Customize Reports',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Customize-Team-Reports-button',
+                                        'value': 'Customize-Team-Reports',
+                                        'text': 'Customize Team Reports',
+                                        'type': 'button'
+                                    }
+                                ]
+                            },
+                        ]
+                    });
+                } else if (user.status != 'manager') {
+                    bot.reply(message, {
+                        text: "I'm here to help!",
+                        attachments: [
+                            {
+                                title: 'Questionnaires',
+                                color: '#02D2FF',
+                                attachment_type: 'default',
+                                text: "Record your headspace at the beginning and end of your workday",
+                                actions: [
+                                    {
+                                        'name': 'checkin-button',
+                                        'value': 'Yes-CheckIn',
+                                        'text': 'Check In',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'reflect-button',
+                                        'value': 'Yes-Reflect',
+                                        'text': 'Reflect',
+                                        'type': 'button'
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Reports',
+                                color: '#2A02FF',
+                                attachment_type: 'default',
+                                text: "Monitor your emotional well-being overtime",
+                                actions: [
+                                    {
+                                        'name': 'Weekly-Report-button',
+                                        'value': 'Weekly-Report',
+                                        'text': 'Weekly Report',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Monthly-Report-button',
+                                        'value': 'Monthly-Report',
+                                        'text': 'Monthly Report',
+                                        'type': 'button'
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Special Actions',
+                                color: '#8A02FF',
+                                attachment_type: 'default',
+                                text: "Get the insights you're curious about",
+                                actions: [
+                                    {
+                                        'name': 'Compare-Scores-button',
+                                        'value': 'Compare-Scores',
+                                        'text': 'Compare Scores',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Historic-Search-button',
+                                        'value': 'Historic-Search',
+                                        'text': 'Historic Search',
+                                        'type': 'button'
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Customizations',
+                                color: '#CF02FF',
+                                attachment_type: 'default',
+                                text: "Choose times to be automatically sent reports and questionnaires",
+                                actions: [
+                                    {
+                                        'name': 'Customize-Questionnaires-button',
+                                        'value': 'Customize-Questionnaires',
+                                        'text': 'Customize Questionnaires',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'Customize-Reports-button',
+                                        'value': 'Customize-Reports',
+                                        'text': 'Customize Reports',
+                                        'type': 'button'
+                                    }
+                                ]
+                            },
+                        ]
+                    })
+                }
             }
         })
     });

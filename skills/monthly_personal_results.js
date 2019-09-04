@@ -115,6 +115,7 @@ module.exports = function (controller) {
                             }
                             let { name, real_name } = response.user;
                             newUser.name = real_name;
+                            newUser.email = response.user.profile.email;
                         })
                         newUser.channel = message.channel;
                         newUser.team = message.team;
@@ -135,12 +136,6 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
                             if (typeof newUser.name != 'undefined') {
-                                bot.api.users.info({ user: bot.config.createdBy }, function (err, response) {
-                                    newUser.email = response.user.profile.email;
-                                    if (err) {
-                                        console.log("error: ", err);
-                                    }
-                                });
                                 controller.storage.users.save(newUser);
                             }
                         }

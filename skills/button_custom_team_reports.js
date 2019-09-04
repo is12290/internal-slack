@@ -1,147 +1,10 @@
 module.exports = function (controller) {
-    controller.hears(['^set up team reports', '^set Up Team Reports', '^custom team reports', '^customize team reports', '^set up team reports', '^custom team reports', '^customize Team Reports'], 'direct_message', function (bot, message) {
-        controller.storage.users.get(message.user, function (error, user) {
-            if (error) {
-                console.log("error: ", err);
-            }
-            if (!user || typeof user == 'undefined') {
-                bot.startPrivateConversation({ user: message.user }, function (err, convo) {
-                    if (err) {
-                        console.log("error: ", err);
-                        bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
-                    }
-                    const newUser = {};
-
-                    convo.addQuestion({
-                        attachments: [
-                            {
-                                callback_id: 'new-user',
-                                text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
-                                color: "#0294ff",
-                                attachment_type: 'default',
-                                actions: [
-                                    {
-                                        'name': 'yes-button',
-                                        'value': 'Yes',
-                                        'text': 'Yes',
-                                        'type': 'button'
-                                    },
-                                    {
-                                        'name': 'no-button',
-                                        'value': 'No',
-                                        'text': 'No',
-                                        'type': 'button'
-                                    }
-                                ]
-                            }
-                        ]
-                    }, [
-                            {
-                                pattern: 'Yes',
-                                callback: function (reply, convo) {
-                                    bot.replyInteractive(reply,
-                                        {
-                                            attachments: [
-                                                {
-                                                    callback_id: 'new-user',
-                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
-                                                    color: "#0294ff",
-                                                    attachment_type: 'default',
-                                                    actions: [
-                                                        {
-                                                            'name': 'yes-button',
-                                                            'value': 'Yes',
-                                                            'style': 'primary',
-                                                            'text': 'Yes',
-                                                            'type': 'button'
-                                                        },
-                                                        {
-                                                            'name': 'no-button',
-                                                            'value': 'No',
-                                                            'text': 'No',
-                                                            'type': 'button'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    )
-                                    convo.next()
-                                }
-                            },
-                            {
-                                pattern: 'No',
-                                callback: function (reply, convo) {
-                                    bot.replyInteractive(reply,
-                                        {
-                                            attachments: [
-                                                {
-                                                    callback_id: 'new-user',
-                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
-                                                    color: "#0294ff",
-                                                    attachment_type: 'default',
-                                                    actions: [
-                                                        {
-                                                            'name': 'yes-button',
-                                                            'value': 'Yes',
-                                                            'text': 'Yes',
-                                                            'type': 'button'
-                                                        },
-                                                        {
-                                                            'name': 'no-button',
-                                                            'value': 'No',
-                                                            'style': 'danger',
-                                                            'text': 'No',
-                                                            'type': 'button'
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    );
-                                    bot.reply(message, "Better luck next time, I suppose! Sadly, you won't really be able to use my features until you're in my memory :zipper-mouth-face:");
-                                    convo.stop();
-                                }
-                            }
-                        ]
-                    );
-
-
-                    convo.addQuestion("What's your favorite book?", function (response, convo) {
-                        bot.api.users.info({ user: response.user }, (error, response) => {
-                            if (error) {
-                                console.log("error: ", error);
-                            }
-                            let { name, real_name } = response.user;
-                            newUser.name = real_name;
-                            newUser.email = response.user.profile.email;
-                        })
-                        newUser.channel = message.channel;
-                        newUser.team = message.team;
-                        newUser.status = 'employee';
-                        newUser.id = message.user;
-                        convo.next();
-                    }, 'default');
-
-                    convo.addQuestion("What's your role here?", function (response, convo) {
-                        newUser.role = response.text;
-                        convo.next();
-                    }, 'default');
-
-                    convo.say("Thanks for that!\n\nNow, what was it you were looking to do?");
-
-                    convo.activate();
-
-                    convo.on('end', function (convo) {
-                        if (convo.successful()) {
-                                controller.storage.users.save(newUser);
-                            }
-                    })
-                })
-
-            } else if (user.status != 'manager' || user.status == 'undefined') {
-                bot.reply(message, 'My deepest condolences, but you need to be a manager in order to report team fitness results! If you\'re interested in upgrading, visit our site: https://getinternal.co');
-            } else {
+    controller.on('interactive_message_callback', function (bot, message) {
+        if (message.actions[0].value == "Customize-Team_reports") {
+            controller.storage.users.get(message.user, function (error, user) {
+                if (error) {
+                    console.log("error: ", err);
+                }
                 if (!user || typeof user.customization == 'undefined' || typeof user.customization.team_reporting == 'undefined') {
                     bot.startConversation(message, function (err, convo) {
                         if (err) {
@@ -858,7 +721,7 @@ module.exports = function (controller) {
                 } else {
                     bot.reply(message, "Could you actually try sending me that message again?");
                 }
-            }
-        })
+            })
+        }
     })
 }

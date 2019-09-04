@@ -83,6 +83,7 @@ module.exports = function (controller) {
 
                 convo.say("Done! I need you to do one more thing for me, which is to add me to the channel that was just created. Would you mind navigating to the channel, then click the 'i' on top bar -> App -> Add App -> Select my name");
 
+                var channel_name = '';
                 convo.addQuestion({
                     attachments: [
                         {
@@ -110,6 +111,7 @@ module.exports = function (controller) {
                         {
                             pattern: 'Yes-one',
                             callback: function (reply, convo) {
+                                channel_name = channel_name + reply.channel;
                                 bot.replyInteractive(reply,
                                     {
                                         attachments: [
@@ -186,15 +188,123 @@ module.exports = function (controller) {
                     ]
                 );
 
-                convo.say("We're all set! Now let's run through a few quick things about me");
+                convo.say("Okay, I've got two more painless questions and then you'll be good to go");
 
-                convo.say("\n\n*Logging*\nParticipating users carry out Check Ins and Reflections in direct message with me every day. As expected, Check Ins are completed at the start of the work day and Check Outs at the end. The logs are 4 topics with 4 possible answers for each - A total of 16 possible choices - and can be carried out by sending me a message saying `Check In` or `Reflect`\n\n*Reporting*\nYour personal results can be tracked on a weekly or monthly basis by simply telling me `Weekly Report` or `Monthly Report`. You can search for your historic scores, or compare your scores with historic scores, by telling me `Search` or `Compare`. Managers have the capability of viewing all scores, but only in aggregate so that no one’s scores are personally identifiable\n\n*Customization*\nI have the capability of automatically sending you Check Ins, Reflections, and Reports at the time of your choice so that you don’t have to remember to invoke them yourself. You can choose a time by direct messaging me `Customize Logs` or `Customize Reports`\n\nThat is pretty much it for basic understanding! I know it’s a bit to take in at once, so ask me for `help` at any time and I’ll provide some guidance.\n\nIf you have additional questions, comments, or problems, be sure to contact my creator at support@getinternal.co")
+                const newUser = {};
+                convo.addQuestion("First - what's your favorite book?", function (response, convo) {
+                    bot.api.users.info({ user: response.user }, (error, response) => {
+                        if (error) {
+                            console.log("error: ", error);
+                        }
+                        let { name, real_name } = response.user;
+                        newUser.name = real_name;
+                        newUser.email = response.user.profile.email;
+                    })
+                    newUser.channel = message.channel;
+                    newUser.team = message.team;
+                    newUser.status = 'employee';
+                    newUser.id = message.user;
+                    convo.next();
+                });
+
+                convo.addQuestion("Second - what's your role here?", function (response, convo) {
+                    newUser.role = response.text;
+                    convo.next();
+                });
+
+                convo.say("We're all set! Thanks for humoring my shenanigans. Now the fun part...");
 
                 convo.activate();
 
                 convo.on('end', function (convo) {
                     if (convo.successful()) {
-                        // Nothing
+                        controller.storage.users.save(newUser);
+                        bot.say({
+                            attachments: [{
+                                text: "Would you like to check in or reflect?",
+                                color: "#0294ff",
+                                callback_id: 'onboarding-ask',
+                                attachment_type: 'default',
+                                actions: [
+                                    {
+                                        'name': 'checkin-button',
+                                        'value': 'Yes-CheckIn',
+                                        'text': 'Check In',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'reflect-button',
+                                        'value': 'Yes-Reflect',
+                                        'text': 'Reflect',
+                                        'type': 'button'
+                                    }
+                                ]
+                            }],
+                            channel: channel_name
+                        },
+                            [
+                                {
+                                    pattern: 'Yes-CheckIn',
+                                    callback: function (reply) {
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [{
+                                                    text: "Would you like to check in or reflect?",
+                                                    color: "#0294ff",
+                                                    callback_id: 'onboarding-ask',
+                                                    attachment_type: 'default',
+                                                    actions: [
+                                                        {
+                                                            'name': 'checkin-button',
+                                                            'value': 'Yes-CheckIn',
+                                                            "style": "primary",
+                                                            'text': 'Check In',
+                                                            'type': 'button'
+                                                        },
+                                                        {
+                                                            'name': 'reflect-button',
+                                                            'value': 'Yes-Reflect',
+                                                            'text': 'Reflect',
+                                                            'type': 'button'
+                                                        }
+                                                    ]
+                                                }]
+                                            }
+                                        )
+                                    }
+                                },
+                                {
+                                    pattern: 'Yes-Reflect',
+                                    callback: function (reply) {
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [{
+                                                    text: "Would you like to check in or reflect?",
+                                                    color: "#0294ff",
+                                                    callback_id: 'onboarding-ask',
+                                                    attachment_type: 'default',
+                                                    actions: [
+                                                        {
+                                                            'name': 'checkin-button',
+                                                            'value': 'Yes-CheckIn',
+                                                            'text': 'Check In',
+                                                            'type': 'button'
+                                                        },
+                                                        {
+                                                            'name': 'reflect-button',
+                                                            'value': 'Yes-Reflect',
+                                                            "style": "primary",
+                                                            'text': 'Reflect',
+                                                            'type': 'button'
+                                                        }
+                                                    ]
+                                                }]
+                                            }
+                                        );
+                                    }
+                                }
+                            ]
+                        );
                     }
                 })
             }
