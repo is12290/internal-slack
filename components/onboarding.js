@@ -200,10 +200,10 @@ module.exports = function (controller) {
                         newUser.name = real_name;
                         newUser.email = response.user.profile.email;
                     })
-                    newUser.channel = message.channel;
-                    newUser.team = message.team;
+                    newUser.channel = response.channel;
+                    newUser.team = response.team;
                     newUser.status = 'employee';
-                    newUser.id = message.user;
+                    newUser.id = response.user;
                     convo.next();
                 });
 
