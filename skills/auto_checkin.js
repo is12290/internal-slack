@@ -1044,21 +1044,23 @@ module.exports = function (controller) {
                                 user.logs = {
                                     [today]: {
                                         check_in: score,
-                                        permission: permission
+                                        permission: permission[0]
                                     }
                                 };
                                 controller.storage.users.save(user);
-                            } else if (!user.logs || !user.logs[today]) {
+                            } else if (!user.logs) {
                                 user.logs = {
                                     [today]: {
                                         check_in: score,
-                                        permission: permission
+                                        permission: permission[0]
                                     }
                                 };
                                 controller.storage.users.save(user);
                             } else {
-                                user.logs[today].check_in = score;
-                                user.logs[today].permission = permission;
+                                user.logs[today] = {
+                                    check_in: score,
+                                    permission: permission[0],
+                                }
                                 controller.storage.users.save(user);
                             }
                         });

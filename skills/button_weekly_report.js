@@ -1,6 +1,6 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
-        if (message.actions[0].value == "Weekly-Report") {
+        if (message.text == "Weekly-Report") {
             controller.storage.users.get(message.user, function (error, user) {
                 if (error) {
                     console.log("error: ", error);

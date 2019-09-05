@@ -1,6 +1,6 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
-        if (message.actions[0].value == "Historic-Team-Search") {
+        if (message.text == "Historic-Team-Search") {
             controller.storage.users.find({ team: message.team }, function (err, all_users) {
                 var role;
                 for (var z = 0; z < all_users.length; z++) {

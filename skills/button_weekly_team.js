@@ -1,6 +1,6 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
-        if (message.actions[0].value == "Weekly-Team-Report") {
+        if (message.text == "Weekly-Team-Report") {
             controller.storage.users.find({ team: message.team }, function (error, output) {
                 if (error) {
                     console.log("error: ", err);

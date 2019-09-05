@@ -142,12 +142,14 @@ module.exports = function (controller) {
 
             } else {
                 if (user.status == 'manager') {
-                    bot.reply(message, {
+                    bot.say({
                         text: "I'm here to help!",
+                        channel: message.channel,
                         attachments: [
                             {
                                 title: 'Questionnaires',
                                 color: '#02D2FF',
+                                callback_id: 'questionnaire',
                                 attachment_type: 'default',
                                 text: "Record your headspace at the beginning and end of your workday",
                                 actions: [
@@ -168,6 +170,7 @@ module.exports = function (controller) {
                             {
                                 title: 'Reports',
                                 color: '#2A02FF',
+                                callback_id: 'report',
                                 attachment_type: 'default',
                                 text: "Monitor you and your team's emotional well-being overtime",
                                 actions: [
@@ -206,6 +209,7 @@ module.exports = function (controller) {
                             {
                                 title: 'Special Actions',
                                 color: '#8A02FF',
+                                callback_id: 'actions',
                                 attachment_type: 'default',
                                 text: "Get the insights you're curious about",
                                 actions: [
@@ -244,6 +248,7 @@ module.exports = function (controller) {
                             {
                                 title: 'Customizations',
                                 color: '#CF02FF',
+                                callback_id: 'custom',
                                 attachment_type: 'default',
                                 text: "Choose times to be automatically sent reports and questionnaires",
                                 actions: [

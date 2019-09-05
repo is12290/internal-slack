@@ -1,6 +1,6 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
-        if (message.actions[0].value == "Customize-Questionnaires") {
+        if (message.text == "Customize-Questionnaires") {
             controller.storage.users.get(message.user, function (error, user) {
                 if (error) {
                     console.log("error: ", err);

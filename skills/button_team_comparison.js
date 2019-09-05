@@ -1,6 +1,6 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
-        if (message.actions[0].value == "Compare-Team-Scores") {
+        if (message.text == "Compare-Team-Scores") {
             controller.storage.users.find({ team: message.team }, function (error, all_users) {
                 if (error) {
                     console.log("error", error);
