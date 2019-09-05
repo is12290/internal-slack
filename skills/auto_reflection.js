@@ -946,7 +946,7 @@ module.exports = function (controller) {
                             } else if (!user.logs) {
                                 user.logs = {
                                     [today]: {
-                                        check_out = score
+                                        check_out: score
                                     }
                                 }
                                 controller.storage.users.save(user);
