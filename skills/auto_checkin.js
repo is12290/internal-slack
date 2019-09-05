@@ -1023,38 +1023,45 @@ module.exports = function (controller) {
                         var sum = score.reduce(function (a, b) { return a + b; }, 0);
                         score.push(sum);
 
-                        var today = new Date();
-                        var dd = String(today.getDate()).padStart(2, '0');
-                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                        var yyyy = today.getFullYear();
+                        controller.storage.users.get(message.user, function (err, user) {
+                            if (err) {
+                                console.log("error: ", err);
+                                convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")
+                            }
 
-                        today = mm + '/' + dd + '/' + yyyy;
+                            var today = new Date();
+                            var dd = String(today.getDate()).padStart(2, '0');
+                            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                            var yyyy = today.getFullYear();
 
-                        if (!user) {
-                            user = {};
-                            user.id = message.user,
-                                user.team = message.team,
-                                user.channel = message.channel
-                            user.logs = {
-                                [today]: {
-                                    check_in: score,
-                                    permission: permission
-                                }
-                            };
-                            controller.storage.users.save(user);
-                        } else if (!user.logs || !user.logs[today]) {
-                            user.logs = {
-                                [today]: {
-                                    check_in: score,
-                                    permission: permission
-                                }
-                            };
-                            controller.storage.users.save(user);
-                        } else {
-                            user.logs[today].check_in = score;
-                            user.logs[today].permission = permission;
-                            controller.storage.users.save(user);
-                        }
+                            today = mm + '/' + dd + '/' + yyyy;
+
+                            if (!user) {
+                                user = {};
+                                user.id = message.user,
+                                    user.team = message.team,
+                                    user.channel = message.channel
+                                user.logs = {
+                                    [today]: {
+                                        check_in: score,
+                                        permission: permission
+                                    }
+                                };
+                                controller.storage.users.save(user);
+                            } else if (!user.logs || !user.logs[today]) {
+                                user.logs = {
+                                    [today]: {
+                                        check_in: score,
+                                        permission: permission
+                                    }
+                                };
+                                controller.storage.users.save(user);
+                            } else {
+                                user.logs[today].check_in = score;
+                                user.logs[today].permission = permission;
+                                controller.storage.users.save(user);
+                            }
+                        });
 
                         if (permission[0] == true) {
                             controller.storage.teams.get(message.team, function (err, team) {
@@ -1087,7 +1094,7 @@ module.exports = function (controller) {
 
 function GetOverall(score) {
     var scores = [];
-    for (var j = 0; j < score.length-1; j++) {
+    for (var j = 0; j < score.length - 1; j++) {
         scores.push(score[j] * 25);
     }
     var sum = scores.reduce(function (a, b) { return a + b; }, 0);
