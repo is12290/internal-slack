@@ -15,6 +15,7 @@ module.exports = function (controller) {
                     text: "Hey, here's your check in questionnaire! Just choose which option vibes best for each of the 4 topics..."
                 });
 
+                var message_team;
                 // Sleep
                 convo.addQuestion({
                     attachments: [
@@ -95,6 +96,7 @@ module.exports = function (controller) {
                                         ]
                                     }
                                 );
+                                message_team = reply.team;
                                 convo.next();
                             }
                         },
@@ -141,6 +143,7 @@ module.exports = function (controller) {
                                         ]
                                     }
                                 );
+                                message_team = reply.team;
                                 convo.next();
                             }
                         },
@@ -187,6 +190,7 @@ module.exports = function (controller) {
                                         ]
                                     }
                                 );
+                                message_team = reply.team;
                                 convo.next();
                             }
                         },
@@ -233,6 +237,7 @@ module.exports = function (controller) {
                                         ]
                                     }
                                 );
+                                message_team = reply.team;
                                 convo.next();
                             }
                         }
@@ -964,7 +969,7 @@ module.exports = function (controller) {
                                 permission.push(true);
                                 bot.api.reactions.add({
                                     name: 'thumbsup',
-                                    channel: message.channel,
+                                    channel: reply.channel,
                                     timestamp: reply.ts
                                 });
                                 convo.next();
@@ -1002,7 +1007,7 @@ module.exports = function (controller) {
                                 permission.push(false);
                                 bot.api.reactions.add({
                                     name: 'thumbsup',
-                                    channel: message.channel,
+                                    channel: reply.channel,
                                     timestamp: reply.ts
                                 });
                                 convo.next();
@@ -1023,7 +1028,7 @@ module.exports = function (controller) {
                         var sum = score.reduce(function (a, b) { return a + b; }, 0);
                         score.push(sum);
 
-                        controller.storage.users.get(message.user, function (err, user) {
+                        controller.storage.users.get(message_team, function (err, user) {
                             if (err) {
                                 console.log("error: ", err);
                                 convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")
