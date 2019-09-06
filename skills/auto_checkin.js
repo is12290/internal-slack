@@ -1071,11 +1071,19 @@ module.exports = function (controller) {
                                 if (err) {
                                     console.log("error: ", err);
                                 }
+                                var error;
                                 bot.say({
                                     text: "<@" + message.user + "> is feeling around " + overall + "% today",
                                     channel: team.bot.channel
-                                })
+                                }, function(err, response) {
+                                    console.log("Erorr: ", err);
+                                    err = true;
+                                });
+                                if (err == true) {
+                                    bot.reply(message, "Sorry!! There has been an error sharing your score. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
+                                } else {
                                 bot.reply(message, "Your score has been shared successfully in <#" + team.bot.channel + ">!");
+                                }
                             })
                         } else {
                             // nuthin
