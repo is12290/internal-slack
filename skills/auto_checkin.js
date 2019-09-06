@@ -1072,9 +1072,10 @@ module.exports = function (controller) {
                                     console.log("error: ", err);
                                 }
                                 bot.say({
-                                    text: user.name + "'s is feeling around " + overall + "% today",
+                                    text: "<@" + message.user + "> is feeling around " + overall + "% today",
                                     channel: team.bot.channel
                                 })
+                                bot.reply(message, "Your score has been shared successfully in <#" + team.bot.channel + ">!");
                             })
                         } else {
                             // nuthin

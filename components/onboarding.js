@@ -32,8 +32,8 @@ module.exports = function (controller) {
                                     "type": "select",
                                     "options": [
                                         {
-                                            "text": '#internal',
-                                            "value": "internal"
+                                            "text": '#internal-fitness',
+                                            "value": "internal-fitness"
                                         },
                                         {
                                             "text": '#internal-vibe',
@@ -56,20 +56,23 @@ module.exports = function (controller) {
                     bot.api.channels.create({ token: bot.config.app_token, name: reply.text }, function (err, response) {
                         if (err) {
                             console.log("error: ", err);
-                        }
-                        bot.api.channels.setPurpose({ token: bot.config.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share the daily overall emotional fitness scores of those who opt to share." }, function (err, response) {
-                            if (err) {
-                                console.log("error: ", err);
-                            }
-                        })
-                        bot.api.channels.setTopic({ token: bot.config.app_token, channel: response.channel.id, topic: "Know how your coworkers are doing today" }, function (err, response) {
-                            if (err) {
-                                console.log("error: ", err);
-                            }
-                        })
+                            bot.reply(reply, "I'm sorry, that channel name is already taken. Try another?");
+                            convo.repeat();
+                        } else {
+                            bot.api.channels.setPurpose({ token: bot.config.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share the daily overall emotional fitness scores of those who opt to share." }, function (err, response) {
+                                if (err) {
+                                    console.log("error: ", err);
+                                }
+                            })
+                            bot.api.channels.setTopic({ token: bot.config.app_token, channel: response.channel.id, topic: "Know how your coworkers are doing today" }, function (err, response) {
+                                if (err) {
+                                    console.log("error: ", err);
+                                }
+                            })
 
-                        team.bot.channel = response.channel.id;
-                        controller.storage.teams.save(team);
+                            team.bot.channel = response.channel.id;
+                            controller.storage.teams.save(team);
+                        }
                     });
                     bot.api.reactions.add({
                         name: 'thumbsup',

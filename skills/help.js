@@ -281,6 +281,7 @@ module.exports = function (controller) {
                             {
                                 title: 'Questionnaires',
                                 color: '#02D2FF',
+                                callback_id: 'questionnaire',
                                 attachment_type: 'default',
                                 text: "Record your headspace at the beginning and end of your workday",
                                 actions: [
@@ -302,6 +303,7 @@ module.exports = function (controller) {
                                 title: 'Reports',
                                 color: '#2A02FF',
                                 attachment_type: 'default',
+                                callback_id: 'report',
                                 text: "Monitor your emotional well-being overtime",
                                 actions: [
                                     {
@@ -321,6 +323,7 @@ module.exports = function (controller) {
                             {
                                 title: 'Special Actions',
                                 color: '#8A02FF',
+                                callback_id: 'special',
                                 attachment_type: 'default',
                                 text: "Get the insights you're curious about",
                                 actions: [
@@ -341,6 +344,7 @@ module.exports = function (controller) {
                             {
                                 title: 'Customizations',
                                 color: '#CF02FF',
+                                callback_id: 'custom',
                                 attachment_type: 'default',
                                 text: "Choose times to be automatically sent reports and questionnaires",
                                 actions: [
@@ -358,6 +362,21 @@ module.exports = function (controller) {
                                     }
                                 ]
                             },
+                            {
+                                title: 'Subscribe',
+                                callback_id: 'subscribe',
+                                color: '#FF029D',
+                                attachment_type: 'default',
+                                text: "Upgrade to manager status to view team emotional trends",
+                                actions: [
+                                    {
+                                        'name': 'subscribe-button',
+                                        'url': 'https://getinternal.co/#pricing',
+                                        'text': 'Upgrade',
+                                        'type': 'button'
+                                    }
+                                ]
+                            }
                         ]
                     })
                 }

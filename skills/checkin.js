@@ -1206,19 +1206,17 @@ module.exports = function (controller) {
 
                             if (permission == true) {
                                 controller.storage.teams.get(message.team, function (err, team) {
-                                    console.log("team: ", team);
-                                    console.log("Channel: ", team.bot.channel);
-                                    console.log("Name: ", user.name);
                                     const overall = GetOverall(score);
                                     if (err) {
                                         console.log("error: ", err);
                                     }
                                     bot.say({
-                                        text: user.name + " is feeling around " + overall + "% today",
+                                        text: "<@" + message.user + "> is feeling around " + overall + "% today",
                                         channel: team.bot.channel
                                     }, function(err, response) {
                                         console.log("Erorr: ", err);
                                     });
+                                    bot.reply(message, "Your score has been shared successfully in <#" + team.bot.channel + ">!");
                                     bot.reply(message, 'Okay, that is all!');
                                 })
                             } else {
