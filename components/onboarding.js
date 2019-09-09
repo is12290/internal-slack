@@ -84,7 +84,7 @@ module.exports = function (controller) {
 
                 convo.say("Awesome! I'll create that right now...");
 
-                convo.say("Done! I need you to do one more thing for me, which is to add me to the channel that was just created. Would you mind navigating to the channel, then click the 'i' on top bar -> App -> Add App -> Select my name");
+                convo.say("Done! Now I need you to add me to the channel that was just created. Would you mind navigating to the channel, then click the 'i' on top bar -> App -> Add App -> Internal. When you've successfully added me to the channel, confirm in the following message");
 
                 var channel_name = '';
                 convo.addQuestion({
@@ -224,7 +224,7 @@ module.exports = function (controller) {
                         controller.storage.users.save(newUser);
                         bot.say({
                             attachments: [{
-                                text: "Would you like to check in or reflect?",
+                                text: "Would you like to check in or reflect?\nA check in is done at the start of your day in order to let your teammates know how you're feeling and a reflection is done at the end of the day to monitor how you're doing over time",
                                 color: "#0294ff",
                                 callback_id: 'onboarding-ask',
                                 attachment_type: 'default',

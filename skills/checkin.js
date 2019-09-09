@@ -1210,12 +1210,27 @@ module.exports = function (controller) {
                                     if (err) {
                                         console.log("error: ", err);
                                     }
-                                    bot.say({
-                                        text: "<@" + message.user + "> is feeling around " + overall + "% today",
-                                        channel: team.bot.channel
-                                    }, function(err, response) {
-                                        console.log("Erorr: ", err);
-                                    });
+                                    if (overall == 100) {
+                                        bot.say({
+                                            text: "<@" + message.user + "> is feeling " + overall + "% today :rocket:",
+                                            channel: team.bot.channel
+                                        }, function(err, response) {
+                                            if (err) {
+                                                console.log("Erorr: ", err);
+                                                error = true;
+                                            }
+                                        });
+                                    } else {
+                                        bot.say({
+                                            text: "<@" + message.user + "> is feeling " + overall + "% today",
+                                            channel: team.bot.channel
+                                        }, function(err, response) {
+                                            if (err) {
+                                                console.log("Erorr: ", err);
+                                                error = true;
+                                            }
+                                        });
+                                    }
                                     bot.reply(message, "Your score has been shared successfully in <#" + team.bot.channel + ">!");
                                     bot.reply(message, 'Okay, that is all!');
                                 })

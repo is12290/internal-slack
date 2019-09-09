@@ -1071,21 +1071,32 @@ module.exports = function (controller) {
 
                         if (permission[0] == true) {
                             controller.storage.teams.get(message.team.id, function (err, team) {
-                                console.log("Team: ", team);
                                 const overall = GetOverall(score);
                                 if (err) {
                                     console.log("error: ", err);
                                 }
                                 var error;
-                                bot.say({
-                                    text: "<@" + message.user + "> is feeling " + overall + "% today",
-                                    channel: team.bot.channel
-                                }, function(err, response) {
-                                    if (err) {
-                                        console.log("Erorr: ", err);
-                                        error = true;
-                                    }
-                                });
+                                if (overall == 100) {
+                                    bot.say({
+                                        text: "<@" + message.user + "> is feeling " + overall + "% today :rocket:",
+                                        channel: team.bot.channel
+                                    }, function(err, response) {
+                                        if (err) {
+                                            console.log("Erorr: ", err);
+                                            error = true;
+                                        }
+                                    });
+                                } else {
+                                    bot.say({
+                                        text: "<@" + message.user + "> is feeling " + overall + "% today",
+                                        channel: team.bot.channel
+                                    }, function(err, response) {
+                                        if (err) {
+                                            console.log("Erorr: ", err);
+                                            error = true;
+                                        }
+                                    });
+                                }
                                 if (error == true) {
                                     bot.reply(message, "Sorry!! There has been an error sharing your score. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
                                 } else {
