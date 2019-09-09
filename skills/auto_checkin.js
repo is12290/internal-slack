@@ -1,6 +1,5 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
-        console.log("User and Team: ", message.user, message.team);
         if (message.actions[0].value == "Yes-CheckIn") {
             // Check in convo
             bot.startConversation(message, function (err, convo) {
@@ -920,6 +919,7 @@ module.exports = function (controller) {
                         {
                             callback_id: 'permission',
                             text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                            color: "#0294ff",
                             attachment_type: 'default',
                             actions: [
                                 {
@@ -947,6 +947,7 @@ module.exports = function (controller) {
                                             {
                                                 callback_id: 'permission',
                                                 text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                                color: "#0294ff",
                                                 attachment_type: 'default',
                                                 actions: [
                                                     {
@@ -985,6 +986,7 @@ module.exports = function (controller) {
                                             {
                                                 callback_id: 'permission',
                                                 text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                                color: "#0294ff",
                                                 attachment_type: 'default',
                                                 actions: [
                                                     {
@@ -1073,7 +1075,7 @@ module.exports = function (controller) {
                         });
 
                         if (permission[0] == true) {
-                            controller.storage.teams.get(message_team, function (err, team) {
+                            controller.storage.teams.get(message.team.id, function (err, team) {
                                 console.log("Team: ", team);
                                 const overall = GetOverall(score);
                                 if (err) {
