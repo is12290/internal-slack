@@ -1086,8 +1086,10 @@ module.exports = function (controller) {
                                     text: "<@" + message.user + "> is feeling " + overall + "% today",
                                     channel: team.bot.channel
                                 }, function(err, response) {
-                                    console.log("Erorr: ", err);
-                                    error = true;
+                                    if (err) {
+                                        console.log("Erorr: ", err);
+                                        error = true;
+                                    }
                                 });
                                 if (error == true) {
                                     bot.reply(message, "Sorry!! There has been an error sharing your score. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")

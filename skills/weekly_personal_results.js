@@ -271,10 +271,12 @@ function getWeeklyOutput(results) {
                 var checkIn = results.logs[lastWeekDays[k]].check_in;
                 var checkOut = results.logs[lastWeekDays[k]].check_out;
 
-                lastWeekCount.push(checkIn[4] / 4);
-
-                lastWeekCount.push(checkOut[4] / 4);
-
+                if (checkIn == 'undefined' || checkOut == 'undefined') {
+                    // Pass
+                } else {
+                    lastWeekCount.push(checkIn[4] / 4);
+                    lastWeekCount.push(checkOut[4] / 4);
+                }
             }
         }
     }
