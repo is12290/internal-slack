@@ -15,7 +15,6 @@ module.exports = function (controller) {
                     text: "Hey, here's your check in questionnaire! Just choose which option vibes best for each of the 4 topics..."
                 });
 
-                var message_team;
                 // Sleep
                 convo.addQuestion({
                     attachments: [
@@ -96,7 +95,6 @@ module.exports = function (controller) {
                                         ]
                                     }
                                 );
-                                message_team = reply.team;
                                 convo.next();
                             }
                         },
@@ -143,7 +141,6 @@ module.exports = function (controller) {
                                         ]
                                     }
                                 );
-                                message_team = reply.team;
                                 convo.next();
                             }
                         },
@@ -190,7 +187,6 @@ module.exports = function (controller) {
                                         ]
                                     }
                                 );
-                                message_team = reply.team;
                                 convo.next();
                             }
                         },
@@ -237,7 +233,6 @@ module.exports = function (controller) {
                                         ]
                                     }
                                 );
-                                message_team = reply.team;
                                 convo.next();
                             }
                         }

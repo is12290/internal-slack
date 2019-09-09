@@ -1,7 +1,7 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
         if (message.text == "Compare-Scores") {
-            controller.storage.users.find({ team: message.team }, function (error, all_users) {
+            controller.storage.users.find({ team: message.team.id }, function (error, all_users) {
                 if (error) {
                     bot.whisper(message, "Ah! I'm a bit popular right now. Could you say that again? I missed it");
                 }

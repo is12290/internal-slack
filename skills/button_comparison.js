@@ -5,385 +5,246 @@ module.exports = function (controller) {
                 if (error) {
                     bot.whisper(message, "Ah! I'm a bit popular right now. Could you say that again? I missed it");
                 }
-                if (!user || typeof user == 'undefined') {
-                    bot.startConversation(message, function (err, convo) {
-                        if (err) {
-                            console.log("error: ", err);
-                            bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
-                        }
-                        const newUser = {};
+                bot.startConversation(message, function (err, convo) {
+                    if (err) {
+                        console.log('error: ', err);
+                    }
+                    convo.say('I need a bit more information to compute the comparison...');
 
-                        convo.addQuestion({
-                            attachments: [
-                                {
-                                    callback_id: 'new-user',
-                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
-                                    color: "#0294ff",
-                                    attachment_type: 'default',
-                                    actions: [
-                                        {
-                                            'name': 'yes-button',
-                                            'value': 'Yes',
-                                            'text': 'Yes',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'no-button',
-                                            'value': 'No',
-                                            'text': 'No',
-                                            'type': 'button'
-                                        }
-                                    ]
-                                }
-                            ]
-                        }, [
-                                {
-                                    pattern: 'Yes',
-                                    callback: function (reply, convo) {
-                                        bot.replyInteractive(reply,
+                    var startTimeframe = [];
+                    convo.addQuestion({
+                        attachments: [
+                            {
+                                title: 'Current',
+                                text: 'You want to compare...',
+                                callback_id: 'current',
+                                attachment_type: 'default',
+                                color: "#0294ff",
+                                actions: [
+                                    {
+                                        "name": "Current",
+                                        "text": "Current",
+                                        "type": "select",
+                                        "options": [
                                             {
-                                                attachments: [
-                                                    {
-                                                        callback_id: 'new-user',
-                                                        text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
-                                                        color: "#0294ff",
-                                                        attachment_type: 'default',
-                                                        actions: [
-                                                            {
-                                                                'name': 'yes-button',
-                                                                'value': 'Yes',
-                                                                'style': 'primary',
-                                                                'text': 'Yes',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'no-button',
-                                                                'value': 'No',
-                                                                'text': 'No',
-                                                                'type': 'button'
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        )
-                                        convo.next()
-                                    }
-                                },
-                                {
-                                    pattern: 'No',
-                                    callback: function (reply, convo) {
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        callback_id: 'new-user',
-                                                        text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
-                                                        color: "#0294ff",
-                                                        attachment_type: 'default',
-                                                        actions: [
-                                                            {
-                                                                'name': 'yes-button',
-                                                                'value': 'Yes',
-                                                                'text': 'Yes',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'no-button',
-                                                                'value': 'No',
-                                                                'style': 'danger',
-                                                                'text': 'No',
-                                                                'type': 'button'
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        bot.reply(message, "Better luck next time, I suppose! Sadly, you won't really be able to use my features until you're in my memory :zipper_mouth_face:");
-                                        convo.stop();
-                                    }
-                                }
-                            ]
-                        );
-
-
-                        convo.addQuestion("What's your favorite book?", function (response, convo) {
-                            bot.api.users.info({ user: response.user }, (error, response) => {
-                                if (error) {
-                                    console.log("error: ", error);
-                                }
-                                let { name, real_name } = response.user;
-                                newUser.name = real_name;
-                                newUser.email = response.user.profile.email;
-                            })
-                            newUser.channel = message.channel;
-                            newUser.team = message.team;
-                            newUser.status = 'employee';
-                            newUser.id = message.user;
-                            convo.next();
-                        }, 'default');
-
-                        convo.addQuestion("What's your role here?", function (response, convo) {
-                            newUser.role = response.text;
-                            convo.next();
-                        }, 'default');
-
-                        convo.say("Thanks for that!\n\nNow, what was it you were looking to do?");
-
-                        convo.activate();
-
-                        convo.on('end', function (convo) {
-                            if (convo.successful()) {
-                                if (typeof newUser.name != 'undefined') {
-                                    controller.storage.users.save(newUser);
-                                }
-                            }
-
-                        })
-                    })
-
-                } else {
-                    bot.startConversation(message, function (err, convo) {
-                        if (err) {
-                            console.log('error: ', err);
-                        }
-                        convo.say('I need a bit more information to compute the comparison...');
-
-                        var startTimeframe = [];
-                        convo.addQuestion({
-                            attachments: [
-                                {
-                                    title: 'Current',
-                                    text: 'You want to compare...',
-                                    callback_id: 'current',
-                                    attachment_type: 'default',
-                                    color: "#0294ff",
-                                    actions: [
-                                        {
-                                            "name": "Current",
-                                            "text": "Current",
-                                            "type": "select",
-                                            "options": [
-                                                {
-                                                    "text": "Today",
-                                                    "value": "Today"
-                                                },
-                                                {
-                                                    "text": "This Week",
-                                                    "value": "Week"
-                                                },
-                                                {
-                                                    "text": "This Month",
-                                                    "value": "Month"
-                                                },
-                                                {
-                                                    "text": "This Year",
-                                                    "value": "Year"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }, [
-                                {
-                                    pattern: "Today",
-                                    callback: function (reply, convo) {
-                                        startTimeframe.push(1);
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: "Week",
-                                    callback: function (reply, convo) {
-                                        startTimeframe.push(2);
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: "Month",
-                                    callback: function (reply, convo) {
-                                        startTimeframe.push(3);
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: "Year",
-                                    callback: function (reply, convo) {
-                                        startTimeframe.push(4);;
-                                        convo.next();
-                                    }
-                                }
-                            ]);
-
-                        // Custom Input
-                        var endTimeframe = [];
-                        // convo.addQuestion({
-                        //     text: 'Custom Timeframe',
-                        //     blocks: [
-                        //         {
-                        //             "type": "section",
-                        //             "block_id": "section1234",
-                        //             "text": {
-                        //                 "type": "mrkdwn",
-                        //                 "text": "Would you be so kind as to select your custom timeframe?"
-                        //             }
-                        //         },
-                        //         {
-                        //             "type": "actions",
-                        //             "elements": [
-                        //                 {
-                        //                     "type": "datepicker",
-                        //                     "placeholder": {
-                        //                         "type": "plain_text",
-                        //                         "text": "Start Date",
-                        //                         "emoji": true
-                        //                     }
-                        //                 },
-                        //                 {
-                        //                     "type": "datepicker",
-                        //                     "placeholder": {
-                        //                         "type": "plain_text",
-                        //                         "text": "End Date",
-                        //                         "emoji": true
-                        //                     }
-                        //                 }
-                        //             ]
-                        //         }
-                        //     ]
-                        // }, function (response, convo) {
-                        //     endTimeframe.push(response.actions[0].selected_date);
-
-                        //     if (endTimeframe.length == 2) {
-                        //         convo.next();
-                        //     } else {
-                        //         convo.silentRepeat();
-                        //     }
-                        // }, 'custom');
-
-                        convo.addQuestion({
-                            attachments: [
-                                {
-                                    title: 'Past',
-                                    text: 'Against...',
-                                    callback_id: 'past',
-                                    attachment_type: 'default',
-                                    color: "#0294ff",
-                                    actions: [
-                                        {
-                                            "name": "Past",
-                                            "text": "Past",
-                                            "type": "select",
-                                            "options": [
-                                                {
-                                                    "text": "Yesterday",
-                                                    "value": "Yesterday"
-                                                },
-                                                {
-                                                    "text": "Last Week",
-                                                    "value": "Week"
-                                                },
-                                                {
-                                                    "text": "Last Month",
-                                                    "value": "Month"
-                                                },
-                                                {
-                                                    "text": "Last Year",
-                                                    "value": "Year"
-                                                },
-                                                {
-                                                    "text": "All Time",
-                                                    "value": "All"
-                                                },
-                                                // {
-                                                //     "text": "Custom",
-                                                //     "value": "Custom"
-                                                // },
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        }, [
-                                {
-                                    pattern: "Yesterday",
-                                    callback: function (reply, convo) {
-                                        endTimeframe.push(1);
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: "Week",
-                                    callback: function (reply, convo) {
-                                        endTimeframe.push(2);
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: "Month",
-                                    callback: function (reply, convo) {
-                                        endTimeframe.push(3);
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: "Year",
-                                    callback: function (reply, convo) {
-                                        endTimeframe.push(4);;
-                                        convo.next();
-                                    }
-                                },
-                                // {
-                                //     pattern: "Custom",
-                                //     callback: function (reply, convo) {
-                                //         convo.addMessage({
-                                //             text: 'Please pick the dates you would like to compare against',
-                                //             action: 'custom'
-                                //         });
-                                //         endTimeframe.push(5);
-                                //         convo.next();
-                                //     }
-                                // },
-                            ]);
-
-                        convo.activate();
-
-                        convo.on('end', function (convo) {
-                            if (convo.successful()) {
-                                var results = getPersonalComparisonOutput(user, startTimeframe, endTimeframe);
-                                if (results == 404) {
-                                    bot.reply(message, "Hmm... I checked my records and you don't seem to have info dating back that far");
-                                } else {
-                                    bot.reply(message, {
-                                        text: 'Here is *' + results[2][0] + '* compared to *' + results[2][1] + '*\n',
-                                        attachments: [
-                                            {
-                                                title: results[2][0],
-                                                color: '#02D2FF',
-                                                attachment_type: 'default',
-                                                text: 'Score: *' + results[0] + '%*' + '\n'
+                                                "text": "Today",
+                                                "value": "Today"
                                             },
                                             {
-                                                title: results[2][1],
-                                                color: '#2A02FF',
-                                                attachment_type: 'default',
-                                                text: 'Score: *' + results[1] + '%*' + '\n'
+                                                "text": "This Week",
+                                                "value": "Week"
                                             },
                                             {
-                                                title: 'Comparison',
-                                                color: '#8A02FF',
-                                                attachment_type: 'default',
-                                                text: 'There has been a *' + ((results[0] - results[1]) / results[1]) * 100 + '%* change in emotional health'
+                                                "text": "This Month",
+                                                "value": "Month"
+                                            },
+                                            {
+                                                "text": "This Year",
+                                                "value": "Year"
                                             }
                                         ]
-                                    });
+                                    }
+                                ]
+                            }
+                        ]
+                    }, [
+                            {
+                                pattern: "Today",
+                                callback: function (reply, convo) {
+                                    startTimeframe.push(1);
+                                    convo.next();
+                                }
+                            },
+                            {
+                                pattern: "Week",
+                                callback: function (reply, convo) {
+                                    startTimeframe.push(2);
+                                    convo.next();
+                                }
+                            },
+                            {
+                                pattern: "Month",
+                                callback: function (reply, convo) {
+                                    startTimeframe.push(3);
+                                    convo.next();
+                                }
+                            },
+                            {
+                                pattern: "Year",
+                                callback: function (reply, convo) {
+                                    startTimeframe.push(4);;
+                                    convo.next();
                                 }
                             }
-                        })
-                    })
+                        ]);
 
-                }
+                    // Custom Input
+                    var endTimeframe = [];
+                    // convo.addQuestion({
+                    //     text: 'Custom Timeframe',
+                    //     blocks: [
+                    //         {
+                    //             "type": "section",
+                    //             "block_id": "section1234",
+                    //             "text": {
+                    //                 "type": "mrkdwn",
+                    //                 "text": "Would you be so kind as to select your custom timeframe?"
+                    //             }
+                    //         },
+                    //         {
+                    //             "type": "actions",
+                    //             "elements": [
+                    //                 {
+                    //                     "type": "datepicker",
+                    //                     "placeholder": {
+                    //                         "type": "plain_text",
+                    //                         "text": "Start Date",
+                    //                         "emoji": true
+                    //                     }
+                    //                 },
+                    //                 {
+                    //                     "type": "datepicker",
+                    //                     "placeholder": {
+                    //                         "type": "plain_text",
+                    //                         "text": "End Date",
+                    //                         "emoji": true
+                    //                     }
+                    //                 }
+                    //             ]
+                    //         }
+                    //     ]
+                    // }, function (response, convo) {
+                    //     endTimeframe.push(response.actions[0].selected_date);
+
+                    //     if (endTimeframe.length == 2) {
+                    //         convo.next();
+                    //     } else {
+                    //         convo.silentRepeat();
+                    //     }
+                    // }, 'custom');
+
+                    convo.addQuestion({
+                        attachments: [
+                            {
+                                title: 'Past',
+                                text: 'Against...',
+                                callback_id: 'past',
+                                attachment_type: 'default',
+                                color: "#0294ff",
+                                actions: [
+                                    {
+                                        "name": "Past",
+                                        "text": "Past",
+                                        "type": "select",
+                                        "options": [
+                                            {
+                                                "text": "Yesterday",
+                                                "value": "Yesterday"
+                                            },
+                                            {
+                                                "text": "Last Week",
+                                                "value": "Week"
+                                            },
+                                            {
+                                                "text": "Last Month",
+                                                "value": "Month"
+                                            },
+                                            {
+                                                "text": "Last Year",
+                                                "value": "Year"
+                                            },
+                                            {
+                                                "text": "All Time",
+                                                "value": "All"
+                                            },
+                                            // {
+                                            //     "text": "Custom",
+                                            //     "value": "Custom"
+                                            // },
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }, [
+                            {
+                                pattern: "Yesterday",
+                                callback: function (reply, convo) {
+                                    endTimeframe.push(1);
+                                    convo.next();
+                                }
+                            },
+                            {
+                                pattern: "Week",
+                                callback: function (reply, convo) {
+                                    endTimeframe.push(2);
+                                    convo.next();
+                                }
+                            },
+                            {
+                                pattern: "Month",
+                                callback: function (reply, convo) {
+                                    endTimeframe.push(3);
+                                    convo.next();
+                                }
+                            },
+                            {
+                                pattern: "Year",
+                                callback: function (reply, convo) {
+                                    endTimeframe.push(4);;
+                                    convo.next();
+                                }
+                            },
+                            // {
+                            //     pattern: "Custom",
+                            //     callback: function (reply, convo) {
+                            //         convo.addMessage({
+                            //             text: 'Please pick the dates you would like to compare against',
+                            //             action: 'custom'
+                            //         });
+                            //         endTimeframe.push(5);
+                            //         convo.next();
+                            //     }
+                            // },
+                        ]);
+
+                    convo.activate();
+
+                    convo.on('end', function (convo) {
+                        if (convo.successful()) {
+                            var results = getPersonalComparisonOutput(user, startTimeframe, endTimeframe);
+                            if (results == 404) {
+                                bot.reply(message, "Hmm... I checked my records and you don't seem to have info dating back that far");
+                            } else {
+                                bot.reply(message, {
+                                    text: 'Here is *' + results[2][0] + '* compared to *' + results[2][1] + '*\n',
+                                    attachments: [
+                                        {
+                                            title: results[2][0],
+                                            color: '#02D2FF',
+                                            attachment_type: 'default',
+                                            text: 'Score: *' + results[0] + '%*' + '\n'
+                                        },
+                                        {
+                                            title: results[2][1],
+                                            color: '#2A02FF',
+                                            attachment_type: 'default',
+                                            text: 'Score: *' + results[1] + '%*' + '\n'
+                                        },
+                                        {
+                                            title: 'Comparison',
+                                            color: '#8A02FF',
+                                            attachment_type: 'default',
+                                            text: 'There has been a *' + ((results[0] - results[1]) / results[1]) * 100 + '%* change in emotional health'
+                                        }
+                                    ]
+                                });
+                            }
+                        }
+                    })
+                })
+
+
             })
         }
     })

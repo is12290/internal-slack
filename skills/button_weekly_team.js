@@ -1,7 +1,7 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
         if (message.text == "Weekly-Team-Report") {
-            controller.storage.users.find({ team: message.team }, function (error, output) {
+            controller.storage.users.find({ team: message.team.id }, function (error, output) {
                 if (error) {
                     console.log("error: ", err);
                     bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
