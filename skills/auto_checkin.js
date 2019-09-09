@@ -1,5 +1,6 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
+        console.log("User and Team: ", message.user, message.team);
         if (message.actions[0].value == "Yes-CheckIn") {
             // Check in convo
             bot.startConversation(message, function (err, convo) {
@@ -1028,7 +1029,8 @@ module.exports = function (controller) {
                         var sum = score.reduce(function (a, b) { return a + b; }, 0);
                         score.push(sum);
 
-                        controller.storage.users.get(message_team, function (err, user) {
+                        controller.storage.users.get(message.user, function (err, user) {
+                            console.log("User: ", user);
                             if (err) {
                                 console.log("error: ", err);
                                 convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")
@@ -1071,20 +1073,21 @@ module.exports = function (controller) {
                         });
 
                         if (permission[0] == true) {
-                            controller.storage.teams.get(message.team, function (err, team) {
+                            controller.storage.teams.get(message_team, function (err, team) {
+                                console.log("Team: ", team);
                                 const overall = GetOverall(score);
                                 if (err) {
                                     console.log("error: ", err);
                                 }
                                 var error;
                                 bot.say({
-                                    text: "<@" + message.user + "> is feeling around " + overall + "% today",
+                                    text: "<@" + message.user + "> is feeling " + overall + "% today",
                                     channel: team.bot.channel
                                 }, function(err, response) {
                                     console.log("Erorr: ", err);
-                                    err = true;
+                                    error = true;
                                 });
-                                if (err == true) {
+                                if (error == true) {
                                     bot.reply(message, "Sorry!! There has been an error sharing your score. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
                                 } else {
                                 bot.reply(message, "Your score has been shared successfully in <#" + team.bot.channel + ">!");
