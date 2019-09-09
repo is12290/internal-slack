@@ -244,70 +244,7 @@ module.exports = function (controller) {
                                 ]
                             }],
                             channel: channel_name
-                        },
-                            [
-                                {
-                                    pattern: 'Yes-CheckIn',
-                                    callback: function (reply) {
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [{
-                                                    text: "Would you like to check in or reflect?",
-                                                    color: "#0294ff",
-                                                    callback_id: 'onboarding-ask',
-                                                    attachment_type: 'default',
-                                                    actions: [
-                                                        {
-                                                            'name': 'checkin-button',
-                                                            'value': 'Yes-CheckIn',
-                                                            "style": "primary",
-                                                            'text': 'Check In',
-                                                            'type': 'button'
-                                                        },
-                                                        {
-                                                            'name': 'reflect-button',
-                                                            'value': 'Yes-Reflect',
-                                                            'text': 'Reflect',
-                                                            'type': 'button'
-                                                        }
-                                                    ]
-                                                }]
-                                            }
-                                        )
-                                    }
-                                },
-                                {
-                                    pattern: 'Yes-Reflect',
-                                    callback: function (reply) {
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [{
-                                                    text: "Would you like to check in or reflect?",
-                                                    color: "#0294ff",
-                                                    callback_id: 'onboarding-ask',
-                                                    attachment_type: 'default',
-                                                    actions: [
-                                                        {
-                                                            'name': 'checkin-button',
-                                                            'value': 'Yes-CheckIn',
-                                                            'text': 'Check In',
-                                                            'type': 'button'
-                                                        },
-                                                        {
-                                                            'name': 'reflect-button',
-                                                            'value': 'Yes-Reflect',
-                                                            "style": "primary",
-                                                            'text': 'Reflect',
-                                                            'type': 'button'
-                                                        }
-                                                    ]
-                                                }]
-                                            }
-                                        );
-                                    }
-                                }
-                            ]
-                        );
+                        });
                     }
                 })
             }

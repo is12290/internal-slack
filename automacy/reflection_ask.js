@@ -63,69 +63,7 @@ if (n === 6 || n === 0) {
                                 ]
                             }],
                             channel: user.channel
-                        },
-                            [
-                                {
-                                    pattern: 'Yes',
-                                    callback: function (reply) {
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [{
-                                                    text: "Ready to reflect?",
-                                                    color: "#0294ff",
-                                                    callback_id: 'automatic-reflections',
-                                                    attachment_type: 'default',
-                                                    actions: [
-                                                        {
-                                                            'name': 'yes-button',
-                                                            'value': 'Yes-Reflect',
-                                                            'style': 'primary',
-                                                            'text': 'Yes',
-                                                            'type': 'button'
-                                                        },
-                                                        {
-                                                            'name': 'no-button',
-                                                            'value': 'No-Reflect',
-                                                            'text': 'No',
-                                                            'type': 'button'
-                                                        }
-                                                    ]
-                                                }]
-                                            }
-                                        )
-                                    }
-                                },
-                                {
-                                    pattern: 'No',
-                                    callback: function (reply) {
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [{
-                                                    text: "Ready to reflect?",
-                                                    color: "#0294ff",
-                                                    callback_id: 'automatic-reflections',
-                                                    attachment_type: 'default',
-                                                    actions: [
-                                                        {
-                                                            'name': 'yes-button',
-                                                            'value': 'Yes-Reflect',
-                                                            'text': 'Yes',
-                                                            'type': 'button'
-                                                        },
-                                                        {
-                                                            'name': 'no-button',
-                                                            'style': 'danger',
-                                                            'value': 'No-Reflect',
-                                                            'text': 'No',
-                                                            'type': 'button'
-                                                        }
-                                                    ]
-                                                }]
-                                            }
-                                        );
-                                    }
-                                }
-                            ]);
+                        });
                         sleep(400);
                     } else {
                         // Pass
