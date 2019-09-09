@@ -21,7 +21,7 @@ module.exports = function (controller) {
                     }
                 ]
             }],
-            channel: user.channel
+            channel: message.channel
         },
             [
                 {
