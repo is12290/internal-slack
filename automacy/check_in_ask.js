@@ -71,17 +71,15 @@ if (n === 6 || n === 0) {
                         // Pass
                     }
                 }
-            
 
             console.log("Made it to bot destroy");
             setTimeout(bot.destroy.bind(bot), 100);
             console.log("Made it past bot destroy");
         }
         console.log("Outside of team for loop");
+        controller.shutdown();
         })
     })
-
-    controller.shutdown();
 }
 
 function sleep(milliseconds) {
