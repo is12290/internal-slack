@@ -73,15 +73,13 @@ if (n === 6 || n === 0) {
                 }
                 setTimeout(bot.destroy.bind(bot), 100);
             }
+            console.log("Outside of team for loop");
+            controller.shutdown();
         })
-        console.log("At return");
-        return;
-    })
-    console.log("At shutdown");
-    controller.shutdown();
-}
 
-console.log("Outside of everything");
+    })
+    
+}
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
