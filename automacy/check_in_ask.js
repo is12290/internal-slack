@@ -71,7 +71,7 @@ if (n === 6 || n === 0) {
                 }
             })
 
-            setTimeout(bot.destroy.bind(bot), 4000);
+            setTimeout(bot.destroy.bind(bot), 100);
         }
     })
 }
