@@ -5,6 +5,7 @@ var now = moment();
 if (n === 6 || n === 0) {
     //Pass
 } else {
+    console.log("first if statement");
     const dotenv = require('dotenv');
     dotenv.config();
     const Botkit = require('botkit');
@@ -26,17 +27,22 @@ if (n === 6 || n === 0) {
     controller.startTicking();
 
     controller.storage.teams.all(function (err, all_teams) {
+        console.log("Opened team storage");
         if (err) {
             console.log("error: ", err);
         }
         for (var i = 0; i < all_teams.length; i++) {
+            console.log("team iteration: ", i);
             var bot = controller.spawn({ token: all_teams[i].bot.token });
+            console.log("bot spawned");
             controller.storage.users.all(function (err, all_users) {
+                console.log("Opened user storage");
                 if (err) {
                     console.log("error: ", err);
                 }
 
                 for (var j = 0; j < all_users.length; j++) {
+                    console.log("user iteration: ", j);
                     var user = all_users[j];
                     if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                         // Pass
@@ -71,9 +77,13 @@ if (n === 6 || n === 0) {
                 }
             })
 
+            console.log("Made it to bot destroy");
             setTimeout(bot.destroy.bind(bot), 100);
+            console.log("Made it past bot destroy");
         }
+        console.log("Outside of team for loop");
     })
+    console.log("Outside of team storage");
 }
 
 function sleep(milliseconds) {
