@@ -6,8 +6,11 @@ module.exports = function (controller) {
             }
 
             bot.startConversation(message, function (err, convo) {
+                if (err) {
+                    console.log("error: ", err);
+                }
                 var team_members = [];
-                bot.api.users.list({}, function (err, response) {
+                bot.api.users.list({ token: bot.config.token }, function (err, response) {
                     if (err) {
                         console.log("error: ", err);
                     }
@@ -49,6 +52,7 @@ module.exports = function (controller) {
                     } else {
                         bot.reply(message, "Okay, no problemo!");
                     }
+                    convo.next();
                 });
 
                 convo.on('end', function (convo) {
