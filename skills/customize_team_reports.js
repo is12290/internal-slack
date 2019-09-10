@@ -16,7 +16,7 @@ module.exports = function (controller) {
                         attachments: [
                             {
                                 callback_id: 'new-user',
-                                text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
+                                text: "This is the first time we're meeting!! Would you mind telling me a bit about yourself?",
                                 color: "#0294ff",
                                 attachment_type: 'default',
                                 actions: [
@@ -44,7 +44,7 @@ module.exports = function (controller) {
                                             attachments: [
                                                 {
                                                     callback_id: 'new-user',
-                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
+                                                    text: "This is the first time we're meeting!! Would you mind telling me a bit about yourself?",
                                                     color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
@@ -77,7 +77,7 @@ module.exports = function (controller) {
                                             attachments: [
                                                 {
                                                     callback_id: 'new-user',
-                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
+                                                    text: "This is the first time we're meeting!! Would you mind telling me a bit about yourself?",
                                                     color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
@@ -167,45 +167,49 @@ module.exports = function (controller) {
                                             "type": "select",
                                             "options": [
                                                 {
-                                                    "text": "America/New York",
+                                                    "text": "America Eastern Time",
                                                     "value": "America/New_York"
                                                 },
                                                 {
-                                                    "text": "America/Los Angeles",
-                                                    "value": "America/Los_Angeles",
+                                                    "text": "America Central Time",
+                                                    "value": "America/Mexico_City",
                                                 },
                                                 {
-                                                    "text": "America/Denver",
+                                                    "text": "America Mountain Time",
                                                     "value": "America/Denver",
                                                 },
                                                 {
-                                                    "text": "Australia/Sydney",
+                                                    "text": "America Pacific Time",
+                                                    "value": "America/Los_Angeles",
+                                                },
+                                                {
+                                                    "text": "Australia Eastern Time",
                                                     "value": "Australia/Sydney",
                                                 },
                                                 {
-                                                    "text": "Australia/Perth",
+                                                    "text": "Australia Western Time",
                                                     "value": "Australia/Perth",
                                                 },
                                                 {
-                                                    "text": "Asia/Hong Kong",
+                                                    "text": "Hong Kong Time",
                                                     "value": "Asia/Hong_Kong",
                                                 },
                                                 {
-                                                    "text": "Asia/Seoul",
+                                                    "text": "Korea Time",
                                                     "value": "Asia/Seoul",
                                                 },
                                                 {
-                                                    "text": "Europe/London",
+                                                    "text": "Europe British Time",
                                                     "value": "Europe/London",
                                                 },
                                                 {
-                                                    "text": "Europe/Madrid",
+                                                    "text": "Central European Time",
                                                     "value": "Europe/Madrid",
                                                 },
                                                 {
-                                                    "text": "Europe/Kiev",
+                                                    "text": "Eastern European Time",
                                                     "value": "Europe/Kiev",
-                                                },
+                                                }
                                             ]
                                         }
                                     ]

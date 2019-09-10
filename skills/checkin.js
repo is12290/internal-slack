@@ -18,7 +18,7 @@ module.exports = function (controller) {
                             {
                                 callback_id: 'new-user',
                                 color: "#0294ff",
-                                text: "This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
+                                text: "This is the first time we're meeting!! Would you mind telling me a bit about yourself?",
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -46,7 +46,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     color: "#0294ff",
-                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
+                                                    text: "This is the first time we're meeting!! Would you mind telling me a bit about yourself?",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -79,7 +79,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     color: "#0294ff",
-                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
+                                                    text: "This is the first time we're meeting!! Would you mind telling me a bit about yourself?",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -1204,9 +1204,9 @@ module.exports = function (controller) {
                                 controller.storage.users.save(user);
                             }
 
+                            const overall = GetOverall(score);
                             if (permission == true) {
                                 controller.storage.teams.get(message.team, function (err, team) {
-                                    const overall = GetOverall(score);
                                     if (err) {
                                         console.log("error: ", err);
                                     }
@@ -1231,11 +1231,11 @@ module.exports = function (controller) {
                                             }
                                         });
                                     }
-                                    bot.reply(message, "Your score has been shared successfully in <#" + team.bot.channel + ">!");
+                                    bot.reply(message, "Your score of " + overall + "% has been shared successfully in <#" + team.bot.channel + ">!");
                                     bot.reply(message, 'Okay, that is all!');
                                 })
                             } else {
-                                bot.reply(message, 'Okay, no problem. That is all!');
+                                bot.reply(message, 'Okay, no problem! Your score of ' + overall + "% has been recorded");
                             }
                         }
                         else {

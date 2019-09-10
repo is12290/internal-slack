@@ -5,14 +5,13 @@
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js",
-    "notify_morning": "node run notify/morning.js",
-    "notify_evening": "node run notify/evening.js",
-    "auto_checkin": "node run automacy/check_in_logs.js",
-    "auto_checkout": "node run automacy/check_out_logs.js",
-    "auto_team_report": "node run automacy/reports.js",
-    "auto_personal_report": "node run automacy/personal_reports.js"
+    "auto_checkin": "node automacy/check_in_ask.js",
+    "auto_checkout": "node automacy/reflection_ask.js",
+    "auto_team_report": "node automacy/team_reports.js",
+    "auto_personal_report": "node automacy/personal_reports.js"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "body-parser": "^1.15.2",
     "botkit": "^0.7.4",
     "botkit-storage-mongo": "^1.0.6",

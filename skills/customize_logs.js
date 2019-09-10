@@ -1,5 +1,5 @@
 module.exports = function (controller) {
-    controller.hears(['^set up logs', '^set Up Logs', '^custom logs', '^customize logs', '^set up log', '^custom log', '^customize log', '^set up check up', '^set Up Check Up', '^custom check up', '^customize Check Up', '^customize Check Ups', '^customize check ups', '^set up check up', '^custom Check Up', '^customize check up'], 'direct_message,direct_mention', function (bot, message) {
+    controller.hears(['^set up logs', '^set Up Logs', '^custom logs', '^customize logs', '^set up log', '^custom log', '^customize log', '^set up check up', '^set Up Check Up', '^custom check up', '^customize Check Up', '^customize Check Ups', '^customize check ups', '^set up check up', '^custom Check Up', '^customize check up', 'customize Questionnaires'], 'direct_message', function (bot, message) {
         controller.storage.users.get(message.user, function (error, user) {
             if (error) {
                 console.log("error: ", err);
@@ -17,7 +17,7 @@ module.exports = function (controller) {
                             {
                                 callback_id: 'new-user',
                                 color: "#0294ff",
-                                text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
+                                text: "This is the first time we're meeting!! Would you mind telling me a bit about yourself?",
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -45,7 +45,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     color: "#0294ff",
-                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
+                                                    text: "This is the first time we're meeting!! Would you mind telling me a bit about yourself?",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -78,7 +78,7 @@ module.exports = function (controller) {
                                                 {
                                                     callback_id: 'new-user',
                                                     color: "#0294ff",
-                                                    text: "Hey! This is the first time we're meeting!! Can I ask two quick questions so that I can properly add you to my memory?",
+                                                    text: "This is the first time we're meeting!! Would you mind telling me a bit about yourself?",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -170,45 +170,49 @@ module.exports = function (controller) {
                                                 "type": "select",
                                                 "options": [
                                                     {
-                                                        "text": "America/New York",
+                                                        "text": "America Eastern Time",
                                                         "value": "America/New_York"
                                                     },
                                                     {
-                                                        "text": "America/Los Angeles",
-                                                        "value": "America/Los_Angeles",
+                                                        "text": "America Central Time",
+                                                        "value": "America/Mexico_City",
                                                     },
                                                     {
-                                                        "text": "America/Denver",
+                                                        "text": "America Mountain Time",
                                                         "value": "America/Denver",
                                                     },
                                                     {
-                                                        "text": "Australia/Sydney",
+                                                        "text": "America Pacific Time",
+                                                        "value": "America/Los_Angeles",
+                                                    },
+                                                    {
+                                                        "text": "Australia Eastern Time",
                                                         "value": "Australia/Sydney",
                                                     },
                                                     {
-                                                        "text": "Australia/Perth",
+                                                        "text": "Australia Western Time",
                                                         "value": "Australia/Perth",
                                                     },
                                                     {
-                                                        "text": "Asia/Hong Kong",
+                                                        "text": "Hong Kong Time",
                                                         "value": "Asia/Hong_Kong",
                                                     },
                                                     {
-                                                        "text": "Asia/Seoul",
+                                                        "text": "Korea Time",
                                                         "value": "Asia/Seoul",
                                                     },
                                                     {
-                                                        "text": "Europe/London",
+                                                        "text": "Europe British Time",
                                                         "value": "Europe/London",
                                                     },
                                                     {
-                                                        "text": "Europe/Madrid",
+                                                        "text": "Central European Time",
                                                         "value": "Europe/Madrid",
                                                     },
                                                     {
-                                                        "text": "Europe/Kiev",
+                                                        "text": "Eastern European Time",
                                                         "value": "Europe/Kiev",
-                                                    },
+                                                    }
                                                 ]
                                             }
                                         ]

@@ -1076,7 +1076,7 @@ module.exports = function (controller) {
                                     console.log("error: ", err);
                                 }
                                 var error;
-                                if (overall == 100) {
+                                if (overall > 90) {
                                     bot.say({
                                         text: "<@" + message.user + "> is feeling " + overall + "% today :rocket:",
                                         channel: team.bot.channel
@@ -1100,13 +1100,12 @@ module.exports = function (controller) {
                                 if (error == true) {
                                     bot.reply(message, "Sorry!! There has been an error sharing your score. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
                                 } else {
-                                bot.reply(message, "Your score has been shared successfully in <#" + team.bot.channel + ">!");
+                                    bot.reply(message, "Your score of " + overall + "% has been shared successfully in <#" + team.bot.channel + ">!");
                                 }
                             })
                         } else {
-                            // nuthin
+                            bot.reply(message, 'Okay, no problem! Your score of ' + overall + "% has been recorded");
                         }
-                        bot.reply(message, 'Okay, that is all! Thank you');
                     }
                     else {
                         bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?')
