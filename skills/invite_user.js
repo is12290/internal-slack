@@ -43,11 +43,11 @@ module.exports = function (controller) {
                 }, function (reply, convo) {
                     if (reply.text != "No") {
                         bot.api.channels.invite({ token: team.bot.app_token, channel: team.bot.channel, user: reply.text }, function (err, outcome) {
+                            console.log(outcome);
                             if (err) {
                                 console.log(err);
-                            } else {
-                            bot.reply(message, "Your recommendation has been successfully added to <#" + team.bot.channel + ">!");
                             }
+                            bot.reply(message, "Your recommendation has been successfully added to <#" + team.bot.channel + ">!");
                         })
                     } else {
                         bot.reply(message, "Okay, no problemo!");
