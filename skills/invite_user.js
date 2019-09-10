@@ -7,17 +7,17 @@ module.exports = function (controller) {
 
             bot.startConversation(message, function (err, convo) {
                 var team_members = [];
-                bot.api.users.list({ token: bot.config.bot.token }, function (err, response) {
+                bot.api.users.list({}, function (err, response) {
                     if (err) {
                         console.log("error: ", err);
                     }
                     for (var x = 0; x < response.members.length; x++) {
                         if (response.members[x].deleted == 'false') {
-                            team_members.push({ text: response.members[x].real_name, value: response.members[x].id });
+                            team_members.push({ "text": response.members[x].real_name, "value": response.members[x].id });
                         }
                     }
+                    team_members.push({ "text": "None, Actually", "value": "No" })
                 });
-                team_members.push({ text: "None, Actually", value: "No" })
 
                 convo.addQuestion({
                     attachments: [
