@@ -43,16 +43,22 @@ module.exports = function (controller) {
                 }, function (reply, convo) {
                     if (reply.text != "No") {
                         bot.api.channels.invite({ token: team.bot.app_token, channel: team.bot.channel, user: reply.text }, function (err, outcome) {
-                            console.log(outcome);
+                            
                             if (err) {
                                 console.log(err);
                             }
+                            if (outcome.ok == 'false' && outcome.error == 'already_in_channel') {
+                                bot.reply(message, "Hey, they're already in the channel! Try again?");
+                                convo.repeat();
+                            } else {
                             bot.reply(message, "Your recommendation has been successfully added to <#" + team.bot.channel + ">!");
+                            convo.next();
+                            }
                         })
                     } else {
                         bot.reply(message, "Okay, no problemo!");
+                        convo.next();
                     }
-                    convo.next();
                 });
 
                 convo.on('end', function (convo) {

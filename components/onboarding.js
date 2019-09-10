@@ -222,14 +222,22 @@ module.exports = function (controller) {
                     ]
                 }, function (reply, convo) {
                     if (reply.text != "No") {
-                        bot.api.channels.invite({ token: bot.config.bot.app_token, channel: team.bot.channel, user: reply.text }, function (err, outcome) {
+                        bot.api.channels.invite({ token: team.bot.app_token, channel: team.bot.channel, user: reply.text }, function (err, outcome) {
+
                             if (err) {
                                 console.log(err);
                             }
-                            bot.reply(message, "Your recommendation has been successfully added to <#" + team.bot.channel + ">!");
+                            if (outcome.ok == 'false' && outcome.error == 'already_in_channel') {
+                                bot.reply(message, "Hey, they're already in the channel! Try again?");
+                                convo.repeat();
+                            } else {
+                                bot.reply(message, "Your recommendation has been successfully added to <#" + team.bot.channel + ">!");
+                                convo.next();
+                            }
                         })
                     } else {
                         bot.reply(message, "Okay, no problemo!");
+                        convo.next();
                     }
                 });
 
