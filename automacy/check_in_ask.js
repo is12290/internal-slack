@@ -73,12 +73,11 @@ if (n === 6 || n === 0) {
                 }
                 setTimeout(bot.destroy.bind(bot), 100);
             }
-            console.log("Outside of team for loop");
-            controller.shutdown();
+            function FatalError() { Error.apply(this, arguments); this.name = "FatalError"; }
+            FatalError.prototype = Object.create(Error.prototype);
+            throw new FatalError("All done!");
         })
-
     })
-    
 }
 
 function sleep(milliseconds) {
