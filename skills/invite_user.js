@@ -14,9 +14,8 @@ module.exports = function (controller) {
                     if (err) {
                         console.log("error: ", err);
                     }
-                    console.log(response);
                     for (var x = 0; x < response.members.length; x++) {
-                        if (response.members[x].deleted == 'false') {
+                        if (response.members[x].deleted != 'false') {
                             team_members.push({ "text": response.members[x].real_name, "value": response.members[x].id });
                         }
                     }
