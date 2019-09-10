@@ -8,7 +8,9 @@ module.exports = function (controller) {
             bot.startConversation(message, function (err, convo) {
                 var team_members = [];
                 bot.api.users.list({ token: bot.config.bot.token }, function (err, response) {
-
+                    if (err) {
+                        console.log("error: ", err);
+                    }
                     for (var x = 0; x < response.members.length; x++) {
                         if (response.members[x].deleted == 'false') {
                             team_members.push({ text: response.members[x].real_name, value: response.members[x].id });
@@ -37,11 +39,12 @@ module.exports = function (controller) {
                     ]
                 }, function (reply, convo) {
                     if (reply.text != "No") {
-                        bot.api.channels.invite({ token: bot.config.token, channel: team.bot.channel, user: reply.text }, function (err, outcome) {
+                        bot.api.channels.invite({ token: team.bot.app_token, channel: team.bot.channel, user: reply.text }, function (err, outcome) {
                             if (err) {
                                 console.log(err);
-                            }
+                            } else {
                             bot.reply(message, "Your recommendation has been successfully added to <#" + team.bot.channel + ">!");
+                            }
                         })
                     } else {
                         bot.reply(message, "Okay, no problemo!");

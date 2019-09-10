@@ -192,7 +192,7 @@ module.exports = function (controller) {
                 );
 
                 var team_members = [];
-                bot.api.users.list({ token: bot.config.bot.token }, function (err, response) {
+                bot.api.users.list({ token: bot.config.bot.app_token }, function (err, response) {
 
                     for (var x = 0; x < response.members.length; x++) {
                         if (response.members[x].deleted == 'false') {
@@ -221,7 +221,7 @@ module.exports = function (controller) {
                     ]
                 }, function (reply, convo) {
                     if (reply.text != "No") {
-                        bot.api.channels.invite({ token: bot.config.token, channel: team.bot.channel, user: reply.text }, function (err, outcome) {
+                        bot.api.channels.invite({ token: bot.config.bot.app_token, channel: team.bot.channel, user: reply.text }, function (err, outcome) {
                             if (err) {
                                 console.log(err);
                             }

@@ -125,7 +125,7 @@ module.exports = function (controller) {
             }, 'default');
 
             var team_members = [];
-            bot.api.users.list({ token: bot.config.bot.token }, function (err, response) {
+            bot.api.users.list({ token: bot.config.bot.app_token }, function (err, response) {
 
                 for (var x = 0; x < response.members.length; x++) {
                     if (response.members[x].deleted == 'false') {
