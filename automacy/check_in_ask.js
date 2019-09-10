@@ -32,12 +32,12 @@ if (n === 6 || n === 0) {
         console.log("Opened team storage");
         controller.storage.users.all(function (err, all_users) {
             console.log("Opened user storage");
-        if (err) {
-            console.log("error: ", err);
-        }
-        for (var i = 0; i < all_teams.length; i++) {
-            var bot = controller.spawn({ token: all_teams[i].bot.token });
-            console.log("bot spawned");
+            if (err) {
+                console.log("error: ", err);
+            }
+            for (var i = 0; i < all_teams.length; i++) {
+                var bot = controller.spawn({ token: all_teams[i].bot.token });
+                console.log("bot spawned");
                 for (var j = 0; j < all_users.length; j++) {
                     var user = all_users[j];
                     if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
@@ -66,21 +66,22 @@ if (n === 6 || n === 0) {
                             }],
                             channel: user.channel
                         });
-                            sleep(400);
+                        sleep(400);
                     } else {
                         // Pass
                     }
                 }
-
-            console.log("Made it to bot destroy");
-            setTimeout(bot.destroy.bind(bot), 100);
-            console.log("Made it past bot destroy");
-        }
-        console.log("Outside of team for loop");
-        controller.shutdown();
+                setTimeout(bot.destroy.bind(bot), 100);
+            }
         })
+        console.log("At return");
+        return;
     })
+    console.log("At shutdown");
+    controller.shutdown();
 }
+
+console.log("Outside of everything");
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
