@@ -23,19 +23,17 @@ if (n === 6 || n === 0) {
     bot_options.storage = mongoStorage;
 
     var controller = Botkit.slackbot(bot_options);
-    controller.startTicking();
 
     controller.storage.teams.all(function (err, all_teams) {
         if (err) {
             console.log("error: ", err);
         }
-        for (var i = 0; i < all_teams.length; i++) {
-            var bot = controller.spawn({ token: all_teams[i].bot.token });
-            controller.storage.users.all(function (err, all_users) {
-                if (err) {
-                    console.log("error: ", err);
-                }
-
+        controller.storage.users.all(function (err, all_users) {
+            if (err) {
+                console.log("error: ", err);
+            }
+            for (var i = 0; i < all_teams.length; i++) {
+                var bot = controller.spawn({ token: all_teams[i].bot.token });
                 for (var j = 0; j < all_users.length; j++) {
                     var user = all_users[j];
                     if (typeof user.customization == 'undefined' || typeof user.customization.logging == 'undefined' || typeof user.customization.logging.reflection_time == 'undefined') {
@@ -69,9 +67,11 @@ if (n === 6 || n === 0) {
                         // Pass
                     }
                 }
-            })
-            setTimeout(bot.destroy.bind(bot), 100);
-        }
+
+                setTimeout(bot.destroy.bind(bot), 100);
+            }
+            process.exit();
+        })
     })
 }
 

@@ -31,12 +31,12 @@ if (today == endOfMonth) {
         if (err) {
             console.log("error: ", err);
         }
-        for (var i = 0; i < all_teams.length; i++) {
-            var bot = controller.spawn({ token: all_teams[i].bot.token });
-            controller.storage.users.all(function (err, all_users) {
-                if (err) {
-                    console.log("error: ", err);
-                }
+        controller.storage.users.all(function (err, all_users) {
+            if (err) {
+                console.log("error: ", err);
+            }
+            for (var i = 0; i < all_teams.length; i++) {
+                var bot = controller.spawn({ token: all_teams[i].bot.token });
                 for (var i = 0; i < all_users.length; i++) {
                     var user = all_users[i];
                     if (!user.customization || typeof user.customization.reporting == 'undefined' || typeof user.customization.reporting.time == 'undefined') {
@@ -169,9 +169,11 @@ if (today == endOfMonth) {
                     }
                     sleep(400);
                 }
-            });
-            setTimeout(bot.destroy.bind(bot), 100);
-        }
+
+                setTimeout(bot.destroy.bind(bot), 100);
+            }
+            process.exit()
+        });
     });
 }
 
