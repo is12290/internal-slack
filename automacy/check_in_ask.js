@@ -5,7 +5,6 @@ var now = moment();
 if (n === 6 || n === 0) {
     //Pass
 } else {
-    console.log("first if statement");
     const dotenv = require('dotenv');
     dotenv.config();
     const Botkit = require('botkit');

@@ -169,10 +169,9 @@ if (today == endOfMonth) {
                     }
                     sleep(400);
                 }
-
                 setTimeout(bot.destroy.bind(bot), 100);
             }
-            process.exit()
+            process.exit();
         });
     });
 }

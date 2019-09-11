@@ -31,12 +31,13 @@ if (today == endOfMonth) {
         if (err) {
             console.log("error: ", err);
         }
-        controller.storage.users.find({ team: all_teams[i].id }, function (err, info) {
-            if (err) {
-                console.log("error: ", err);
-            }
         for (var i = 0; i < all_teams.length; i++) {
-            var bot = controller.spawn({ token: all_teams[i].bot.token });
+            controller.storage.users.find({ team: all_teams[i].id }, function (err, info) {
+                if (err) {
+                    console.log("error: ", err);
+                }
+
+                var bot = controller.spawn({ token: all_teams[i].bot.token });
                 for (var i = 0; i < info.length; i++) {
                     var user = info[i];
                     if (typeof user.status == 'undefined' || user.status != 'manager' || !user.customization || !user.customization.team_reporting || !user.customization.team_reporting.time) {
@@ -234,11 +235,10 @@ if (today == endOfMonth) {
                     }
                     sleep(400);
                 }
-
-                setTimeout(bot.destroy.bind(bot), 100);
-            }
-            proces.exit();
-        });
+            });
+            setTimeout(bot.destroy.bind(bot), 100);
+        }
+        proces.exit();
     });
 }
 
