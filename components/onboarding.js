@@ -85,120 +85,19 @@ module.exports = function (controller) {
                     convo.next();
                 });
 
-                convo.say("Awesome! I'll create that right now...");
+                bot.api.channels.invite({ token: team.bot.app_token, channel: channel_id, user: bot.config.bot.user_id }, function (err, outcome) { 
+                    if (err) {
+                        console.log("error: ", err);
+                    }
+                });
 
-                convo.say("Done! Now I need you to add me to the channel that was just created. Would you mind navigating to the channel, then click the 'i' on top bar -> App -> Add App -> Internal. When you've successfully added me to the channel, confirm in the following message");
-
-                var channel_name = '';
-                convo.addQuestion({
-                    attachments: [
-                        {
-                            callback_id: 'new-user',
-                            color: "#0294ff",
-                            text: "Task completed? (Yes is the only option)",
-                            attachment_type: 'default',
-                            actions: [
-                                {
-                                    'name': 'yes-button',
-                                    'value': 'Yes-one',
-                                    'text': 'Yes',
-                                    'type': 'button'
-                                },
-                                {
-                                    'name': 'yes-button',
-                                    'value': 'Yes-two',
-                                    'text': 'Yes',
-                                    'type': 'button'
-                                },
-                            ]
-                        }
-                    ]
-                }, [
-                        {
-                            pattern: 'Yes-one',
-                            callback: function (reply, convo) {
-                                channel_name = channel_name + reply.channel;
-                                bot.replyInteractive(reply,
-                                    {
-                                        attachments: [
-                                            {
-                                                callback_id: 'new-user',
-                                                color: "#0294ff",
-                                                text: "Task completed? (Yes is the only option)",
-                                                attachment_type: 'default',
-                                                actions: [
-                                                    {
-                                                        'name': 'yes-button',
-                                                        'value': 'Yes-one',
-                                                        'style': 'primary',
-                                                        'text': 'Yes',
-                                                        'type': 'button'
-                                                    },
-                                                    {
-                                                        'name': 'yes-button',
-                                                        'value': 'Yes-two',
-                                                        'text': 'Yes',
-                                                        'type': 'button'
-                                                    },
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                )
-                                bot.api.reactions.add({
-                                    name: 'thumbsup',
-                                    channel: reply.channel,
-                                    timestamp: reply.ts
-                                });
-                                convo.next()
-                            }
-                        },
-                        {
-                            pattern: 'Yes-two',
-                            callback: function (reply, convo) {
-                                bot.replyInteractive(reply,
-                                    {
-                                        attachments: [
-                                            {
-                                                callback_id: 'new-user',
-                                                color: "#0294ff",
-                                                text: "Task completed? (Yes is the only option)",
-                                                attachment_type: 'default',
-                                                actions: [
-                                                    {
-                                                        'name': 'yes-button',
-                                                        'value': 'Yes-one',
-                                                        'text': 'Yes',
-                                                        'type': 'button'
-                                                    },
-                                                    {
-                                                        'name': 'yes-button',
-                                                        'value': 'Yes-two',
-                                                        'style': 'primary',
-                                                        'text': 'Yes',
-                                                        'type': 'button'
-                                                    },
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                )
-                                bot.api.reactions.add({
-                                    name: 'thumbsup',
-                                    channel: reply.channel,
-                                    timestamp: reply.ts
-                                });
-                                convo.next()
-                            }
-                        }
-                    ]
-                );
+                convo.say("Awesome! I just created the channel and added myself...");
 
                 var team_members = [];
                 bot.api.users.list({token: bot.config.token}, function (err, response) {
 
                     for (var x = 0; x < response.members.length; x++) {
-                        if (response.members[x].deleted == 'false') {
+                        if (response.members[x].deleted != 'false') {
                             team_members.push({ "text": response.members[x].real_name, "value": response.members[x].id });
                         }
                     }
@@ -209,7 +108,7 @@ module.exports = function (controller) {
                 convo.addQuestion({
                     attachments: [
                         {
-                            text: "Select a teammate you would like to invite to the new channel - The value increases with each participating teammate!",
+                            text: "Would you like to add another teammate to the channel? The value increases with each participant!",
                             callback_id: 'invite',
                             attachment_type: 'default',
                             color: "#0294ff",
@@ -296,7 +195,7 @@ module.exports = function (controller) {
                         sgMail.send(msg);
 
                         bot.say({
-                            channel: channel_name,
+                            channel: convo.context.channel,
                             text: "Choose what feature you'd like to check out! You can see this message when ever you want by sending me a message saying `Help`",
                             attachments: [
                                 {

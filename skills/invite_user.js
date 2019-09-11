@@ -47,7 +47,7 @@ module.exports = function (controller) {
                             if (err) {
                                 console.log(err);
                             }
-                            if (outcome.ok == 'false' && outcome.error == 'already_in_channel') {
+                            if (err == 'already_in_channel') {
                                 bot.reply(message, "Hey, they're already in the channel! Try again?");
                                 convo.repeat();
                             } else {
