@@ -4,9 +4,7 @@ const moment = require('moment-timezone');
 var now = moment();
 const endOfMonth = moment().endOf('month').format('DD/MM/YYYY');
 const today = moment().format('DD/MM/YYY');
-if (today == endOfMonth) {
-    //Pass
-} else {
+if (today == endoOfMonth || n == 5) {
     const dotenv = require('dotenv');
     dotenv.config();
     const Botkit = require('botkit');
@@ -175,6 +173,8 @@ if (today == endOfMonth) {
             process.exit();
         });
     });
+} else {
+    // Pass
 }
 
 function getMonthlyOutput(results) {
