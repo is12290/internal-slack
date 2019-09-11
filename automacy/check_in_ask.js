@@ -76,7 +76,7 @@ if (n === 6 || n === 0) {
             // function FatalError() { Error.apply(this, arguments); this.name = "FatalError"; }
             // FatalError.prototype = Object.create(Error.prototype);
             // throw new FatalError("All done!");
-            return;
+            process.exit();
         })
     })
 }
