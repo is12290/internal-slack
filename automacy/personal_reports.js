@@ -168,8 +168,10 @@ if (today == endOfMonth) {
                     }
                     sleep(400);
                 }
+                console.log("Made it to bot destroy");
                 setTimeout(bot.destroy.bind(bot), 100);
             }
+            console.log("Made it to process.exit()");
             process.exit();
         });
     });

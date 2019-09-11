@@ -237,7 +237,7 @@ if (today == endOfMonth) {
                 setTimeout(bot.destroy.bind(bot), 100);
             });
         }
-        proces.exit();
+        process.exit();
     });
 }
 
