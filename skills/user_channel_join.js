@@ -17,13 +17,13 @@ module.exports = function (controller) {
                                 {
                                     callback_id: 'new-user',
                                     color: "#0294ff",
-                                    text: "Thanks for joining my channel! I'm a bot that lets you easily monitor you and your team's well-being. Would you mind telling me a bit about yourself?",
+                                    text: "Thanks for joining my channel! I'm a bot that lets you easily monitor you and your team's well-being. Can you tell me a bit about yourself?",
                                     attachment_type: 'default',
                                     actions: [
                                         {
                                             'name': 'yes-button',
                                             'value': 'Yes',
-                                            'text': 'Yes',
+                                            'text': 'Sure!',
                                             'type': 'button'
                                         },
                                         {
@@ -45,14 +45,14 @@ module.exports = function (controller) {
                                                     {
                                                         callback_id: 'new-user',
                                                         color: "#0294ff",
-                                                        text: "Thanks for joining my channel! I'm a bot that lets you easily monitor you and your team's well-being. Would you mind telling me a bit about yourself?",
+                                                        text: "Thanks for joining my channel! I'm a bot that lets you easily monitor you and your team's well-being. Can you tell me a bit about yourself?",
                                                         attachment_type: 'default',
                                                         actions: [
                                                             {
                                                                 'name': 'yes-button',
                                                                 'value': 'Yes',
                                                                 'style': 'primary',
-                                                                'text': 'Yes',
+                                                                'text': 'Sure!',
                                                                 'type': 'button'
                                                             },
                                                             {
@@ -78,13 +78,13 @@ module.exports = function (controller) {
                                                     {
                                                         callback_id: 'new-user',
                                                         color: "#0294ff",
-                                                        text: "Thanks for joining my channel! I'm a bot that lets you easily monitor you and your team's well-being. Would you mind telling me a bit about yourself?",
+                                                        text: "Thanks for joining my channel! I'm a bot that lets you easily monitor you and your team's well-being. Can you tell me a bit about yourself?",
                                                         attachment_type: 'default',
                                                         actions: [
                                                             {
                                                                 'name': 'yes-button',
                                                                 'value': 'Yes',
-                                                                'text': 'Yes',
+                                                                'text': 'Sure!',
                                                                 'type': 'button'
                                                             },
                                                             {

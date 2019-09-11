@@ -209,7 +209,7 @@ module.exports = function (controller) {
                 convo.addQuestion({
                     attachments: [
                         {
-                            text: "Select a teammate you would like to invite to <#" + channel_id + "> - The value increases with each participating teammate!",
+                            text: "Select a teammate you would like to invite to the new channel - The value increases with each participating teammate!",
                             callback_id: 'invite',
                             attachment_type: 'default',
                             color: "#0294ff",
@@ -233,13 +233,13 @@ module.exports = function (controller) {
                             if (outcome.ok == 'false' && outcome.error == 'already_in_channel') {
                                 bot.say({
                                     text: "Hey, they're already in the channel! Try again?",
-                                    channel: reply.channel
+                                    channel: convo.context.channel
                                 });
                                 convo.repeat();
                             } else {
                                 bot.say({
                                     text: "Your recommendation has been successfully added to <#" + channel_id + ">!",
-                                    channel: reply.channel
+                                    channel: convo.context.channel
                                 });
                                 convo.next();
                             }
@@ -247,7 +247,7 @@ module.exports = function (controller) {
                     } else {
                         bot.say({
                             text: "Okay, no problemo!",
-                            channel: reply.channel
+                            channel: convo.context.channel
                         });
                         convo.next();
                     }
