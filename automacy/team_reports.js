@@ -25,7 +25,6 @@ if (today == endOfMonth) {
     bot_options.storage = mongoStorage;
 
     var controller = Botkit.slackbot(bot_options);
-    controller.startTicking();
 
     controller.storage.teams.all(function (err, all_teams) {
         if (err) {
@@ -235,8 +234,8 @@ if (today == endOfMonth) {
                     }
                     sleep(400);
                 }
+                setTimeout(bot.destroy.bind(bot), 100);
             });
-            setTimeout(bot.destroy.bind(bot), 100);
         }
         proces.exit();
     });
