@@ -18,6 +18,8 @@ module.exports = function (controller) {
             } else {
                 convo.say("Hey! I'm Internal and _you_ happen to be the first person to add me to this fresh, new Slack team. Due to this, you get a bit more power than your friends :)");
                 convo.say("For instance, I need to create a public channel where I will post you and your teammates overall check in scores (So long as I'm given permission)");
+
+                var channel_id = '';
                 convo.addQuestion({
                     attachments: [
                         {
@@ -71,6 +73,7 @@ module.exports = function (controller) {
                             })
 
                             team.bot.channel = response.channel.id;
+                            channel_id = channel_id + response.channel.id;
                             controller.storage.teams.save(team);
                         }
                     });
@@ -192,7 +195,7 @@ module.exports = function (controller) {
                 );
 
                 var team_members = [];
-                bot.api.users.list({}, function (err, response) {
+                bot.api.users.list({token: bot.config.token}, function (err, response) {
 
                     for (var x = 0; x < response.members.length; x++) {
                         if (response.members[x].deleted == 'false') {
@@ -206,7 +209,7 @@ module.exports = function (controller) {
                 convo.addQuestion({
                     attachments: [
                         {
-                            text: "Select a teammate you would like to invite to <#" + team.bot.channel + "> - The value increases with each participating teammate!",
+                            text: "Select a teammate you would like to invite to <#" + channel_id + "> - The value increases with each participating teammate!",
                             callback_id: 'invite',
                             attachment_type: 'default',
                             color: "#0294ff",
@@ -222,21 +225,30 @@ module.exports = function (controller) {
                     ]
                 }, function (reply, convo) {
                     if (reply.text != "No") {
-                        bot.api.channels.invite({ token: team.bot.app_token, channel: team.bot.channel, user: reply.text }, function (err, outcome) {
+                        bot.api.channels.invite({ token: team.bot.app_token, channel: channel_id, user: reply.text }, function (err, outcome) {
 
                             if (err) {
                                 console.log(err);
                             }
                             if (outcome.ok == 'false' && outcome.error == 'already_in_channel') {
-                                bot.reply(message, "Hey, they're already in the channel! Try again?");
+                                bot.say({
+                                    text: "Hey, they're already in the channel! Try again?",
+                                    channel: reply.channel
+                                });
                                 convo.repeat();
                             } else {
-                                bot.reply(message, "Your recommendation has been successfully added to <#" + team.bot.channel + ">!");
+                                bot.say({
+                                    text: "Your recommendation has been successfully added to <#" + channel_id + ">!",
+                                    channel: reply.channel
+                                });
                                 convo.next();
                             }
                         })
                     } else {
-                        bot.reply(message, "Okay, no problemo!");
+                        bot.say({
+                            text: "Okay, no problemo!",
+                            channel: reply.channel
+                        });
                         convo.next();
                     }
                 });
