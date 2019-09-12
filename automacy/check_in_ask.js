@@ -24,6 +24,7 @@ if (n === 6 || n === 0) {
     bot_options.storage = mongoStorage;
 
     var controller = Botkit.slackbot(bot_options);
+    controller.startTicking();
 
     controller.storage.teams.all(function (err, all_teams) {
         if (err) {
