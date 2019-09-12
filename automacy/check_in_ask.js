@@ -29,13 +29,14 @@ if (n === 6 || n === 0) {
         if (err) {
             console.log("error: ", err);
         }
+        controller.storage.users.all(function (err, all_users) {
+            console.log("In storage");
+            if (err) {
+                console.log("error: ", err);
+            }
         for (var i = 0; i < all_teams.length; i++) {
             var bot = controller.spawn({ token: all_teams[i].bot.token });
-            controller.storage.users.find({ team: all_teams[i].id }, function (err, all_users) {
-                console.log("In storage");
-                if (err) {
-                    console.log("error: ", err);
-                }
+            
                 for (var j = 0; j < all_users.length; j++) {
                     var user = all_users[j];
                     if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
@@ -75,13 +76,13 @@ if (n === 6 || n === 0) {
                 }
                 }
                 setTimeout(bot.destroy.bind(bot), 100);
-            })
+            
         }
         // function FatalError() { Error.apply(this, arguments); this.name = "FatalError"; }
         // FatalError.prototype = Object.create(Error.prototype);
         // throw new FatalError("All done!");
         process.exit();
-
+    })
     })
 }
 
