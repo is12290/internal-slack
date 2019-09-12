@@ -701,8 +701,8 @@ module.exports = function (controller) {
                                     newUser.customization = {
                                         logging: {
                                             timezone: data.timezone,
-                                            check_in_time = data.check_in_time,
-                                            reflection_time = data.reflection_time
+                                            check_in_time: data.check_in_time,
+                                            reflection_time: data.reflection_time
                                         }
                                     }
                                     controller.storage.users.save(newUser);
