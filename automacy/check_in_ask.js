@@ -15,9 +15,7 @@ if (n === 6 || n === 0) {
         clientSecret: process.env.clientSecret,
         clientSigningSecret: process.env.clientSigningSecret,
         // debug: true,
-        scopes: ['bot'],
-        studio_token: process.env.studio_token,
-        studio_command_uri: process.env.studio_command_uri
+        scopes: ['bot']
     };
 
     var mongoStorage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGODB_URI, useNewUrlParser: true });
@@ -103,7 +101,6 @@ if (n === 6 || n === 0) {
                         }
                     }
                 }
-                setTimeout(bot.destroy.bind(bot), 100);
 
             }
             // function FatalError() { Error.apply(this, arguments); this.name = "FatalError"; }
