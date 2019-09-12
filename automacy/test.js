@@ -70,8 +70,10 @@ if (n === 6 || n === 0) {
                 }
             });
             }
+            if (j == all_users.length) {
+                process.exit();
+            }
         }
-        process.exit();
     })
 }
 
