@@ -2,7 +2,7 @@ var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
-var rounded = round(now, moment.duration(15, "minutes"), "floor");
+var rounded = round(now, moment.duration(30, "minutes"), "floor");
 if (n === 6 || n === 0) {
     //Pass
 } else {
@@ -30,7 +30,6 @@ if (n === 6 || n === 0) {
             console.log("error: ", err);
         }
         for (var i = 0; i < all_teams.length; i++) {
-            console.log("Looping");
             var bot = controller.spawn({ token: all_teams[i].bot.token });
             controller.storage.users.find({ team: all_teams[i].id }, function (err, all_users) {
                 if (err) {
@@ -40,7 +39,9 @@ if (n === 6 || n === 0) {
                     var user = all_users[j];
                     if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                         // Pass
-                    } else if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
+                    } else {
+                        console.log(user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone.format("HH:mm")));
+                        if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                         console.log("Saying for ", user.name);
                         bot.say({
                             attachments: [{
@@ -69,6 +70,7 @@ if (n === 6 || n === 0) {
                     } else {
                         // Pass
                     }
+                }
                 }
                 setTimeout(bot.destroy.bind(bot), 100);
             })
