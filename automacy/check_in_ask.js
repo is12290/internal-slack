@@ -76,10 +76,7 @@ if (n === 6 || n === 0) {
                         //     }, function (err, response) {
                         //         console.log("error: ", err);
                         //     })
-                            bot.startPrivateConversation({user: user.id}, function (err, convo) {
-                                console.log("error: ", err);
-                                convo.say("Hey");
-                            } )
+                            
                             bot.say({
                                 text: "Ready to check in?",
                                 attachments: [{
@@ -113,12 +110,9 @@ if (n === 6 || n === 0) {
             });
 
             }
-            // function FatalError() { Error.apply(this, arguments); this.name = "FatalError"; }
-            // FatalError.prototype = Object.create(Error.prototype);
-            // throw new FatalError("All done!");
-            process.exit();
         })
     })
+    process.exit();
 }
 
 function sleep(milliseconds) {
