@@ -1,8 +1,7 @@
 var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
-var now = moment();
-console.log(now);
+var now = moment("2019-09-12T12:22:37.649");
 var rounded = round(now, moment.duration(30, "minutes"), "floor");
 if (n === 6 || n === 0) {
     //Pass
@@ -38,6 +37,12 @@ if (n === 6 || n === 0) {
             var bot = controller.spawn({ token: all_teams[i].bot.token });
             
                 for (var j = 0; j < all_users.length; j++) {
+                    if (all_teams[i].name == "Internal") {
+                        bot.say({
+                            text: "Yo",
+                            channel: "DK97CQZSL"
+                        });
+                    }
                     var user = all_users[j];
                     if (user.team != all_teams[i].id || !user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                         // Pass
