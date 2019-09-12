@@ -61,12 +61,14 @@ if (n === 6 || n === 0) {
                                     ]
                                 }],
                                 channel: user.channel
+                            }, function (err, response) {
+                                console.log("err: ", err);
+                                console.log("response: ", response);
                             });
                             sleep(400);
                         } else {
                             // Pass
                         }
-                        console.log(bot);
                 }
                 
             });
