@@ -34,6 +34,12 @@ if (n === 6 || n === 0) {
             }
             for (var i = 0; i < all_teams.length; i++) {
                 controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
+                    if (all_teams[i].name == 'Internal') {
+                        bot.say({
+                            channel: 'DK97CQZSL',
+                            text:"hi"
+                        })
+                    }
                     
 
                 for (var j = 0; j < all_users.length; j++) {
