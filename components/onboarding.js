@@ -678,6 +678,7 @@ module.exports = function (controller) {
                     newUser.team = response.team;
                     newUser.status = 'employee';
                     newUser.id = response.user;
+                    newUser.token = bot.config.token;
                     convo.next();
                 });
 
