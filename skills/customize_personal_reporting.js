@@ -575,51 +575,48 @@ module.exports = function (controller) {
                                         color: "#0294ff",
                                         actions: [
                                             {
-                                                "name": "timezone",
-                                                "text": "Timezone",
-                                                "type": "select",
-                                                "options": [
-                                                    {
-                                                        "text": "America/New York",
-                                                        "value": "America/New_York"
-                                                    },
-                                                    {
-                                                        "text": "America/Los Angeles",
-                                                        "value": "America/Los_Angeles",
-                                                    },
-                                                    {
-                                                        "text": "America/Denver",
-                                                        "value": "America/Denver",
-                                                    },
-                                                    {
-                                                        "text": "Australia/Sydney",
-                                                        "value": "Australia/Sydney",
-                                                    },
-                                                    {
-                                                        "text": "Australia/Perth",
-                                                        "value": "Australia/Perth",
-                                                    },
-                                                    {
-                                                        "text": "Asia/Hong Kong",
-                                                        "value": "Asia/Hong_Kong",
-                                                    },
-                                                    {
-                                                        "text": "Asia/Seoul",
-                                                        "value": "Asia/Seoul",
-                                                    },
-                                                    {
-                                                        "text": "Europe/London",
-                                                        "value": "Europe/London",
-                                                    },
-                                                    {
-                                                        "text": "Europe/Madrid",
-                                                        "value": "Europe/Madrid",
-                                                    },
-                                                    {
-                                                        "text": "Europe/Kiev",
-                                                        "value": "Europe/Kiev",
-                                                    },
-                                                ]
+                                                "text": "America Eastern Time",
+                                                "value": "America/New_York"
+                                            },
+                                            {
+                                                "text": "America Central Time",
+                                                "value": "America/Mexico_City",
+                                            },
+                                            {
+                                                "text": "America Mountain Time",
+                                                "value": "America/Denver",
+                                            },
+                                            {
+                                                "text": "America Pacific Time",
+                                                "value": "America/Los_Angeles",
+                                            },
+                                            {
+                                                "text": "Australia Eastern Time",
+                                                "value": "Australia/Sydney",
+                                            },
+                                            {
+                                                "text": "Australia Western Time",
+                                                "value": "Australia/Perth",
+                                            },
+                                            {
+                                                "text": "Hong Kong Time",
+                                                "value": "Asia/Hong_Kong",
+                                            },
+                                            {
+                                                "text": "Korea Time",
+                                                "value": "Asia/Seoul",
+                                            },
+                                            {
+                                                "text": "Europe British Time",
+                                                "value": "Europe/London",
+                                            },
+                                            {
+                                                "text": "Central European Time",
+                                                "value": "Europe/Madrid",
+                                            },
+                                            {
+                                                "text": "Eastern European Time",
+                                                "value": "Europe/Kiev",
                                             }
                                         ]
                                     }
