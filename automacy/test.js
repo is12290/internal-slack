@@ -31,10 +31,11 @@ if (n === 6 || n === 0) {
         for (var j = 0; j < all_users.length; j++) {
             var user = all_users[j];
             if (typeof user.token != 'undefined') {
+                console.log(user.name);
+                controller.spawn({ token: user.token }, function (bot) {
                 if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                     // Pass
                 } else {
-                    controller.spawn({ token: user.token }, function (bot) {
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                             console.log("Saying for ", user.name);
                             bot.say({
@@ -65,12 +66,12 @@ if (n === 6 || n === 0) {
                         } else {
                             // Pass
                         }
-                    });
+                    
                 }
+            });
             }
         }
     })
-    process.exit();
 }
 
 function sleep(milliseconds) {
