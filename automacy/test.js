@@ -72,7 +72,7 @@ if (n === 6 || n === 0) {
                 }
             });
             }
-            if (j == all_users.length) {
+            if (j == all_users.length - 1) {
                 process.exit();
             }
         }
