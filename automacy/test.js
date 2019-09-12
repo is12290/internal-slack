@@ -67,7 +67,7 @@ if (n === 6 || n === 0) {
                                     sent = sent + 1;
                                 }
                             });
-                            sleep(1000);
+                            sleep(400);
                         } else {
                             // Pass
                         }
@@ -76,6 +76,7 @@ if (n === 6 || n === 0) {
             });
             }
         }
+        sleep(10000);
         process.exit();
     })
 }
