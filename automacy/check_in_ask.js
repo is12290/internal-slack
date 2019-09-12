@@ -42,6 +42,8 @@ if (n === 6 || n === 0) {
                         bot.say({
                             text: "Yo",
                             channel: "DK97CQZSL"
+                        }, function (err, response) {
+                            console.log("error: ", err);
                         });
                     }
                     var user = all_users[j];
@@ -50,8 +52,6 @@ if (n === 6 || n === 0) {
                     } else {
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                         console.log("Saying for ", user.name);
-                        console.log("Channel id: ", user.channel);
-                        console.log("Team: ", all_teams[i].name);
                         bot.say({
                             text: "Ready to check in?",
                             attachments: [{
@@ -75,6 +75,8 @@ if (n === 6 || n === 0) {
                                 ]
                             }],
                             channel: user.channel
+                        }, function (err, response) {
+                            console.log("error: ", err);
                         });
                         sleep(400);
                     } else {
