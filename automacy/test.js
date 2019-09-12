@@ -33,7 +33,6 @@ if (n === 6 || n === 0) {
         for (var j = 0; j < all_users.length; j++) {
             var user = all_users[j];
             if (typeof user.token != 'undefined') {
-                console.log(user.name);
                 controller.spawn({ token: user.token }, function (bot) {
                 if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                     // Pass
@@ -68,7 +67,7 @@ if (n === 6 || n === 0) {
                                     sent = sent + 1;
                                 }
                             });
-                            sleep(400);
+                            sleep(1000);
                         } else {
                             // Pass
                         }
@@ -76,13 +75,8 @@ if (n === 6 || n === 0) {
                 
             });
             }
-            if (j == all_users.length - 1) {
-                while (tally > sent) {
-                    // Wait
-                }
-                process.exit();
-            }
         }
+        process.exit();
     })
 }
 
