@@ -70,7 +70,7 @@ if (n === 6 || n === 0) {
                         //     }, function (err, response) {
                         //         console.log("error: ", err);
                         //     })
-                            bot.say({
+                            console.log(bot.say({
                                 text: "Ready to check in?",
                                 attachments: [{
                                     title: "Check In",
@@ -93,9 +93,7 @@ if (n === 6 || n === 0) {
                                     ]
                                 }],
                                 channel: user.channel
-                            }, function (err, response) {
-                                console.log("error: ", err);
-                            });
+                            }));
                             sleep(400);
                         } else {
                             // Pass
