@@ -32,6 +32,7 @@ if (n === 6 || n === 0) {
         for (var i = 0; i < all_teams.length; i++) {
             var bot = controller.spawn({ token: all_teams[i].bot.token });
             controller.storage.users.find({ team: all_teams[i].id }, function (err, all_users) {
+                console.log("In storage");
                 if (err) {
                     console.log("error: ", err);
                 }
