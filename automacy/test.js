@@ -28,7 +28,9 @@ if (n === 6 || n === 0) {
         if (err) {
             console.log("error: ", err);
         }
+        console.log("length: ", all_users.length);
         for (var j = 0; j < all_users.length; j++) {
+            console.log("iteration: ", j);
             var user = all_users[j];
             if (typeof user.token != 'undefined') {
                 console.log(user.name);
