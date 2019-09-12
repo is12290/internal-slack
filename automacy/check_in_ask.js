@@ -46,8 +46,8 @@ if (n === 6 || n === 0) {
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                         console.log("Saying for ", user.name);
                         bot.say({
+                            text: "Ready to check in?",
                             attachments: [{
-                                text: "Ready to check in?",
                                 color: "#0294ff",
                                 callback_id: 'automatic-checkin',
                                 attachment_type: 'default',
