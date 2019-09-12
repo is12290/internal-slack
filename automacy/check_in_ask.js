@@ -48,7 +48,7 @@ if (n === 6 || n === 0) {
                         // Pass
                     } else {
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
-                        //     console.log("Saying for ", user.name);
+                            console.log("Saying for ", user.name);
                         //     bot.api.chat.postMessage({
                         //         token: bot.config.token,
                         //         channel: user.channel,
@@ -76,7 +76,8 @@ if (n === 6 || n === 0) {
                         //     }, function (err, response) {
                         //         console.log("error: ", err);
                         //     })
-                            console.log(bot.say({
+                            console.log(bot);
+                            bot.say({
                                 text: "Ready to check in?",
                                 attachments: [{
                                     title: "Check In",
@@ -99,7 +100,7 @@ if (n === 6 || n === 0) {
                                     ]
                                 }],
                                 channel: user.channel
-                            }));
+                            });
                             sleep(400);
                         } else {
                             // Pass
