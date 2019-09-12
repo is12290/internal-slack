@@ -33,8 +33,8 @@ if (today == endOfMonth || n == 5) {
             if (err) {
                 console.log("error: ", err);
             }
-            for (var i = 0; i < all_teams.length; i++) {
-                var bot = controller.spawn({ token: all_teams[i].bot.token });
+            for (var j = 0; j < all_teams.length; j++) {
+                var bot = controller.spawn({ token: all_teams[j].bot.token });
                 for (var i = 0; i < all_users.length; i++) {
                     var user = all_users[i];
                     if (!user.customization || typeof user.customization.reporting == 'undefined' || typeof user.customization.reporting.time == 'undefined') {
