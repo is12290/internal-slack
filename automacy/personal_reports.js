@@ -2,6 +2,7 @@ var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
+var rounded = round(now, moment.duration(15, "minutes"), "floor");
 const endOfMonth = moment().endOf('month').format('DD/MM/YYYY');
 const today = moment().format('DD/MM/YYY');
 if (today == endOfMonth || n == 5) {
@@ -38,7 +39,7 @@ if (today == endOfMonth || n == 5) {
                     var user = all_users[i];
                     if (!user.customization || typeof user.customization.reporting == 'undefined' || typeof user.customization.reporting.time == 'undefined') {
                         // Pass
-                    } else if (user.customization.reporting.time == moment.tz(now, user.customization.reporting.timezone).format('HH:mm')) {
+                    } else if (user.customization.reporting.time == moment.tz(rounded, user.customization.reporting.timezone).format('HH:mm')) {
                         if (today == endOfMonth) {
                             // Monthly Report
                             var results = getMonthlyOutput(user);
@@ -475,4 +476,8 @@ function sleep(milliseconds) {
             break;
         }
     }
+}
+
+function round(date, duration, method) {
+    return moment(Math[method]((+date) / (+duration)) * (+duration)); 
 }

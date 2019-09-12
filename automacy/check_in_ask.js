@@ -2,6 +2,7 @@ var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
+var rounded = round(now, moment.duration(15, "minutes"), "floor");
 if (n === 6 || n === 0) {
     //Pass
 } else {
@@ -38,7 +39,7 @@ if (n === 6 || n === 0) {
                     var user = all_users[j];
                     if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                         // Pass
-                    } else if (user.customization.logging.check_in_time == moment.tz(now, user.customization.logging.timezone).format('HH:mm')) {
+                    } else if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                         bot.say({
                             attachments: [{
                                 text: "Ready to check in?",
@@ -84,4 +85,8 @@ function sleep(milliseconds) {
             break;
         }
     }
+}
+
+function round(date, duration, method) {
+    return moment(Math[method]((+date) / (+duration)) * (+duration)); 
 }

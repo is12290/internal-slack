@@ -2,6 +2,7 @@ var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
+var rounded = round(now, moment.duration(15, "minutes"), "floor");
 if (n === 6 || n === 0) {
     //Pass
 } else {
@@ -38,7 +39,7 @@ if (n === 6 || n === 0) {
                     var user = all_users[j];
                     if (typeof user.customization == 'undefined' || typeof user.customization.logging == 'undefined' || typeof user.customization.logging.reflection_time == 'undefined') {
                         // Pass
-                    } else if (user.customization.logging.reflection_time == moment.tz(now, user.customization.logging.timezone).format('HH:mm')) {
+                    } else if (user.customization.logging.reflection_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                         bot.say({
                             attachments: [{
                                 text: "Ready to reflect?",
@@ -82,4 +83,8 @@ function sleep(milliseconds) {
             break;
         }
     }
+}
+
+function round(date, duration, method) {
+    return moment(Math[method]((+date) / (+duration)) * (+duration)); 
 }
