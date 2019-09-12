@@ -85,7 +85,7 @@ module.exports = function (controller) {
                         convo.next();
                     });
 
-                bot.api.channels.invite({ token: team.bot.app_token, channel: channel_id, user: bot.config.bot.user_id }, function (err, outcome) {
+                bot.api.channels.invite({ token: team.bot.app_token, channel: channel_id, user: team.bot.user_id }, function (err, outcome) {
                     if (err) {
                         console.log("error: ", err);
                     }
