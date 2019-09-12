@@ -39,11 +39,10 @@ if (n === 6 || n === 0) {
             
                 for (var j = 0; j < all_users.length; j++) {
                     var user = all_users[j];
-                    if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
+                    if (user.team != all_teams[i].id || !user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                         // Pass
-                        console.log("Passed for: ", user.name);
                     } else {
-                        console.log(user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format("HH:mm"));
+                        console.log(user.name, " made it passed");
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                         console.log("Saying for ", user.name);
                         bot.say({
