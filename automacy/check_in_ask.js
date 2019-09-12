@@ -42,10 +42,35 @@ if (n === 6 || n === 0) {
                         // Pass
                     } else {
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
-                            console.log("Saying for ", user.name);
-                            bot.api.chat.postMessage({
-                                token: bot.config.token,
-                                channel: user.channel,
+                        //     console.log("Saying for ", user.name);
+                        //     bot.api.chat.postMessage({
+                        //         token: bot.config.token,
+                        //         channel: user.channel,
+                        //         text: "Ready to check in?",
+                        //         attachments: [{
+                        //             title: "Check In",
+                        //             color: "#0294ff",
+                        //             callback_id: 'automatic-checkin',
+                        //             attachment_type: 'default',
+                        //             actions: [
+                        //                 {
+                        //                     'name': 'yes-button',
+                        //                     'value': 'Yes-CheckIn',
+                        //                     'text': 'Yes',
+                        //                     'type': 'button'
+                        //                 },
+                        //                 {
+                        //                     'name': 'no-button',
+                        //                     'value': 'No-CheckIn',
+                        //                     'text': 'No',
+                        //                     'type': 'button'
+                        //                 }
+                        //             ]
+                        //         }]
+                        //     }, function (err, response) {
+                        //         console.log("error: ", err);
+                        //     })
+                            bot.say({
                                 text: "Ready to check in?",
                                 attachments: [{
                                     title: "Check In",
@@ -66,36 +91,11 @@ if (n === 6 || n === 0) {
                                             'type': 'button'
                                         }
                                     ]
-                                }]
+                                }],
+                                channel: user.channel
                             }, function (err, response) {
                                 console.log("error: ", err);
-                            })
-                            // bot.say({
-                            //     text: "Ready to check in?",
-                            //     attachments: [{
-                            //         title: "Check In",
-                            //         color: "#0294ff",
-                            //         callback_id: 'automatic-checkin',
-                            //         attachment_type: 'default',
-                            //         actions: [
-                            //             {
-                            //                 'name': 'yes-button',
-                            //                 'value': 'Yes-CheckIn',
-                            //                 'text': 'Yes',
-                            //                 'type': 'button'
-                            //             },
-                            //             {
-                            //                 'name': 'no-button',
-                            //                 'value': 'No-CheckIn',
-                            //                 'text': 'No',
-                            //                 'type': 'button'
-                            //             }
-                            //         ]
-                            //     }],
-                            //     channel: user.channel
-                            // }, function (err, response) {
-                            //     console.log("error: ", err);
-                            // });
+                            });
                             sleep(400);
                         } else {
                             // Pass
