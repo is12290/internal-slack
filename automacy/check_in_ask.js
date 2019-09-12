@@ -76,7 +76,10 @@ if (n === 6 || n === 0) {
                         //     }, function (err, response) {
                         //         console.log("error: ", err);
                         //     })
-                            console.log(bot);
+                            bot.startPrivateConversation({user: user.id}, function (err, convo) {
+                                console.log("error: ", err);
+                                convo.say("Hey");
+                            } )
                             bot.say({
                                 text: "Ready to check in?",
                                 attachments: [{
