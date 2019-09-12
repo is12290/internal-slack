@@ -3,6 +3,8 @@ var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment("2019-09-12T12:22:37.649");
 var rounded = round(now, moment.duration(30, "minutes"), "floor");
+var tally = 0;
+var sent = 0;
 if (n === 6 || n === 0) {
     //Pass
 } else {
@@ -37,6 +39,7 @@ if (n === 6 || n === 0) {
                     // Pass
                 } else {
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
+                            tally = tally + 1;
                             console.log("Saying for ", user.name);
                             bot.say({
                                 text: "Ready to check in?",
@@ -64,6 +67,9 @@ if (n === 6 || n === 0) {
                             }, function (err, response) {
                                 console.log("err: ", err);
                                 console.log("response: ", response);
+                                if (response) {
+                                    sent = sent + 1;
+                                }
                             });
                             sleep(400);
                         } else {
@@ -73,12 +79,15 @@ if (n === 6 || n === 0) {
                 
             });
             }
-            // if (j == all_users.length) {
-            //     process.exit();
-            // }
         }
     })
 }
+
+while (sent < tally) {
+    // Wait
+}
+
+process.exit();
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
