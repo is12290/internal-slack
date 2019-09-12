@@ -1,7 +1,7 @@
 var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
-var now = moment("2019-09-12T12:22:37.649");
+var now = moment();
 var rounded = round(now, moment.duration(30, "minutes"), "floor");
 if (n === 6 || n === 0) {
     //Pass
@@ -24,59 +24,18 @@ if (n === 6 || n === 0) {
     var controller = Botkit.slackbot(bot_options);
     controller.startTicking();
 
-    controller.storage.teams.all(function (err, all_teams) {
+    controller.storage.users.all(function (err, all_users) {
         if (err) {
             console.log("error: ", err);
         }
-        controller.storage.users.all(function (err, all_users) {
-            if (err) {
-                console.log("error: ", err);
-            }
-            for (var i = 0; i < all_teams.length; i++) {
-                controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
-                    if (all_teams[i].name == 'Internal') {
-                        bot.say({
-                            channel: 'DK97CQZSL',
-                            text:"hi"
-                        })
-                    }
-                    
-
-                for (var j = 0; j < all_users.length; j++) {
-                    var user = all_users[j];
-                    if (user.team != all_teams[i].id || !user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
+        for (var j = 0; j < all_users.length; j++) {
+            var user = all_users[j];
+            if (typeof user.token != 'undefined') {
+                controller.spawn({ token: user.token }, function (bot) {
+                    if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                         // Pass
                     } else {
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
-                            console.log("Saying for ", user.name);
-                        //     bot.api.chat.postMessage({
-                        //         token: bot.config.token,
-                        //         channel: user.channel,
-                        //         text: "Ready to check in?",
-                        //         attachments: [{
-                        //             title: "Check In",
-                        //             color: "#0294ff",
-                        //             callback_id: 'automatic-checkin',
-                        //             attachment_type: 'default',
-                        //             actions: [
-                        //                 {
-                        //                     'name': 'yes-button',
-                        //                     'value': 'Yes-CheckIn',
-                        //                     'text': 'Yes',
-                        //                     'type': 'button'
-                        //                 },
-                        //                 {
-                        //                     'name': 'no-button',
-                        //                     'value': 'No-CheckIn',
-                        //                     'text': 'No',
-                        //                     'type': 'button'
-                        //                 }
-                        //             ]
-                        //         }]
-                        //     }, function (err, response) {
-                        //         console.log("error: ", err);
-                        //     })
-                            
                             bot.say({
                                 text: "Ready to check in?",
                                 attachments: [{
@@ -100,19 +59,20 @@ if (n === 6 || n === 0) {
                                     ]
                                 }],
                                 channel: user.channel
+                            }, function (err, response) {
+                                if (err) {
+                                    console.log(err);
+                                }
                             });
                             sleep(400);
                         } else {
                             // Pass
                         }
                     }
-                }
-            });
-
+                });
             }
-        })
+        }
     })
-    process.exit();
 }
 
 function sleep(milliseconds) {
@@ -125,5 +85,5 @@ function sleep(milliseconds) {
 }
 
 function round(date, duration, method) {
-    return moment(Math[method]((+date) / (+duration)) * (+duration)); 
+    return moment(Math[method]((+date) / (+duration)) * (+duration));
 }

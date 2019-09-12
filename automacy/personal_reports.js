@@ -16,8 +16,6 @@ if (today == endOfMonth || n == 5) {
         clientSigningSecret: process.env.clientSigningSecret,
         // debug: true,
         scopes: ['bot'],
-        studio_token: process.env.studio_token,
-        studio_command_uri: process.env.studio_command_uri
     };
 
     var mongoStorage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGODB_URI, useNewUrlParser: true });
@@ -25,32 +23,93 @@ if (today == endOfMonth || n == 5) {
 
     var controller = Botkit.slackbot(bot_options);
 
-    controller.storage.teams.all(function (err, all_teams) {
+
+    controller.storage.users.all(function (err, all_users) {
         if (err) {
             console.log("error: ", err);
         }
-        controller.storage.users.all(function (err, all_users) {
-            if (err) {
-                console.log("error: ", err);
-            }
-            for (var j = 0; j < all_teams.length; j++) {
-                var bot = controller.spawn({ token: all_teams[j].bot.token });
-                for (var i = 0; i < all_users.length; i++) {
-                    var user = all_users[i];
-                    if (!user.customization || typeof user.customization.reporting == 'undefined' || typeof user.customization.reporting.time == 'undefined') {
-                        // Pass
-                    } else if (user.customization.reporting.time == moment.tz(rounded, user.customization.reporting.timezone).format('HH:mm')) {
-                        if (today == endOfMonth) {
-                            // Monthly Report
-                            var results = getMonthlyOutput(user);
+        for (var i = 0; i < all_users.length; i++) {
+            var user = all_users[i];
+            var bot = controller.spawn({ token: user.token });
+            if (!user.customization || typeof user.customization.reporting == 'undefined' || typeof user.customization.reporting.time == 'undefined') {
+                // Pass
+            } else {
+                if (user.customization.reporting.time == moment.tz(rounded, user.customization.reporting.timezone).format('HH:mm')) {
+                    if (today == endOfMonth) {
+                        // Monthly Report
+                        var results = getMonthlyOutput(user);
+                        if (results == 404) {
+                            bot.say({
+                                text: 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\n\nIf this is unusual behavior from me, email support@getinternal.co for help!',
+                                channel: user.channel
+                            });
+                        } else {
+                            bot.say({
+                                text: 'Hey there! Here is your personal monthly report. Scores are out of 100%...\n',
+                                channel: user.channel,
+                                attachments: [
+                                    {
+                                        title: 'Sleep',
+                                        color: '#02D2FF',
+                                        attachment_type: 'default',
+                                        text: results[0][0] + '\n*Perfect:* ' + results[1][0][4] + ' | *Sufficient:* ' + results[1][0][3] + ' | *Restless:* ' + results[1][0][2] + ' | *Terrible:* ' + results[1][0][1] + '\n'
+                                    },
+                                    {
+                                        title: 'Energy',
+                                        color: '#2A02FF',
+                                        attachment_type: 'default',
+                                        text: results[0][1] + '\n*Full:* ' + results[1][1][4] + ' | *Alright:* ' + results[1][1][3] + ' | *Hanging On:* ' + results[1][1][2] + ' | *Dead:* ' + results[1][1][1] + '\n'
+                                    },
+                                    {
+                                        title: 'Mood',
+                                        color: '#8A02FF',
+                                        attachment_type: 'default',
+                                        text: results[0][2] + '\n*Happy:* ' + results[1][2][4] + ' | *Calm:* ' + results[1][2][3] + ' | *Tense:* ' + results[1][2][2] + ' | *Upset:* ' + results[1][2][1] + '\n'
+                                    },
+                                    {
+                                        title: 'Confidence',
+                                        color: '#CF02FF',
+                                        attachment_type: 'default',
+                                        text: results[0][3] + '\n*Crushing It:* ' + results[1][3][4] + ' | *Okay:* ' + results[1][3][3] + ' | *Managing:* ' + results[1][3][2] + ' | *Overwhelmed:* ' + results[1][3][1] + '\n'
+                                    },
+                                    {
+                                        title: 'Presence',
+                                        color: '#FF029D',
+                                        attachment_type: 'default',
+                                        text: results[0][4] + '\n*Grounded:* ' + results[1][4][4] + ' | *Aware:* ' + results[1][4][3] + ' | *Out of It:* ' + results[1][4][2] + ' | *Disconnected:* ' + results[1][4][1] + '\n'
+                                    },
+                                    {
+                                        title: 'Fulfillment',
+                                        color: '#FF8402',
+                                        attachment_type: 'default',
+                                        text: results[0][5] + '\n*Complete:* ' + results[1][5][4] + ' | *Present:* ' + results[1][5][3] + ' | *Searching:* ' + results[1][5][2] + ' | *Non-Existent:* ' + results[1][5][1] + '\n'
+                                    },
+                                    {
+                                        title: 'Overall',
+                                        color: '#02FF57',
+                                        attachment_type: 'default',
+                                        text: results[0][6]
+                                    }
+                                ]
+                            });
+                        }
+                    } else if (n == '5') {
+                        // Weekly report
+                        if (!all_users) {
+                            bot.say({
+                                'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\n\nIf this is unusual behavior from me, email support@getinternal.co for help!',
+                                'channel': user.channel[0]
+                            });
+                        } else {
+                            var results = getWeeklyOutput(user);
                             if (results == 404) {
                                 bot.say({
-                                    text: 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime, make sure all of your teammates have completed their logs!\n\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                    channel: user.channel
+                                    'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\n\nIf this is unusual behavior from me, email support@getinternal.co for help!',
+                                    'channel': user.channel
                                 });
                             } else {
                                 bot.say({
-                                    text: 'Hey there! Here is your personal monthly report. Scores are out of 100%...\n',
+                                    text: 'Hey there! Here are is you personal report for the week. Scores are out of 100%...\n',
                                     channel: user.channel,
                                     attachments: [
                                         {
@@ -98,82 +157,14 @@ if (today == endOfMonth || n == 5) {
                                     ]
                                 });
                             }
-                        } else if (n == '5') {
-                            // Weekly report
-                            if (!all_users) {
-                                bot.say({
-                                    'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\n\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                    'channel': user.channel[0]
-                                });
-                            } else {
-                                var results = getWeeklyOutput(user);
-                                if (results == 404) {
-                                    bot.say({
-                                        'text': 'Sorry, I need at least a day\'s worth of logs to report this - Maybe check back tomorrow? :thinking_face:\n\nIn the meantime you can check your daily results with `Daily Results`\n\nIf this is unusual behavior from me, email support@getinternal.co for help!',
-                                        'channel': user.channel
-                                    });
-                                } else {
-                                    bot.say({
-                                        text: 'Hey there! Here are is you personal report for the week. Scores are out of 100%...\n',
-                                        channel: user.channel,
-                                        attachments: [
-                                            {
-                                                title: 'Sleep',
-                                                color: '#02D2FF',
-                                                attachment_type: 'default',
-                                                text: results[0][0] + '\n*Perfect:* ' + results[1][0][4] + ' | *Sufficient:* ' + results[1][0][3] + ' | *Restless:* ' + results[1][0][2] + ' | *Terrible:* ' + results[1][0][1] + '\n'
-                                            },
-                                            {
-                                                title: 'Energy',
-                                                color: '#2A02FF',
-                                                attachment_type: 'default',
-                                                text: results[0][1] + '\n*Full:* ' + results[1][1][4] + ' | *Alright:* ' + results[1][1][3] + ' | *Hanging On:* ' + results[1][1][2] + ' | *Dead:* ' + results[1][1][1] + '\n'
-                                            },
-                                            {
-                                                title: 'Mood',
-                                                color: '#8A02FF',
-                                                attachment_type: 'default',
-                                                text: results[0][2] + '\n*Happy:* ' + results[1][2][4] + ' | *Calm:* ' + results[1][2][3] + ' | *Tense:* ' + results[1][2][2] + ' | *Upset:* ' + results[1][2][1] + '\n'
-                                            },
-                                            {
-                                                title: 'Confidence',
-                                                color: '#CF02FF',
-                                                attachment_type: 'default',
-                                                text: results[0][3] + '\n*Crushing It:* ' + results[1][3][4] + ' | *Okay:* ' + results[1][3][3] + ' | *Managing:* ' + results[1][3][2] + ' | *Overwhelmed:* ' + results[1][3][1] + '\n'
-                                            },
-                                            {
-                                                title: 'Presence',
-                                                color: '#FF029D',
-                                                attachment_type: 'default',
-                                                text: results[0][4] + '\n*Grounded:* ' + results[1][4][4] + ' | *Aware:* ' + results[1][4][3] + ' | *Out of It:* ' + results[1][4][2] + ' | *Disconnected:* ' + results[1][4][1] + '\n'
-                                            },
-                                            {
-                                                title: 'Fulfillment',
-                                                color: '#FF8402',
-                                                attachment_type: 'default',
-                                                text: results[0][5] + '\n*Complete:* ' + results[1][5][4] + ' | *Present:* ' + results[1][5][3] + ' | *Searching:* ' + results[1][5][2] + ' | *Non-Existent:* ' + results[1][5][1] + '\n'
-                                            },
-                                            {
-                                                title: 'Overall',
-                                                color: '#02FF57',
-                                                attachment_type: 'default',
-                                                text: results[0][6]
-                                            }
-                                        ]
-                                    });
-                                }
-                            }
                         }
                     }
-                    sleep(400);
                 }
-                console.log("Made it to bot destroy");
-                setTimeout(bot.destroy.bind(bot), 100);
             }
-            console.log("Made it to process.exit()");
-            process.exit();
-        });
-    });
+            sleep(400);
+        }
+    })
+
 } else {
     // Pass
 }
@@ -479,5 +470,5 @@ function sleep(milliseconds) {
 }
 
 function round(date, duration, method) {
-    return moment(Math[method]((+date) / (+duration)) * (+duration)); 
+    return moment(Math[method]((+date) / (+duration)) * (+duration));
 }

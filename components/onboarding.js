@@ -692,6 +692,13 @@ module.exports = function (controller) {
 
                 convo.on('end', function (convo) {
                     if (convo.successful()) {
+                        newUser.customization = {
+                            logging: {
+                                timezone: data.timezone,
+                                check_in_time = data.check_in_time,
+                                reflection_time = data.reflection_time
+                            }
+                        }
                         controller.storage.users.save(newUser);
 
                         const sgMail = require('@sendgrid/mail');

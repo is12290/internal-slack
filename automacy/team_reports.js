@@ -17,9 +17,7 @@ if (n == 6 || n == 0) {
         clientSecret: process.env.clientSecret,
         clientSigningSecret: process.env.clientSigningSecret,
         // debug: true,
-        scopes: ['bot'],
-        studio_token: process.env.studio_token,
-        studio_command_uri: process.env.studio_command_uri
+        scopes: ['bot']
     };
 
     var mongoStorage = require('botkit-storage-mongo')({ mongoUri: process.env.MONGODB_URI, useNewUrlParser: true });
@@ -27,19 +25,14 @@ if (n == 6 || n == 0) {
 
     var controller = Botkit.slackbot(bot_options);
 
-    controller.storage.teams.all(function (err, all_teams) {
-        if (err) {
-            console.log("error: ", err);
-        }
-        for (var i = 0; i < all_teams.length; i++) {
-            controller.storage.users.find({ team: all_teams[i].id }, function (err, info) {
+            controller.storage.users.all( function (err, info) {
                 if (err) {
                     console.log("error: ", err);
                 }
-
-                var bot = controller.spawn({ token: all_teams[i].bot.token });
                 for (var i = 0; i < info.length; i++) {
                     var user = info[i];
+                    if (user.token != 'undefined') {
+                    var bot = controller.spawn({ token: user.token });
                     if (typeof user.status == 'undefined' || user.status != 'manager' || !user.customization || !user.customization.team_reporting || !user.customization.team_reporting.time) {
                         // Pass
                     } else if (user.customization.team_reporting.time == moment.tz(rounded, user.customization.team_reporting.timezone).format('HH:mm')) {
@@ -235,12 +228,9 @@ if (n == 6 || n == 0) {
                     }
                     sleep(400);
                 }
-                setTimeout(bot.destroy.bind(bot), 100);
+                }
             });
         }
-        process.exit();
-    });
-}
 
 
 function getDailyOutput(input) {
