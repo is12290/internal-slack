@@ -33,7 +33,8 @@ if (n === 6 || n === 0) {
                 console.log("error: ", err);
             }
             for (var i = 0; i < all_teams.length; i++) {
-                var bot = controller.spawn({ token: all_teams[i].bot.token });
+                controller.spawn({ token: all_teams[i].bot.token }, function (bot) {
+                    
 
                 for (var j = 0; j < all_users.length; j++) {
                     var user = all_users[j];
@@ -101,6 +102,7 @@ if (n === 6 || n === 0) {
                         }
                     }
                 }
+            });
 
             }
             // function FatalError() { Error.apply(this, arguments); this.name = "FatalError"; }
