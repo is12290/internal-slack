@@ -40,7 +40,6 @@ if (n === 6 || n === 0) {
                 } else {
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                             tally = tally + 1;
-                            console.log("Saying for ", user.name);
                             bot.say({
                                 text: "Ready to check in?",
                                 attachments: [{
@@ -65,8 +64,6 @@ if (n === 6 || n === 0) {
                                 }],
                                 channel: user.channel
                             }, function (err, response) {
-                                console.log("err: ", err);
-                                console.log("response: ", response);
                                 if (response) {
                                     sent = sent + 1;
                                 }
@@ -79,15 +76,15 @@ if (n === 6 || n === 0) {
                 
             });
             }
+            if (j == all_users.length - 1) {
+                while (tally > sent) {
+                    // Wait
+                }
+                process.exit();
+            }
         }
     })
 }
-
-while (sent < tally) {
-    // Wait
-}
-
-process.exit();
 
 function sleep(milliseconds) {
     var start = new Date().getTime();
