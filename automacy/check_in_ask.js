@@ -37,9 +37,12 @@ if (n === 6 || n === 0) {
                 var bot = controller.spawn({ token: all_teams[i].bot.token });
                 for (var j = 0; j < all_users.length; j++) {
                     var user = all_users[j];
+                    console.log(user.name);
                     if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                         // Pass
+                        console.log("Passed on ", user.name);
                     } else if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
+                        console.log("Saying for ", user.name);
                         bot.say({
                             attachments: [{
                                 text: "Ready to check in?",
