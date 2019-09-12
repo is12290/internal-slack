@@ -2,6 +2,7 @@ var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
+console.log(now);
 var rounded = round(now, moment.duration(30, "minutes"), "floor");
 if (n === 6 || n === 0) {
     //Pass
@@ -30,7 +31,6 @@ if (n === 6 || n === 0) {
             console.log("error: ", err);
         }
         controller.storage.users.all(function (err, all_users) {
-            console.log("In storage");
             if (err) {
                 console.log("error: ", err);
             }
@@ -42,12 +42,14 @@ if (n === 6 || n === 0) {
                     if (user.team != all_teams[i].id || !user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                         // Pass
                     } else {
-                        console.log(user.name, " made it passed");
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                         console.log("Saying for ", user.name);
+                        console.log("Channel id: ", user.channel);
+                        console.log("Team: ", all_teams[i].name);
                         bot.say({
                             text: "Ready to check in?",
                             attachments: [{
+                                title: "Check In",
                                 color: "#0294ff",
                                 callback_id: 'automatic-checkin',
                                 attachment_type: 'default',

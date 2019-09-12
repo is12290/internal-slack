@@ -2,7 +2,7 @@ var d = new Date();
 var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
-var rounded = round(now, moment.duration(15, "minutes"), "floor");
+var rounded = round(now, moment.duration(30, "minutes"), "floor");
 if (n === 6 || n === 0) {
     //Pass
 } else {
