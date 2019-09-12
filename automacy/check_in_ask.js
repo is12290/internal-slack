@@ -30,6 +30,7 @@ if (n === 6 || n === 0) {
             console.log("error: ", err);
         }
         for (var i = 0; i < all_teams.length; i++) {
+            console.log("Looping");
             var bot = controller.spawn({ token: all_teams[i].bot.token });
             controller.storage.users.find({ team: all_teams[i].id }, function (err, all_users) {
                 if (err) {
