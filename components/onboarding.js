@@ -71,6 +71,11 @@ module.exports = function (controller) {
                                     console.log("error: ", err);
                                 }
                             })
+                            bot.api.channels.invite({ token: team.bot.app_token, channel: response.channel.id, user: team.bot.user_id }, function (err, outcome) {
+                                if (err) {
+                                    console.log("error: ", err);
+                                }
+                            });
 
                             team.bot.channel = response.channel.id;
                             channel_id = channel_id + response.channel.id;
@@ -85,13 +90,7 @@ module.exports = function (controller) {
                         convo.next();
                     });
 
-                bot.api.channels.invite({ token: team.bot.app_token, channel: channel_id, user: team.bot.user_id }, function (err, outcome) {
-                    if (err) {
-                        console.log("error: ", err);
-                    }
-                });
-
-                convo.say("Awesome! I just created the channel and added myself...");
+                convo.say("Awesome! I just created the channel...");
 
                 var team_members = [];
                 bot.api.users.list({ token: bot.config.token }, function (err, response) {
