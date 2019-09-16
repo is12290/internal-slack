@@ -32,7 +32,7 @@ if (n === 6 || n === 0) {
             var user = all_users[j];
             if (typeof user.token != 'undefined') {
                 controller.spawn({ token: user.token }, function (bot) {
-                    if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
+                    if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined' || (typeof user.logs[today] != 'undefined' && typeof user.logs[today].check_in != 'undefined')) {
                         // Pass
                     } else {
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {

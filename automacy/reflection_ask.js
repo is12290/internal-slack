@@ -31,7 +31,7 @@ if (n === 6 || n === 0) {
             var user = all_users[j];
             if (typeof user.token != 'undefined') {
             var bot = controller.spawn({ token: user.token });
-            if (typeof user.customization == 'undefined' || typeof user.customization.logging == 'undefined' || typeof user.customization.logging.reflection_time == 'undefined') {
+            if (typeof user.customization == 'undefined' || typeof user.customization.logging == 'undefined' || typeof user.customization.logging.reflection_time == 'undefined' || (typeof user.logs[today] != 'undefined' && typeof user.logs[today].check_in != 'undefined')) {
                 // Pass
             } else {
                 if (user.customization.logging.reflection_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
