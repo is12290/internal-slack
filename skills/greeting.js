@@ -216,195 +216,195 @@ module.exports = function (controller) {
                                         "type": "select",
                                         "options": [
                                             {
-                                                "text": "00:00",
+                                                "text": "12:00 am",
                                                 "value": "00:00"
                                             },
                                             {
-                                                "text": "00:30",
+                                                "text": "12:30 am",
                                                 "value": "00:30"
                                             },
                                             {
-                                                "text": "01:00",
+                                                "text": "1:00 am",
                                                 "value": "01:00"
                                             },
                                             {
-                                                "text": "01:30",
+                                                "text": "1:30 am",
                                                 "value": "01:30"
                                             },
                                             {
-                                                "text": "02:00",
+                                                "text": "2:00 am",
                                                 "value": "02:00"
                                             },
                                             {
-                                                "text": "02:30",
+                                                "text": "2:30 am",
                                                 "value": "02:30"
                                             },
                                             {
-                                                "text": "03:00",
+                                                "text": "3:00 am",
                                                 "value": "03:00"
                                             },
                                             {
-                                                "text": "03:30",
+                                                "text": "3:30 am",
                                                 "value": "03:30"
                                             },
                                             {
-                                                "text": "04:00",
+                                                "text": "4:00 am",
                                                 "value": "04:00"
                                             },
                                             {
-                                                "text": "04:30",
+                                                "text": "4:30 am",
                                                 "value": "04:30"
                                             },
                                             {
-                                                "text": "05:00",
+                                                "text": "5:00 am",
                                                 "value": "05:00"
                                             },
                                             {
-                                                "text": "05:30",
+                                                "text": "5:30 am",
                                                 "value": "05:30"
                                             },
                                             {
-                                                "text": "06:00",
+                                                "text": "6:00 am",
                                                 "value": "06:00"
                                             },
                                             {
-                                                "text": "06:30",
+                                                "text": "6:30 am",
                                                 "value": "06:30"
                                             },
                                             {
-                                                "text": "07:00",
+                                                "text": "7:00 am",
                                                 "value": "07:00"
                                             },
                                             {
-                                                "text": "07:30",
+                                                "text": "7:30 am",
                                                 "value": "07:30"
                                             },
                                             {
-                                                "text": "08:00",
+                                                "text": "8:00 am",
                                                 "value": "08:00"
                                             },
                                             {
-                                                "text": "08:30",
+                                                "text": "8:30 am",
                                                 "value": "08:30"
                                             },
                                             {
-                                                "text": "09:00",
+                                                "text": "9:00 am",
                                                 "value": "09:00"
                                             },
                                             {
-                                                "text": "09:30",
+                                                "text": "9:30 am",
                                                 "value": "09:30"
                                             },
                                             {
-                                                "text": "10:00",
+                                                "text": "10:00 am",
                                                 "value": "10:00"
                                             },
                                             {
-                                                "text": "10:30",
+                                                "text": "10:30 am",
                                                 "value": "10:30"
                                             },
                                             {
-                                                "text": "11:00",
+                                                "text": "11:00 am",
                                                 "value": "11:00"
                                             },
                                             {
-                                                "text": "11:30",
+                                                "text": "11:30 am",
                                                 "value": "11:30"
                                             },
                                             {
-                                                "text": "12:00",
+                                                "text": "12:00 pm",
                                                 "value": "12:00"
                                             },
                                             {
-                                                "text": "12:30",
+                                                "text": "12:30 pm",
                                                 "value": "12:30"
                                             },
                                             {
-                                                "text": "13:00",
+                                                "text": "1:00 pm",
                                                 "value": "13:00"
                                             },
                                             {
-                                                "text": "13:30",
+                                                "text": "1:30 pm",
                                                 "value": "13:30"
                                             },
                                             {
-                                                "text": "14:00",
+                                                "text": "2:00 pm",
                                                 "value": "14:00"
                                             },
                                             {
-                                                "text": "14:30",
+                                                "text": "2:30 pm",
                                                 "value": "14:30"
                                             },
                                             {
-                                                "text": "15:00",
+                                                "text": "3:00 pm",
                                                 "value": "15:00"
                                             },
                                             {
-                                                "text": "15:30",
+                                                "text": "3:30 pm",
                                                 "value": "15:30"
                                             },
                                             {
-                                                "text": "16:00",
+                                                "text": "4:00 pm",
                                                 "value": "16:00"
                                             },
                                             {
-                                                "text": "16:30",
+                                                "text": "4:30 pm",
                                                 "value": "16:30"
                                             },
                                             {
-                                                "text": "17:00",
+                                                "text": "5:00 pm",
                                                 "value": "17:00"
                                             },
                                             {
-                                                "text": "17:30",
+                                                "text": "5:30 pm",
                                                 "value": "17:30"
                                             },
                                             {
-                                                "text": "18:00",
+                                                "text": "6:00",
                                                 "value": "18:00"
                                             },
                                             {
-                                                "text": "18:30",
+                                                "text": "6:30 pm",
                                                 "value": "18:30"
                                             },
                                             {
-                                                "text": "19:00",
+                                                "text": "7:00 pm",
                                                 "value": "19:00"
                                             },
                                             {
-                                                "text": "19:30",
+                                                "text": "7:30 pm",
                                                 "value": "19:30"
                                             },
                                             {
-                                                "text": "20:00",
+                                                "text": "8:00 pm",
                                                 "value": "20:00"
                                             },
                                             {
-                                                "text": "20:30",
+                                                "text": "8:30 pm",
                                                 "value": "20:30"
                                             },
                                             {
-                                                "text": "21:00",
+                                                "text": "9:00 pm",
                                                 "value": "21:00"
                                             },
                                             {
-                                                "text": "21:30",
+                                                "text": "9:30 pm",
                                                 "value": "21:30"
                                             },
                                             {
-                                                "text": "22:00",
+                                                "text": "10:00 pm",
                                                 "value": "22:00"
                                             },
                                             {
-                                                "text": "22:30",
+                                                "text": "10:30 pm",
                                                 "value": "22:30"
                                             },
                                             {
-                                                "text": "23:00",
+                                                "text": "11:00 pm",
                                                 "value": "23:00"
                                             },
                                             {
-                                                "text": "23:30",
+                                                "text": "11:30 pm",
                                                 "value": "23:30"
                                             },
                                         ]
@@ -429,199 +429,199 @@ module.exports = function (controller) {
                                 actions: [
                                     {
                                         "name": "time",
-                                        "text": 'Time',
+                                        "text": "Time",
                                         "type": "select",
                                         "options": [
                                             {
-                                                "text": "00:00",
+                                                "text": "12:00 am",
                                                 "value": "00:00"
                                             },
                                             {
-                                                "text": "00:30",
+                                                "text": "12:30 am",
                                                 "value": "00:30"
                                             },
                                             {
-                                                "text": "01:00",
+                                                "text": "1:00 am",
                                                 "value": "01:00"
                                             },
                                             {
-                                                "text": "01:30",
+                                                "text": "1:30 am",
                                                 "value": "01:30"
                                             },
                                             {
-                                                "text": "02:00",
+                                                "text": "2:00 am",
                                                 "value": "02:00"
                                             },
                                             {
-                                                "text": "02:30",
+                                                "text": "2:30 am",
                                                 "value": "02:30"
                                             },
                                             {
-                                                "text": "03:00",
+                                                "text": "3:00 am",
                                                 "value": "03:00"
                                             },
                                             {
-                                                "text": "03:30",
+                                                "text": "3:30 am",
                                                 "value": "03:30"
                                             },
                                             {
-                                                "text": "04:00",
+                                                "text": "4:00 am",
                                                 "value": "04:00"
                                             },
                                             {
-                                                "text": "04:30",
+                                                "text": "4:30 am",
                                                 "value": "04:30"
                                             },
                                             {
-                                                "text": "05:00",
+                                                "text": "5:00 am",
                                                 "value": "05:00"
                                             },
                                             {
-                                                "text": "05:30",
+                                                "text": "5:30 am",
                                                 "value": "05:30"
                                             },
                                             {
-                                                "text": "06:00",
+                                                "text": "6:00 am",
                                                 "value": "06:00"
                                             },
                                             {
-                                                "text": "06:30",
+                                                "text": "6:30 am",
                                                 "value": "06:30"
                                             },
                                             {
-                                                "text": "07:00",
+                                                "text": "7:00 am",
                                                 "value": "07:00"
                                             },
                                             {
-                                                "text": "07:30",
+                                                "text": "7:30 am",
                                                 "value": "07:30"
                                             },
                                             {
-                                                "text": "08:00",
+                                                "text": "8:00 am",
                                                 "value": "08:00"
                                             },
                                             {
-                                                "text": "08:30",
+                                                "text": "8:30 am",
                                                 "value": "08:30"
                                             },
                                             {
-                                                "text": "09:00",
+                                                "text": "9:00 am",
                                                 "value": "09:00"
                                             },
                                             {
-                                                "text": "09:30",
+                                                "text": "9:30 am",
                                                 "value": "09:30"
                                             },
                                             {
-                                                "text": "10:00",
+                                                "text": "10:00 am",
                                                 "value": "10:00"
                                             },
                                             {
-                                                "text": "10:30",
+                                                "text": "10:30 am",
                                                 "value": "10:30"
                                             },
                                             {
-                                                "text": "11:00",
+                                                "text": "11:00 am",
                                                 "value": "11:00"
                                             },
                                             {
-                                                "text": "11:30",
+                                                "text": "11:30 am",
                                                 "value": "11:30"
                                             },
                                             {
-                                                "text": "12:00",
+                                                "text": "12:00 pm",
                                                 "value": "12:00"
                                             },
                                             {
-                                                "text": "12:30",
+                                                "text": "12:30 pm",
                                                 "value": "12:30"
                                             },
                                             {
-                                                "text": "13:00",
+                                                "text": "1:00 pm",
                                                 "value": "13:00"
                                             },
                                             {
-                                                "text": "13:30",
+                                                "text": "1:30 pm",
                                                 "value": "13:30"
                                             },
                                             {
-                                                "text": "14:00",
+                                                "text": "2:00 pm",
                                                 "value": "14:00"
                                             },
                                             {
-                                                "text": "14:30",
+                                                "text": "2:30 pm",
                                                 "value": "14:30"
                                             },
                                             {
-                                                "text": "15:00",
+                                                "text": "3:00 pm",
                                                 "value": "15:00"
                                             },
                                             {
-                                                "text": "15:30",
+                                                "text": "3:30 pm",
                                                 "value": "15:30"
                                             },
                                             {
-                                                "text": "16:00",
+                                                "text": "4:00 pm",
                                                 "value": "16:00"
                                             },
                                             {
-                                                "text": "16:30",
+                                                "text": "4:30 pm",
                                                 "value": "16:30"
                                             },
                                             {
-                                                "text": "17:00",
+                                                "text": "5:00 pm",
                                                 "value": "17:00"
                                             },
                                             {
-                                                "text": "17:30",
+                                                "text": "5:30 pm",
                                                 "value": "17:30"
                                             },
                                             {
-                                                "text": "18:00",
+                                                "text": "6:00",
                                                 "value": "18:00"
                                             },
                                             {
-                                                "text": "18:30",
+                                                "text": "6:30 pm",
                                                 "value": "18:30"
                                             },
                                             {
-                                                "text": "19:00",
+                                                "text": "7:00 pm",
                                                 "value": "19:00"
                                             },
                                             {
-                                                "text": "19:30",
+                                                "text": "7:30 pm",
                                                 "value": "19:30"
                                             },
                                             {
-                                                "text": "20:00",
+                                                "text": "8:00 pm",
                                                 "value": "20:00"
                                             },
                                             {
-                                                "text": "20:30",
+                                                "text": "8:30 pm",
                                                 "value": "20:30"
                                             },
                                             {
-                                                "text": "21:00",
+                                                "text": "9:00 pm",
                                                 "value": "21:00"
                                             },
                                             {
-                                                "text": "21:30",
+                                                "text": "9:30 pm",
                                                 "value": "21:30"
                                             },
                                             {
-                                                "text": "22:00",
+                                                "text": "10:00 pm",
                                                 "value": "22:00"
                                             },
                                             {
-                                                "text": "22:30",
+                                                "text": "10:30 pm",
                                                 "value": "22:30"
                                             },
                                             {
-                                                "text": "23:00",
+                                                "text": "11:00 pm",
                                                 "value": "23:00"
                                             },
                                             {
-                                                "text": "23:30",
+                                                "text": "11:30 pm",
                                                 "value": "23:30"
                                             },
                                         ]
