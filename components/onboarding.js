@@ -16,8 +16,9 @@ module.exports = function (controller) {
             if (err) {
                 console.log(err);
             } else {
-                convo.say("Hey! I'm Internal and _you_ happen to be the first person to add me to this fresh, new Slack team. Due to this, you get a bit more power than your friends :)");
-                convo.say("For instance, I need to create a public channel where I will post you and your teammates overall check in scores (So long as I'm given permission)");
+                const newUser = {};
+                convo.say("Hey, <" + bot.config.createdBy + ">! _I'm_ Internal, a bot that allows your team to easily communicate their well-being");
+                convo.say("_You_ happen to be the first person to communicate with me on this Slack team so I need some quick help from you about what to name the channel that I'll send you and your teammates emotional fitness scores in");
 
                 var channel_id = '';
                 convo.addQuestion({
@@ -61,7 +62,7 @@ module.exports = function (controller) {
                             bot.reply(reply, "I'm sorry, that channel name is already taken. Try another?");
                             convo.repeat();
                         } else {
-                            bot.api.channels.setPurpose({ token: bot.config.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share the daily overall emotional fitness scores of those who opt to share." }, function (err, response) {
+                            bot.api.channels.setPurpose({ token: bot.config.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share the daily overall emotional scores of those who opt to share." }, function (err, response) {
                                 if (err) {
                                     console.log("error: ", err);
                                 }
@@ -76,583 +77,27 @@ module.exports = function (controller) {
                                     console.log("error: ", err);
                                 }
                             });
-
                             team.bot.channel = response.channel.id;
                             channel_id = channel_id + response.channel.id;
                             controller.storage.teams.save(team);
                         }
                     });
-                        bot.api.reactions.add({
-                            name: 'thumbsup',
-                            channel: reply.channel,
-                            timestamp: reply.ts
-                        });
-                        convo.next();
-                    });
 
-                convo.say("Awesome! I just created the channel...");
-
-                var team_members = [];
-                bot.api.users.list({ token: bot.config.token }, function (err, response) {
-
-                    for (var x = 0; x < response.members.length; x++) {
-                        if (response.members[x].deleted != 'false') {
-                            team_members.push({ "text": response.members[x].real_name, "value": response.members[x].id });
+                    bot.api.users.info({ user: reply.user }, (error, response) => {
+                        if (error) {
+                            console.log("error: ", error);
                         }
-                    }
-                    team_members.push({ "text": "None, Actually", "value": "No" })
-                });
+                        let { name, real_name } = response.user;
+                        newUser.name = real_name;
+                        newUser.email = response.user.profile.email;
+                        newUser.timezone = response.user.tz
+                    })
+                    newUser.channel = reply.channel;
+                    newUser.team = reply.team.id;
+                    newUser.status = 'employee';
+                    newUser.id = reply.user;
+                    newUser.token = bot.config.token;
 
-
-                convo.addQuestion({
-                    attachments: [
-                        {
-                            text: "Would you like to add another teammate to the channel? The value increases with each participant!",
-                            callback_id: 'invite',
-                            attachment_type: 'default',
-                            color: "#0294ff",
-                            actions: [
-                                {
-                                    "name": "Invite",
-                                    "text": "Invite",
-                                    "type": "select",
-                                    "options": team_members
-                                }
-                            ]
-                        }
-                    ]
-                }, function (reply, convo) {
-                    if (reply.text != "No") {
-                        bot.api.channels.invite({ token: team.bot.app_token, channel: channel_id, user: reply.text }, function (err, outcome) {
-
-                            if (err) {
-                                console.log(err);
-                            }
-                            if (outcome.ok == 'false' && outcome.error == 'already_in_channel') {
-                                bot.say({
-                                    text: "Hey, they're already in the channel! Try again?",
-                                    channel: convo.context.channel
-                                });
-                                convo.repeat();
-                            } else {
-                                bot.say({
-                                    text: "Your recommendation has been successfully added to <#" + channel_id + ">!",
-                                    channel: convo.context.channel
-                                });
-                                convo.next();
-                            }
-                        })
-                    } else {
-                        bot.say({
-                            text: "Okay, no problemo!",
-                            channel: convo.context.channel
-                        });
-                        convo.next();
-                    }
-                });
-
-                convo.say("The most important part of having me around is completing your daily questionnaires because, without your questionnaires filled out, nothing else matters! It's sometimes difficult to remember to carry them out, so let's set up a time for me to send them automatically everyday...");
-
-                var data = {};
-                convo.addQuestion({
-                    attachments: [
-                        {
-                            title: 'Timezone',
-                            text: 'What timezone are you in?',
-                            callback_id: 'timezone',
-                            attachment_type: 'default',
-                            color: "#0294ff",
-                            actions: [
-                                {
-                                    "name": "timezone",
-                                    "text": "Timezone",
-                                    "type": "select",
-                                    "options": [
-                                        {
-                                            "text": "America Eastern Time",
-                                            "value": "America/New_York"
-                                        },
-                                        {
-                                            "text": "America Central Time",
-                                            "value": "America/Mexico_City",
-                                        },
-                                        {
-                                            "text": "America Mountain Time",
-                                            "value": "America/Denver",
-                                        },
-                                        {
-                                            "text": "America Pacific Time",
-                                            "value": "America/Los_Angeles",
-                                        },
-                                        {
-                                            "text": "Australia Eastern Time",
-                                            "value": "Australia/Sydney",
-                                        },
-                                        {
-                                            "text": "Australia Western Time",
-                                            "value": "Australia/Perth",
-                                        },
-                                        {
-                                            "text": "Hong Kong Time",
-                                            "value": "Asia/Hong_Kong",
-                                        },
-                                        {
-                                            "text": "Korea Time",
-                                            "value": "Asia/Seoul",
-                                        },
-                                        {
-                                            "text": "Europe British Time",
-                                            "value": "Europe/London",
-                                        },
-                                        {
-                                            "text": "Central European Time",
-                                            "value": "Europe/Madrid",
-                                        },
-                                        {
-                                            "text": "Eastern European Time",
-                                            "value": "Europe/Kiev",
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }, function (reply, convo) {
-                    data.timezone = reply.text;
-                    convo.next();
-                });
-
-                convo.addQuestion({
-                    attachments: [
-                        {
-                            title: 'Check In Time',
-                            text: 'What time would be best for check ins?',
-                            callback_id: 'time',
-                            attachment_type: 'default',
-                            color: "#0294ff",
-                            actions: [
-                                {
-                                    "name": "time",
-                                    "text": "Time",
-                                    "type": "select",
-                                    "options": [
-                                        {
-                                            "text": "12:00 am",
-                                            "value": "00:00"
-                                        },
-                                        {
-                                            "text": "12:30 am",
-                                            "value": "00:30"
-                                        },
-                                        {
-                                            "text": "1:00 am",
-                                            "value": "01:00"
-                                        },
-                                        {
-                                            "text": "1:30 am",
-                                            "value": "01:30"
-                                        },
-                                        {
-                                            "text": "2:00 am",
-                                            "value": "02:00"
-                                        },
-                                        {
-                                            "text": "2:30 am",
-                                            "value": "02:30"
-                                        },
-                                        {
-                                            "text": "3:00 am",
-                                            "value": "03:00"
-                                        },
-                                        {
-                                            "text": "3:30 am",
-                                            "value": "03:30"
-                                        },
-                                        {
-                                            "text": "4:00 am",
-                                            "value": "04:00"
-                                        },
-                                        {
-                                            "text": "4:30 am",
-                                            "value": "04:30"
-                                        },
-                                        {
-                                            "text": "5:00 am",
-                                            "value": "05:00"
-                                        },
-                                        {
-                                            "text": "5:30 am",
-                                            "value": "05:30"
-                                        },
-                                        {
-                                            "text": "6:00 am",
-                                            "value": "06:00"
-                                        },
-                                        {
-                                            "text": "6:30 am",
-                                            "value": "06:30"
-                                        },
-                                        {
-                                            "text": "7:00 am",
-                                            "value": "07:00"
-                                        },
-                                        {
-                                            "text": "7:30 am",
-                                            "value": "07:30"
-                                        },
-                                        {
-                                            "text": "8:00 am",
-                                            "value": "08:00"
-                                        },
-                                        {
-                                            "text": "8:30 am",
-                                            "value": "08:30"
-                                        },
-                                        {
-                                            "text": "9:00 am",
-                                            "value": "09:00"
-                                        },
-                                        {
-                                            "text": "9:30 am",
-                                            "value": "09:30"
-                                        },
-                                        {
-                                            "text": "10:00 am",
-                                            "value": "10:00"
-                                        },
-                                        {
-                                            "text": "10:30 am",
-                                            "value": "10:30"
-                                        },
-                                        {
-                                            "text": "11:00 am",
-                                            "value": "11:00"
-                                        },
-                                        {
-                                            "text": "11:30 am",
-                                            "value": "11:30"
-                                        },
-                                        {
-                                            "text": "12:00 pm",
-                                            "value": "12:00"
-                                        },
-                                        {
-                                            "text": "12:30 pm",
-                                            "value": "12:30"
-                                        },
-                                        {
-                                            "text": "1:00 pm",
-                                            "value": "13:00"
-                                        },
-                                        {
-                                            "text": "1:30 pm",
-                                            "value": "13:30"
-                                        },
-                                        {
-                                            "text": "2:00 pm",
-                                            "value": "14:00"
-                                        },
-                                        {
-                                            "text": "2:30 pm",
-                                            "value": "14:30"
-                                        },
-                                        {
-                                            "text": "3:00 pm",
-                                            "value": "15:00"
-                                        },
-                                        {
-                                            "text": "3:30 pm",
-                                            "value": "15:30"
-                                        },
-                                        {
-                                            "text": "4:00 pm",
-                                            "value": "16:00"
-                                        },
-                                        {
-                                            "text": "4:30 pm",
-                                            "value": "16:30"
-                                        },
-                                        {
-                                            "text": "5:00 pm",
-                                            "value": "17:00"
-                                        },
-                                        {
-                                            "text": "5:30 pm",
-                                            "value": "17:30"
-                                        },
-                                        {
-                                            "text": "6:00",
-                                            "value": "18:00"
-                                        },
-                                        {
-                                            "text": "6:30 pm",
-                                            "value": "18:30"
-                                        },
-                                        {
-                                            "text": "7:00 pm",
-                                            "value": "19:00"
-                                        },
-                                        {
-                                            "text": "7:30 pm",
-                                            "value": "19:30"
-                                        },
-                                        {
-                                            "text": "8:00 pm",
-                                            "value": "20:00"
-                                        },
-                                        {
-                                            "text": "8:30 pm",
-                                            "value": "20:30"
-                                        },
-                                        {
-                                            "text": "9:00 pm",
-                                            "value": "21:00"
-                                        },
-                                        {
-                                            "text": "9:30 pm",
-                                            "value": "21:30"
-                                        },
-                                        {
-                                            "text": "10:00 pm",
-                                            "value": "22:00"
-                                        },
-                                        {
-                                            "text": "10:30 pm",
-                                            "value": "22:30"
-                                        },
-                                        {
-                                            "text": "11:00 pm",
-                                            "value": "23:00"
-                                        },
-                                        {
-                                            "text": "11:30 pm",
-                                            "value": "23:30"
-                                        },
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }, function (reply, convo) {
-                    var check_in_time = reply.text;
-                    data.check_in_time = check_in_time;
-                    convo.next();
-                });
-
-                convo.addQuestion({
-                    attachments: [
-                        {
-                            title: 'Reflection Time',
-                            text: "What time would be best for reflections?",
-                            callback_id: 'time',
-                            attachment_type: 'default',
-                            color: "#0294ff",
-                            actions: [
-                                {
-                                    "name": "time",
-                                    "text": "Time",
-                                    "type": "select",
-                                    "options": [
-                                        {
-                                            "text": "12:00 am",
-                                            "value": "00:00"
-                                        },
-                                        {
-                                            "text": "12:30 am",
-                                            "value": "00:30"
-                                        },
-                                        {
-                                            "text": "1:00 am",
-                                            "value": "01:00"
-                                        },
-                                        {
-                                            "text": "1:30 am",
-                                            "value": "01:30"
-                                        },
-                                        {
-                                            "text": "2:00 am",
-                                            "value": "02:00"
-                                        },
-                                        {
-                                            "text": "2:30 am",
-                                            "value": "02:30"
-                                        },
-                                        {
-                                            "text": "3:00 am",
-                                            "value": "03:00"
-                                        },
-                                        {
-                                            "text": "3:30 am",
-                                            "value": "03:30"
-                                        },
-                                        {
-                                            "text": "4:00 am",
-                                            "value": "04:00"
-                                        },
-                                        {
-                                            "text": "4:30 am",
-                                            "value": "04:30"
-                                        },
-                                        {
-                                            "text": "5:00 am",
-                                            "value": "05:00"
-                                        },
-                                        {
-                                            "text": "5:30 am",
-                                            "value": "05:30"
-                                        },
-                                        {
-                                            "text": "6:00 am",
-                                            "value": "06:00"
-                                        },
-                                        {
-                                            "text": "6:30 am",
-                                            "value": "06:30"
-                                        },
-                                        {
-                                            "text": "7:00 am",
-                                            "value": "07:00"
-                                        },
-                                        {
-                                            "text": "7:30 am",
-                                            "value": "07:30"
-                                        },
-                                        {
-                                            "text": "8:00 am",
-                                            "value": "08:00"
-                                        },
-                                        {
-                                            "text": "8:30 am",
-                                            "value": "08:30"
-                                        },
-                                        {
-                                            "text": "9:00 am",
-                                            "value": "09:00"
-                                        },
-                                        {
-                                            "text": "9:30 am",
-                                            "value": "09:30"
-                                        },
-                                        {
-                                            "text": "10:00 am",
-                                            "value": "10:00"
-                                        },
-                                        {
-                                            "text": "10:30 am",
-                                            "value": "10:30"
-                                        },
-                                        {
-                                            "text": "11:00 am",
-                                            "value": "11:00"
-                                        },
-                                        {
-                                            "text": "11:30 am",
-                                            "value": "11:30"
-                                        },
-                                        {
-                                            "text": "12:00 pm",
-                                            "value": "12:00"
-                                        },
-                                        {
-                                            "text": "12:30 pm",
-                                            "value": "12:30"
-                                        },
-                                        {
-                                            "text": "1:00 pm",
-                                            "value": "13:00"
-                                        },
-                                        {
-                                            "text": "1:30 pm",
-                                            "value": "13:30"
-                                        },
-                                        {
-                                            "text": "2:00 pm",
-                                            "value": "14:00"
-                                        },
-                                        {
-                                            "text": "2:30 pm",
-                                            "value": "14:30"
-                                        },
-                                        {
-                                            "text": "3:00 pm",
-                                            "value": "15:00"
-                                        },
-                                        {
-                                            "text": "3:30 pm",
-                                            "value": "15:30"
-                                        },
-                                        {
-                                            "text": "4:00 pm",
-                                            "value": "16:00"
-                                        },
-                                        {
-                                            "text": "4:30 pm",
-                                            "value": "16:30"
-                                        },
-                                        {
-                                            "text": "5:00 pm",
-                                            "value": "17:00"
-                                        },
-                                        {
-                                            "text": "5:30 pm",
-                                            "value": "17:30"
-                                        },
-                                        {
-                                            "text": "6:00",
-                                            "value": "18:00"
-                                        },
-                                        {
-                                            "text": "6:30 pm",
-                                            "value": "18:30"
-                                        },
-                                        {
-                                            "text": "7:00 pm",
-                                            "value": "19:00"
-                                        },
-                                        {
-                                            "text": "7:30 pm",
-                                            "value": "19:30"
-                                        },
-                                        {
-                                            "text": "8:00 pm",
-                                            "value": "20:00"
-                                        },
-                                        {
-                                            "text": "8:30 pm",
-                                            "value": "20:30"
-                                        },
-                                        {
-                                            "text": "9:00 pm",
-                                            "value": "21:00"
-                                        },
-                                        {
-                                            "text": "9:30 pm",
-                                            "value": "21:30"
-                                        },
-                                        {
-                                            "text": "10:00 pm",
-                                            "value": "22:00"
-                                        },
-                                        {
-                                            "text": "10:30 pm",
-                                            "value": "22:30"
-                                        },
-                                        {
-                                            "text": "11:00 pm",
-                                            "value": "23:00"
-                                        },
-                                        {
-                                            "text": "11:30 pm",
-                                            "value": "23:30"
-                                        },
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }, function (reply, convo) {
-                    var reflection_time = reply.text;
-                    data.reflection_time = reflection_time;
                     bot.api.reactions.add({
                         name: 'thumbsup',
                         channel: reply.channel,
@@ -661,27 +106,7 @@ module.exports = function (controller) {
                     convo.next();
                 });
 
-                convo.say("Okay, I've got two more painless questions and then you'll be good to go");
-
-                const newUser = {};
-                convo.addQuestion("First - what's your favorite book?", function (response, convo) {
-                    bot.api.users.info({ user: response.user }, (error, response) => {
-                        if (error) {
-                            console.log("error: ", error);
-                        }
-                        let { name, real_name } = response.user;
-                        newUser.name = real_name;
-                        newUser.email = response.user.profile.email;
-                    })
-                    newUser.channel = response.channel;
-                    newUser.team = response.team;
-                    newUser.status = 'employee';
-                    newUser.id = response.user;
-                    newUser.token = bot.config.token;
-                    convo.next();
-                });
-
-                convo.addQuestion("Second - what's your role here?", function (response, convo) {
+                convo.addQuestion("Lastly, what's your role here?", function (response, convo) {
                     newUser.role = response.text;
                     convo.next();
                 });
@@ -692,13 +117,6 @@ module.exports = function (controller) {
 
                 convo.on('end', function (convo) {
                     if (convo.successful()) {
-                        newUser.customization = {
-                            logging: {
-                                timezone: data.timezone,
-                                check_in_time: data.check_in_time,
-                                reflection_time: data.reflection_time
-                            }
-                        }
                         controller.storage.users.save(newUser);
 
                         const sgMail = require('@sendgrid/mail');
@@ -713,7 +131,7 @@ module.exports = function (controller) {
 
                         bot.say({
                             channel: convo.context.channel,
-                            text: "Choose what feature you'd like to check out! You can see this message when ever you want by sending me a message saying `Help`",
+                            text: "All done! Feel free to check out my features - you can see this message when ever you want by sending me a message saying `Help`",
                             attachments: [
                                 {
                                     title: 'Questionnaires',

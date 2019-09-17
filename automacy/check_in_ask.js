@@ -33,8 +33,39 @@ if (n === 6 || n === 0) {
             var user = all_users[j];
             if (typeof user.token != 'undefined') {
                 controller.spawn({ token: user.token }, function (bot) {
-                    if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined' || (typeof user.logs[today] != 'undefined' && typeof user.logs[today].check_in != 'undefined')) {
+                    if (typeof user.logs[today] != 'undefined' && typeof user.logs[today].check_in != 'undefined') {
                         // Pass
+                    } else if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
+                        if (moment.tz(rounded, user.timezone).format('HH:mm') == '08:30') {
+                            bot.say({
+                                text: "Ready to check in?",
+                                attachments: [{
+                                    title: "Check In",
+                                    color: "#0294ff",
+                                    callback_id: 'automatic-checkin',
+                                    attachment_type: 'default',
+                                    actions: [
+                                        {
+                                            'name': 'yes-button',
+                                            'value': 'Yes-CheckIn',
+                                            'text': 'Yes',
+                                            'type': 'button'
+                                        },
+                                        {
+                                            'name': 'no-button',
+                                            'value': 'No-CheckIn',
+                                            'text': 'No',
+                                            'type': 'button'
+                                        }
+                                    ]
+                                }],
+                                channel: user.channel
+                            }, function (err, response) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            });
+                        }
                     } else {
                         if (user.customization.logging.check_in_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                             bot.say({

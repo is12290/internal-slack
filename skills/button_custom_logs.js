@@ -242,7 +242,7 @@ module.exports = function (controller) {
                                                     "value": "17:30"
                                                 },
                                                 {
-                                                    "text": "6:00",
+                                                    "text": "6:00 pm",
                                                     "value": "18:00"
                                                 },
                                                 {
@@ -459,7 +459,7 @@ module.exports = function (controller) {
                                                     "value": "17:30"
                                                 },
                                                 {
-                                                    "text": "6:00",
+                                                    "text": "6:00 pm",
                                                     "value": "18:00"
                                                 },
                                                 {
@@ -875,7 +875,7 @@ module.exports = function (controller) {
                                                     "value": "17:30"
                                                 },
                                                 {
-                                                    "text": "6:00",
+                                                    "text": "6:00 pm",
                                                     "value": "18:00"
                                                 },
                                                 {
@@ -1092,7 +1092,7 @@ module.exports = function (controller) {
                                                     "value": "17:30"
                                                 },
                                                 {
-                                                    "text": "6:00",
+                                                    "text": "6:00 pm",
                                                     "value": "18:00"
                                                 },
                                                 {

@@ -32,8 +32,38 @@ if (n === 6 || n === 0) {
             var user = all_users[j];
             if (typeof user.token != 'undefined') {
             var bot = controller.spawn({ token: user.token });
-            if (typeof user.customization == 'undefined' || typeof user.customization.logging == 'undefined' || typeof user.customization.logging.reflection_time == 'undefined' || (typeof user.logs[today] != 'undefined' && typeof user.logs[today].check_in != 'undefined')) {
+            if (typeof user.logs[today] != 'undefined' && typeof user.logs[today].reflection != 'undefined') {
                 // Pass
+            } else if (!user.customization || !user.customization.logging || typeof user.customization.logging.reflection_time == 'undefined') {
+                if (moment.tz(rounded, user.timezone).format('HH:mm') == '18:30') {
+                    bot.say({
+                        attachments: [{
+                            text: "Ready to reflect?",
+                            color: "#0294ff",
+                            callback_id: 'automatic-reflections',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'yes-button',
+                                    'value': 'Yes-Reflect',
+                                    'text': 'Yes',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'no-button',
+                                    'value': 'No-Reflect',
+                                    'text': 'No',
+                                    'type': 'button'
+                                }
+                            ]
+                        }],
+                        channel: user.channel
+                    }, function (err, response) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                }
             } else {
                 if (user.customization.logging.reflection_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                     bot.say({
