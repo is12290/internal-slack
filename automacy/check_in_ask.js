@@ -3,7 +3,7 @@ var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
 var rounded = round(now, moment.duration(30, "minutes"), "floor");
-const today = moment().format('DD/MM/YYY');
+const today = moment().format('MM/DD/YYYY');
 if (n === 6 || n === 0) {
     //Pass
 } else {
@@ -33,7 +33,7 @@ if (n === 6 || n === 0) {
             var user = all_users[j];
             if (typeof user.token != 'undefined') {
                 controller.spawn({ token: user.token }, function (bot) {
-                    if (typeof user.logs[today] != 'undefined' && typeof user.logs[today].check_in != 'undefined') {
+                    if (user.logs && typeof user.logs[today] != 'undefined' && typeof user.logs[today].check_in != 'undefined') {
                         // Pass
                     } else if (!user.customization || !user.customization.logging || typeof user.customization.logging.check_in_time == 'undefined') {
                         if (moment.tz(rounded, user.timezone).format('HH:mm') == '08:30') {

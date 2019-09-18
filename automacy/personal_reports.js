@@ -3,8 +3,8 @@ var n = d.getDay();
 const moment = require('moment-timezone');
 var now = moment();
 var rounded = round(now, moment.duration(30, "minutes"), "floor");
-const endOfMonth = moment().endOf('month').format('DD/MM/YYYY');
-const today = moment().format('DD/MM/YYY');
+const endOfMonth = moment().endOf('month').format('MM/DD/YYYY');
+const today = moment().format('MM/DD/YYYY');
 if (today == endOfMonth || n == 5) {
     const dotenv = require('dotenv');
     dotenv.config();
