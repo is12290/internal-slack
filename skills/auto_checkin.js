@@ -1027,7 +1027,6 @@ module.exports = function (controller) {
                         score.push(sum);
 
                         controller.storage.users.get(message.user, function (err, user) {
-                            console.log("User: ", user);
                             if (err) {
                                 console.log("error: ", err);
                                 convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")

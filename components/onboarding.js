@@ -6,7 +6,6 @@ module.exports = function (controller) {
         debug('Starting an onboarding experience!');
         bot.api.users.info({ user: bot.config.createdBy }, function (err, response) {
             team.installer_email = response.user.profile.email;
-            console.log("installer email: ", team.installer_email);
             if (err) {
                 console.log("error: ", err);
             }
@@ -92,7 +91,6 @@ module.exports = function (controller) {
                         newUser.email = response.user.profile.email;
                         newUser.timezone = response.user.tz
                     })
-                    newUser.channel = reply.channel;
                     newUser.team = reply.team.id;
                     newUser.status = 'employee';
                     newUser.id = reply.user;
@@ -107,6 +105,7 @@ module.exports = function (controller) {
                 });
 
                 convo.addQuestion("Lastly, what's your role here?", function (response, convo) {
+                    newUser.channel = response.channel;
                     newUser.role = response.text;
                     convo.next();
                 });
