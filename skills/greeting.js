@@ -18,7 +18,7 @@ module.exports = function (controller) {
                         }
                         const newUser = {};
     
-                        convo.addMessage("Greetings, <@" + message.user + ">! This is the first time we're meeting, so just give me a quick second to set you up on my end...", function (response, convo) {
+                        convo.addMessage("Greetings, <@" + message.user + ">! This is the first time we're meeting and I've got a quick question for you...", function (response, convo) {
                             bot.api.users.info({ user: reply.user }, (error, response) => {
                                 if (error) {
                                     console.log("error: ", error);
@@ -28,11 +28,6 @@ module.exports = function (controller) {
                                 newUser.email = response.user.profile.email;
                                 newUser.timezone = response.user.tz
                             })
-                            bot.api.channels.invite({ token: bot.config.bot.app_token, channel: team.bot.channel, user: message.user }, function (err, outcome) {
-                                if (err) {
-                                    console.log("error: ", err);
-                                }
-                            });
                             newUser.channel = message.channel;
                             newUser.team = message.team;
                             newUser.status = 'employee';
@@ -40,22 +35,26 @@ module.exports = function (controller) {
                             newUser.token = bot.config.token;
                         });
     
-                        convo.addQuestion("All done! I've just got one quick question - what's your role here?", function (response, convo) {
+                        convo.addQuestion("What's your role here?", function (response, convo) {
                             newUser.role = response.text;
                             convo.next();
                         }, 'default');
-    
-                        convo.say("Cool! Thanks for humoring my shenanigans. Now the fun part...");
+
+                        convo.say("Thanks for that!");
     
                         convo.activate();
     
                         convo.on('end', function (convo) {
                             if (convo.successful()) {
                                 controller.storage.users.save(newUser);
-    
+                                bot.api.channels.invite({ token: bot.config.bot.app_token, channel: team.bot.channel, user: message.user }, function (err, outcome) {
+                                    if (err) {
+                                        console.log("error: ", err);
+                                    }
+                                });
                                 bot.say({
                                     channel: convo.context.channel,
-                                    text: "Choose what feature you'd like to check out! You can see this message when ever you want by sending me a message saying `Help`",
+                                    text: "Now what was it you were looking to do? P.S. - You can see this message when ever you want by sending me a message saying `Help`",
                                     attachments: [
                                         {
                                             title: 'Questionnaires',

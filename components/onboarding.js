@@ -17,7 +17,7 @@ module.exports = function (controller) {
             } else {
                 const newUser = {};
                 convo.say("Hey, <@" + bot.config.createdBy + ">! _I'm_ Internal, a bot that allows your team to easily communicate their well-being");
-                convo.say("_You_ happen to be the first person to communicate with me on this Slack team so I need some quick help from you about what to name the channel that I'll send you and your teammates emotional fitness scores in");
+                convo.say("_You_ happen to be the first person to communicate with me on this Slack team so I need some quick help from you about what to name the channel that I'll send you and your teammate's emotional fitness scores in");
 
                 var channel_id = '';
                 convo.addQuestion({
@@ -104,13 +104,11 @@ module.exports = function (controller) {
                     convo.next();
                 });
 
-                convo.addQuestion("Lastly, what's your role here?", function (response, convo) {
+                convo.addQuestion("And while I have you, what's your role here?", function (response, convo) {
                     newUser.channel = response.channel;
                     newUser.role = response.text;
                     convo.next();
                 });
-
-                convo.say("We're all set! Thanks for humoring my shenanigans. Now the fun part...");
 
                 convo.activate();
 
