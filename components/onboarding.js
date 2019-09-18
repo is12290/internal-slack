@@ -16,7 +16,7 @@ module.exports = function (controller) {
                 console.log(err);
             } else {
                 const newUser = {};
-                convo.say("Hey, <" + bot.config.createdBy + ">! _I'm_ Internal, a bot that allows your team to easily communicate their well-being");
+                convo.say("Hey, <@" + bot.config.createdBy + ">! _I'm_ Internal, a bot that allows your team to easily communicate their well-being");
                 convo.say("_You_ happen to be the first person to communicate with me on this Slack team so I need some quick help from you about what to name the channel that I'll send you and your teammates emotional fitness scores in");
 
                 var channel_id = '';

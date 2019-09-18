@@ -17,7 +17,7 @@ module.exports = function (controller) {
                         }
                         const newUser = {};
     
-                        convo.addMessage("Greetings, <" + message.user + ">! This is the first time we're meeting, so just give me a quick second to set you up on my end...", function (response, convo) {
+                        convo.addMessage("Greetings, <@" + message.user + ">! This is the first time we're meeting, so just give me a quick second to set you up on my end...", function (response, convo) {
                             bot.api.users.info({ user: reply.user }, (error, response) => {
                                 if (error) {
                                     console.log("error: ", error);
