@@ -12,241 +12,237 @@ module.exports = function (controller) {
                     break;
                 }
             }
-            if (!role || typeof role.status == 'undefined' || role.status != 'manager') {
-                bot.reply(message, 'My deepest condolences, but you need to be a manager in order to report team fitness results! If you\'re interested in upgrading, visit our site: https://getinternal.co');
-            } else {
-                bot.startConversation(message, function (err, convo) {
+            bot.startConversation(message, function (err, convo) {
+                if (err) {
+                    console.log('error: ', err);
+                }
+                var channels = [];
+                bot.api.channels.list({}, function (err, res) {
                     if (err) {
-                        console.log('error: ', err);
+                        console.log("error: ", err)
                     }
-                    var channels = [];
-                    bot.api.channels.list({}, function (err, res) {
-                        if (err) {
-                            console.log("error: ", err)
+                    var list = res.channels;
+                    for (i = 0; i < list.length; i++) {
+                        var instance = list[i];
+                        channels.push({ "text": "#" + instance.name, "value": instance.id });
+                    }
+                    channels.push({ "text": "None", "value": "None" });
+                });
+
+                var channel_id = '';
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            text: "Select a desired channel or choose 'None'",
+                            callback_id: 'channel',
+                            attachment_type: 'default',
+                            color: '#0294ff',
+                            actions: [
+                                {
+                                    "name": "channel",
+                                    "text": "Channel",
+                                    "type": "select",
+                                    "options": channels
+                                }
+                            ]
                         }
-                        var list = res.channels;
-                        for (i = 0; i < list.length; i++) {
-                            var instance = list[i];
-                            channels.push({ "text": "#" + instance.name, "value": instance.id });
-                        }
-                        channels.push({ "text": "None", "value": "None" });
-                    });
+                    ]
+                }, function (response, convo) {
+                    channel_id = channel_id + response.text;
+                    convo.next();
+                });
 
-                    var channel_id = '';
-                    convo.addQuestion({
-                        attachments: [
-                            {
-                                text: "Select a desired channel or choose 'None'",
-                                callback_id: 'channel',
-                                attachment_type: 'default',
-                                color: '#0294ff',
-                                actions: [
-                                    {
-                                        "name": "channel",
-                                        "text": "Channel",
-                                        "type": "select",
-                                        "options": channels
-                                    }
-                                ]
-                            }
-                        ]
-                    }, function (response, convo) {
-                        channel_id = channel_id + response.text;
-                        convo.next();
-                    });
-
-                    var startTimeframe = [];
-                    convo.addQuestion({
-                        attachments: [
-                            {
-                                title: 'Current',
-                                text: 'You want to compare...',
-                                color: "#0294ff",
-                                callback_id: 'current',
-                                attachment_type: 'default',
-                                actions: [
-                                    {
-                                        "name": "Current",
-                                        "text": "Current",
-                                        "type": "select",
-                                        "options": [
-                                            {
-                                                "text": "Today",
-                                                "value": "Today"
-                                            },
-                                            {
-                                                "text": "This Week",
-                                                "value": "Week"
-                                            },
-                                            {
-                                                "text": "This Month",
-                                                "value": "Month"
-                                            },
-                                            {
-                                                "text": "This Year",
-                                                "value": "Year"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }, [
-                            {
-                                pattern: "Today",
-                                callback: function (reply, convo) {
-                                    startTimeframe.push(1);
-                                    convo.next();
-                                }
-                            },
-                            {
-                                pattern: "Week",
-                                callback: function (reply, convo) {
-                                    startTimeframe.push(2);
-                                    convo.next();
-                                }
-                            },
-                            {
-                                pattern: "Month",
-                                callback: function (reply, convo) {
-                                    startTimeframe.push(3);
-                                    convo.next();
-                                }
-                            },
-                            {
-                                pattern: "Year",
-                                callback: function (reply, convo) {
-                                    startTimeframe.push(4);;
-                                    convo.next();
-                                }
-                            }
-                        ]);
-
-                    var endTimeframe = [];
-                    convo.addQuestion({
-                        attachments: [
-                            {
-                                title: 'Past',
-                                text: 'Against...',
-                                callback_id: 'past',
-                                color: "#0294ff",
-                                attachment_type: 'default',
-                                actions: [
-                                    {
-                                        "name": "Past",
-                                        "text": "Past",
-                                        "type": "select",
-                                        "options": [
-                                            {
-                                                "text": "Yesterday",
-                                                "value": "Yesterday"
-                                            },
-                                            {
-                                                "text": "Last Week",
-                                                "value": "Week"
-                                            },
-                                            {
-                                                "text": "Last Month",
-                                                "value": "Month"
-                                            },
-                                            {
-                                                "text": "Last Year",
-                                                "value": "Year"
-                                            },
-                                            {
-                                                "text": "All Time",
-                                                "value": "All"
-                                            }
-                                        ]
-                                    }
-                                ]
-                            }
-                        ]
-                    }, [
-                            {
-                                pattern: "Yesterday",
-                                callback: function (reply, convo) {
-                                    endTimeframe.push(1);
-                                    convo.next();
-                                }
-                            },
-                            {
-                                pattern: "Week",
-                                callback: function (reply, convo) {
-                                    endTimeframe.push(2);
-                                    convo.next();
-                                }
-                            },
-                            {
-                                pattern: "Month",
-                                callback: function (reply, convo) {
-                                    endTimeframe.push(3);
-                                    convo.next();
-                                }
-                            },
-                            {
-                                pattern: "Year",
-                                callback: function (reply, convo) {
-                                    endTimeframe.push(4);;
-                                    convo.next();
-                                }
-                            }
-                        ]);
-
-                    convo.activate();
-
-                    convo.on('end', function (convo) {
-                        if (convo.successful()) {
-                            if (channel_id != 'None') {
-                                var updated_input = [];
-                                bot.api.channels.info({ channel: channel_id }, function (err, response) {
-                                    const users = response.channel.members;
-                                    for (var j = 0; j < users.length; j++) {
-                                        for (var k = 0; k < all_users.length; k++) {
-                                            if (all_users[k].id == users[j]) {
-                                                updated_input.push(all_users[k]);
-                                            }
-                                        }
-                                    }
-                                });
-                                var user_input = updated_input;
-                            } else {
-                                var user_input = all_users;
-                            }
-
-                            var results = getTeamComparisonOutput(user_input, startTimeframe, endTimeframe);
-                            console.log(results);
-                            if (results == 404) {
-                                bot.reply(message, "Hey, make sure your inputs are correct - It doesn't appear that you have scores dating back that far");
-                            } else {
-                                bot.reply(message, {
-                                    text: 'Here is *' + results[2][0] + '* compared to *' + results[2][1] + '*\n',
-                                    attachments: [
+                var startTimeframe = [];
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            title: 'Current',
+                            text: 'You want to compare...',
+                            color: "#0294ff",
+                            callback_id: 'current',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    "name": "Current",
+                                    "text": "Current",
+                                    "type": "select",
+                                    "options": [
                                         {
-                                            title: results[2][0],
-                                            color: '#02D2FF',
-                                            attachment_type: 'default',
-                                            text: 'Score: ' + results[0] + '%' + '\n'
+                                            "text": "Today",
+                                            "value": "Today"
                                         },
                                         {
-                                            title: results[2][1],
-                                            color: '#2A02FF',
-                                            attachment_type: 'default',
-                                            text: 'Score: ' + results[1] + '%' + '\n'
+                                            "text": "This Week",
+                                            "value": "Week"
                                         },
                                         {
-                                            title: 'Comparison',
-                                            color: '#8A02FF',
-                                            attachment_type: 'default',
-                                            text: 'There has been a *' + ((results[0] - results[1]) / results[1]) * 100 + '%* change in emotional health'
+                                            "text": "This Month",
+                                            "value": "Month"
+                                        },
+                                        {
+                                            "text": "This Year",
+                                            "value": "Year"
                                         }
                                     ]
-                                });
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: "Today",
+                            callback: function (reply, convo) {
+                                startTimeframe.push(1);
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: "Week",
+                            callback: function (reply, convo) {
+                                startTimeframe.push(2);
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: "Month",
+                            callback: function (reply, convo) {
+                                startTimeframe.push(3);
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: "Year",
+                            callback: function (reply, convo) {
+                                startTimeframe.push(4);;
+                                convo.next();
                             }
                         }
-                    })
+                    ]);
+
+                var endTimeframe = [];
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            title: 'Past',
+                            text: 'Against...',
+                            callback_id: 'past',
+                            color: "#0294ff",
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    "name": "Past",
+                                    "text": "Past",
+                                    "type": "select",
+                                    "options": [
+                                        {
+                                            "text": "Yesterday",
+                                            "value": "Yesterday"
+                                        },
+                                        {
+                                            "text": "Last Week",
+                                            "value": "Week"
+                                        },
+                                        {
+                                            "text": "Last Month",
+                                            "value": "Month"
+                                        },
+                                        {
+                                            "text": "Last Year",
+                                            "value": "Year"
+                                        },
+                                        {
+                                            "text": "All Time",
+                                            "value": "All"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: "Yesterday",
+                            callback: function (reply, convo) {
+                                endTimeframe.push(1);
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: "Week",
+                            callback: function (reply, convo) {
+                                endTimeframe.push(2);
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: "Month",
+                            callback: function (reply, convo) {
+                                endTimeframe.push(3);
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: "Year",
+                            callback: function (reply, convo) {
+                                endTimeframe.push(4);;
+                                convo.next();
+                            }
+                        }
+                    ]);
+
+                convo.activate();
+
+                convo.on('end', function (convo) {
+                    if (convo.successful()) {
+                        if (channel_id != 'None') {
+                            var updated_input = [];
+                            bot.api.channels.info({ channel: channel_id }, function (err, response) {
+                                const users = response.channel.members;
+                                for (var j = 0; j < users.length; j++) {
+                                    for (var k = 0; k < all_users.length; k++) {
+                                        if (all_users[k].id == users[j]) {
+                                            updated_input.push(all_users[k]);
+                                        }
+                                    }
+                                }
+                            });
+                            var user_input = updated_input;
+                        } else {
+                            var user_input = all_users;
+                        }
+
+                        var results = getTeamComparisonOutput(user_input, startTimeframe, endTimeframe);
+                        console.log(results);
+                        if (results == 404) {
+                            bot.reply(message, "Hey, make sure your inputs are correct - It doesn't appear that you have scores dating back that far");
+                        } else {
+                            bot.reply(message, {
+                                text: 'Here is *' + results[2][0] + '* compared to *' + results[2][1] + '*\n',
+                                attachments: [
+                                    {
+                                        title: results[2][0],
+                                        color: '#02D2FF',
+                                        attachment_type: 'default',
+                                        text: 'Score: ' + results[0] + '%' + '\n'
+                                    },
+                                    {
+                                        title: results[2][1],
+                                        color: '#2A02FF',
+                                        attachment_type: 'default',
+                                        text: 'Score: ' + results[1] + '%' + '\n'
+                                    },
+                                    {
+                                        title: 'Comparison',
+                                        color: '#8A02FF',
+                                        attachment_type: 'default',
+                                        text: 'There has been a *' + ((results[0] - results[1]) / results[1]) * 100 + '%* change in emotional health'
+                                    }
+                                ]
+                            });
+                        }
+                    }
                 })
-            }
+            })
         });
     })
 }

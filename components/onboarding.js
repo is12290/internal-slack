@@ -92,7 +92,6 @@ module.exports = function (controller) {
                         newUser.timezone = response.user.tz
                     })
                     newUser.team = reply.team.id;
-                    newUser.status = 'employee';
                     newUser.id = reply.user;
                     newUser.token = bot.config.token;
 

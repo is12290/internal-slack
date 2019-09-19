@@ -9,10 +9,26 @@ module.exports = function(controller) {
         if (!payload.identity.team_id) {
             debug('Error: received an oauth response without a team id', payload);
         }
-        controller.storage.teams.get(payload.identity.team_id, function(err, team) {
+        controller.storage.teams.get(payload.identity.team_id, function (err, team) {
             if (err) {
                 debug('Error: could not load team from storage system:', payload.identity.team_id, err);
             }
+
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+            today = mm + '/' + dd + '/' + yyyy;
+
+            var end = new Date();
+            var numberOfDaysToAdd = 14;
+            end.setDate(end.getDate() + numberOfDaysToAdd);
+
+            var dd = end.getDate();
+            var mm = end.getMonth() + 1;
+            var y = end.getFullYear();
+
+            var endDate = mm + '/' + dd + '/' + y;
 
             var new_team = false;
             if (!team) {
@@ -21,8 +37,21 @@ module.exports = function(controller) {
                     createdBy: payload.identity.user_id,
                     url: payload.identity.url,
                     name: payload.identity.team,
+                    status: {
+                        subscription: {
+                            status: 'inactive',
+                            seats: 0,
+                            seats_used: 0
+                        },
+                        trial: {
+                            start: today,
+                            end: endDate,
+                            status: 'active',
+                            tally: 1
+                        }
+                    }
                 };
-                var new_team= true;
+                var new_team = true;
             }
 
             team.bot = {
