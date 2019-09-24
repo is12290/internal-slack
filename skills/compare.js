@@ -386,7 +386,6 @@ module.exports = function (controller) {
                                     }
 
                                     if (style == 'Personal') {
-                                        console.log(messager);
                                         var results = getComparison(messager, startTimeframe, endTimeframe, style);
                                     } else if (style == 'Channel') {
                                         var updated_input = [];
@@ -403,7 +402,6 @@ module.exports = function (controller) {
                                         var results = getComparison(all_users, startTimeframe, endTimeframe, style);
                                     }
 
-                                    console.log(results);
                                     if (results == 404) {
                                         bot.reply(message, "Hey, make sure your inputs are correct - It doesn't appear that you have scores dating back that far");
                                     } else {
@@ -596,25 +594,21 @@ function getComparison(results, start, end, type) {
                 }
             }
         }
-
-        if (currentCount.length > 0) {
-            var currentScore = ((currentCount.reduce(function (a, b) { return a + b; }, 0) * 25) / currentCount.length).toFixed(2);
-            currentScore = Math.round(currentScore);
-        } else {
-            return 404;
-        }
-
-        if (pastCount.length > 0) {
-            var pastScore = ((pastCount.reduce(function (a, b) { return a + b; }, 0) * 25) / pastCount.length).toFixed(2);
-            pastScore = Math.round(pastScore);
-        } else {
-            return 404;
-        }
     }
-    console.log(currentCount);
-    console.log(pastCount);
-    console.log(currentScore);
-    console.log(pastScore);
+
+    if (currentCount.length > 0) {
+        var currentScore = ((currentCount.reduce(function (a, b) { return a + b; }, 0) * 25) / currentCount.length).toFixed(2);
+        currentScore = Math.round(currentScore);
+    } else {
+        return 404;
+    }
+
+    if (pastCount.length > 0) {
+        var pastScore = ((pastCount.reduce(function (a, b) { return a + b; }, 0) * 25) / pastCount.length).toFixed(2);
+        pastScore = Math.round(pastScore);
+    } else {
+        return 404;
+    }
 
     return [currentScore, pastScore, timeframeMessage];
 }
