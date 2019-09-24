@@ -412,19 +412,19 @@ module.exports = function (controller) {
                                                     title: results[2][0],
                                                     color: '#02D2FF',
                                                     attachment_type: 'default',
-                                                    text: 'Score: ' + results[0] + '%' + '\n'
+                                                    text: 'Score: *' + results[0] + '%*' + '\n'
                                                 },
                                                 {
                                                     title: results[2][1],
                                                     color: '#2A02FF',
                                                     attachment_type: 'default',
-                                                    text: 'Score: ' + results[1] + '%' + '\n'
+                                                    text: 'Score: *' + results[1] + '%*' + '\n'
                                                 },
                                                 {
                                                     title: 'Comparison',
                                                     color: '#8A02FF',
                                                     attachment_type: 'default',
-                                                    text: 'There has been a *' + ((results[0] - results[1]) / results[1]) * 100 + '%* change in emotional health'
+                                                    text: 'There has been a *' + (results[0] - results[1])+ '%* change in emotional health'
                                                 }
                                             ]
                                         });
