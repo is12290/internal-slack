@@ -82,15 +82,24 @@ module.exports = function (controller) {
                         }
                     });
 
+                    var user_name = '';
+                    var user_email = '';
+                    var timezone = '';
                     bot.api.users.info({ user: reply.user }, (error, response) => {
                         if (error) {
                             console.log("error: ", error);
                         }
                         let { name, real_name } = response.user;
-                        newUser.name = real_name;
-                        newUser.email = response.user.profile.email;
-                        newUser.timezone = response.user.tz
+                        user_name = user_name + real_name;
+                        user_email = user_email + response.user.profile.email;
+                        timezone = timezone + response.user.tz;
+                        team.timezone = response.user.tz;
+                        controller.storage.teams.save(team);
                     })
+                    newUser.name = user_name;
+                    newUser.email = user_email;
+                    newUser.timezone = timezone;
+                    team.timezone = response.user.tz;
                     newUser.team = reply.team.id;
                     newUser.id = reply.user;
                     newUser.token = bot.config.token;

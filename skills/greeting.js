@@ -1,153 +1,91 @@
 module.exports = function (controller) {
-
     controller.hears(['^hi', '^hello', '^yo'], 'direct_message,direct_mention', function (bot, message) {
-        controller.storage.users.get(message.user, function (error, user) {
-            if (error) {
-                console.log("error: ", error);
-                bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
+        controller.storage.teams.get(message.team, function (err, team) {
+            if (err) {
+                console.log(err);
             }
-            if (!user || typeof user == "undefined") {
-                controller.storage.teams.get(message.team, function (err, team) {
-                    if (err) {
-                        console.log(err);
-                    }
-                    bot.startPrivateConversation({ user: message.user }, function (err, convo) {
-                        if (err) {
-                            console.log("error: ", err);
-                            bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
-                        }
-                        const newUser = {};
-    
-                        convo.addMessage("Greetings, <@" + message.user + ">! This is the first time we're meeting and I've got a quick question for you...", function (response, convo) {
-                            bot.api.users.info({ user: reply.user }, (error, response) => {
-                                if (error) {
-                                    console.log("error: ", error);
-                                }
-                                let { name, real_name } = response.user;
-                                newUser.name = real_name;
-                                newUser.email = response.user.profile.email;
-                                newUser.timezone = response.user.tz
-                            })
-                            newUser.channel = message.channel;
-                            newUser.team = message.team;
-                            newUser.status = 'employee';
-                            newUser.id = message.user;
-                            newUser.token = bot.config.token;
-                        });
-    
-                        convo.addQuestion("What's your role here?", function (response, convo) {
-                            newUser.role = response.text;
-                            convo.next();
-                        }, 'default');
-
-                        convo.say("Thanks for that!");
-    
-                        convo.activate();
-    
-                        convo.on('end', function (convo) {
-                            if (convo.successful()) {
-                                controller.storage.users.save(newUser);
-                                bot.api.channels.invite({ token: bot.config.bot.app_token, channel: team.bot.channel, user: message.user }, function (err, outcome) {
-                                    if (err) {
-                                        console.log("error: ", err);
-                                    }
-                                });
-                                bot.say({
-                                    channel: convo.context.channel,
-                                    text: "Now what was it you were looking to do? P.S. - You can see this message when ever you want by sending me a message saying `Help`",
-                                    attachments: [
-                                        {
-                                            title: 'Questionnaires',
-                                            color: '#02D2FF',
-                                            callback_id: 'questionnaire',
-                                            attachment_type: 'default',
-                                            text: "Record your headspace at the beginning and end of your workday",
-                                            actions: [
-                                                {
-                                                    'name': 'checkin-button',
-                                                    'value': 'Yes-CheckIn',
-                                                    'text': 'Check In',
-                                                    'type': 'button'
-                                                },
-                                                {
-                                                    'name': 'reflect-button',
-                                                    'value': 'Yes-Reflect',
-                                                    'text': 'Reflect',
-                                                    'type': 'button'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: 'Reports',
-                                            color: '#2A02FF',
-                                            attachment_type: 'default',
-                                            callback_id: 'report',
-                                            text: "Monitor your emotional well-being overtime",
-                                            actions: [
-                                                {
-                                                    'name': 'Weekly-Report-button',
-                                                    'value': 'Weekly-Report',
-                                                    'text': 'Weekly Report',
-                                                    'type': 'button'
-                                                },
-                                                {
-                                                    'name': 'Monthly-Report-button',
-                                                    'value': 'Monthly-Report',
-                                                    'text': 'Monthly Report',
-                                                    'type': 'button'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: 'Special Actions',
-                                            color: '#8A02FF',
-                                            callback_id: 'special',
-                                            attachment_type: 'default',
-                                            text: "Get the insights you're curious about",
-                                            actions: [
-                                                {
-                                                    'name': 'Compare-Scores-button',
-                                                    'value': 'Compare-Scores',
-                                                    'text': 'Compare Scores',
-                                                    'type': 'button'
-                                                },
-                                                {
-                                                    'name': 'Historic-Search-button',
-                                                    'value': 'Historic-Search',
-                                                    'text': 'Historic Search',
-                                                    'type': 'button'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: 'Customizations',
-                                            color: '#CF02FF',
-                                            callback_id: 'custom',
-                                            attachment_type: 'default',
-                                            text: "Choose times to be automatically sent reports and questionnaires",
-                                            actions: [
-                                                {
-                                                    'name': 'Customize-Questionnaires-button',
-                                                    'value': 'Customize-Questionnaires',
-                                                    'text': 'Customize Questionnaires',
-                                                    'type': 'button'
-                                                },
-                                                {
-                                                    'name': 'Customize-Reports-button',
-                                                    'value': 'Customize-Reports',
-                                                    'text': 'Customize Reports',
-                                                    'type': 'button'
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                })
+            if (team.status.subscription.status == 'inactive' && team.status.trial.status == 'inactive') {
+                if (team.status.trial.status == 'inactive' && team.status.subscription.seats_used == 0) {
+                    var message = "Your trial is up! Would you like to purchase a subscription?"
+                } else if (team.status.subscription.status == 'inactive' && team.status.subscription.seats_used > 0) {
+                    var message = "It looks like your subscription is up! Would you like to renew?"
+                }
+                bot.reply(message, {
+                    attachments: [{
+                        title: "Subscribe",
+                        text: message,
+                        callback_id: 'subscribe',
+                        color: "#0294ff",
+                        attachment_type: 'default',
+                        actions: [
+                            {
+                                'name': 'yes-button',
+                                'value': 'Yes-Subscribe',
+                                'text': 'Yes',
+                                'type': 'button'
+                            },
+                            {
+                                'name': 'no-button',
+                                'value': 'No-Subscribe',
+                                'text': 'No',
+                                'type': 'button'
                             }
+                        ]
+                    }]
+                }, function (err, response) {
+                    if (response.text == 'Yes-Subscribe') {
+                        bot.replyInteractive(response, {
+                            attachments: [{
+                                title: "Subscribe",
+                                text: message,
+                                callback_id: 'subscribe',
+                                color: "#0294ff",
+                                attachment_type: 'default',
+                                actions: [
+                                    {
+                                        'name': 'yes-button',
+                                        'value': 'Yes-Subscribe',
+                                        'style': 'primary',
+                                        'text': 'Yes',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'no-button',
+                                        'value': 'No-Subscribe',
+                                        'text': 'No',
+                                        'type': 'button'
+                                    }
+                                ]
+                            }]
                         })
-                    })
+                    } else if (response.text == 'No-Subscribe') {
+                        bot.replyInteractive(response, {
+                            attachments: [{
+                                title: "Subscribe",
+                                text: message,
+                                callback_id: 'subscribe',
+                                color: "#0294ff",
+                                attachment_type: 'default',
+                                actions: [
+                                    {
+                                        'name': 'yes-button',
+                                        'value': 'Yes-Subscribe',
+                                        'text': 'Yes',
+                                        'type': 'button'
+                                    },
+                                    {
+                                        'name': 'no-button',
+                                        'value': 'No-Subscribe',
+                                        'style': 'danger',
+                                        'text': 'No',
+                                        'type': 'button'
+                                    }
+                                ]
+                            }]
+                        })
+                    }
                 })
             }
-
             else {
                 var messages = ["Greetings! I hope you’re doing well today. If you’re looking for help, reply with `Help`",
                     "Yoyo! Let me know if I can help you out with `Help`",
@@ -161,5 +99,5 @@ module.exports = function (controller) {
                 bot.reply(message, messages[msg]);
             }
         })
-    });
+    })
 };

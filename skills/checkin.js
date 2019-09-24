@@ -1,152 +1,93 @@
 module.exports = function (controller) {
-    controller.hears(['check in', 'Check in', 'check In', 'Check In'], 'direct_message', function (bot, message) {
-        controller.storage.users.get(message.user, function (error, user) {
-            if (error) {
-                console.log("error: ", err);
-                bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
-            }
-            if (!user || typeof user == 'undefined') {
-                controller.storage.teams.get(message.team, function (err, team) {
-                    if (err) {
-                        console.log(err);
+    controller.on('interactive_message_callback', function (bot, message) {
+        if (message.text == "Yes-CheckIn") {
+            controller.storage.teams.get(message.team.id, function (err, team) {
+                if (err) {
+                    console.log("error: ", err);
+                }
+                if (team.status.subscription.status == 'inactive' && team.status.trial.status == 'inactive') {
+                    if (team.status.trial.status == 'inactive' && team.status.subscription.seats_used == 0) {
+                        var message = "Your trial is up! Would you like to purchase a subscription?"
+                    } else if (team.status.subscription.status == 'inactive' && team.status.subscription.seats_used > 0) {
+                        var message = "It looks like your subscription is up! Would you like to renew?"
                     }
-                    bot.startPrivateConversation({ user: message.user }, function (err, convo) {
-                        if (err) {
-                            console.log("error: ", err);
-                            bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
-                        }
-                        const newUser = {};
-    
-                        convo.addMessage("Greetings, <@" + message.user + ">! This is the first time we're meeting and I've got a quick question for you...", function (response, convo) {
-                            bot.api.users.info({ user: reply.user }, (error, response) => {
-                                if (error) {
-                                    console.log("error: ", error);
+                    bot.reply(message, {
+                        attachments: [{
+                            title: "Subscribe",
+                            text: message,
+                            callback_id: 'subscribe',
+                            color: "#0294ff",
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'yes-button',
+                                    'value': 'Yes-Subscribe',
+                                    'text': 'Yes',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'no-button',
+                                    'value': 'No-Subscribe',
+                                    'text': 'No',
+                                    'type': 'button'
                                 }
-                                let { name, real_name } = response.user;
-                                newUser.name = real_name;
-                                newUser.email = response.user.profile.email;
-                                newUser.timezone = response.user.tz
-                            })
-                            newUser.channel = message.channel;
-                            newUser.team = message.team;
-                            newUser.status = 'employee';
-                            newUser.id = message.user;
-                            newUser.token = bot.config.token;
-                        });
-    
-                        convo.addQuestion("What's your role here?", function (response, convo) {
-                            newUser.role = response.text;
-                            convo.next();
-                        }, 'default');
-
-                        convo.say("Thanks for that!");
-    
-                        convo.activate();
-    
-                        convo.on('end', function (convo) {
-                            if (convo.successful()) {
-                                controller.storage.users.save(newUser);
-                                bot.api.channels.invite({ token: bot.config.bot.app_token, channel: team.bot.channel, user: message.user }, function (err, outcome) {
-                                    if (err) {
-                                        console.log("error: ", err);
-                                    }
-                                });
-                                bot.say({
-                                    channel: convo.context.channel,
-                                    text: "Now what was it you were looking to do? P.S. - You can see this message when ever you want by sending me a message saying `Help`",
-                                    attachments: [
+                            ]
+                        }]
+                    }, function (err, response) {
+                        if (response.text == 'Yes-Subscribe') {
+                            bot.replyInteractive(response, {
+                                attachments: [{
+                                    title: "Subscribe",
+                                    text: message,
+                                    callback_id: 'subscribe',
+                                    color: "#0294ff",
+                                    attachment_type: 'default',
+                                    actions: [
                                         {
-                                            title: 'Questionnaires',
-                                            color: '#02D2FF',
-                                            callback_id: 'questionnaire',
-                                            attachment_type: 'default',
-                                            text: "Record your headspace at the beginning and end of your workday",
-                                            actions: [
-                                                {
-                                                    'name': 'checkin-button',
-                                                    'value': 'Yes-CheckIn',
-                                                    'text': 'Check In',
-                                                    'type': 'button'
-                                                },
-                                                {
-                                                    'name': 'reflect-button',
-                                                    'value': 'Yes-Reflect',
-                                                    'text': 'Reflect',
-                                                    'type': 'button'
-                                                }
-                                            ]
+                                            'name': 'yes-button',
+                                            'value': 'Yes-Subscribe',
+                                            'style': 'primary',
+                                            'text': 'Yes',
+                                            'type': 'button'
                                         },
                                         {
-                                            title: 'Reports',
-                                            color: '#2A02FF',
-                                            attachment_type: 'default',
-                                            callback_id: 'report',
-                                            text: "Monitor your emotional well-being overtime",
-                                            actions: [
-                                                {
-                                                    'name': 'Weekly-Report-button',
-                                                    'value': 'Weekly-Report',
-                                                    'text': 'Weekly Report',
-                                                    'type': 'button'
-                                                },
-                                                {
-                                                    'name': 'Monthly-Report-button',
-                                                    'value': 'Monthly-Report',
-                                                    'text': 'Monthly Report',
-                                                    'type': 'button'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: 'Special Actions',
-                                            color: '#8A02FF',
-                                            callback_id: 'special',
-                                            attachment_type: 'default',
-                                            text: "Get the insights you're curious about",
-                                            actions: [
-                                                {
-                                                    'name': 'Compare-Scores-button',
-                                                    'value': 'Compare-Scores',
-                                                    'text': 'Compare Scores',
-                                                    'type': 'button'
-                                                },
-                                                {
-                                                    'name': 'Historic-Search-button',
-                                                    'value': 'Historic-Search',
-                                                    'text': 'Historic Search',
-                                                    'type': 'button'
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            title: 'Customizations',
-                                            color: '#CF02FF',
-                                            callback_id: 'custom',
-                                            attachment_type: 'default',
-                                            text: "Choose times to be automatically sent reports and questionnaires",
-                                            actions: [
-                                                {
-                                                    'name': 'Customize-Questionnaires-button',
-                                                    'value': 'Customize-Questionnaires',
-                                                    'text': 'Customize Questionnaires',
-                                                    'type': 'button'
-                                                },
-                                                {
-                                                    'name': 'Customize-Reports-button',
-                                                    'value': 'Customize-Reports',
-                                                    'text': 'Customize Reports',
-                                                    'type': 'button'
-                                                }
-                                            ]
+                                            'name': 'no-button',
+                                            'value': 'No-Subscribe',
+                                            'text': 'No',
+                                            'type': 'button'
                                         }
                                     ]
-                                })
-                            }
-                        })
+                                }]
+                            })
+                        } else if (response.text == 'No-Subscribe') {
+                            bot.replyInteractive(response, {
+                                attachments: [{
+                                    title: "Subscribe",
+                                    text: message,
+                                    callback_id: 'subscribe',
+                                    color: "#0294ff",
+                                    attachment_type: 'default',
+                                    actions: [
+                                        {
+                                            'name': 'yes-button',
+                                            'value': 'Yes-Subscribe',
+                                            'text': 'Yes',
+                                            'type': 'button'
+                                        },
+                                        {
+                                            'name': 'no-button',
+                                            'value': 'No-Subscribe',
+                                            'style': 'danger',
+                                            'text': 'No',
+                                            'type': 'button'
+                                        }
+                                    ]
+                                }]
+                            })
+                        }
                     })
-                })
-            }
-            else {
+                } else { 
+                // Check in convo
                 bot.startConversation(message, function (err, convo) {
                     if (err) {
                         console.log("error: ", err);
@@ -1053,13 +994,13 @@ module.exports = function (controller) {
                             }
                         ]);
 
-                    var permission;
+                    const permission = [];
                     convo.addQuestion({
                         attachments: [
                             {
                                 callback_id: 'permission',
-                                color: "#0294ff",
                                 text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                color: "#0294ff",
                                 attachment_type: 'default',
                                 actions: [
                                     {
@@ -1086,8 +1027,8 @@ module.exports = function (controller) {
                                             attachments: [
                                                 {
                                                     callback_id: 'permission',
-                                                    color: "#0294ff",
                                                     text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -1108,10 +1049,10 @@ module.exports = function (controller) {
                                             ]
                                         }
                                     )
-                                    permission = true;
+                                    permission.push(true);
                                     bot.api.reactions.add({
                                         name: 'thumbsup',
-                                        channel: message.channel,
+                                        channel: reply.channel,
                                         timestamp: reply.ts
                                     });
                                     convo.next();
@@ -1125,8 +1066,8 @@ module.exports = function (controller) {
                                             attachments: [
                                                 {
                                                     callback_id: 'permission',
-                                                    color: "#0294ff",
                                                     text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                                    color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
@@ -1147,10 +1088,10 @@ module.exports = function (controller) {
                                             ]
                                         }
                                     );
-                                    permission = false;
+                                    permission.push(false);
                                     bot.api.reactions.add({
                                         name: 'thumbsup',
-                                        channel: message.channel,
+                                        channel: reply.channel,
                                         timestamp: reply.ts
                                     });
                                     convo.next();
@@ -1171,71 +1112,86 @@ module.exports = function (controller) {
                             var sum = score.reduce(function (a, b) { return a + b; }, 0);
                             score.push(sum);
 
-                            var today = new Date();
-                            var dd = String(today.getDate()).padStart(2, '0');
-                            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                            var yyyy = today.getFullYear();
-
-                            today = mm + '/' + dd + '/' + yyyy;
-
-                            if (!user) {
-                                user = {};
-                                user.id = message.user,
-                                    user.team = message.team,
-                                    user.channel = message.channel
-                                user.logs = {
-                                    [today]: {
-                                        check_in: score,
-                                        permission: permission
-                                    }
-                                };
-                                controller.storage.users.save(user);
-                            } else if (!user.logs) {
-                                user.logs = {
-                                    [today]:  {
-                                        check_in: score,
-                                        permission: permission
-                                    }
-                                };
-                                controller.storage.users.save(user);
-                            } else {
-                                user.logs[today] = {
-                                    check_in: score,
-                                    permission: permission,
+                            controller.storage.users.get(message.user, function (err, user) {
+                                if (err) {
+                                    console.log("error: ", err);
+                                    convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")
                                 }
-                                controller.storage.users.save(user);
-                            }
 
-                            const overall = GetOverall(score);
-                            if (permission == true) {
-                                controller.storage.teams.get(message.team, function (err, team) {
-                                    if (err) {
-                                        console.log("error: ", err);
-                                    }
-                                    if (overall == 100) {
-                                        bot.say({
-                                            text: "<@" + message.user + "> is feeling " + overall + "% today :rocket:",
-                                            channel: team.bot.channel
-                                        }, function(err, response) {
-                                            if (err) {
-                                                console.log("Erorr: ", err);
-                                                error = true;
+                                var today = new Date();
+                                var dd = String(today.getDate()).padStart(2, '0');
+                                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                                var yyyy = today.getFullYear();
+
+                                today = mm + '/' + dd + '/' + yyyy;
+
+                                if (!user) {
+                                    user = {};
+                                    bot.api.users.info({ user: message.user }, (error, response) => {
+                                        if (error) {
+                                            console.log("error: ", error);
+                                        }
+                                        let { name, real_name } = response.user;
+                                        user.name = real_name;
+                                        user.email = response.user.profile.email;
+                                        user.timezone = response.user.tz
+                                        user.id = message.user,
+                                            user.team = message.team,
+                                            user.channel = message.channel
+                                        user.logs = {
+                                            [today]: {
+                                                check_in: score,
+                                                permission: permission[0]
                                             }
-                                        });
-                                    } else {
-                                        bot.say({
-                                            text: "<@" + message.user + "> is feeling " + overall + "% today",
-                                            channel: team.bot.channel
-                                        }, function(err, response) {
-                                            if (err) {
-                                                console.log("Erorr: ", err);
-                                                error = true;
-                                            }
-                                        });
+                                        };
+                                    })
+                                    controller.storage.users.save(user);
+                                } else if (!user.logs) {
+                                    user.logs = {
+                                        [today]: {
+                                            check_in: score,
+                                            permission: permission[0]
+                                        }
+                                    };
+                                    controller.storage.users.save(user);
+                                } else {
+                                    user.logs[today] = {
+                                        check_in: score,
+                                        permission: permission[0],
                                     }
+                                    controller.storage.users.save(user);
+                                }
+                            });
+
+                            if (permission[0] == true) {
+                                const overall = GetOverall(score);
+                                var error;
+                                if (overall > 90) {
+                                    bot.say({
+                                        text: "<@" + message.user + "> is feeling " + overall + "% today :rocket:",
+                                        channel: team.bot.channel
+                                    }, function (err, response) {
+                                        if (err) {
+                                            console.log("Erorr: ", err);
+                                            error = true;
+                                        }
+                                    });
+                                } else {
+                                    bot.say({
+                                        text: "<@" + message.user + "> is feeling " + overall + "% today",
+                                        channel: team.bot.channel
+                                    }, function (err, response) {
+                                        if (err) {
+                                            console.log("Erorr: ", err);
+                                            error = true;
+                                        }
+                                    });
+                                }
+                                if (error == true) {
+                                    bot.reply(message, "Sorry!! There has been an error sharing your score. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
+                                } else {
                                     bot.reply(message, "Your score of " + overall + "% has been shared successfully in <#" + team.bot.channel + ">!");
-                                    bot.reply(message, 'Okay, that is all!');
-                                })
+                                }
                             } else {
                                 bot.reply(message, 'Okay, no problem! Your score of ' + overall + "% has been recorded");
                             }
@@ -1246,9 +1202,14 @@ module.exports = function (controller) {
                     });
                 });
             }
-        })
-    });
-};
+            })
+        } else if (message.actions[0].value == "No-CheckIn") {
+            bot.reply(message, "Okay, no worries! I'm ready when you are")
+        } else {
+            // Pass
+        }
+    })
+}
 
 function GetOverall(score) {
     var scores = [];

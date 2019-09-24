@@ -1,7 +1,7 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
-        if (message.text == "Generate-Report") {
-            controller.storage.teams.get(message.team.id, function (err, team) {
+        if (message.text == "Historic-Search") {
+            controller.storage.teams.get(message.team, function (err, team) {
                 if (err) {
                     console.log("error: ", err);
                 }
@@ -91,41 +91,49 @@ module.exports = function (controller) {
                         if (err) {
                             console.log(err);
                         }
-                        var timeframe = '';
+                        var dates = [];
                         convo.addQuestion({
-                            attachments: [
+                            text: 'Search Timeframe',
+                            blocks: [
                                 {
-                                    title: 'Timeframe',
-                                    text: 'What is the timeframe for the report?',
-                                    callback_id: 'timeframe',
-                                    attachment_type: 'default',
-                                    color: "#0294ff",
-                                    actions: [
+                                    "type": "section",
+                                    "block_id": "section1234",
+                                    "text": {
+                                        "type": "mrkdwn",
+                                        "text": "Choose the date range you'd like the compute"
+                                    }
+                                },
+                                {
+                                    "type": "actions",
+                                    "elements": [
                                         {
-                                            "name": "timeframe",
-                                            "text": "Timeframe",
-                                            "type": "select",
-                                            "options": [
-                                                {
-                                                    "text": "Daily",
-                                                    "value": "daily"
-                                                },
-                                                {
-                                                    "text": "Weekly",
-                                                    "value": "weekly",
-                                                },
-                                                {
-                                                    "text": "Monthly",
-                                                    "value": "monthly",
-                                                }
-                                            ]
+                                            "type": "datepicker",
+                                            "placeholder": {
+                                                "type": "plain_text",
+                                                "text": "Start Date",
+                                                "emoji": true
+                                            }
+                                        },
+                                        {
+                                            "type": "datepicker",
+                                            "placeholder": {
+                                                "type": "plain_text",
+                                                "text": "End Date",
+                                                "emoji": true
+                                            }
                                         }
                                     ]
                                 }
                             ]
                         }, function (response, convo) {
-                            timeframe = timeframe + response.text;
-                            convo.stop('completed');
+                            dates.push(response.actions[0].selected_date);
+
+                            if (dates.length == 2) {
+                                bot.reply(message, "One moment, computing the results...");
+                                convo.stop('completed');
+                            } else {
+                                convo.silentRepeat();
+                            }
                         }, {}, 'timeframe');
 
                         var users = [];
@@ -180,8 +188,8 @@ module.exports = function (controller) {
                         var style = '';
                         convo.addQuestion({
                             attachments: [{
-                                text: "What kind of report is this?",
-                                callback_id: 'report-style',
+                                text: "What kind of search do you want to carry out?",
+                                callback_id: 'search-style',
                                 color: "#0294ff",
                                 attachment_type: 'default',
                                 actions: [
@@ -211,8 +219,8 @@ module.exports = function (controller) {
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
                                             attachments: [{
-                                                text: "What kind of report is this?",
-                                                callback_id: 'report-style',
+                                                text: "What kind of search do you want to carry out?",
+                                                callback_id: 'search-style',
                                                 color: "#0294ff",
                                                 attachment_type: 'default',
                                                 actions: [
@@ -247,8 +255,8 @@ module.exports = function (controller) {
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
                                             attachments: [{
-                                                text: "What kind of report is this?",
-                                                callback_id: 'report-style',
+                                                text: "What kind of search do you want to carry out?",
+                                                callback_id: 'search-style',
                                                 color: "#0294ff",
                                                 attachment_type: 'default',
                                                 actions: [
@@ -283,8 +291,8 @@ module.exports = function (controller) {
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
                                             attachments: [{
-                                                text: "What kind of report is this?",
-                                                callback_id: 'report-style',
+                                                text: "What kind of search do you want to carry out?",
+                                                callback_id: 'search-style',
                                                 color: "#0294ff",
                                                 attachment_type: 'default',
                                                 actions: [
@@ -334,8 +342,7 @@ module.exports = function (controller) {
                                     }
 
                                     if (style == 'Personal') {
-                                        var results = getReport(messager, timeframe, style);
-                                        var text = "Here is your personal " + timeframe + " report";
+                                        var results = getSearchOutput(messager, dates, style);
                                     } else if (style == 'Channel') {
                                         var updated_input = [];
                                         bot.api.channels.info({ channel: channel_name }, function (err, response) {
@@ -352,18 +359,16 @@ module.exports = function (controller) {
                                             }
                                         });
 
-                                        var results = getReport(updated_input, timeframe, style);
-                                        var text = "Here is the " + timeframe + " report for " + channel_name;
+                                        var results = getSearchOutput(updated_input, dates, style);
                                     } else {
-                                        var results = getReport(all_users, timeframe, style);
-                                        var text = "Here is the " + timeframe + " report for your team"
+                                        var results = getSearchOutput(all_users, dates, style);
                                     }
 
                                     if (results == 404) {
-                                        bot.reply(message, "Are you sure those dates are correct? I can't find logs back that far :thinking_face:");
+                                        bot.reply(message, "Results weren't able to be computed... Are you sure you selected the correct dates?");
                                     } else {
                                         bot.reply(message, {
-                                            text: text,
+                                            text: 'Hey there! Here is your search report...\n',
                                             attachments: [
                                                 {
                                                     title: 'Sleep',
@@ -390,10 +395,10 @@ module.exports = function (controller) {
                                                     text: results[0][3] + '\n*Crushing It:* ' + results[1][3][4] + ' | *Okay:* ' + results[1][3][3] + ' | *Managing:* ' + results[1][3][2] + ' | *Overwhelmed:* ' + results[1][3][1] + '\n'
                                                 },
                                                 {
-                                                    title: 'Presence',
+                                                    title: 'Efficiency',
                                                     color: '#FF029D',
                                                     attachment_type: 'default',
-                                                    text: results[0][4] + '\n*Grounded:* ' + results[1][4][4] + ' | *Aware:* ' + results[1][4][3] + ' | *Out of It:* ' + results[1][4][2] + ' | *Disconnected:* ' + results[1][4][1] + '\n'
+                                                    text: results[0][4] + '\n*Overdrive:* ' + results[1][4][4] + ' | *Normal:* ' + results[1][4][3] + ' | *Slow:* ' + results[1][4][2] + ' | *Dragging:* ' + results[1][4][1] + '\n'
                                                 },
                                                 {
                                                     title: 'Fulfillment',
@@ -410,7 +415,6 @@ module.exports = function (controller) {
                                             ]
                                         });
                                     }
-
                                 })
                             }
                         })
@@ -421,56 +425,17 @@ module.exports = function (controller) {
     })
 }
 
-function getReport(results, timeframe, style) {
+function getSearchOutput(results, dates, style) {
     var moment = require('moment');
-    var message = '';
-    var days = [];
-    if (timeframe == 'monthly') {
-        var start = moment().startOf('month');
-        var end = moment().endOf('month');
-        var day = start;
-        message = message + 'This month';
-        while (day <= end) {
-            days.push(day.format('L'));
-            day = day.clone().add(1, 'd');
-        }
-    } else if (timeframe == 'weekly') {
-        var start = moment().startOf('isoWeek');
-        var end = moment().endOf('isoWeek');
-        var day = start;
-        message = message + 'This week';
-        while (day <= end) {
-            days.push(day.format('L'));
-            day = day.clone().add(1, 'd');
-        }
-    } else if (timeframe == 'daily') {
-        days.push(moment().format('DD/MM/YYY'));
-        message = message + 'Today';
-    }
+    var startOfMonth = moment(dates[0]);
+    var endOfMonth = moment(dates[1]);
 
-    var pastDays = [];
-    var message2 = '';
-    if (timeframe == 'monthly') {
-        pastDays.push(moment().subtract(1, 'd').format('MM/DD/YYY'));
-        message2 = message2 + 'yesterday';
-    } else if (timeframe == 'weekly') {
-        var startOfWeek = moment().startOf('isoWeek').subtract(7, 'd');
-        var endOfWeek = moment().endOf('isoWeek').subtract(7, 'd');
-        message2 = message2 + 'last week';
-        while (startOfWeek <= endOfWeek) {
-            pastDays.push(startOfWeek.format('L'));
-            startOfWeek = startOfWeek.clone().add(1, 'd');
-        }
-        timeframeMessage.push('Last Week');
-    } else if (timeframe == 'monthly') {
-        var startOfMonth = moment().startOf('month').subtract(1, 'months');
-        var endOfMonth = moment().endOf('month').subtract(1, 'months');
-        message2 = message2 + 'last month';
-        while (startOfMonth <= endOfMonth) {
-            pastDays.push(startOfMonth.format('L'));
-            startOfMonth = startOfMonth.clone().add(1, 'd');
-        }
-        timeframeMessage.push('Last Month');
+    var day = startOfMonth;
+
+    var days = [];
+    while (day <= endOfMonth) {
+        days.push(day.format('L'));
+        day = day.clone().add(1, 'd');
     }
 
     var sleepCount = [];
@@ -481,16 +446,14 @@ function getReport(results, timeframe, style) {
     var fulfillmentCount = [];
     var overallCount = [];
 
-    var pastCount = [];
-
     if (style == 'Personal') {
-        for (var a = 0; a < days.length; a++) {
-            if (days[a] in results.logs) {
-                if (typeof results.logs[days[a]].check_in == 'undefined' || typeof results.logs[days[a]].check_out == 'undefined') {
+        for (var j = 0; j < days.length; j++) {
+            if (days[j] in results.logs) {
+                if (typeof results.logs[days[j]].check_in == 'undefined' || results.logs[days[j]].check_out == 'undefined') {
                     // Pass
                 } else {
-                    var checkIn = results.logs[days[a]].check_in;
-                    var checkOut = results.logs[days[a]].check_out;
+                    var checkIn = results.logs[days[j]].check_in;
+                    var checkOut = results.logs[days[j]].check_out;
 
                     sleepCount.push(checkIn[0]);
                     energyCount.push(checkIn[1]);
@@ -506,34 +469,16 @@ function getReport(results, timeframe, style) {
                 }
             }
         }
-
-        for (var k = 0; k < pastDays.length; k++) {
-            if (pastDays[k] in results.logs) {
-                if (typeof results.logs[pastDays[k]].check_in == 'undefined' || results.logs[pastDays[k]].check_out == 'undefined') {
-                    // Pass
-                } else {
-                    var checkIn = results.logs[pastDays[k]].check_in;
-                    var checkOut = results.logs[pastDays[k]].check_out;
-
-                    if (checkIn == 'undefined' || checkOut == 'undefined') {
-                        // Pass
-                    } else {
-                        pastCount.push(checkIn[4] / 4);
-                        pastCount.push(checkOut[4] / 4);
-                    }
-                }
-            }
-        }
     } else {
-        for (var i = 0; i < results.length; i++) {
-            var instance = results[i];
-            for (var j = 0; j < days.length; j++) {
-                if (days[j] in instance.logs) {
-                    if (typeof instance.logs[days[j]].check_in == 'undefined' || instance.logs[days[j]].check_out == 'undefined') {
+        for (var j = 0; j < days.length; j++) {
+            for (var i = 0; i < results.length; i++) {
+                var resultsInstance = results[i];
+                if (days[j] in resultsInstance.logs) {
+                    if (typeof resultsInstance.logs[days[j]].check_in == 'undefined' || resultsInstance.logs[days[j]].check_out == 'undefined') {
                         // Pass
                     } else {
-                        var checkIn = instance.logs[days[j]].check_in;
-                        var checkOut = instance.logs[days[j]].check_out;
+                        var checkIn = resultsInstance.logs[days[j]].check_in;
+                        var checkOut = resultsInstance.logs[days[j]].check_out;
 
                         sleepCount.push(checkIn[0]);
                         energyCount.push(checkIn[1]);
@@ -541,29 +486,11 @@ function getReport(results, timeframe, style) {
                         confidenceCount.push(checkIn[3]);
                         overallCount.push(checkIn[4] / 4);
 
-
                         presenceCount.push(checkOut[0]);
                         energyCount.push(checkOut[1]);
                         moodCount.push(checkOut[2]);
                         fulfillmentCount.push(checkOut[3]);
                         overallCount.push(checkOut[4] / 4);
-
-                    }
-                }
-            }
-
-            for (var k = 0; k < pastDays.length; k++) {
-                if (pastDays[k] in instance.logs) {
-                    if (typeof instance.logs[pastDays[k]].check_in == 'undefined' || instance.logs[pastDays[k]].check_out == 'undefined') {
-                        // Pass
-                    } else {
-                        var checkIn = instance.logs[pastDays[k]].check_in;
-                        var checkOut = instance.logs[pastDays[k]].check_out;
-
-                        pastCount.push(checkIn[4] / 4);
-
-                        pastCount.push(checkOut[4] / 4);
-
                     }
                 }
             }
@@ -571,8 +498,6 @@ function getReport(results, timeframe, style) {
     }
 
     if (overallCount.length > 0) {
-        var countArray = [sleepCount, energyCount, moodCount, confidenceCount, presenceCount, fulfillmentCount];
-
         var sleep = ((sleepCount.reduce(function (a, b) { return a + b; }, 0) * 25) / sleepCount.length).toFixed(2);
         var energy = ((energyCount.reduce(function (a, b) { return a + b; }, 0) * 25) / energyCount.length).toFixed(2);
         var mood = ((moodCount.reduce(function (a, b) { return a + b; }, 0) * 25) / moodCount.length).toFixed(2);
@@ -581,6 +506,8 @@ function getReport(results, timeframe, style) {
         var fulfillment = ((fulfillmentCount.reduce(function (a, b) { return a + b; }, 0) * 25) / fulfillmentCount.length).toFixed(2);
         var overall = ((overallCount.reduce(function (a, b) { return a + b; }, 0) * 25) / overallCount.length).toFixed(2);
         overall = Math.round(overall);
+
+        var countArray = [sleepCount, energyCount, moodCount, confidenceCount, presenceCount, fulfillmentCount];
 
         var inDepthArray = [];
         for (var i = 0; i < countArray.length; i++) {
@@ -592,52 +519,32 @@ function getReport(results, timeframe, style) {
             inDepthArray.push(map);
         }
 
-        var analysisOutcome = [];
-        var analysisArray = [sleep, energy, mood, confidence, presence, fulfillment];
-        for (var a = 0; a < analysisArray.length; a++) {
-            var analysisInstance = Math.round(analysisArray[a]);
-            if (analysisArray[a] < 50) {
-                var message = 'Score: *' + analysisInstance + '%*\nAverage: *Positive*';
-                analysisOutcome.push(message);
+        var loopArray = [sleep, energy, mood, confidence, presence, fulfillment];
+
+        var searchReport = [];
+        for (var z = 0; z < loopArray.length; z++) {
+            var loopInstance = Math.round(loopArray[z]);
+            if (loopInstance > 50) {
+                var message = 'Score: *' + loopInstance + '%*\nAverage: *Positive*';
+                searchReport.push(message);
             } else {
-                var message = 'Score: *' + analysisInstance + '%*\nAverage: *Negative*';
-                analysisOutcome.push(message);
+                var message = 'Score: *' + loopInstance + '%*\nAverage: *Negative*';
+                searchReport.push(message);
             }
         }
 
-        if (pastCount.length > 0) {
-            var past = ((pastCount.reduce(function (a, b) { return a + b; }, 0) * 25) / pastCount.length).toFixed(2);
+        var lastDay = days.length - 1
+        if (overall > 50) {
+            var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness between *' + days[0] + '* and *' + days[lastDay] + '* was *positive*!';
+            searchReport.push(overallMonth);
+        }
+        else {
+            var overallMonth = 'Score: *' + overall + '%*\nThe overall emotional fitness between *' + days[0] + '* and *' + days[lastDay] + '* was *negative*';
+            searchReport.push(overallMonth);
         }
 
-        if (overall < 50) {
-            var overallAnalysis = 'Score: ' + overall + '%\nYour overall emotional fitness this week was *negative*';
-            if (!past || typeof past == 'undefined' || past == 0) {
-                overallAnalysis = overallAnalysis + '\nNo logs to compare against :rowboat:';
-            } else if (overall > past) {
-                var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n ' + message + ' is up ' + difference + '% compared to ' + message2;
-            } else if (overall < past) {
-                var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n ' + message + ' is down ' + difference + '% compared to ' + message2;
-            }
-            analysisOutcome.push(overallAnalysis);
-        } else {
-            var overallAnalysis = 'Score: ' + overall + '%\nYour overall emotional fitness this week was *positive*!';
-            if (!past || typeof past == 'undefined' || past == 0) {
-                overallAnalysis = overallAnalysis + '\nNo logs to compare against :rowboat:';
-            } else if (overall > past) {
-                var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n ' + message + ' is up ' + difference + '% compared to ' + message2;
-            } else if (overall < past) {
-                var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n ' + message + ' is down ' + difference + '% compared to ' + message2;
-            }
-            analysisOutcome.push(overallAnalysis);
-        }
+        return [searchReport, inDepthArray];
 
-        var returnArray = [analysisOutcome, inDepthArray];
-
-        return returnArray;
     } else {
         return 404;
     }
