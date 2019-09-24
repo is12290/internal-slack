@@ -347,6 +347,7 @@ module.exports = function (controller) {
                                             }
                                         }
 
+                                        console.log("UPDATED INPUT: ", updated_input);
                                         var results = getReport(updated_input, timeframe, style);
                                         var text = "Here is the " + timeframe + " report for " + channel_name;
                                     } else {
@@ -417,6 +418,7 @@ module.exports = function (controller) {
 }
 
 function getReport(results, timeframe, style) {
+    console.log(results);
     var moment = require('moment');
     var message = '';
     var days = [];
