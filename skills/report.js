@@ -179,7 +179,7 @@ module.exports = function (controller) {
 
                         var style = '';
                         convo.addQuestion({
-                            text: "Okay! Let us generate a repport:",
+                            text: "Okay! Let us generate a report",
                             attachments: [{
                                 title: "Type",
                                 text: "What kind of report is this?",
@@ -212,6 +212,7 @@ module.exports = function (controller) {
                                     pattern: "Personal",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
+                                            text: "Okay! Let us generate a report",
                                             attachments: [{
                                                 text: "What kind of report is this?",
                                                 callback_id: 'report-style',
@@ -248,6 +249,7 @@ module.exports = function (controller) {
                                     pattern: "Team",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
+                                            text: "Okay! Let us generate a report",
                                             attachments: [{
                                                 text: "What kind of report is this?",
                                                 callback_id: 'report-style',
@@ -284,6 +286,7 @@ module.exports = function (controller) {
                                     pattern: "Channel",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
+                                            text: "Okay! Let us generate a report",
                                             attachments: [{
                                                 text: "What kind of report is this?",
                                                 callback_id: 'report-style',
@@ -340,10 +343,12 @@ module.exports = function (controller) {
                                         var text = "Here is your personal " + timeframe + " report";
                                     } else if (style == 'Channel') {
                                         var updated_input = [];
+                                        console.log(channel_name);
                                         bot.api.channels.info({ channel: channel_name }, function (err, response) {
                                             if (err) {
                                                 console.log("error: ", err);
                                             }
+                                            console.log(response);
                                             const users = response.channel.members;
                                             for (var j = 0; j < users.length; j++) {
                                                 for (var k = 0; k < all_users.length; k++) {
