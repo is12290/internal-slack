@@ -128,7 +128,7 @@ module.exports = function (controller) {
                             convo.stop('completed');
                         }, {}, 'timeframe');
 
-                        var users = [];
+                        
                         var channels = [];
                         var channel_name = '';
                         bot.api.channels.list({}, function (err, res) {
@@ -141,6 +141,8 @@ module.exports = function (controller) {
                                 channels.push({ "text": "#" + instance.name, "value": instance.id });
                             }
                         });
+
+                        var users = [];
                         convo.addQuestion({
                             attachments: [
                                 {
@@ -168,12 +170,6 @@ module.exports = function (controller) {
                                 }
                                 users.push(res.channel.members);
                             });
-                            for (var q = 0; q < users.length; q++) {
-                                var channel_instance = users[0];
-                                if (channel_instance.id == response.text) {
-                                    channel_name = channel_name + channel_instance.text;
-                                }
-                            }
                             convo.gotoThread('timeframe');
                         }, {}, 'channel_choice');
 
@@ -343,21 +339,13 @@ module.exports = function (controller) {
                                         var text = "Here is your personal " + timeframe + " report";
                                     } else if (style == 'Channel') {
                                         var updated_input = [];
-                                        console.log(channel_name);
-                                        bot.api.channels.info({ channel: channel_name }, function (err, response) {
-                                            if (err) {
-                                                console.log("error: ", err);
-                                            }
-                                            console.log(response);
-                                            const users = response.channel.members;
-                                            for (var j = 0; j < users.length; j++) {
-                                                for (var k = 0; k < all_users.length; k++) {
-                                                    if (all_users[k].id == users[j]) {
-                                                        updated_input.push(all_users[k]);
-                                                    }
+                                        for (var j = 0; j < users.length; j++) {
+                                            for (var k = 0; k < all_users.length; k++) {
+                                                if (all_users[k].id == users[j]) {
+                                                    updated_input.push(all_users[k]);
                                                 }
                                             }
-                                        });
+                                        }
 
                                         var results = getReport(updated_input, timeframe, style);
                                         var text = "Here is the " + timeframe + " report for " + channel_name;
