@@ -422,6 +422,7 @@ module.exports = function (controller) {
 }
 
 function getReport(results, timeframe, style) {
+    console.log(results);
     var moment = require('moment');
     var message = '';
     var days = [];
