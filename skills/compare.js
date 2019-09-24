@@ -386,6 +386,7 @@ module.exports = function (controller) {
                                     }
 
                                     if (style == 'Personal') {
+                                        console.log(messager);
                                         var results = getComparison(messager, startTimeframe, endTimeframe, style);
                                     } else if (style == 'Channel') {
                                         var updated_input = [];
@@ -534,9 +535,12 @@ function getComparison(results, start, end, type) {
                     var checkIn = results.logs[currentDays[j]].check_in;
                     var checkOut = results.logs[currentDays[j]].check_out;
 
-                    currentCount.push(checkIn[4] / 4);
-
-                    currentCount.push(checkOut[4] / 4);
+                    if (checkIn == 'undefined' || checkOut == 'undefined') {
+                        // Pass
+                    } else {
+                        currentCount.push(checkIn[4] / 4);
+                        currentCount.push(checkOut[4] / 4);
+                    }
                 }
             }
         }
@@ -549,9 +553,12 @@ function getComparison(results, start, end, type) {
                     var checkIn = results.logs[pastDays[y]].check_in;
                     var checkOut = results.logs[pastDays[y]].check_out;
 
-                    pastCount.push(checkIn[4] / 4);
-
-                    pastCount.push(checkOut[4] / 4);
+                    if (checkIn == 'undefined' || checkOut == 'undefined') {
+                        // Pass
+                    } else {
+                        pastCount.push(checkIn[4] / 4);
+                        pastCount.push(checkOut[4] / 4);
+                    }
                 }
             }
         }
