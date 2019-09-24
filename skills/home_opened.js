@@ -7,14 +7,14 @@ module.exports = function (controller) {
             if (team.status.subscription.status == 'inactive' && team.status.trial.status == 'inactive') {
                 // Subscribe message
                 if (team.status.trial.status == 'inactive' && team.status.subscription.seats_used == 0) {
-                    var message = "Your trial is up! Would you like to purchase a subscription?"
+                    var text = "Your trial is up! Would you like to purchase a subscription?"
                 } else if (team.status.subscription.status == 'inactive' && team.status.subscription.seats_used > 0) {
-                    var message = "It looks like your subscription is up! Would you like to renew?"
+                    var text = "It looks like your subscription is up! Would you like to renew?"
                 }
                 bot.reply(message, {
                     attachments: [{
                         title: "Subscribe",
-                        text: message,
+                        text: text,
                         callback_id: 'subscribe',
                         color: "#0294ff",
                         attachment_type: 'default',
@@ -38,7 +38,7 @@ module.exports = function (controller) {
                         bot.replyInteractive(response, {
                             attachments: [{
                                 title: "Subscribe",
-                                text: message,
+                                text: text,
                                 callback_id: 'subscribe',
                                 color: "#0294ff",
                                 attachment_type: 'default',
@@ -63,7 +63,7 @@ module.exports = function (controller) {
                         bot.replyInteractive(response, {
                             attachments: [{
                                 title: "Subscribe",
-                                text: message,
+                                text: text,
                                 callback_id: 'subscribe',
                                 color: "#0294ff",
                                 attachment_type: 'default',

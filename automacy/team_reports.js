@@ -33,7 +33,12 @@ if (n != 5 || today != endOfMonth) {
         for (var i = 0; i < all_teams.length; i++) {
             var instance = all_teams[i];
             var bot = controller.spawn({token: instance.bot.token});
-            if (moment.tz(rounded, instance.timezone).format('HH:mm') == '18:30') {
+            if (!instance.timezone) {
+                var timezone = "America/New_York";
+            } else {
+                var timezone = instance.timezone;
+            }
+            if (moment.tz(rounded, timezone).format('HH:mm') == '18:30') {
                 controller.storage.users.find({team: instance.id}, function (err, all_users) {
                     if (err) {
                         console.log('error: ', err);
@@ -282,4 +287,8 @@ function getReport(results, timeframe) {
     } else {
         return 404;
     }
+}
+
+function round(date, duration, method) {
+    return moment(Math[method]((+date) / (+duration)) * (+duration));
 }
