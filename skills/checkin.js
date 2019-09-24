@@ -1,8 +1,7 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
         if (message.text == "Yes-CheckIn") {
-            controller.storage.teams.get(message.team, function (err, team) {
-                console.log(team);
+            controller.storage.teams.get(message.team.id, function (err, team) {
                 if (err) {
                     console.log("error: ", err);
                 }
