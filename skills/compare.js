@@ -402,6 +402,7 @@ module.exports = function (controller) {
                                         var results = getComparison(all_users, startTimeframe, endTimeframe, style);
                                     }
 
+                                    console.log(results);
                                     if (results == 404) {
                                         bot.reply(message, "Hey, make sure your inputs are correct - It doesn't appear that you have scores dating back that far");
                                     } else {
@@ -603,6 +604,10 @@ function getComparison(results, start, end, type) {
             return 404;
         }
     }
+    console.log(currentCount);
+    console.log(pastCount);
+    console.log(currentScore);
+    console.log(pastScore);
 
     return [currentScore, pastScore, timeframeMessage];
 }
