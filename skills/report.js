@@ -179,7 +179,9 @@ module.exports = function (controller) {
 
                         var style = '';
                         convo.addQuestion({
+                            text: "Okay! Let us generate a repport:",
                             attachments: [{
+                                title: "Type",
                                 text: "What kind of report is this?",
                                 callback_id: 'report-style',
                                 color: "#0294ff",
@@ -320,7 +322,7 @@ module.exports = function (controller) {
 
                         convo.on('end', function (convo) {
                             if (convo.successful()) {
-                                controller.storage.users.find({ team: message.team }, function (err, all_users) {
+                                controller.storage.users.find({ team: message.team.id }, function (err, all_users) {
                                     if (err) {
                                         console.log("error: ", err);
                                     }
@@ -422,7 +424,6 @@ module.exports = function (controller) {
 }
 
 function getReport(results, timeframe, style) {
-    console.log(results);
     var moment = require('moment');
     var message = '';
     var days = [];

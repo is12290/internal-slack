@@ -328,7 +328,7 @@ module.exports = function (controller) {
 
                         convo.on('end', function (convo) {
                             if (convo.successful()) {
-                                controller.storage.users.find({ team: message.team }, function (err, all_users) {
+                                controller.storage.users.find({ team: message.team.id }, function (err, all_users) {
                                     if (err) {
                                         console.log("error: ", err);
                                     }
