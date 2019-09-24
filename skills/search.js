@@ -136,7 +136,6 @@ module.exports = function (controller) {
                             }
                         }, {}, 'timeframe');
 
-                        var users = [];
                         var channels = [];
                         var channel_name = '';
                         bot.api.channels.list({}, function (err, res) {
@@ -149,6 +148,8 @@ module.exports = function (controller) {
                                 channels.push({ "text": "#" + instance.name, "value": instance.id });
                             }
                         });
+
+                        var users = [];
                         convo.addQuestion({
                             attachments: [
                                 {
@@ -176,18 +177,14 @@ module.exports = function (controller) {
                                 }
                                 users.push(res.channel.members);
                             });
-                            for (var q = 0; q < users.length; q++) {
-                                var channel_instance = users[0];
-                                if (channel_instance.id == response.text) {
-                                    channel_name = channel_name + channel_instance.text;
-                                }
-                            }
                             convo.gotoThread('timeframe');
                         }, {}, 'channel_choice');
 
                         var style = '';
                         convo.addQuestion({
+                            text: "Okay! Let's start this search",
                             attachments: [{
+                                title: "Type",
                                 text: "What kind of search do you want to carry out?",
                                 callback_id: 'search-style',
                                 color: "#0294ff",
@@ -218,7 +215,9 @@ module.exports = function (controller) {
                                     pattern: "Personal",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
+                                            text: "Okay! Let's start this search",
                                             attachments: [{
+                                                title: "Type",
                                                 text: "What kind of search do you want to carry out?",
                                                 callback_id: 'search-style',
                                                 color: "#0294ff",
@@ -254,7 +253,9 @@ module.exports = function (controller) {
                                     pattern: "Team",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
+                                            text: "Okay! Let's start this search",
                                             attachments: [{
+                                                title: "Type",
                                                 text: "What kind of search do you want to carry out?",
                                                 callback_id: 'search-style',
                                                 color: "#0294ff",
@@ -290,7 +291,9 @@ module.exports = function (controller) {
                                     pattern: "Channel",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
+                                            text: "Okay! Let's start this search",
                                             attachments: [{
+                                                title: "Type",
                                                 text: "What kind of search do you want to carry out?",
                                                 callback_id: 'search-style',
                                                 color: "#0294ff",
@@ -345,19 +348,13 @@ module.exports = function (controller) {
                                         var results = getSearchOutput(messager, dates, style);
                                     } else if (style == 'Channel') {
                                         var updated_input = [];
-                                        bot.api.channels.info({ channel: channel_name }, function (err, response) {
-                                            if (err) {
-                                                console.log("error: ", err);
-                                            }
-                                            const users = response.channel.members;
-                                            for (var j = 0; j < users.length; j++) {
-                                                for (var k = 0; k < all_users.length; k++) {
-                                                    if (all_users[k].id == users[j]) {
-                                                        updated_input.push(all_users[k]);
-                                                    }
+                                        for (var j = 0; j < users[0].length; j++) {
+                                            for (var k = 0; k < all_users.length; k++) {
+                                                if (all_users[k].id == users[0][j]) {
+                                                    updated_input.push(all_users[k]);
                                                 }
                                             }
-                                        });
+                                        }
 
                                         var results = getSearchOutput(updated_input, dates, style);
                                     } else {
@@ -449,7 +446,7 @@ function getSearchOutput(results, dates, style) {
     if (style == 'Personal') {
         for (var j = 0; j < days.length; j++) {
             if (days[j] in results.logs) {
-                if (typeof results.logs[days[j]].check_in == 'undefined' || results.logs[days[j]].check_out == 'undefined') {
+                if (typeof results.logs[days[j]].check_in == 'undefined' || typeof results.logs[days[j]].check_out == 'undefined') {
                     // Pass
                 } else {
                     var checkIn = results.logs[days[j]].check_in;
@@ -474,7 +471,7 @@ function getSearchOutput(results, dates, style) {
             for (var i = 0; i < results.length; i++) {
                 var resultsInstance = results[i];
                 if (days[j] in resultsInstance.logs) {
-                    if (typeof resultsInstance.logs[days[j]].check_in == 'undefined' || resultsInstance.logs[days[j]].check_out == 'undefined') {
+                    if (typeof resultsInstance.logs[days[j]].check_in == 'undefined' || typeof resultsInstance.logs[days[j]].check_out == 'undefined') {
                         // Pass
                     } else {
                         var checkIn = resultsInstance.logs[days[j]].check_in;

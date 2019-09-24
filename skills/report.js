@@ -284,9 +284,9 @@ module.exports = function (controller) {
                                     pattern: "Channel",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
-                                            title: "Type",
                                             text: "Okay! Let us generate a report",
                                             attachments: [{
+                                                title: "Type",
                                                 text: "What kind of report is this?",
                                                 callback_id: 'report-style',
                                                 color: "#0294ff",
@@ -350,7 +350,6 @@ module.exports = function (controller) {
                                             }
                                         }
 
-                                        console.log("UPDATED INPUT: ", updated_input);
                                         var results = getReport(updated_input, timeframe, style);
                                         var text = "Here is the " + timeframe + " report for " + channel_name;
                                     } else {
@@ -421,7 +420,6 @@ module.exports = function (controller) {
 }
 
 function getReport(results, timeframe, style) {
-    console.log(results);
     var moment = require('moment');
     var message = '';
     var days = [];
@@ -509,7 +507,7 @@ function getReport(results, timeframe, style) {
 
         for (var k = 0; k < pastDays.length; k++) {
             if (pastDays[k] in results.logs) {
-                if (typeof results.logs[pastDays[k]].check_in == 'undefined' || results.logs[pastDays[k]].check_out == 'undefined') {
+                if (typeof results.logs[pastDays[k]].check_in == 'undefined' || typeof results.logs[pastDays[k]].check_out == 'undefined') {
                     // Pass
                 } else {
                     var checkIn = results.logs[pastDays[k]].check_in;
@@ -529,7 +527,7 @@ function getReport(results, timeframe, style) {
             var instance = results[i];
             for (var j = 0; j < days.length; j++) {
                 if (days[j] in instance.logs) {
-                    if (typeof instance.logs[days[j]].check_in == 'undefined' || instance.logs[days[j]].check_out == 'undefined') {
+                    if (typeof instance.logs[days[j]].check_in == 'undefined' || typeof instance.logs[days[j]].check_out == 'undefined') {
                         // Pass
                     } else {
                         var checkIn = instance.logs[days[j]].check_in;
@@ -554,7 +552,7 @@ function getReport(results, timeframe, style) {
 
             for (var k = 0; k < pastDays.length; k++) {
                 if (pastDays[k] in instance.logs) {
-                    if (typeof instance.logs[pastDays[k]].check_in == 'undefined' || instance.logs[pastDays[k]].check_out == 'undefined') {
+                    if (typeof instance.logs[pastDays[k]].check_in == 'undefined' || typeof instance.logs[pastDays[k]].check_out == 'undefined') {
                         // Pass
                     } else {
                         var checkIn = instance.logs[pastDays[k]].check_in;

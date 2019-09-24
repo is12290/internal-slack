@@ -191,7 +191,7 @@ function getReport(results, timeframe) {
 
     for (var k = 0; k < pastDays.length; k++) {
         if (pastDays[k] in results.logs) {
-            if (typeof results.logs[pastDays[k]].check_in == 'undefined' || results.logs[pastDays[k]].check_out == 'undefined') {
+            if (typeof results.logs[pastDays[k]].check_in == 'undefined' || typeof results.logs[pastDays[k]].check_out == 'undefined') {
                 // Pass
             } else {
                 var checkIn = results.logs[pastDays[k]].check_in;

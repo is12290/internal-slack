@@ -177,7 +177,6 @@ module.exports = function (controller) {
                             convo.gotoThread('timeframe2')
                         }, {}, 'timeframe1');
 
-                        var users = [];
                         var channels = [];
                         var channel_name = '';
                         bot.api.channels.list({}, function (err, res) {
@@ -191,6 +190,7 @@ module.exports = function (controller) {
                             }
                         });
 
+                        var users = [];
                         convo.addQuestion({
                             attachments: [
                                 {
@@ -218,18 +218,14 @@ module.exports = function (controller) {
                                 }
                                 users.push(res.channel.members);
                             });
-                            for (var q = 0; q < users.length; q++) {
-                                var channel_instance = users[0];
-                                if (channel_instance.id == response.text) {
-                                    channel_name = channel_name + channel_instance.text;
-                                }
-                            }
                             convo.gotoThread('timeframe1');
                         }, {}, 'channel_choice');
 
                         var style = '';
                         convo.addQuestion({
+                            text: "Okay! Let's start this comparison",
                             attachments: [{
+                                title: "Type",
                                 text: "What kind of comparison?",
                                 callback_id: 'comparison-style',
                                 color: "#0294ff",
@@ -260,7 +256,9 @@ module.exports = function (controller) {
                                     pattern: "Personal",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
+                                            text: "Okay! Let's start this comparison",
                                             attachments: [{
+                                                title: "Type",
                                                 text: "What kind of comparison?",
                                                 callback_id: 'comparison-style',
                                                 color: "#0294ff",
@@ -296,7 +294,9 @@ module.exports = function (controller) {
                                     pattern: "Team",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
+                                            text: "Okay! Let's start this comparison",
                                             attachments: [{
+                                                title: "Type",
                                                 text: "What kind of comparison?",
                                                 callback_id: 'comparison-style',
                                                 color: "#0294ff",
@@ -332,7 +332,9 @@ module.exports = function (controller) {
                                     pattern: "Channel",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
+                                            text: "Okay! Let's start this comparison",
                                             attachments: [{
+                                                title: "Type",
                                                 text: "What kind of comparison?",
                                                 callback_id: 'comparison-style',
                                                 color: "#0294ff",
@@ -387,19 +389,13 @@ module.exports = function (controller) {
                                         var results = getComparison(messager, startTimeframe, endTimeframe, style);
                                     } else if (style == 'Channel') {
                                         var updated_input = [];
-                                        bot.api.channels.info({ channel: channel_name }, function (err, response) {
-                                            if (err) {
-                                                console.log("error: ", err);
-                                            }
-                                            const users = response.channel.members;
-                                            for (var j = 0; j < users.length; j++) {
-                                                for (var k = 0; k < all_users.length; k++) {
-                                                    if (all_users[k].id == users[j]) {
-                                                        updated_input.push(all_users[k]);
-                                                    }
+                                        for (var j = 0; j < users[0].length; j++) {
+                                            for (var k = 0; k < all_users.length; k++) {
+                                                if (all_users[k].id == users[0][j]) {
+                                                    updated_input.push(all_users[k]);
                                                 }
                                             }
-                                        });
+                                        }
 
                                         var results = getComparison(updated_input, startTimeframe, endTimeframe, style);
                                     } else {
@@ -531,7 +527,7 @@ function getComparison(results, start, end, type) {
     if (type == "Personal") {
         for (var j = 0; j < currentDays.length; j++) {
             if (currentDays[j] in results.logs) {
-                if (typeof results.logs[currentDays[j]].check_in == 'undefined' || results.logs[currentDays[j]].check_out == 'undefined') {
+                if (typeof results.logs[currentDays[j]].check_in == 'undefined' || typeof results.logs[currentDays[j]].check_out == 'undefined') {
                     // Pass
                 } else {
                     var checkIn = results.logs[currentDays[j]].check_in;
@@ -546,7 +542,7 @@ function getComparison(results, start, end, type) {
 
         for (var y = 0; y < pastDays.length; y++) {
             if (pastDays[y] in results.logs) {
-                if (typeof results.logs[pastDays[y]].check_in == 'undefined' || results.logs[pastDays[y]].check_out == 'undefined') {
+                if (typeof results.logs[pastDays[y]].check_in == 'undefined' || typeof results.logs[pastDays[y]].check_out == 'undefined') {
                     // Pass
                 } else {
                     var checkIn = results.logs[pastDays[y]].check_in;
@@ -564,7 +560,7 @@ function getComparison(results, start, end, type) {
 
             for (var j = 0; j < currentDays.length; j++) {
                 if (currentDays[j] in instance.logs) {
-                    if (typeof instance.logs[currentDays[j]].check_in == 'undefined' || instance.logs[currentDays[j]].check_out == 'undefined') {
+                    if (typeof instance.logs[currentDays[j]].check_in == 'undefined' || typeof instance.logs[currentDays[j]].check_out == 'undefined') {
                         // Pass
                     } else {
                         var checkIn = instance.logs[currentDays[j]].check_in;
@@ -579,7 +575,7 @@ function getComparison(results, start, end, type) {
 
             for (var y = 0; y < pastDays.length; y++) {
                 if (pastDays[y] in instance.logs) {
-                    if (typeof instance.logs[pastDays[y]].check_in == 'undefined' || instance.logs[pastDays[y]].check_out == 'undefined') {
+                    if (typeof instance.logs[pastDays[y]].check_in == 'undefined' || typeof instance.logs[pastDays[y]].check_out == 'undefined') {
                         // Pass
                     } else {
                         var checkIn = instance.logs[pastDays[y]].check_in;

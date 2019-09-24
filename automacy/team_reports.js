@@ -175,7 +175,7 @@ function getReport(results, timeframe) {
         var instance = results[i];
         for (var j = 0; j < days.length; j++) {
             if (days[j] in instance.logs) {
-                if (typeof instance.logs[days[j]].check_in == 'undefined' || instance.logs[days[j]].check_out == 'undefined') {
+                if (typeof instance.logs[days[j]].check_in == 'undefined' || typeof instance.logs[days[j]].check_out == 'undefined') {
                     // Pass
                 } else {
                     var checkIn = instance.logs[days[j]].check_in;
@@ -200,7 +200,7 @@ function getReport(results, timeframe) {
 
         for (var k = 0; k < pastDays.length; k++) {
             if (pastDays[k] in instance.logs) {
-                if (typeof instance.logs[pastDays[k]].check_in == 'undefined' || instance.logs[pastDays[k]].check_out == 'undefined') {
+                if (typeof instance.logs[pastDays[k]].check_in == 'undefined' || typeof instance.logs[pastDays[k]].check_out == 'undefined') {
                     // Pass
                 } else {
                     var checkIn = instance.logs[pastDays[k]].check_in;
