@@ -210,6 +210,7 @@ module.exports = function (controller) {
                                         bot.replyInteractive(response, {
                                             text: "Okay! Let us generate a report",
                                             attachments: [{
+                                                title: "Type",
                                                 text: "What kind of report is this?",
                                                 callback_id: 'report-style',
                                                 color: "#0294ff",
@@ -247,6 +248,7 @@ module.exports = function (controller) {
                                         bot.replyInteractive(response, {
                                             text: "Okay! Let us generate a report",
                                             attachments: [{
+                                                title: "Type",
                                                 text: "What kind of report is this?",
                                                 callback_id: 'report-style',
                                                 color: "#0294ff",
@@ -282,6 +284,7 @@ module.exports = function (controller) {
                                     pattern: "Channel",
                                     callback: function (response, convo) {
                                         bot.replyInteractive(response, {
+                                            title: "Type",
                                             text: "Okay! Let us generate a report",
                                             attachments: [{
                                                 text: "What kind of report is this?",
@@ -339,9 +342,9 @@ module.exports = function (controller) {
                                         var text = "Here is your personal " + timeframe + " report";
                                     } else if (style == 'Channel') {
                                         var updated_input = [];
-                                        for (var j = 0; j < users.length; j++) {
+                                        for (var j = 0; j < users[0].length; j++) {
                                             for (var k = 0; k < all_users.length; k++) {
-                                                if (all_users[k].id == users[j]) {
+                                                if (all_users[k].id == users[0][j]) {
                                                     updated_input.push(all_users[k]);
                                                 }
                                             }

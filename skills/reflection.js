@@ -1033,7 +1033,7 @@ module.exports = function (controller) {
                                             user.channel = message.channel
                                             user.logs = {
                                                 [today]: {
-                                                    check_in: score,
+                                                    check_out: score,
                                                     permission: permission[0]
                                                 }
                                             };
