@@ -4,7 +4,7 @@ module.exports = function (controller) {
             if (err) {
                 console.log("error: ", err);
             }
-            controller.storage.teams.get(api_user.team, function (err, team) {
+            controller.storage.teams.get(api_user.user.team_id, function (err, team) {
                 if (err) {
                     console.log("error: ", err);
                 }
@@ -118,10 +118,8 @@ module.exports = function (controller) {
                                         user.email = api_user.user.profile.email;
                                         user.timezone = api_user.user.tz
                                         user.id = message.user,
-                                        user.team = api_user.team,
+                                        user.team = api_user.user.team_id,
                                         user.channel = message.channel
-                                        
-                                        
                                     }
 
                                     var conversation = '';
