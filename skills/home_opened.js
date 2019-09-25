@@ -1311,7 +1311,7 @@ module.exports = function (controller) {
 
                                 })
                             });
-                        } else if (response.messages[0].text == 'Ready to check in?' || response.messages[0].text == 'Ready to reflect?' || response.message[0].text == 'Hiya! What are you looking to do?' || response.message[0].text == 'Whoops! Subscribe for continued access') {
+                        } else if (response.messages[0].text == 'Ready to check in?' || response.messages[0].text == 'Ready to reflect?' || response.messages[0].text == 'Hiya! What are you looking to do?' || response.messages[0].text == 'Whoops! Subscribe for continued access') {
                             // Pass
                         } else {
                             // Show help message
