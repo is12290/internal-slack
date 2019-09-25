@@ -217,7 +217,7 @@ module.exports = function (controller) {
                                             }
                                         ])
 
-                                    convo.say("Perfect! To start off, the source of all the value that I can create is dependent upon your ability to carry out two super fast logs at the beginning and end of your day. We're going to run through checking in right now...");
+                                    convo.say("Perfect! To start off, the source of all the value that I can create is dependent upon your ability to carry out two super fast logs at the beginning and end of your day.\nWe're going to run through checking in right now...");
 
                                     // Keep Score
                                     const score = [];
@@ -1119,7 +1119,7 @@ module.exports = function (controller) {
                                             }
                                         ]);
 
-                                    convo.addMessage("That's it for the check in log - pretty easy, right? The reflection log is just as simple and completed at the end of the day. I know it's hard to remember to carry them out yourself so I send reminders every weekday morning and evening in your local time");
+                                    convo.addMessage("That's it for the check in log - pretty easy, right?\nThe reflection log is just as simple and completed at the end of the day.\nI know it's hard to remember to carry them out yourself so I send reminders every weekday morning and evening in your local time");
 
 
                                     const permission = [];
@@ -1296,7 +1296,7 @@ module.exports = function (controller) {
                                                     bot.reply(message, "Sorry!! There has been an error sharing your score. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
                                                 } else {
                                                     bot.reply(message, "Your score of " + overall + "% has been shared successfully in <#" + team.bot.channel + ">!");
-                                                    bot.reply(message, "And that's it! I'll automatically send you all of your weekly and monthly emotional reports I gather at the end of every week and month. I also send weekly and monthly team reports to <#" + team.bot.channel + "> for you to get a feeling of how your team is doing!");
+                                                    bot.reply(message, "And that's it! I'll automatically send you all of your weekly and monthly emotional reports I gather at the end of every week and month.\n I also send weekly and monthly team reports to <#" + team.bot.channel + "> for you to get a feeling of how your team is doing!");
                                                 }
                                             } else {
                                                 bot.reply(message, 'Okay, no problem! Your score of ' + overall + "% has been recorded");
