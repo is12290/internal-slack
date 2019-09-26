@@ -459,7 +459,7 @@ function getReport(results, timeframe, style) {
             pastDays.push(startOfWeek.format('L'));
             startOfWeek = startOfWeek.clone().add(1, 'd');
         }
-        timeframeMessage.push('Last Week');
+        message2 =  message2 + 'Last Week';
     } else if (timeframe == 'monthly') {
         var startOfMonth = moment().startOf('month').subtract(1, 'months');
         var endOfMonth = moment().endOf('month').subtract(1, 'months');
@@ -468,7 +468,7 @@ function getReport(results, timeframe, style) {
             pastDays.push(startOfMonth.format('L'));
             startOfMonth = startOfMonth.clone().add(1, 'd');
         }
-        timeframeMessage.push('Last Month');
+        message2 = message2 + 'Last Month';
     }
 
     var sleepCount = [];

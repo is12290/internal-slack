@@ -1163,8 +1163,8 @@ module.exports = function (controller) {
                                 }
                             });
 
+                            const overall = GetOverall(score);
                             if (permission[0] == true) {
-                                const overall = GetOverall(score);
                                 var error;
                                 if (overall > 90) {
                                     bot.say({
