@@ -139,21 +139,19 @@ function getReport(results, timeframe) {
     } else if (timeframe == 'weekly') {
         var startOfWeek = moment().startOf('isoWeek').subtract(7, 'd');
         var endOfWeek = moment().endOf('isoWeek').subtract(7, 'd');
-        message2 = message2 + 'last week';
+        message2 = message2 + 'Last Week';
         while (startOfWeek <= endOfWeek) {
             pastDays.push(startOfWeek.format('L'));
             startOfWeek = startOfWeek.clone().add(1, 'd');
         }
-        timeframeMessage.push('Last Week');
     } else if (timeframe == 'monthly') {
         var startOfMonth = moment().startOf('month').subtract(1, 'months');
         var endOfMonth = moment().endOf('month').subtract(1, 'months');
-        message2 = message2 + 'last month';
+        message2 = message2 + 'Last Month';
         while (startOfMonth <= endOfMonth) {
             pastDays.push(startOfMonth.format('L'));
             startOfMonth = startOfMonth.clone().add(1, 'd');
         }
-        timeframeMessage.push('Last Month');
     }
 
     var sleepCount = [];

@@ -37,8 +37,9 @@ if (n === 6 || n === 0) {
             } else if (!user.customization || !user.customization.logging || typeof user.customization.logging.reflection_time == 'undefined') {
                 if (moment.tz(rounded, user.timezone).format('HH:mm') == '18:30') {
                     bot.say({
+                        text: "Ready to reflect?",
                         attachments: [{
-                            text: "Ready to reflect?",
+                            title: "Reflection",
                             color: "#0294ff",
                             callback_id: 'automatic-reflections',
                             attachment_type: 'default',
@@ -67,8 +68,9 @@ if (n === 6 || n === 0) {
             } else {
                 if (user.customization.logging.reflection_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
                     bot.say({
+                        text: "Ready to reflect?",
                         attachments: [{
-                            text: "Ready to reflect?",
+                            title: "Reflection",
                             color: "#0294ff",
                             callback_id: 'automatic-reflections',
                             attachment_type: 'default',
