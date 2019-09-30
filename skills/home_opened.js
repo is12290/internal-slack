@@ -8,7 +8,7 @@ module.exports = function (controller) {
                 if (err) {
                     console.log("error: ", err);
                 }
-                if (!team.status || team.status.subscription.status == 'inactive' && team.status.trial.status == 'inactive') {
+                if (!team || !team.status || team.status.subscription.status == 'inactive' && team.status.trial.status == 'inactive') {
                     // Subscribe message
                     if (team.status.trial.status == 'inactive' && team.status.subscription.seats_used == 0) {
                         var text = "Your trial is up! Would you like to purchase a subscription?"
