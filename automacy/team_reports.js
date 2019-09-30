@@ -173,24 +173,31 @@ function getReport(results, timeframe) {
         var instance = results[i];
         for (var j = 0; j < days.length; j++) {
             if (days[j] in instance.logs) {
-                if (typeof instance.logs[days[j]].check_in == 'undefined' || typeof instance.logs[days[j]].check_out == 'undefined') {
+                if (typeof instance.logs[days[j]].check_in == 'undefined' && typeof instance.logs[days[j]].check_out == 'undefined') {
                     // Pass
                 } else {
-                    var checkIn = instance.logs[days[j]].check_in;
-                    var checkOut = instance.logs[days[j]].check_out;
+                    if (typeof results.logs[days[j]].check_in == 'undefined') {
+                        // Pass
+                    } else {
+                        var checkIn = results.logs[days[j]].check_in;
 
-                    sleepCount.push(checkIn[0]);
-                    energyCount.push(checkIn[1]);
-                    moodCount.push(checkIn[2]);
-                    confidenceCount.push(checkIn[3]);
-                    overallCount.push(checkIn[4] / 4);
+                        sleepCount.push(checkIn[0]);
+                        energyCount.push(checkIn[1]);
+                        moodCount.push(checkIn[2]);
+                        confidenceCount.push(checkIn[3]);
+                        overallCount.push(checkIn[4] / 4);
+                    }
+                    if (typeof results.logs[days[j]].check_out == 'undefined') {
+                        // Pass
+                    } else {
+                        var checkOut = results.logs[days[j]].check_out;
 
-
-                    presenceCount.push(checkOut[0]);
-                    energyCount.push(checkOut[1]);
-                    moodCount.push(checkOut[2]);
-                    fulfillmentCount.push(checkOut[3]);
-                    overallCount.push(checkOut[4] / 4);
+                        presenceCount.push(checkOut[0]);
+                        energyCount.push(checkOut[1]);
+                        moodCount.push(checkOut[2]);
+                        fulfillmentCount.push(checkOut[3]);
+                        overallCount.push(checkOut[4] / 4);
+                    }
 
                 }
             }
@@ -201,12 +208,12 @@ function getReport(results, timeframe) {
                 if (typeof instance.logs[pastDays[k]].check_in == 'undefined' || typeof instance.logs[pastDays[k]].check_out == 'undefined') {
                     // Pass
                 } else {
-                    var checkIn = instance.logs[pastDays[k]].check_in;
-                    var checkOut = instance.logs[pastDays[k]].check_out;
-
-                    pastCount.push(checkIn[4] / 4);
-
-                    pastCount.push(checkOut[4] / 4);
+                    if (checkIn == 'undefined' || checkOut == 'undefined') {
+                        // Pass
+                    } else {
+                        pastCount.push(checkIn[4] / 4);
+                        pastCount.push(checkOut[4] / 4);
+                    }
 
                 }
             }
