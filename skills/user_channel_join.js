@@ -1,5 +1,5 @@
 module.exports = function (controller) {
-    controller.on('user_channel_join', function (bot, message) {
+    controller.on('member_joined_channel', function (bot, message) {
         controller.storage.users.get(message.user, function (err, user) {
             if (err) {
                 console.log("err: ", err);
