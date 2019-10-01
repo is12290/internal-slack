@@ -1,43 +1,6 @@
 module.exports = function (controller) {
     controller.on('interactive_message_callback', function (bot, message) {
-        if (message.text == "Yes-Subscription") {
-            bot.reply(message, {
-                attachments: [{
-                    title: 'Subscribe',
-                    text: 'Click to be taken to the checkout page',
-                    callback_id: 'yes-question',
-                    color: "#0294ff",
-                    attachment_type: 'default',
-                    actions: [
-                        {
-                            'name': 'subscribe-button',
-                            'value': 'Subscribe',
-                            'text': 'Subscribe',
-                            'type': 'button'
-                        }
-                    ]
-                }, function (err, response) {
-                    bot.replyInteractive(response, {
-                        attachments: [{
-                            title: 'Subscribe',
-                            text: 'Click to be taken to the checkout page',
-                            callback_id: 'yes-question',
-                            color: "#0294ff",
-                            attachment_type: 'default',
-                            actions: [
-                                {
-                                    'name': 'subscribe-button',
-                                    'value': 'Subscribe',
-                                    'style': 'primary',
-                                    'text': 'Subscribe',
-                                    'type': 'button'
-                                }
-                            ]
-                        }]
-                    })
-                }]
-            }) // Link to Stripe checkout
-        } else if (message.text == 'No-Subscription') {
+        if (message.text == 'No-Subscription') {
             controller.storage.teams.get(message.team, function (err, team) {
                 if (err) {
                     console.log("error: ", err);

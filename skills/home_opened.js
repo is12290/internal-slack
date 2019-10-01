@@ -24,10 +24,9 @@ module.exports = function (controller) {
                             attachment_type: 'default',
                             actions: [
                                 {
-                                    'name': 'yes-button',
-                                    'value': 'Yes-Subscribe',
                                     'text': 'Yes',
-                                    'type': 'button'
+                                    'type': 'button',
+                                    'url': 'https://getinternal.co/subscribe'
                                 },
                                 {
                                     'name': 'no-button',
@@ -38,32 +37,7 @@ module.exports = function (controller) {
                             ]
                         }]
                     }, function (err, response) {
-                        if (response.text == 'Yes-Subscribe') {
-                            bot.replyInteractive(response, {
-                                attachments: [{
-                                    title: "Subscribe",
-                                    text: text,
-                                    callback_id: 'subscribe',
-                                    color: "#0294ff",
-                                    attachment_type: 'default',
-                                    actions: [
-                                        {
-                                            'name': 'yes-button',
-                                            'value': 'Yes-Subscribe',
-                                            'style': 'primary',
-                                            'text': 'Yes',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'no-button',
-                                            'value': 'No-Subscribe',
-                                            'text': 'No',
-                                            'type': 'button'
-                                        }
-                                    ]
-                                }]
-                            })
-                        } else if (response.text == 'No-Subscribe') {
+                        if (response.text == 'No-Subscribe') {
                             bot.replyInteractive(response, {
                                 attachments: [{
                                     title: "Subscribe",

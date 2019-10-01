@@ -42,10 +42,9 @@ controller.storage.teams.all(function (err, teams) {
                             attachment_type: 'default',
                             actions: [
                                 {
-                                    'name': 'yes-button',
-                                    'value': 'Yes-Subscribe',
                                     'text': 'Yes',
-                                    'type': 'button'
+                                    'type': 'button',
+                                    'url': 'https://getinternal.co/subscribe'
                                 },
                                 {
                                     'name': 'no-button',
@@ -73,10 +72,9 @@ controller.storage.teams.all(function (err, teams) {
                     attachment_type: 'default',
                     actions: [
                         {
-                            'name': 'yes-button',
-                            'value': 'Yes-Subscribe',
                             'text': 'Yes',
-                            'type': 'button'
+                            'type': 'button',
+                            'url': 'https://getinternal.co/subscribe'
                         },
                         {
                             'name': 'no-button',
