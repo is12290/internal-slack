@@ -1,5 +1,5 @@
 module.exports = function (controller) {
-    controller.hears(['I\'m a Workfrom member', '^workfrom'], function (bot, message) {
+    controller.hears(['I\'m a Workfrom member', '^workfrom'], 'direct_message', function (bot, message) {
         controller.storage.teams.get(message.team, function (err, team) {
             if (err) {
                 console.log(err);

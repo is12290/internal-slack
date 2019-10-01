@@ -24,7 +24,7 @@ controller.storage.teams.all(function (err, teams) {
     }
     for (var j = 0; j < teams.length; j++) {
         var team = teams[j];
-        if (team.status.subscription.status == 'inactive' && team.status.subscription.seats_used == 0) {
+        if (team.status && team.status.subscription.status == 'inactive' && team.status.subscription.seats_used == 0) {
             if (team.status.alerted && team.status.alerted == true) {
                 // Pass
             } else {
