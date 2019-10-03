@@ -10,7 +10,7 @@ module.exports = function (controller) {
                 }
                 if (!team || !team.status || team.status.subscription.status == 'inactive' && team.status.trial.status == 'inactive') {
                     // Subscribe message
-                    if (team.status.trial.status == 'inactive' && team.status.subscription.seats_used == 0) {
+                    if (typeof team.status != 'undefined' && team.status.trial.status == 'inactive' && team.status.subscription.seats_used == 0) {
                         var text = "Your trial is up! Would you like to purchase a subscription?"
                     } else if (team.status.subscription.status == 'inactive' && team.status.subscription.seats_used > 0) {
                         var text = "It looks like your subscription is up! Would you like to renew?"
