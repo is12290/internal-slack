@@ -511,7 +511,12 @@ function getComparison(results, start, end, type) {
                         // Pass
                     } else {
                         currentCount.push(checkIn[4] / 4);
-                        currentCount.push(checkOut[4] / 4);
+                        
+                        if (checkOut.length == 5) {
+                            currentCount.push(checkOut[4] / 4);
+                        } else {
+                            currentCount.push(checkOut[5] / 5);
+                        }
                     }
                 }
             }
@@ -529,7 +534,12 @@ function getComparison(results, start, end, type) {
                         // Pass
                     } else {
                         pastCount.push(checkIn[4] / 4);
-                        pastCount.push(checkOut[4] / 4);
+                        
+                        if (checkOut.length == 5) {
+                            pastCount.push(checkOut[4] / 4);
+                        } else {
+                            pastCount.push(checkOut[5] / 5);
+                        }
                     }
                 }
             }
@@ -548,7 +558,11 @@ function getComparison(results, start, end, type) {
 
                         currentCount.push(checkIn[4] / 4);
 
-                        currentCount.push(checkOut[4] / 4);
+                        if (checkOut.length == 5) {
+                            currentCount.push(checkOut[4] / 4);
+                        } else {
+                            currentCount.push(checkOut[5] / 5);
+                        }
                     }
                 }
             }
@@ -563,7 +577,11 @@ function getComparison(results, start, end, type) {
 
                         pastCount.push(checkIn[4] / 4);
 
-                        pastCount.push(checkOut[4] / 4);
+                        if (checkOut.length == 5) {
+                            pastCount.push(checkOut[4] / 4);
+                        } else {
+                            pastCount.push(checkOut[5] / 5);
+                        }
                     }
                 }
             }

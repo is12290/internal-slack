@@ -90,10 +90,16 @@ if (n != 5 || today != endOfMonth) {
                                 text: results[0][5] + '\n*Complete:* ' + results[1][5][4] + ' | *Present:* ' + results[1][5][3] + ' | *Searching:* ' + results[1][5][2] + ' | *Non-Existent:* ' + results[1][5][1] + '\n'
                             },
                             {
+                                title: 'Relationships',
+                                color: '#FFE602',
+                                attachment_type: 'default',
+                                text: results[0][6] + '\n*Fulfilled:* ' + results[1][6][4] + ' | *Connected:* ' + results[1][6][3] + ' | *Unsatisfied:* ' + results[1][6][2] + ' | *Lonely:* ' + results[1][6][1] + '\n'
+                            },
+                            {
                                 title: 'Overall',
                                 color: '#02FF57',
                                 attachment_type: 'default',
-                                text: results[0][6]
+                                text: results[0][7]
                             }
                         ]
                     });
@@ -160,6 +166,7 @@ function getReport(results, timeframe) {
     var confidenceCount = [];
     var presenceCount = [];
     var fulfillmentCount = [];
+    var relationshipCount = [];
     var overallCount = [];
 
     var pastCount = [];
@@ -185,11 +192,20 @@ function getReport(results, timeframe) {
                 } else {
                     var checkOut = results.logs[days[a]].check_out;
 
-                    presenceCount.push(checkOut[0]);
-                    energyCount.push(checkOut[1]);
-                    moodCount.push(checkOut[2]);
-                    fulfillmentCount.push(checkOut[3]);
-                    overallCount.push(checkOut[4] / 4);
+                    if (checkOut.length == 5) {
+                        presenceCount.push(checkOut[0]);
+                        energyCount.push(checkOut[1]);
+                        moodCount.push(checkOut[2]);
+                        fulfillmentCount.push(checkOut[3]);
+                        overallCount.push(checkOut[4] / 4);
+                    } else {
+                        presenceCount.push(checkOut[0]);
+                        energyCount.push(checkOut[1]);
+                        moodCount.push(checkOut[2]);
+                        fulfillmentCount.push(checkOut[3]);
+                        relationshipCount.push(checkOut[4])
+                        overallCount.push(checkOut[5] / 5);
+                    }
                 }
             }
         }
@@ -207,14 +223,19 @@ function getReport(results, timeframe) {
                     // Pass
                 } else {
                     pastCount.push(checkIn[4] / 4);
-                    pastCount.push(checkOut[4] / 4);
+                    
+                    if (checkOut.length == 5) {
+                        pastCount.push(checkOut[4] / 4);
+                    } else {
+                        pastCount.push(checkOut[5] / 5);
+                    }
                 }
             }
         }
     }
 
     if (overallCount.length > 0) {
-        var countArray = [sleepCount, energyCount, moodCount, confidenceCount, presenceCount, fulfillmentCount];
+        var countArray = [sleepCount, energyCount, moodCount, confidenceCount, presenceCount, fulfillmentCount, relationshipCount];
 
         var sleep = ((sleepCount.reduce(function (a, b) { return a + b; }, 0) * 25) / sleepCount.length).toFixed(2);
         var energy = ((energyCount.reduce(function (a, b) { return a + b; }, 0) * 25) / energyCount.length).toFixed(2);
@@ -222,6 +243,7 @@ function getReport(results, timeframe) {
         var confidence = ((confidenceCount.reduce(function (a, b) { return a + b; }, 0) * 25) / confidenceCount.length).toFixed(2);
         var presence = ((presenceCount.reduce(function (a, b) { return a + b; }, 0) * 25) / presenceCount.length).toFixed(2);
         var fulfillment = ((fulfillmentCount.reduce(function (a, b) { return a + b; }, 0) * 25) / fulfillmentCount.length).toFixed(2);
+        var relationship = ((relationshipCount.reduce(function (a, b) { return a + b; }, 0) * 25) / relationshipCount.length).toFixed(2);
         var overall = ((overallCount.reduce(function (a, b) { return a + b; }, 0) * 25) / overallCount.length).toFixed(2);
         overall = Math.round(overall);
 
@@ -236,7 +258,7 @@ function getReport(results, timeframe) {
         }
 
         var analysisOutcome = [];
-        var analysisArray = [sleep, energy, mood, confidence, presence, fulfillment];
+        var analysisArray = [sleep, energy, mood, confidence, presence, fulfillment, relationship];
         for (var a = 0; a < analysisArray.length; a++) {
             var analysisInstance = Math.round(analysisArray[a]);
             if (analysisArray[a] < 50) {

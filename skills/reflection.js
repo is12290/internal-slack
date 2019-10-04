@@ -967,6 +967,229 @@ module.exports = function (controller) {
                                 }
                             ]);
 
+                        // relationships
+                        convo.addQuestion({
+                            attachments: [
+                                {
+                                    title: "Relationships",
+                                    callback_id: 'reflection-relationships',
+                                    attachment_type: 'default',
+                                    color: '#FF029D',
+                                    actions: [
+                                        {
+                                            'name': 'fulfilled-button',
+                                            'value': 'Fulfilled',
+                                            'text': 'Fulfilled',
+                                            'type': 'button'
+                                        },
+                                        {
+                                            'name': 'connected-button',
+                                            'value': 'Connected',
+                                            'text': 'Connected',
+                                            'type': 'button'
+                                        },
+                                        {
+                                            'name': 'unsatisfied-button',
+                                            'value': 'Unsatisfied',
+                                            'text': 'Unsatisfied',
+                                            'type': 'button'
+                                        },
+                                        {
+                                            'name': 'lonely-button',
+                                            'value': 'Lonely',
+                                            'text': 'Lonely',
+                                            'type': 'button'
+                                        },
+                                    ]
+                                }
+                            ]
+                        }, [
+                                {
+                                    pattern: 'Fulfilled',
+                                    callback: function (reply, convo) {
+                                        score.push(4);
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [
+                                                    {
+                                                        title: "Relationships",
+                                                        callback_id: 'reflection-relationships',
+                                                        attachment_type: 'default',
+                                                        color: '#FF029D',
+                                                        actions: [
+                                                            {
+                                                                'name': 'fulfilled-button',
+                                                                'value': 'Fulfilled',
+                                                                'style': 'primary',
+                                                                'text': 'Fulfilled',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'connected-button',
+                                                                'value': 'Connected',
+                                                                'text': 'Connected',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'unsatisfied-button',
+                                                                'value': 'Unsatisfied',
+                                                                'text': 'Unsatisfied',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'lonely-button',
+                                                                'value': 'Lonely',
+                                                                'text': 'Lonely',
+                                                                'type': 'button'
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        );
+                                        convo.next();
+                                    }
+                                },
+                                {
+                                    pattern: 'Connected',
+                                    callback: function (reply, convo) {
+                                        score.push(3);
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [
+                                                    {
+                                                        title: "Relationships",
+                                                        callback_id: 'reflection-relationships',
+                                                        attachment_type: 'default',
+                                                        color: '#FF029D',
+                                                        actions: [
+                                                            {
+                                                                'name': 'fulfilled-button',
+                                                                'value': 'Fulfilled',
+                                                                'text': 'Fulfilled',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'connected-button',
+                                                                'value': 'Connected',
+                                                                'style': 'primary',
+                                                                'text': 'Connected',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'unsatisfied-button',
+                                                                'value': 'Unsatisfied',
+                                                                'text': 'Unsatisfied',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'lonely-button',
+                                                                'value': 'Lonely',
+                                                                'text': 'Lonely',
+                                                                'type': 'button'
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        );
+                                        convo.next();
+                                    }
+                                },
+                                {
+                                    pattern: 'Unsatisfied',
+                                    callback: function (reply, convo) {
+                                        score.push(2);
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [
+                                                    {
+                                                        title: "Relationships",
+                                                        callback_id: 'reflection-relationships',
+                                                        attachment_type: 'default',
+                                                        color: '#FF029D',
+                                                        actions: [
+                                                            {
+                                                                'name': 'fulfilled-button',
+                                                                'value': 'Fulfilled',
+                                                                'text': 'Fulfilled',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'connected-button',
+                                                                'value': 'Connected',
+                                                                'text': 'Connected',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'unsatisfied-button',
+                                                                'value': 'Unsatisfied',
+                                                                'style': 'primary',
+                                                                'text': 'Unsatisfied',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'lonely-button',
+                                                                'value': 'Lonely',
+                                                                'text': 'Lonely',
+                                                                'type': 'button'
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        );
+                                        convo.next();
+                                    }
+                                },
+                                {
+                                    pattern: 'Lonely',
+                                    callback: function (reply, convo) {
+                                        score.push(1);
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [
+                                                    {
+                                                        title: "Relationships",
+                                                        callback_id: 'reflection-relationships',
+                                                        attachment_type: 'default',
+                                                        color: '#FF029D',
+                                                        actions: [
+                                                            {
+                                                                'name': 'fulfilled-button',
+                                                                'value': 'Fulfilled',
+                                                                'text': 'Fulfilled',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'connected-button',
+                                                                'value': 'Connected',
+                                                                'text': 'Connected',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'unsatisfied-button',
+                                                                'value': 'Unsatisfied',
+                                                                'text': 'Unsatisfied',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'lonely-button',
+                                                                'value': 'Lonely',
+                                                                'text': 'Lonely',
+                                                                'style': 'primary',
+                                                                'type': 'button'
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        );
+                                        convo.next();
+                                    }
+                                }
+                            ]);
+
                         convo.addMessage("Reflection complete!", {}, 'default');
 
                         convo.activate();

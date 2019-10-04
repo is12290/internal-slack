@@ -378,10 +378,16 @@ module.exports = function (controller) {
                                                     text: results[0][5] + '\n*Complete:* ' + results[1][5][4] + ' | *Present:* ' + results[1][5][3] + ' | *Searching:* ' + results[1][5][2] + ' | *Non-Existent:* ' + results[1][5][1] + '\n'
                                                 },
                                                 {
+                                                    title: 'Relationships',
+                                                    color: '#FFE602',
+                                                    attachment_type: 'default',
+                                                    text: results[0][6] + '\n*Fulfilled:* ' + results[1][6][4] + ' | *Connected:* ' + results[1][6][3] + ' | *Unsatisfied:* ' + results[1][6][2] + ' | *Lonely:* ' + results[1][6][1] + '\n'
+                                                },
+                                                {
                                                     title: 'Overall',
                                                     color: '#02FF57',
                                                     attachment_type: 'default',
-                                                    text: results[0][6]
+                                                    text: results[0][7]
                                                 }
                                             ]
                                         });
@@ -415,6 +421,8 @@ function getSearchOutput(results, dates, style) {
     var confidenceCount = [];
     var presenceCount = [];
     var fulfillmentCount = [];
+    var relationshipCount = [];
+
     var overallCount = [];
 
     if (style == 'Personal') {
@@ -432,11 +440,20 @@ function getSearchOutput(results, dates, style) {
                     confidenceCount.push(checkIn[3]);
                     overallCount.push(checkIn[4] / 4);
 
-                    presenceCount.push(checkOut[0]);
-                    energyCount.push(checkOut[1]);
-                    moodCount.push(checkOut[2]);
-                    fulfillmentCount.push(checkOut[3]);
-                    overallCount.push(checkOut[4] / 4);
+                    if (checkOut.length == 5) {
+                        presenceCount.push(checkOut[0]);
+                        energyCount.push(checkOut[1]);
+                        moodCount.push(checkOut[2]);
+                        fulfillmentCount.push(checkOut[3]);
+                        overallCount.push(checkOut[4] / 4);
+                    } else {
+                        presenceCount.push(checkOut[0]);
+                        energyCount.push(checkOut[1]);
+                        moodCount.push(checkOut[2]);
+                        fulfillmentCount.push(checkOut[3]);
+                        relationshipCount.push(checkOut[4])
+                        overallCount.push(checkOut[5] / 5);
+                    }
                 }
             }
         }
@@ -457,11 +474,20 @@ function getSearchOutput(results, dates, style) {
                         confidenceCount.push(checkIn[3]);
                         overallCount.push(checkIn[4] / 4);
 
-                        presenceCount.push(checkOut[0]);
-                        energyCount.push(checkOut[1]);
-                        moodCount.push(checkOut[2]);
-                        fulfillmentCount.push(checkOut[3]);
-                        overallCount.push(checkOut[4] / 4);
+                        if (checkOut.length == 5) {
+                            presenceCount.push(checkOut[0]);
+                            energyCount.push(checkOut[1]);
+                            moodCount.push(checkOut[2]);
+                            fulfillmentCount.push(checkOut[3]);
+                            overallCount.push(checkOut[4] / 4);
+                        } else {
+                            presenceCount.push(checkOut[0]);
+                            energyCount.push(checkOut[1]);
+                            moodCount.push(checkOut[2]);
+                            fulfillmentCount.push(checkOut[3]);
+                            relationshipCount.push(checkOut[4])
+                            overallCount.push(checkOut[5] / 5);
+                        }
                     }
                 }
             }
@@ -475,10 +501,11 @@ function getSearchOutput(results, dates, style) {
         var confidence = ((confidenceCount.reduce(function (a, b) { return a + b; }, 0) * 25) / confidenceCount.length).toFixed(2);
         var presence = ((presenceCount.reduce(function (a, b) { return a + b; }, 0) * 25) / presenceCount.length).toFixed(2);
         var fulfillment = ((fulfillmentCount.reduce(function (a, b) { return a + b; }, 0) * 25) / fulfillmentCount.length).toFixed(2);
+        var relationship = ((relationshipCount.reduce(function (a, b) { return a + b; }, 0) * 25) / relationshipCount.length).toFixed(2);
         var overall = ((overallCount.reduce(function (a, b) { return a + b; }, 0) * 25) / overallCount.length).toFixed(2);
         overall = Math.round(overall);
 
-        var countArray = [sleepCount, energyCount, moodCount, confidenceCount, presenceCount, fulfillmentCount];
+        var countArray = [sleepCount, energyCount, moodCount, confidenceCount, presenceCount, fulfillmentCount, relationshipCount];
 
         var inDepthArray = [];
         for (var i = 0; i < countArray.length; i++) {
@@ -490,7 +517,7 @@ function getSearchOutput(results, dates, style) {
             inDepthArray.push(map);
         }
 
-        var loopArray = [sleep, energy, mood, confidence, presence, fulfillment];
+        var loopArray = [sleep, energy, mood, confidence, presence, fulfillment, relationship];
 
         var searchReport = [];
         for (var z = 0; z < loopArray.length; z++) {

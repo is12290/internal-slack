@@ -1188,7 +1188,17 @@ module.exports = function (controller) {
 function GetOverall(score) {
     var scores = [];
     for (var j = 0; j < score.length - 1; j++) {
-        scores.push(score[j] * 25);
+        if (j == 0) {
+            // Sleep
+            scores.push((score[j] * 25) * 1.8);
+        } else if (j == 1 || j == 3) {
+            // Energy and Motivation
+            scores.push((score[j] * 25) * 0.6);
+        } else if (j == 2) {
+            // Mood
+            scores.push(score[j] * 25);
+        }
+        
     }
     var sum = scores.reduce(function (a, b) { return a + b; }, 0);
     var overall = sum / scores.length;
