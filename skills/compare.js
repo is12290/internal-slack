@@ -421,7 +421,7 @@ function getComparison(results, start, end, type) {
     var currentDays = [];
     // Get current timeframe
     if (start == 'Today') {
-        currentDays.push(moment().format('MM/DD/YYY'));
+        currentDays.push(moment().format('MM/DD/YYYY'));
         timeframeMessage.push('Today');
     } else if (start == 'Week') {
         var startOfWeek = moment().startOf('isoWeek');
@@ -453,8 +453,8 @@ function getComparison(results, start, end, type) {
 
     // Get past timeframe
     var pastDays = [];
-    if (end == 'Yesterday') {
-        pastDays.push(moment().subtract(1, 'd').format('MM/DD/YYY'));
+    if (end == 'Today') {
+        pastDays.push(moment().subtract(1, 'd').format('MM/DD/YYYY'));
         timeframeMessage.push('Yesterday');
     } else if (end == 'Week') {
         var startOfWeek = moment().startOf('isoWeek').subtract(7, 'd');

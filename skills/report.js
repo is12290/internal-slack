@@ -422,14 +422,14 @@ function getReport(results, timeframe, style) {
             day = day.clone().add(1, 'd');
         }
     } else if (timeframe == 'daily') {
-        days.push(moment().format('DD/MM/YYY'));
+        days.push(moment().format('DD/MM/YYYY'));
         message = message + 'Today';
     }
 
     var pastDays = [];
     var message2 = '';
-    if (timeframe == 'monthly') {
-        pastDays.push(moment().subtract(1, 'd').format('MM/DD/YYY'));
+    if (timeframe == 'daily') {
+        pastDays.push(moment().subtract(1, 'd').format('MM/DD/YYYY'));
         message2 = message2 + 'yesterday';
     } else if (timeframe == 'weekly') {
         var startOfWeek = moment().startOf('isoWeek').subtract(7, 'd');

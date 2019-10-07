@@ -139,7 +139,7 @@ function getReport(results, timeframe) {
 
     var pastDays = [];
     var message2 = '';
-    if (timeframe == 'monthly') {
+    if (timeframe == 'daily') {
         pastDays.push(moment().subtract(1, 'd').format('MM/DD/YYYY'));
         message2 = message2 + 'yesterday';
     } else if (timeframe == 'weekly') {
