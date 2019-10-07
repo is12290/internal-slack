@@ -36,8 +36,8 @@ if (n == 5 || n == 1 || today == endOfMonth) {
                     var results = getReport(instance, 'monthly');
                     var message = 'Here is your monthly report...';
                 } else {
-                    var results = getReport(instance, 'weekly');
-                    var message = 'Here is your weekly report...';
+                    var results = getReport(instance, 'daily');
+                    var message = 'Here is your daily report...';
                 }
                 if (results == 404) {
                     // Pass

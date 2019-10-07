@@ -5,9 +5,7 @@ var now = moment();
 var rounded = round(now, moment.duration(30, "minutes"), "floor");
 const endOfMonth = moment().endOf('month').format('MM/DD/YYYY');
 const today = moment().format('MM/DD/YYYY');
-if (n != 5 || today != endOfMonth) {
-    //Pass
-} else {
+if (n == 5 || today == endOfMonth) {
     const dotenv = require('dotenv');
     dotenv.config();
     const Botkit = require('botkit');
@@ -107,7 +105,8 @@ if (n != 5 || today != endOfMonth) {
             }
         }
     })
-
+} else {
+    // Pass
 }
 
 function getReport(results, timeframe) {
