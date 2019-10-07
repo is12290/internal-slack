@@ -72,7 +72,7 @@ module.exports = function (controller) {
                         const score = [];
 
                         convo.addMessage({
-                            text: "Hey, here's your end of day reflection! Just choose which option vibes best for each of the 4 topics..."
+                            text: "Hey, here's your end of day reflection! Just choose which option vibes best for each of the 5 topics..."
                         });
 
                         // Presence

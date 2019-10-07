@@ -24,7 +24,7 @@ controller.storage.teams.all(function (err, teams) {
     }
     for (var j = 0; j < teams.length; j++) {
         var team = teams[j];
-        if (team.status && team.status.subscription.status == 'inactive' && team.status.subscription.seats_used == 0) {
+        if (typeof team.status != 'undefined' && team.status.subscription.status == 'inactive' && team.status.subscription.seats_used == 0) {
             if (team.status.alerted && team.status.alerted == true) {
                 // Pass
             } else {
@@ -62,7 +62,7 @@ controller.storage.teams.all(function (err, teams) {
                     // Pass
                 }
             }
-        } else if (team.status.subscription.seats >= team.status.subscription.seats) {
+        } else if (typeof team.status != 'undefined' && team.status.subscription.seats >= team.status.subscription.seats) {
             bot.say({
                 attachments: [{
                     title: "Seat Limit Reached",
