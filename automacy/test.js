@@ -30,7 +30,7 @@ if (n == 5 || n == 1 || today == endOfMonth) {
         }
         for (var i = 0; i < all_users.length; i++) {
             var instance = all_users[i];
-            if (instance.name == 'Ian Scalzo') {
+            if (instance.name == 'Ian Scalzo' && instance.status == 'manager') {
                 var bot = controller.spawn({token: instance.token});
                 if (today == endOfMonth) {
                     var results = getReport(instance, 'monthly');
@@ -129,14 +129,14 @@ function getReport(results, timeframe) {
             day = day.clone().add(1, 'd');
         }
     } else if (timeframe == 'daily') {
-        days.push(moment().format('DD/MM/YYY'));
+        days.push(moment().format('DD/MM/YYYY'));
         message = message + 'Today';
     }
 
     var pastDays = [];
     var message2 = '';
     if (timeframe == 'monthly') {
-        pastDays.push(moment().subtract(1, 'd').format('MM/DD/YYY'));
+        pastDays.push(moment().subtract(1, 'd').format('MM/DD/YYYY'));
         message2 = message2 + 'yesterday';
     } else if (timeframe == 'weekly') {
         var startOfWeek = moment().startOf('isoWeek').subtract(7, 'd');
