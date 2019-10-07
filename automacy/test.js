@@ -39,8 +39,12 @@ if (n == 5 || n == 1 || today == endOfMonth) {
                     var results = getReport(instance, 'daily');
                     var message = 'Here is your daily report...';
                 }
+                console.log(results);
                 if (results == 404) {
-                    // Pass
+                    bot.say({
+                        text: "Sorry, something went wrong",
+                        channel: instance.channel
+                    })
                 } else {
                     bot.say({
                         text: message,
