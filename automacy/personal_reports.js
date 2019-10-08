@@ -144,7 +144,7 @@ function getReport(results, timeframe) {
     } else if (timeframe == 'weekly') {
         var startOfWeek = moment().startOf('isoWeek').subtract(7, 'd');
         var endOfWeek = moment().endOf('isoWeek').subtract(7, 'd');
-        message2 = message2 + 'Last Week';
+        message2 = message2 + 'last Week';
         while (startOfWeek <= endOfWeek) {
             pastDays.push(startOfWeek.format('L'));
             startOfWeek = startOfWeek.clone().add(1, 'd');
@@ -152,7 +152,7 @@ function getReport(results, timeframe) {
     } else if (timeframe == 'monthly') {
         var startOfMonth = moment().startOf('month').subtract(1, 'months');
         var endOfMonth = moment().endOf('month').subtract(1, 'months');
-        message2 = message2 + 'Last Month';
+        message2 = message2 + 'last Month';
         while (startOfMonth <= endOfMonth) {
             pastDays.push(startOfMonth.format('L'));
             startOfMonth = startOfMonth.clone().add(1, 'd');
@@ -280,11 +280,11 @@ function getReport(results, timeframe) {
                 analysisOutcome.push(overallAnalysis);
             } else if (overall > past) {
                 var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n' + message1 + ' is up ' + difference + '% compared to ' + message2;
+                overallAnalysis = overallAnalysis + '\n' + message1 + ' is up *' + difference.toFixed(2) + '%* compared to ' + message2;
                 analysisOutcome.push(overallAnalysis);
             } else if (overall < past) {
                 var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n' + message1 + ' is down ' + difference + '% compared to ' + message2;
+                overallAnalysis = overallAnalysis + '\n' + message1 + ' is down *' + difference.toFixed(2) + '%* compared to ' + message2;
                 analysisOutcome.push(overallAnalysis);
             }
         } else {
@@ -294,11 +294,11 @@ function getReport(results, timeframe) {
                 analysisOutcome.push(overallAnalysis);
             } else if (overall > past) {
                 var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n' + message1 + ' is up ' + difference + '% compared to ' + message2;
+                overallAnalysis = overallAnalysis + '\n' + message1 + ' is up *' + difference.toFixed(2) + '%* compared to ' + message2;
                 analysisOutcome.push(overallAnalysis);
             } else if (overall < past) {
                 var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n' + message1 + ' is down ' + difference + '% compared to ' + message2;
+                overallAnalysis = overallAnalysis + '\n' + message1 + ' is down *' + difference.toFixed(2) + '%* compared to ' + message2;
                 analysisOutcome.push(overallAnalysis);
             }
         }

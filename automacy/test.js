@@ -5,7 +5,7 @@ var now = moment();
 var rounded = round(now, moment.duration(30, "minutes"), "floor");
 const endOfMonth = moment().endOf('month').format('MM/DD/YYYY');
 const today = moment().format('MM/DD/YYYY');
-if (n == 5 || n == 1 || today == endOfMonth) {
+if (n > 0) {
     const dotenv = require('dotenv');
     dotenv.config();
     const Botkit = require('botkit');
@@ -37,8 +37,8 @@ if (n == 5 || n == 1 || today == endOfMonth) {
                     var message = 'Here is your monthly report...';
                 } else {
                     console.log(instance.logs);
-                    var results = getReport(instance, 'daily');
-                    var message = 'Here is your daily report...';
+                    var results = getReport(instance, 'weekly');
+                    var message = 'Here is your weekly report...';
                 }
                 console.log(results);
                 if (results == 404) {
@@ -121,7 +121,7 @@ function getReport(results, timeframe) {
         var day = start;
         message = message + 'This month';
         while (day <= end) {
-            days.push(day.format('L'));
+            days.push(day.format('MM/DD/YYYY'));
             day = day.clone().add(1, 'd');
         }
     } else if (timeframe == 'weekly') {
@@ -130,7 +130,7 @@ function getReport(results, timeframe) {
         var day = start;
         message = message + 'This week';
         while (day <= end) {
-            days.push(day.format('L'));
+            days.push(day.format('MM/DD/YYYY'));
             day = day.clone().add(1, 'd');
         }
     } else if (timeframe == 'daily') {
@@ -148,7 +148,7 @@ function getReport(results, timeframe) {
         var endOfWeek = moment().endOf('isoWeek').subtract(7, 'd');
         message2 = message2 + 'Last Week';
         while (startOfWeek <= endOfWeek) {
-            pastDays.push(startOfWeek.format('L'));
+            pastDays.push(startOfWeek.format('MM/DD/YYYY'));
             startOfWeek = startOfWeek.clone().add(1, 'd');
         }
     } else if (timeframe == 'monthly') {
@@ -156,7 +156,7 @@ function getReport(results, timeframe) {
         var endOfMonth = moment().endOf('month').subtract(1, 'months');
         message2 = message2 + 'Last Month';
         while (startOfMonth <= endOfMonth) {
-            pastDays.push(startOfMonth.format('L'));
+            pastDays.push(startOfMonth.format('MM/DD/YYYY'));
             startOfMonth = startOfMonth.clone().add(1, 'd');
         }
     }
