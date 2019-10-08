@@ -401,13 +401,13 @@ module.exports = function (controller) {
 
 function getReport(results, timeframe, style) {
     var moment = require('moment');
-    var message = '';
+    var message1 = '';
     var days = [];
     if (timeframe == 'monthly') {
         var start = moment().startOf('month');
         var end = moment().endOf('month');
         var day = start;
-        message = message + 'This month';
+        message1 = message1 + 'This month';
         while (day <= end) {
             days.push(day.format('L'));
             day = day.clone().add(1, 'd');
@@ -416,14 +416,14 @@ function getReport(results, timeframe, style) {
         var start = moment().startOf('isoWeek');
         var end = moment().endOf('isoWeek');
         var day = start;
-        message = message + 'This week';
+        message1 = message1 + 'This week';
         while (day <= end) {
             days.push(day.format('L'));
             day = day.clone().add(1, 'd');
         }
     } else if (timeframe == 'daily') {
         days.push(moment().format('DD/MM/YYYY'));
-        message = message + 'Today';
+        message1 = message1 + 'Today';
     }
 
     var pastDays = [];
@@ -640,26 +640,30 @@ function getReport(results, timeframe, style) {
             var overallAnalysis = 'Score: ' + overall + '%\nYour overall emotional fitness this week was *negative*';
             if (!past || typeof past == 'undefined' || past == 0) {
                 overallAnalysis = overallAnalysis + '\nNo logs to compare against :rowboat:';
+                analysisOutcome.push(overallAnalysis);
             } else if (overall > past) {
                 var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n ' + message + ' is up ' + difference + '% compared to ' + message2;
+                overallAnalysis = overallAnalysis + '\n' + message1 + ' is up ' + difference + '% compared to ' + message2;
+                analysisOutcome.push(overallAnalysis);
             } else if (overall < past) {
                 var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n ' + message + ' is down ' + difference + '% compared to ' + message2;
+                overallAnalysis = overallAnalysis + '\n' + message1 + ' is down ' + difference + '% compared to ' + message2;
+                analysisOutcome.push(overallAnalysis);
             }
-            analysisOutcome.push(overallAnalysis);
         } else {
             var overallAnalysis = 'Score: ' + overall + '%\nYour overall emotional fitness this week was *positive*!';
             if (!past || typeof past == 'undefined' || past == 0) {
                 overallAnalysis = overallAnalysis + '\nNo logs to compare against :rowboat:';
+                analysisOutcome.push(overallAnalysis);
             } else if (overall > past) {
                 var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n ' + message + ' is up ' + difference + '% compared to ' + message2;
+                overallAnalysis = overallAnalysis + '\n' + message1 + ' is up ' + difference + '% compared to ' + message2;
+                analysisOutcome.push(overallAnalysis);
             } else if (overall < past) {
                 var difference = overall - past;
-                overallAnalysis = overallAnalysis + '\n ' + message + ' is down ' + difference + '% compared to ' + message2;
+                overallAnalysis = overallAnalysis + '\n' + message1 + ' is down ' + difference + '% compared to ' + message2;
+                analysisOutcome.push(overallAnalysis);
             }
-            analysisOutcome.push(overallAnalysis);
         }
 
         var returnArray = [analysisOutcome, inDepthArray];
