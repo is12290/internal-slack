@@ -2,6 +2,7 @@ var moment = require('moment');
 const today = moment().format('MM/DD/YYYY');
 const dotenv = require('dotenv');
 dotenv.config();
+const stripe = require('stripe')(STRIPE_KEY);
 const Botkit = require('botkit');
 
 var bot_options = {
@@ -24,70 +25,50 @@ controller.storage.teams.all(function (err, teams) {
     }
     for (var j = 0; j < teams.length; j++) {
         var team = teams[j];
-        if (typeof team.status != 'undefined' && team.status.subscription.status == 'inactive' && team.status.subscription.seats_used == 0) {
-            if (team.status.alerted && team.status.alerted == true) {
-                // Pass
-            } else {
-                var end = moment(team.status.trial.end);
-                if (today == end || today > end) {
-                    // Serve them the 'pay now message
-                    team.status.trial.status = 'inactive';
-                    team.status.trial.tally = team.status.trial.tally + 1;
-                    bot.say({
-                        attachments: [{
-                            title: "End of Trial",
-                            text: "It appears you have reached the end of your 2 week trial! Would you like to subscribe now?",
-                            color: "#ff0228",
-                            callback_id: 'upgrade',
-                            attachment_type: 'default',
-                            actions: [
-                                {
-                                    'text': 'Yes',
-                                    'type': 'button',
-                                    'url': 'https://getinternal.co/subscribe'
-                                },
-                                {
-                                    'name': 'no-button',
-                                    'value': 'No-Subscribe',
-                                    'text': 'No',
-                                    'type': 'button'
-                                }
-                            ]
-                        }],
-                        channel: team.bot.channel
-                    });
-                    team.status.alerted = true;
+        var subscription_status = '';
+        stripe.customers.list({ email: team.stripe_email }, function (err, customers) {
+            if (err || !customers) {
+                team.subscription.status = 'inactive';
+                controller.storage.teams.save(team);
+                subscription_status = subscription_status + 'inactive';
+            } else if (customers) {
+                if (customers[0].data.subscriptions.data[0].ended_at == 'null') {
+                    team.subscription.status = 'active';
                     controller.storage.teams.save(team);
+                    subscription_status = subscription_status + 'active';
                 } else {
-                    // Pass
+                    team.subscription.status = 'inactive';
+                    controller.storage.teams.save(team);
+                    subscription_status = subscription_status + 'inactive';
                 }
             }
-        } else if (typeof team.status != 'undefined' && team.status.subscription.seats >= team.status.subscription.seats) {
-            bot.say({
-                attachments: [{
-                    title: "Seat Limit Reached",
-                    text: "Oops, it seems like you've reached the maximum amount of seats you currently pay for! Would you like to add more?",
-                    color: "#ff0228",
-                    callback_id: 'upgrade',
-                    attachment_type: 'default',
-                    actions: [
-                        {
-                            'text': 'Yes',
-                            'type': 'button',
-                            'url': 'https://getinternal.co/subscribe'
-                        },
-                        {
-                            'name': 'no-button',
-                            'value': 'No-Subscribe',
-                            'text': 'No',
-                            'type': 'button'
-                        }
-                    ]
-                }],
-                channel: team.bot.channel
-            });
-        }
-        // Eventually add subscription data
+
+            if (subscription_status == 'inactive') {
+                bot.say({
+                    attachments: [{
+                        title: "Subscription Ended",
+                        text: "It appears yous subscription has ended. Would you like to renew?",
+                        color: "#ff0228",
+                        callback_id: 'upgrade',
+                        attachment_type: 'default',
+                        actions: [
+                            {
+                                'text': 'Yes',
+                                'type': 'button',
+                                'url': 'https://getinternal.co/#pricing'
+                            },
+                            {
+                                'name': 'no-button',
+                                'value': 'No-Subscribe',
+                                'text': 'No',
+                                'type': 'button'
+                            }
+                        ]
+                    }],
+                    channel: team.bot.channel
+                });
+            }
+        })
     }
 })
 

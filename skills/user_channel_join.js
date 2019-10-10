@@ -9,7 +9,7 @@ module.exports = function (controller) {
                     if (err) {
                         console.log("err: ", err);
                     }
-                    convo.say("Nice to meet you, <@" + message.user + ">! I'm Internal, a bot you use to know how your coworkers are feeling everyday");
+                    convo.say("Nice to meet you, <@" + message.user + ">! I'm Internal, a bot you use to manage your cofounder relationship");
 
                     convo.activate();
 

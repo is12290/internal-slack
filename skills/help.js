@@ -4,12 +4,10 @@ module.exports = function (controller) {
             if (err) {
                 console.log(err);
             }
-            if (team.status.subscription.status == 'inactive' && team.status.trial.status == 'inactive') {
-                if (team.status.trial.status == 'inactive' && team.status.subscription.seats_used == 0) {
-                    var text = "Your trial is up! Would you like to purchase a subscription?"
-                } else if (team.status.subscription.status == 'inactive' && team.status.subscription.seats_used > 0) {
-                    var text = "It looks like your subscription is up! Would you like to renew?"
-                }
+            if (team.subscription.status == 'inactive') {
+                    
+                var text = "It looks like your subscription is up! Would you like to renew?"
+            
                 bot.reply(message, {
                     attachments: [{
                         title: "Subscribe",
@@ -21,7 +19,7 @@ module.exports = function (controller) {
                             {
                                 'text': 'Yes',
                                 'type': 'button',
-                                'url': 'https://getinternal.co/subscribe'
+                                'url': 'https://getinternal.co/#pricing'
                             },
                             {
                                 'name': 'no-button',
@@ -65,9 +63,9 @@ module.exports = function (controller) {
                     text: "Help is on the way! What are you looking to do?",
                     attachments: [
                         {
-                            title: 'Questionnaires',
+                            title: 'Logs',
                             color: '#02D2FF',
-                            callback_id: 'questionnaire',
+                            callback_id: 'Logs',
                             attachment_type: 'default',
                             text: "Record your headspace at the beginning and end of your workday",
                             actions: [
@@ -90,33 +88,12 @@ module.exports = function (controller) {
                             color: '#2A02FF',
                             attachment_type: 'default',
                             callback_id: 'report',
-                            text: "Monitor your or your team's emotional well-being overtime",
+                            text: "Monitor yourself and your relationship with your cofounder(s)",
                             actions: [
                                 {
                                     'name': 'Report-button',
                                     'value': 'Generate-Report',
                                     'text': 'Generate Report',
-                                    'type': 'button'
-                                }
-                            ]
-                        },
-                        {
-                            title: 'Special Actions',
-                            color: '#8A02FF',
-                            callback_id: 'special',
-                            attachment_type: 'default',
-                            text: "Get the insights you're curious about",
-                            actions: [
-                                {
-                                    'name': 'Compare-Scores-button',
-                                    'value': 'Compare-Scores',
-                                    'text': 'Compare Scores',
-                                    'type': 'button'
-                                },
-                                {
-                                    'name': 'Historic-Search-button',
-                                    'value': 'Historic-Search',
-                                    'text': 'Historic Search',
                                     'type': 'button'
                                 }
                             ]

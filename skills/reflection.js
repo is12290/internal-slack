@@ -5,12 +5,10 @@ module.exports = function (controller) {
                 if (err) {
                     console.log("error: ", err);
                 }
-                if (team.status.subscription.status == 'inactive' && team.status.trial.status == 'inactive') {
-                    if (team.status.trial.status == 'inactive' && team.status.subscription.seats_used == 0) {
-                        var text = "Your trial is up! Would you like to purchase a subscription?"
-                    } else if (team.status.subscription.status == 'inactive' && team.status.subscription.seats_used > 0) {
-                        var text = "It looks like your subscription is up! Would you like to renew?"
-                    }
+                if (team.subscription.status == 'inactive') {
+                    
+                    var text = "It looks like your subscription is up! Would you like to renew?"
+                    
                     bot.reply(message, {
                         attachments: [{
                             title: "Subscribe",
@@ -22,7 +20,7 @@ module.exports = function (controller) {
                                 {
                                     'text': 'Yes',
                                     'type': 'button',
-                                    'url': 'https://getinternal.co/subscribe'
+                                    'url': 'https://getinternal.co/#pricing'
                                 },
                                 {
                                     'name': 'no-button',
@@ -72,40 +70,40 @@ module.exports = function (controller) {
                         const score = [];
 
                         convo.addMessage({
-                            text: "Hey, here's your end of day reflection! Just choose which option vibes best for each of the 5 topics..."
+                            text: "Hey, here's your end of day reflection! Just choose which option vibes best for each of the 4 topics..."
                         });
 
-                        // Presence
+                        // Progress
                         convo.addQuestion({
                             attachments: [
                                 {
-                                    title: "Presence",
-                                    callback_id: 'reflection-presence',
+                                    title: "Progress",
+                                    callback_id: 'reflection-progress',
                                     attachment_type: 'default',
                                     color: '#02D2FF',
                                     actions: [
                                         {
-                                            'name': 'grounded-button',
-                                            'value': 'Grounded',
-                                            'text': 'Grounded',
+                                            'name': 'substantial-button',
+                                            'value': 'Substantial',
+                                            'text': 'Substantial',
                                             'type': 'button'
                                         },
                                         {
-                                            'name': 'aware-button',
-                                            'value': 'Aware',
-                                            'text': 'Aware',
+                                            'name': 'acceptable-button',
+                                            'value': 'Acceptable',
+                                            'text': 'Acceptable',
                                             'type': 'button'
                                         },
                                         {
-                                            'name': 'outOfIt-button',
-                                            'value': 'Out-of-It',
-                                            'text': 'Out of It',
+                                            'name': 'minimal-button',
+                                            'value': 'Minimal',
+                                            'text': 'Minimal',
                                             'type': 'button'
                                         },
                                         {
-                                            'name': 'disconnected-button',
-                                            'value': 'Disconnected',
-                                            'text': 'Disconnected',
+                                            'name': 'stagnant-button',
+                                            'value': 'Stagnant',
+                                            'text': 'Stagnant',
                                             'type': 'button'
                                         },
                                     ]
@@ -113,41 +111,41 @@ module.exports = function (controller) {
                             ]
                         }, [
                                 {
-                                    pattern: 'Grounded',
+                                    pattern: 'Substantial',
                                     callback: function (reply, convo) {
                                         score.push(4);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Presence",
-                                                        callback_id: 'reflection-presence',
+                                                        title: "Progress",
+                                                        callback_id: 'reflection-progress',
                                                         attachment_type: 'default',
                                                         color: '#02D2FF',
                                                         actions: [
                                                             {
-                                                                'name': 'grounded-button',
-                                                                'value': 'Grounded',
+                                                                'name': 'substantial-button',
+                                                                'value': 'Substantial',
                                                                 'style': 'primary',
-                                                                'text': 'Grounded',
+                                                                'text': 'Substantial',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'aware-button',
-                                                                'value': 'Aware',
-                                                                'text': 'Aware',
+                                                                'name': 'acceptable-button',
+                                                                'value': 'Acceptable',
+                                                                'text': 'Acceptable',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'outOfIt-button',
-                                                                'value': 'Out-of-It',
-                                                                'text': 'Out of It',
+                                                                'name': 'minimal-button',
+                                                                'value': 'Minimal',
+                                                                'text': 'Minimal',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'disconnected-button',
-                                                                'value': 'Disconnected',
-                                                                'text': 'Disconnected',
+                                                                'name': 'stagnant-button',
+                                                                'value': 'Stagnant',
+                                                                'text': 'Stagnant',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -159,41 +157,41 @@ module.exports = function (controller) {
                                     }
                                 },
                                 {
-                                    pattern: 'Aware',
+                                    pattern: 'Acceptable',
                                     callback: function (reply, convo) {
                                         score.push(3);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Presence",
-                                                        callback_id: 'reflection-presence',
+                                                        title: "Progress",
+                                                        callback_id: 'reflection-progress',
                                                         attachment_type: 'default',
                                                         color: '#02D2FF',
                                                         actions: [
                                                             {
-                                                                'name': 'grounded-button',
-                                                                'value': 'Grounded',
-                                                                'text': 'Grounded',
+                                                                'name': 'substantial-button',
+                                                                'value': 'Substantial',
+                                                                'text': 'Substantial',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'aware-button',
+                                                                'name': 'acceptable-button',
+                                                                'value': 'Acceptable',
                                                                 'style': 'primary',
-                                                                'value': 'Aware',
-                                                                'text': 'Aware',
+                                                                'text': 'Acceptable',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'outOfIt-button',
-                                                                'value': 'Out-of-It',
-                                                                'text': 'Out of It',
+                                                                'name': 'minimal-button',
+                                                                'value': 'Minimal',
+                                                                'text': 'Minimal',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'disconnected-button',
-                                                                'value': 'Disconnected',
-                                                                'text': 'Disconnected',
+                                                                'name': 'stagnant-button',
+                                                                'value': 'Stagnant',
+                                                                'text': 'Stagnant',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -205,41 +203,41 @@ module.exports = function (controller) {
                                     }
                                 },
                                 {
-                                    pattern: 'Out-of-It',
+                                    pattern: 'Minimal',
                                     callback: function (reply, convo) {
                                         score.push(2);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Presence",
-                                                        callback_id: 'reflection-presence',
+                                                        title: "Progress",
+                                                        callback_id: 'reflection-progress',
                                                         attachment_type: 'default',
                                                         color: '#02D2FF',
                                                         actions: [
                                                             {
-                                                                'name': 'grounded-button',
-                                                                'value': 'Grounded',
-                                                                'text': 'Grounded',
+                                                                'name': 'substantial-button',
+                                                                'value': 'Substantial',
+                                                                'text': 'Substantial',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'aware-button',
-                                                                'value': 'Aware',
-                                                                'text': 'Aware',
+                                                                'name': 'acceptable-button',
+                                                                'value': 'Acceptable',
+                                                                'text': 'Acceptable',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'outOfIt-button',
+                                                                'name': 'minimal-button',
+                                                                'value': 'Minimal',
                                                                 'style': 'primary',
-                                                                'value': 'Out-of-It',
-                                                                'text': 'Out of It',
+                                                                'text': 'Minimal',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'disconnected-button',
-                                                                'value': 'Disconnected',
-                                                                'text': 'Disconnected',
+                                                                'name': 'stagnant-button',
+                                                                'value': 'Stagnant',
+                                                                'text': 'Stagnant',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -251,41 +249,41 @@ module.exports = function (controller) {
                                     }
                                 },
                                 {
-                                    pattern: 'Disconnected',
+                                    pattern: 'Stagnant',
                                     callback: function (reply, convo) {
                                         score.push(1);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Presence",
-                                                        callback_id: 'reflection-presence',
+                                                        title: "Progress",
+                                                        callback_id: 'reflection-progress',
                                                         attachment_type: 'default',
                                                         color: '#02D2FF',
                                                         actions: [
                                                             {
-                                                                'name': 'grounded-button',
-                                                                'value': 'Grounded',
-                                                                'text': 'Grounded',
+                                                                'name': 'substantial-button',
+                                                                'value': 'Substantial',
+                                                                'text': 'Substantial',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'aware-button',
-                                                                'value': 'Aware',
-                                                                'text': 'Aware',
+                                                                'name': 'acceptable-button',
+                                                                'value': 'Acceptable',
+                                                                'text': 'Acceptable',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'outOfIt-button',
-                                                                'value': 'Out-of-It',
-                                                                'text': 'Out of It',
+                                                                'name': 'minimal-button',
+                                                                'value': 'Minimal',
+                                                                'text': 'Minimal',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'disconnected-button',
-                                                                'value': 'Disconnected',
+                                                                'name': 'stagnant-button',
+                                                                'value': 'Stagnant',
                                                                 'style': 'primary',
-                                                                'text': 'Disconnected',
+                                                                'text': 'Stagnant',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -298,465 +296,19 @@ module.exports = function (controller) {
                                 }
                             ]);
 
-                        // Energy
+                        // Frustration
                         convo.addQuestion({
                             attachments: [
                                 {
-                                    title: "Energy",
-                                    callback_id: 'reflection-energy',
+                                    title: "Frustration",
+                                    callback_id: 'reflection-frustration',
                                     attachment_type: 'default',
                                     color: '#2A02FF',
                                     actions: [
                                         {
-                                            'name': 'full-button',
-                                            'value': 'Full',
-                                            'text': 'Full',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'alright-button',
-                                            'value': 'Alright',
-                                            'text': 'Alright',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'hangingOn-button',
-                                            'value': 'Hanging-On',
-                                            'text': 'Hanging On',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'dead-button',
-                                            'value': 'Dead',
-                                            'text': 'Dead',
-                                            'type': 'button'
-                                        },
-                                    ]
-                                }
-                            ]
-                        }, [
-                                {
-                                    pattern: 'Full',
-                                    callback: function (reply, convo) {
-                                        score.push(4);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Energy",
-                                                        callback_id: 'reflection-energy',
-                                                        attachment_type: 'default',
-                                                        color: '#2A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'full-button',
-                                                                'value': 'Full',
-                                                                'style': 'primary',
-                                                                'text': 'Full',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'alright-button',
-                                                                'value': 'Alright',
-                                                                'text': 'Alright',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'hangingOn-button',
-                                                                'value': 'Hanging-On',
-                                                                'text': 'Hanging On',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'dead-button',
-                                                                'value': 'Dead',
-                                                                'text': 'Dead',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Alright',
-                                    callback: function (reply, convo) {
-                                        score.push(3);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Energy",
-                                                        callback_id: 'reflection-energy',
-                                                        attachment_type: 'default',
-                                                        color: '#2A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'full-button',
-                                                                'value': 'Full',
-                                                                'text': 'Full',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'alright-button',
-                                                                'value': 'Alright',
-                                                                'style': 'primary',
-                                                                'text': 'Alright',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'hangingOn-button',
-                                                                'value': 'Hanging-On',
-                                                                'text': 'Hanging On',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'dead-button',
-                                                                'value': 'Dead',
-                                                                'text': 'Dead',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Hanging-On',
-                                    callback: function (reply, convo) {
-                                        score.push(2);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Energy",
-                                                        callback_id: 'reflection-energy',
-                                                        attachment_type: 'default',
-                                                        color: '#2A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'full-button',
-                                                                'value': 'Full',
-                                                                'text': 'Full',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'alright-button',
-                                                                'value': 'Alright',
-                                                                'text': 'Alright',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'hangingOn-button',
-                                                                'value': 'Hanging-On',
-                                                                'style': 'primary',
-                                                                'text': 'Hanging On',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'dead-button',
-                                                                'value': 'Dead',
-                                                                'text': 'Dead',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Dead',
-                                    callback: function (reply, convo) {
-                                        score.push(1);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Energy",
-                                                        callback_id: 'reflection-energy',
-                                                        attachment_type: 'default',
-                                                        color: '#2A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'full-button',
-                                                                'value': 'Full',
-                                                                'text': 'Full',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'alright-button',
-                                                                'value': 'Alright',
-                                                                'text': 'Alright',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'hangingOn-button',
-                                                                'value': 'Hanging-On',
-                                                                'text': 'Hanging On',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'dead-button',
-                                                                'value': 'Dead',
-                                                                'style': 'primary',
-                                                                'text': 'Dead',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                }
-                            ]);
-
-                        // Mood
-                        convo.addQuestion({
-                            attachments: [
-                                {
-                                    title: "Mood",
-                                    callback_id: 'reflection-mood',
-                                    attachment_type: 'default',
-                                    color: '#8A02FF',
-                                    actions: [
-                                        {
-                                            'name': 'happy-button',
-                                            'value': 'Happy',
-                                            'text': 'Happy',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'calm-button',
-                                            'value': 'Calm',
-                                            'text': 'Calm',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'tense-button',
-                                            'value': 'Tense',
-                                            'text': 'Tense',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'upset-button',
-                                            'value': 'Upset',
-                                            'text': 'Upset',
-                                            'type': 'button'
-                                        },
-                                    ]
-                                }
-                            ]
-                        }, [
-                                {
-                                    pattern: 'Happy',
-                                    callback: function (reply, convo) {
-                                        score.push(4);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Mood",
-                                                        callback_id: 'reflection-mood',
-                                                        attachment_type: 'default',
-                                                        color: '#8A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'happy-button',
-                                                                'style': 'primary',
-                                                                'value': 'Happy',
-                                                                'text': 'Happy',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'calm-button',
-                                                                'value': 'Calm',
-                                                                'text': 'Calm',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'tense-button',
-                                                                'value': 'Tense',
-                                                                'text': 'Tense',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'upset-button',
-                                                                'value': 'Upset',
-                                                                'text': 'Upset',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Calm',
-                                    callback: function (reply, convo) {
-                                        score.push(3);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Mood",
-                                                        callback_id: 'reflection-mood',
-                                                        attachment_type: 'default',
-                                                        color: '#8A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'happy-button',
-                                                                'value': 'Happy',
-                                                                'text': 'Happy',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'calm-button',
-                                                                'style': 'primary',
-                                                                'value': 'Calm',
-                                                                'text': 'Calm',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'tense-button',
-                                                                'value': 'Tense',
-                                                                'text': 'Tense',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'upset-button',
-                                                                'value': 'Upset',
-                                                                'text': 'Upset',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Tense',
-                                    callback: function (reply, convo) {
-                                        score.push(2);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Mood",
-                                                        callback_id: 'reflection-mood',
-                                                        attachment_type: 'default',
-                                                        color: '#8A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'happy-button',
-                                                                'value': 'Happy',
-                                                                'text': 'Happy',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'calm-button',
-                                                                'value': 'Calm',
-                                                                'text': 'Calm',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'tense-button',
-                                                                'value': 'Tense',
-                                                                'style': 'primary',
-                                                                'text': 'Tense',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'upset-button',
-                                                                'value': 'Upset',
-                                                                'text': 'Upset',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Upset',
-                                    callback: function (reply, convo) {
-                                        score.push(1);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Mood",
-                                                        callback_id: 'reflection-mood',
-                                                        attachment_type: 'default',
-                                                        color: '#8A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'happy-button',
-                                                                'value': 'Happy',
-                                                                'text': 'Happy',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'calm-button',
-                                                                'value': 'Calm',
-                                                                'text': 'Calm',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'tense-button',
-                                                                'value': 'Tense',
-                                                                'text': 'Tense',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'upset-button',
-                                                                'style': 'primary',
-                                                                'value': 'Upset',
-                                                                'text': 'Upset',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                }
-                            ]);
-
-                        // fulfillment
-                        convo.addQuestion({
-                            attachments: [
-                                {
-                                    title: "Fulfillment",
-                                    callback_id: 'reflection-fulfillment',
-                                    attachment_type: 'default',
-                                    color: '#CF02FF',
-                                    actions: [
-                                        {
-                                            'name': 'complete-button',
-                                            'value': 'Complete',
-                                            'text': 'Complete',
+                                            'name': 'nonexistent-button',
+                                            'value': 'Nonexistent',
+                                            'text': 'Nonexistent',
                                             'type': 'button'
                                         },
                                         {
@@ -766,15 +318,15 @@ module.exports = function (controller) {
                                             'type': 'button'
                                         },
                                         {
-                                            'name': 'searching-button',
-                                            'value': 'Searching',
-                                            'text': 'Searching',
+                                            'name': 'considerable-button',
+                                            'value': 'Considerable',
+                                            'text': 'Considerable',
                                             'type': 'button'
                                         },
                                         {
-                                            'name': 'nonExistent-button',
-                                            'value': 'Non-Existent',
-                                            'text': 'Non-Existent',
+                                            'name': 'peak-button',
+                                            'value': 'Peak',
+                                            'text': 'Peak',
                                             'type': 'button'
                                         },
                                     ]
@@ -782,23 +334,23 @@ module.exports = function (controller) {
                             ]
                         }, [
                                 {
-                                    pattern: 'Complete',
+                                    pattern: 'Nonexistent',
                                     callback: function (reply, convo) {
                                         score.push(4);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Fulfillment",
-                                                        callback_id: 'reflection-fulfillment',
+                                                        title: "Frustration",
+                                                        callback_id: 'reflection-frustration',
                                                         attachment_type: 'default',
-                                                        color: '#CF02FF',
+                                                        color: '#2A02FF',
                                                         actions: [
                                                             {
-                                                                'name': 'complete-button',
-                                                                'value': 'Complete',
+                                                                'name': 'nonexistent-button',
+                                                                'value': 'Nonexistent',
                                                                 'style': 'primary',
-                                                                'text': 'Complete',
+                                                                'text': 'Nonexistent',
                                                                 'type': 'button'
                                                             },
                                                             {
@@ -808,15 +360,15 @@ module.exports = function (controller) {
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'searching-button',
-                                                                'value': 'Searching',
-                                                                'text': 'Searching',
+                                                                'name': 'considerable-button',
+                                                                'value': 'Considerable',
+                                                                'text': 'Considerable',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'nonExistent-button',
-                                                                'value': 'Non-Existent',
-                                                                'text': 'Non-Existent',
+                                                                'name': 'peak-button',
+                                                                'value': 'Peak',
+                                                                'text': 'Peak',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -835,15 +387,15 @@ module.exports = function (controller) {
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Fulfillment",
-                                                        callback_id: 'reflection-fulfillment',
+                                                        title: "Frustration",
+                                                        callback_id: 'reflection-frustration',
                                                         attachment_type: 'default',
-                                                        color: '#CF02FF',
+                                                        color: '#2A02FF',
                                                         actions: [
                                                             {
-                                                                'name': 'complete-button',
-                                                                'value': 'Complete',
-                                                                'text': 'Complete',
+                                                                'name': 'nonexistent-button',
+                                                                'value': 'Nonexistent',
+                                                                'text': 'Nonexistent',
                                                                 'type': 'button'
                                                             },
                                                             {
@@ -854,15 +406,15 @@ module.exports = function (controller) {
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'searching-button',
-                                                                'value': 'Searching',
-                                                                'text': 'Searching',
+                                                                'name': 'considerable-button',
+                                                                'value': 'Considerable',
+                                                                'text': 'Considerable',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'nonExistent-button',
-                                                                'value': 'Non-Existent',
-                                                                'text': 'Non-Existent',
+                                                                'name': 'peak-button',
+                                                                'value': 'Peak',
+                                                                'text': 'Peak',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -874,22 +426,22 @@ module.exports = function (controller) {
                                     }
                                 },
                                 {
-                                    pattern: 'Searching',
+                                    pattern: 'Considerable',
                                     callback: function (reply, convo) {
                                         score.push(2);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Fulfillment",
-                                                        callback_id: 'reflection-fulfillment',
+                                                        title: "Frustration",
+                                                        callback_id: 'reflection-frustration',
                                                         attachment_type: 'default',
-                                                        color: '#CF02FF',
+                                                        color: '#2A02FF',
                                                         actions: [
                                                             {
-                                                                'name': 'complete-button',
-                                                                'value': 'Complete',
-                                                                'text': 'Complete',
+                                                                'name': 'nonexistent-button',
+                                                                'value': 'Nonexistent',
+                                                                'text': 'Nonexistent',
                                                                 'type': 'button'
                                                             },
                                                             {
@@ -899,16 +451,16 @@ module.exports = function (controller) {
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'searching-button',
-                                                                'value': 'Searching',
+                                                                'name': 'considerable-button',
+                                                                'value': 'Considerable',
                                                                 'style': 'primary',
-                                                                'text': 'Searching',
+                                                                'text': 'Considerable',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'nonExistent-button',
-                                                                'value': 'Non-Existent',
-                                                                'text': 'Non-Existent',
+                                                                'name': 'peak-button',
+                                                                'value': 'Peak',
+                                                                'text': 'Peak',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -920,22 +472,22 @@ module.exports = function (controller) {
                                     }
                                 },
                                 {
-                                    pattern: 'Non-Existent',
+                                    pattern: 'Peak',
                                     callback: function (reply, convo) {
                                         score.push(1);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Fulfillment",
-                                                        callback_id: 'reflection-fulfillment',
+                                                        title: "Frustration",
+                                                        callback_id: 'reflection-frustration',
                                                         attachment_type: 'default',
-                                                        color: '#CF02FF',
+                                                        color: '#2A02FF',
                                                         actions: [
                                                             {
-                                                                'name': 'complete-button',
-                                                                'value': 'Complete',
-                                                                'text': 'Complete',
+                                                                'name': 'nonexistent-button',
+                                                                'value': 'Nonexistent',
+                                                                'text': 'Nonexistent',
                                                                 'type': 'button'
                                                             },
                                                             {
@@ -945,16 +497,16 @@ module.exports = function (controller) {
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'searching-button',
-                                                                'value': 'Searching',
-                                                                'text': 'Searching',
+                                                                'name': 'considerable-button',
+                                                                'value': 'Considerable',
+                                                                'text': 'Considerable',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'nonExistent-button',
-                                                                'value': 'Non-Existent',
+                                                                'name': 'peak-button',
+                                                                'value': 'Peak',
                                                                 'style': 'primary',
-                                                                'text': 'Non-Existent',
+                                                                'text': 'Peak',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -967,37 +519,37 @@ module.exports = function (controller) {
                                 }
                             ]);
 
-                        // relationships
+                        // Work Distribution
                         convo.addQuestion({
                             attachments: [
                                 {
-                                    title: "Relationships",
-                                    callback_id: 'reflection-relationships',
+                                    title: "Work Distribution",
+                                    callback_id: 'reflection-workDistribution',
                                     attachment_type: 'default',
-                                    color: '#FF029D',
+                                    color: '#8A02FF',
                                     actions: [
                                         {
-                                            'name': 'fulfilled-button',
-                                            'value': 'Fulfilled',
-                                            'text': 'Fulfilled',
+                                            'name': 'equal-button',
+                                            'value': 'Equal',
+                                            'text': 'Equal',
                                             'type': 'button'
                                         },
                                         {
-                                            'name': 'connected-button',
-                                            'value': 'Connected',
-                                            'text': 'Connected',
+                                            'name': 'fair-button',
+                                            'value': 'Fair',
+                                            'text': 'Fair',
                                             'type': 'button'
                                         },
                                         {
-                                            'name': 'unsatisfied-button',
-                                            'value': 'Unsatisfied',
-                                            'text': 'Unsatisfied',
+                                            'name': 'me-button',
+                                            'value': 'Mostly-Me',
+                                            'text': 'Mostly Me',
                                             'type': 'button'
                                         },
                                         {
-                                            'name': 'lonely-button',
-                                            'value': 'Lonely',
-                                            'text': 'Lonely',
+                                            'name': 'them-button',
+                                            'value': 'Mostly-Them',
+                                            'text': 'Mostly-Them',
                                             'type': 'button'
                                         },
                                     ]
@@ -1005,41 +557,41 @@ module.exports = function (controller) {
                             ]
                         }, [
                                 {
-                                    pattern: 'Fulfilled',
+                                    pattern: 'Equal',
                                     callback: function (reply, convo) {
                                         score.push(4);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Relationships",
-                                                        callback_id: 'reflection-relationships',
+                                                        title: "Work Distribution",
+                                                        callback_id: 'reflection-workDistribution',
                                                         attachment_type: 'default',
-                                                        color: '#FF029D',
+                                                        color: '#8A02FF',
                                                         actions: [
                                                             {
-                                                                'name': 'fulfilled-button',
-                                                                'value': 'Fulfilled',
+                                                                'name': 'equal-button',
+                                                                'value': 'Equal',
                                                                 'style': 'primary',
-                                                                'text': 'Fulfilled',
+                                                                'text': 'Equal',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'connected-button',
-                                                                'value': 'Connected',
-                                                                'text': 'Connected',
+                                                                'name': 'fair-button',
+                                                                'value': 'Fair',
+                                                                'text': 'Fair',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'unsatisfied-button',
-                                                                'value': 'Unsatisfied',
-                                                                'text': 'Unsatisfied',
+                                                                'name': 'me-button',
+                                                                'value': 'Mostly-Me',
+                                                                'text': 'Mostly Me',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'lonely-button',
-                                                                'value': 'Lonely',
-                                                                'text': 'Lonely',
+                                                                'name': 'them-button',
+                                                                'value': 'Mostly-Them',
+                                                                'text': 'Mostly-Them',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -1051,41 +603,41 @@ module.exports = function (controller) {
                                     }
                                 },
                                 {
-                                    pattern: 'Connected',
+                                    pattern: 'Fair',
                                     callback: function (reply, convo) {
                                         score.push(3);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Relationships",
-                                                        callback_id: 'reflection-relationships',
+                                                        title: "Work Distribution",
+                                                        callback_id: 'reflection-workDistribution',
                                                         attachment_type: 'default',
-                                                        color: '#FF029D',
+                                                        color: '#8A02FF',
                                                         actions: [
                                                             {
-                                                                'name': 'fulfilled-button',
-                                                                'value': 'Fulfilled',
-                                                                'text': 'Fulfilled',
+                                                                'name': 'equal-button',
+                                                                'value': 'Equal',
+                                                                'text': 'Equal',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'connected-button',
-                                                                'value': 'Connected',
+                                                                'name': 'fair-button',
+                                                                'value': 'Fair',
                                                                 'style': 'primary',
-                                                                'text': 'Connected',
+                                                                'text': 'Fair',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'unsatisfied-button',
-                                                                'value': 'Unsatisfied',
-                                                                'text': 'Unsatisfied',
+                                                                'name': 'me-button',
+                                                                'value': 'Mostly-Me',
+                                                                'text': 'Mostly Me',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'lonely-button',
-                                                                'value': 'Lonely',
-                                                                'text': 'Lonely',
+                                                                'name': 'them-button',
+                                                                'value': 'Mostly-Them',
+                                                                'text': 'Mostly-Them',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -1097,41 +649,41 @@ module.exports = function (controller) {
                                     }
                                 },
                                 {
-                                    pattern: 'Unsatisfied',
+                                    pattern: 'Mostly-Me',
                                     callback: function (reply, convo) {
                                         score.push(2);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Relationships",
-                                                        callback_id: 'reflection-relationships',
+                                                        title: "Work Distribution",
+                                                        callback_id: 'reflection-workDistribution',
                                                         attachment_type: 'default',
-                                                        color: '#FF029D',
+                                                        color: '#8A02FF',
                                                         actions: [
                                                             {
-                                                                'name': 'fulfilled-button',
-                                                                'value': 'Fulfilled',
-                                                                'text': 'Fulfilled',
+                                                                'name': 'equal-button',
+                                                                'value': 'Equal',
+                                                                'text': 'Equal',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'connected-button',
-                                                                'value': 'Connected',
-                                                                'text': 'Connected',
+                                                                'name': 'fair-button',
+                                                                'value': 'Fair',
+                                                                'text': 'Fair',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'unsatisfied-button',
-                                                                'value': 'Unsatisfied',
+                                                                'name': 'me-button',
+                                                                'value': 'Mostly-Me',
                                                                 'style': 'primary',
-                                                                'text': 'Unsatisfied',
+                                                                'text': 'Mostly Me',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'lonely-button',
-                                                                'value': 'Lonely',
-                                                                'text': 'Lonely',
+                                                                'name': 'them-button',
+                                                                'value': 'Mostly-Them',
+                                                                'text': 'Mostly-Them',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -1143,41 +695,41 @@ module.exports = function (controller) {
                                     }
                                 },
                                 {
-                                    pattern: 'Lonely',
+                                    pattern: 'Mostly-Them',
                                     callback: function (reply, convo) {
                                         score.push(1);
                                         bot.replyInteractive(reply,
                                             {
                                                 attachments: [
                                                     {
-                                                        title: "Relationships",
-                                                        callback_id: 'reflection-relationships',
+                                                        title: "Work Distribution",
+                                                        callback_id: 'reflection-workDistribution',
                                                         attachment_type: 'default',
-                                                        color: '#FF029D',
+                                                        color: '#8A02FF',
                                                         actions: [
                                                             {
-                                                                'name': 'fulfilled-button',
-                                                                'value': 'Fulfilled',
-                                                                'text': 'Fulfilled',
+                                                                'name': 'equal-button',
+                                                                'value': 'Equal',
+                                                                'text': 'Equal',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'connected-button',
-                                                                'value': 'Connected',
-                                                                'text': 'Connected',
+                                                                'name': 'fair-button',
+                                                                'value': 'Fair',
+                                                                'text': 'Fair',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'unsatisfied-button',
-                                                                'value': 'Unsatisfied',
-                                                                'text': 'Unsatisfied',
+                                                                'name': 'me-button',
+                                                                'value': 'Mostly-Me',
+                                                                'text': 'Mostly Me',
                                                                 'type': 'button'
                                                             },
                                                             {
-                                                                'name': 'lonely-button',
-                                                                'value': 'Lonely',
-                                                                'text': 'Lonely',
+                                                                'name': 'them-button',
+                                                                'value': 'Mostly-Them',
                                                                 'style': 'primary',
+                                                                'text': 'Mostly-Them',
                                                                 'type': 'button'
                                                             },
                                                         ]
@@ -1190,7 +742,250 @@ module.exports = function (controller) {
                                 }
                             ]);
 
-                        convo.addMessage("Reflection complete!", {}, 'default');
+                        // Confidence
+                        convo.addQuestion({
+                            attachments: [
+                                {
+                                    title: "Confidence",
+                                    callback_id: 'reflection-confidence',
+                                    attachment_type: 'default',
+                                    color: '#CF02FF',
+                                    actions: [
+                                        {
+                                            'name': 'certain-button',
+                                            'value': 'Certain',
+                                            'text': 'Certain',
+                                            'type': 'button'
+                                        },
+                                        {
+                                            'name': 'hopeful-button',
+                                            'value': 'Hopeful',
+                                            'text': 'Hopeful',
+                                            'type': 'button'
+                                        },
+                                        {
+                                            'name': 'dwindling-button',
+                                            'value': 'Dwindling',
+                                            'text': 'Dwindling',
+                                            'type': 'button'
+                                        },
+                                        {
+                                            'name': 'lost-button',
+                                            'value': 'Lost',
+                                            'text': 'Lost',
+                                            'type': 'button'
+                                        },
+                                    ]
+                                }
+                            ]
+                        }, [
+                                {
+                                    pattern: 'Certain',
+                                    callback: function (reply, convo) {
+                                        score.push(4);
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [
+                                                    {
+                                                        title: "Confidence",
+                                                        callback_id: 'reflection-confidence',
+                                                        attachment_type: 'default',
+                                                        color: '#CF02FF',
+                                                        actions: [
+                                                            {
+                                                                'name': 'certain-button',
+                                                                'value': 'Certain',
+                                                                'style': 'primary',
+                                                                'text': 'Certain',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'hopeful-button',
+                                                                'value': 'Hopeful',
+                                                                'text': 'Hopeful',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'dwindling-button',
+                                                                'value': 'Dwindling',
+                                                                'text': 'Dwindling',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'lost-button',
+                                                                'value': 'Lost',
+                                                                'text': 'Lost',
+                                                                'type': 'button'
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        );
+                                        bot.api.reactions.add({
+                                            name: 'thumbsup',
+                                            channel: reply.channel,
+                                            timestamp: reply.ts
+                                        });
+                                        convo.next();
+                                    }
+                                },
+                                {
+                                    pattern: 'Hopeful',
+                                    callback: function (reply, convo) {
+                                        score.push(3);
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [
+                                                    {
+                                                        title: "Confidence",
+                                                        callback_id: 'reflection-confidence',
+                                                        attachment_type: 'default',
+                                                        color: '#CF02FF',
+                                                        actions: [
+                                                            {
+                                                                'name': 'certain-button',
+                                                                'value': 'Certain',
+                                                                'text': 'Certain',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'hopeful-button',
+                                                                'value': 'Hopeful',
+                                                                'style': 'primary',
+                                                                'text': 'Hopeful',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'dwindling-button',
+                                                                'value': 'Dwindling',
+                                                                'text': 'Dwindling',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'lost-button',
+                                                                'value': 'Lost',
+                                                                'text': 'Lost',
+                                                                'type': 'button'
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        );
+                                        bot.api.reactions.add({
+                                            name: 'thumbsup',
+                                            channel: reply.channel,
+                                            timestamp: reply.ts
+                                        });
+                                        convo.next();
+                                    }
+                                },
+                                {
+                                    pattern: 'Dwindling',
+                                    callback: function (reply, convo) {
+                                        score.push(2);
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [
+                                                    {
+                                                        title: "Confidence",
+                                                        callback_id: 'reflection-confidence',
+                                                        attachment_type: 'default',
+                                                        color: '#CF02FF',
+                                                        actions: [
+                                                            {
+                                                                'name': 'certain-button',
+                                                                'value': 'Certain',
+                                                                'text': 'Certain',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'hopeful-button',
+                                                                'value': 'Hopeful',
+                                                                'text': 'Hopeful',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'dwindling-button',
+                                                                'value': 'Dwindling',
+                                                                'style': 'primary',
+                                                                'text': 'Dwindling',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'lost-button',
+                                                                'value': 'Lost',
+                                                                'text': 'Lost',
+                                                                'type': 'button'
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        );
+                                        bot.api.reactions.add({
+                                            name: 'thumbsup',
+                                            channel: reply.channel,
+                                            timestamp: reply.ts
+                                        });
+                                        convo.next();
+                                    }
+                                },
+                                {
+                                    pattern: 'Lost',
+                                    callback: function (reply, convo) {
+                                        score.push(1);
+                                        bot.replyInteractive(reply,
+                                            {
+                                                attachments: [
+                                                    {
+                                                        title: "Confidence",
+                                                        callback_id: 'reflection-confidence',
+                                                        attachment_type: 'default',
+                                                        color: '#CF02FF',
+                                                        actions: [
+                                                            {
+                                                                'name': 'certain-button',
+                                                                'value': 'Certain',
+                                                                'text': 'Certain',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'hopeful-button',
+                                                                'value': 'Hopeful',
+                                                                'text': 'Hopeful',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'dwindling-button',
+                                                                'value': 'Dwindling',
+                                                                'text': 'Dwindling',
+                                                                'type': 'button'
+                                                            },
+                                                            {
+                                                                'name': 'lost-button',
+                                                                'value': 'Lost',
+                                                                'text': 'Lost',
+                                                                'style': 'primary',
+                                                                'type': 'button'
+                                                            },
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        );
+                                        bot.api.reactions.add({
+                                            name: 'thumbsup',
+                                            channel: reply.channel,
+                                            timestamp: reply.ts
+                                        });
+                                        convo.next();
+                                    }
+                                }
+                            ]);
+
+                        convo.addMessage("Reflection complete!");
 
                         convo.activate();
 
@@ -1199,10 +994,6 @@ module.exports = function (controller) {
                         convo.on('end', function (convo) {
 
                             if (convo.successful()) {
-                                // Compute score
-                                var sum = score.reduce(function (a, b) { return a + b; }, 0);
-                                score.push(sum);
-
                                 controller.storage.users.get(message.user, function (err, user) {
                                     if (err) {
                                         console.log("error: ", err);
@@ -1254,7 +1045,26 @@ module.exports = function (controller) {
                                     }
                                 });
 
-                                bot.reply(message, 'Thanks for reflecting!');
+                                const snapshot = GetSnapshot(score, message.user);
+                            if (typeof snapshot != 'undefined') {
+                                var error;
+                                    bot.say({
+                                        attachments: snapshot,
+                                        channel: team.bot.channel
+                                    }, function (err, response) {
+                                        if (err) {
+                                            console.log("Erorr: ", err);
+                                            error = true;
+                                        }
+                                    });
+                                if (error == true) {
+                                    bot.reply(message, "Sorry!! There has been an error sharing your snapshot. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
+                                } else {
+                                    bot.reply(message, "Your snapshot has been shared successfully in <#" + team.bot.channel + ">!");
+                                }
+                            } else {
+                                bot.reply(message, 'Okay, no problem! Your score of ' + overall + "% has been recorded");
+                            }
                             }
                             else {
                                 bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?')
@@ -1269,4 +1079,74 @@ module.exports = function (controller) {
             // Pass
         }
     })
+}
+
+function GetSnapshot(input, user) {
+    // Get qualitative snapshot
+    var overview = {
+        0: {
+            4: 'Substantial',
+            3: 'Acceptable',
+            2: 'Minimal',
+            1: 'Stagnant',
+            0: 'Progress'
+        },
+        1: {
+            4: 'Nonexistent',
+            3: 'Present',
+            2: 'Considerable',
+            1: 'Peak',
+            0: 'Frustration'
+        },
+        2: {
+            4: 'Equal',
+            3: 'Fair',
+            2: 'Mostly Me',
+            1: 'Mostly Them',
+            0: 'Work Distribution'
+        },
+        3: {
+            4: 'Certain',
+            3: 'Hopeful',
+            2: 'Dwindling',
+            1: 'Lost',
+            0: 'Confidence'
+        }
+    };
+
+    var qualitative = [];
+    for (var l = 0; l < input.length; l++) {
+        qualitative.push(overview[l][input[l]]);
+    }
+
+    // Get quantitative overall score
+    var scores = [];
+    for (var j = 0; j < input.length; j++) {
+        if (j == 0) {
+            // Progress
+            scores.push((input[j] * 25) * 1.2);
+        } else if (j == 1) {
+            // Frustration
+            scores.push((input[j] * 25) * 0.8);
+        } else if (j == 2) {
+            // Work Distribution
+            scores.push((input[j] * 25) * 1.1);
+        } else if (j == 2) {
+            // Confidence
+            scores.push((input[j] * 25) * 0.9);
+        }
+        
+    }
+    var sum = scores.reduce(function (a, b) { return a + b; }, 0);
+    var overall = sum / scores.length;
+    overall = Math.round(overall);
+
+    var attachments = {
+        title: '<@' + user + '>\'s End of Day Snapshot',
+        color: '#CF02FF',
+        attachment_type: 'default',
+        text: '*Progress:* ' + qualitative[0] + '\n*Frustration:* ' + qualitative[1] + '\n*Work Distribution:* ' + qualitative[2] + '\n*Confidence:* ' + qualitative[3] + '\n*Score:* ' + overall + '%'
+    };
+
+    return attachments;
 }

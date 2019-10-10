@@ -5,12 +5,10 @@ module.exports = function (controller) {
                 if (err) {
                     console.log("error: ", err);
                 }
-                if (team.status.subscription.status == 'inactive' && team.status.trial.status == 'inactive') {
-                    if (team.status.trial.status == 'inactive' && team.status.subscription.seats_used == 0) {
-                        var text = "Your trial is up! Would you like to purchase a subscription?"
-                    } else if (team.status.subscription.status == 'inactive' && team.status.subscription.seats_used > 0) {
-                        var text = "It looks like your subscription is up! Would you like to renew?"
-                    }
+                if (team.status.subscription.status == 'inactive') {
+                    
+                    var text = "It looks like your subscription is up! Would you like to renew?"
+                    
                     bot.reply(message, {
                         attachments: [{
                             title: "Subscribe",
@@ -22,7 +20,7 @@ module.exports = function (controller) {
                                 {
                                     'text': 'Yes',
                                     'type': 'button',
-                                    'url': 'https://getinternal.co/subscribe'
+                                    'url': 'https://getinternal.co/#pricing'
                                 },
                                 {
                                     'name': 'no-button',
@@ -72,7 +70,7 @@ module.exports = function (controller) {
                     const score = [];
 
                     convo.addMessage({
-                        text: "Hey, here's your check in questionnaire! Just choose which option vibes best for each of the 4 topics..."
+                        text: "Hey, here's your check in log! Just choose which option vibes best for each of the 4 topics..."
                     });
 
                     // Sleep
@@ -744,37 +742,37 @@ module.exports = function (controller) {
                             }
                         ]);
 
-                    // Confidence
+                    // Presence
                     convo.addQuestion({
                         attachments: [
                             {
-                                title: "Confidence",
-                                callback_id: 'checkin-confidence',
+                                title: "Presence",
+                                callback_id: 'checkin-presence',
                                 attachment_type: 'default',
                                 color: '#CF02FF',
                                 actions: [
                                     {
-                                        'name': 'crushing-button',
-                                        'value': 'Crushing-It',
-                                        'text': 'Crushing It',
+                                        'name': 'grounded-button',
+                                        'value': 'Grounded',
+                                        'text': 'Grounded',
                                         'type': 'button'
                                     },
                                     {
-                                        'name': 'okay-button',
-                                        'value': 'Okay',
-                                        'text': 'Okay',
+                                        'name': 'aware-button',
+                                        'value': 'Aware',
+                                        'text': 'Aware',
                                         'type': 'button'
                                     },
                                     {
-                                        'name': 'managing-button',
-                                        'value': 'Managing',
-                                        'text': 'Managing',
+                                        'name': 'outOfIt-button',
+                                        'value': 'Out-of-It',
+                                        'text': 'Out of It',
                                         'type': 'button'
                                     },
                                     {
-                                        'name': 'overwhelmed-button',
-                                        'value': 'Overwhelmed',
-                                        'text': 'Overwhelmed',
+                                        'name': 'disconnected-button',
+                                        'value': 'Disconnected',
+                                        'text': 'Disconnected',
                                         'type': 'button'
                                     },
                                 ]
@@ -782,41 +780,41 @@ module.exports = function (controller) {
                         ]
                     }, [
                             {
-                                pattern: 'Crushing-It',
+                                pattern: 'Grounded',
                                 callback: function (reply, convo) {
                                     score.push(4);
                                     bot.replyInteractive(reply,
                                         {
                                             attachments: [
                                                 {
-                                                    title: "Confidence",
-                                                    callback_id: 'checkin-confidence',
+                                                    title: "Presence",
+                                                    callback_id: 'checkin-presence',
                                                     attachment_type: 'default',
                                                     color: '#CF02FF',
                                                     actions: [
                                                         {
-                                                            'name': 'crushing-button',
-                                                            'value': 'Crushing-It',
+                                                            'name': 'grounded-button',
+                                                            'value': 'Grounded',
                                                             'style': 'primary',
-                                                            'text': 'Crushing It',
+                                                            'text': 'Grounded',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'okay-button',
-                                                            'value': 'Okay',
-                                                            'text': 'Okay',
+                                                            'name': 'aware-button',
+                                                            'value': 'Aware',
+                                                            'text': 'Aware',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'managing-button',
-                                                            'value': 'Managing',
-                                                            'text': 'Managing',
+                                                            'name': 'outOfIt-button',
+                                                            'value': 'Out-of-It',
+                                                            'text': 'Out of It',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'overwhelmed-button',
-                                                            'value': 'Overwhelmed',
-                                                            'text': 'Overwhelmed',
+                                                            'name': 'disconnected-button',
+                                                            'value': 'Disconnected',
+                                                            'text': 'Disconnected',
                                                             'type': 'button'
                                                         },
                                                     ]
@@ -828,41 +826,41 @@ module.exports = function (controller) {
                                 }
                             },
                             {
-                                pattern: 'Okay',
+                                pattern: 'Aware',
                                 callback: function (reply, convo) {
                                     score.push(3);
                                     bot.replyInteractive(reply,
                                         {
                                             attachments: [
                                                 {
-                                                    title: "Confidence",
-                                                    callback_id: 'checkin-confidence',
+                                                    title: "Presence",
+                                                    callback_id: 'checkin-presence',
                                                     attachment_type: 'default',
                                                     color: '#CF02FF',
                                                     actions: [
                                                         {
-                                                            'name': 'crushing-button',
-                                                            'value': 'Crushing-It',
-                                                            'text': 'Crushing It',
+                                                            'name': 'grounded-button',
+                                                            'value': 'Grounded',
+                                                            'text': 'Grounded',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'okay-button',
-                                                            'value': 'Okay',
+                                                            'name': 'aware-button',
                                                             'style': 'primary',
-                                                            'text': 'Okay',
+                                                            'value': 'Aware',
+                                                            'text': 'Aware',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'managing-button',
-                                                            'value': 'Managing',
-                                                            'text': 'Managing',
+                                                            'name': 'outOfIt-button',
+                                                            'value': 'Out-of-It',
+                                                            'text': 'Out of It',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'overwhelmed-button',
-                                                            'value': 'Overwhelmed',
-                                                            'text': 'Overwhelmed',
+                                                            'name': 'disconnected-button',
+                                                            'value': 'Disconnected',
+                                                            'text': 'Disconnected',
                                                             'type': 'button'
                                                         },
                                                     ]
@@ -874,41 +872,41 @@ module.exports = function (controller) {
                                 }
                             },
                             {
-                                pattern: 'Managing',
+                                pattern: 'Out-of-It',
                                 callback: function (reply, convo) {
                                     score.push(2);
                                     bot.replyInteractive(reply,
                                         {
                                             attachments: [
                                                 {
-                                                    title: "Confidence",
-                                                    callback_id: 'checkin-confidence',
+                                                    title: "Presence",
+                                                    callback_id: 'checkin-presence',
                                                     attachment_type: 'default',
                                                     color: '#CF02FF',
                                                     actions: [
                                                         {
-                                                            'name': 'crushing-button',
-                                                            'value': 'Crushing-It',
-                                                            'text': 'Crushing It',
+                                                            'name': 'grounded-button',
+                                                            'value': 'Grounded',
+                                                            'text': 'Grounded',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'okay-button',
-                                                            'value': 'Okay',
-                                                            'text': 'Okay',
+                                                            'name': 'aware-button',
+                                                            'value': 'Aware',
+                                                            'text': 'Aware',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'managing-button',
-                                                            'value': 'Managing',
+                                                            'name': 'outOfIt-button',
                                                             'style': 'primary',
-                                                            'text': 'Managing',
+                                                            'value': 'Out-of-It',
+                                                            'text': 'Out of It',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'overwhelmed-button',
-                                                            'value': 'Overwhelmed',
-                                                            'text': 'Overwhelmed',
+                                                            'name': 'disconnected-button',
+                                                            'value': 'Disconnected',
+                                                            'text': 'Disconnected',
                                                             'type': 'button'
                                                         },
                                                     ]
@@ -920,41 +918,41 @@ module.exports = function (controller) {
                                 }
                             },
                             {
-                                pattern: 'Overwhelmed',
-                                callback: function (response, convo) {
+                                pattern: 'Disconnected',
+                                callback: function (reply, convo) {
                                     score.push(1);
-                                    bot.replyInteractive(response,
+                                    bot.replyInteractive(reply,
                                         {
                                             attachments: [
                                                 {
-                                                    title: "Confidence",
-                                                    callback_id: 'checkin-confidence',
+                                                    title: "Presence",
+                                                    callback_id: 'checkin-presence',
                                                     attachment_type: 'default',
                                                     color: '#CF02FF',
                                                     actions: [
                                                         {
-                                                            'name': 'crushing-button',
-                                                            'value': 'Crushing-It',
-                                                            'text': 'Crushing It',
+                                                            'name': 'grounded-button',
+                                                            'value': 'Grounded',
+                                                            'text': 'Grounded',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'okay-button',
-                                                            'value': 'Okay',
-                                                            'text': 'Okay',
+                                                            'name': 'aware-button',
+                                                            'value': 'Aware',
+                                                            'text': 'Aware',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'managing-button',
-                                                            'value': 'Managing',
-                                                            'text': 'Managing',
+                                                            'name': 'outOfIt-button',
+                                                            'value': 'Out-of-It',
+                                                            'text': 'Out of It',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'overwhelmed-button',
-                                                            'value': 'Overwhelmed',
+                                                            'name': 'disconnected-button',
+                                                            'value': 'Disconnected',
                                                             'style': 'primary',
-                                                            'text': 'Overwhelmed',
+                                                            'text': 'Disconnected',
                                                             'type': 'button'
                                                         },
                                                     ]
@@ -962,31 +960,30 @@ module.exports = function (controller) {
                                             ]
                                         }
                                     );
-                                    bot.reply(response, "Thanks for checking in!");
                                     convo.next();
                                 }
                             }
                         ]);
 
-                    const permission = [];
+                        const permission = [];
                     convo.addQuestion({
                         attachments: [
                             {
                                 callback_id: 'permission',
-                                text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                text: "Would you like to share a complete snapshot of your check in or just your score?",
                                 color: "#0294ff",
                                 attachment_type: 'default',
                                 actions: [
                                     {
-                                        'name': 'yes-button',
-                                        'value': 'Yes',
-                                        'text': 'Yes',
+                                        'name': 'snapshot-button',
+                                        'value': 'Snapshot',
+                                        'text': 'Snapshot',
                                         'type': 'button'
                                     },
                                     {
-                                        'name': 'no-button',
-                                        'value': 'No',
-                                        'text': 'No',
+                                        'name': 'score-button',
+                                        'value': 'Score',
+                                        'text': 'Score',
                                         'type': 'button'
                                     }
                                 ]
@@ -994,28 +991,28 @@ module.exports = function (controller) {
                         ]
                     }, [
                             {
-                                pattern: 'Yes',
+                                pattern: 'Snapshot',
                                 callback: function (reply, convo) {
                                     bot.replyInteractive(reply,
                                         {
                                             attachments: [
                                                 {
                                                     callback_id: 'permission',
-                                                    text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                                    text: "Would you like to share a complete snapshot of your check in or just your score?",
                                                     color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
-                                                            'name': 'yes-button',
-                                                            'value': 'Yes',
+                                                            'name': 'snapshot-button',
+                                                            'value': 'Snapshot',
                                                             'style': 'primary',
-                                                            'text': 'Yes',
+                                                            'text': 'Snapshot',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'no-button',
-                                                            'value': 'No',
-                                                            'text': 'No',
+                                                            'name': 'score-button',
+                                                            'value': 'Score',
+                                                            'text': 'Score',
                                                             'type': 'button'
                                                         }
                                                     ]
@@ -1023,7 +1020,7 @@ module.exports = function (controller) {
                                             ]
                                         }
                                     )
-                                    permission.push(true);
+                                    permission.push('Snapshot');
                                     bot.api.reactions.add({
                                         name: 'thumbsup',
                                         channel: reply.channel,
@@ -1033,28 +1030,28 @@ module.exports = function (controller) {
                                 }
                             },
                             {
-                                pattern: 'No',
+                                pattern: 'Score',
                                 callback: function (reply, convo) {
                                     bot.replyInteractive(reply,
                                         {
                                             attachments: [
                                                 {
                                                     callback_id: 'permission',
-                                                    text: "Would you like to share your overall score with your teammates so that they know how you're doing today?",
+                                                    text: "Would you like to share a complete snapshot of your check in or just your score?",
                                                     color: "#0294ff",
                                                     attachment_type: 'default',
                                                     actions: [
                                                         {
-                                                            'name': 'yes-button',
-                                                            'value': 'Yes',
-                                                            'text': 'Yes',
+                                                            'name': 'snapshot-button',
+                                                            'value': 'Snapshot',
+                                                            'text': 'Snapshot',
                                                             'type': 'button'
                                                         },
                                                         {
-                                                            'name': 'no-button',
-                                                            'value': 'No',
-                                                            'style': 'danger',
-                                                            'text': 'No',
+                                                            'name': 'score-button',
+                                                            'value': 'Score',
+                                                            'style': 'primary',
+                                                            'text': 'Score',
                                                             'type': 'button'
                                                         }
                                                     ]
@@ -1062,7 +1059,7 @@ module.exports = function (controller) {
                                             ]
                                         }
                                     );
-                                    permission.push(false);
+                                    permission.push('Score');
                                     bot.api.reactions.add({
                                         name: 'thumbsup',
                                         channel: reply.channel,
@@ -1082,14 +1079,10 @@ module.exports = function (controller) {
                     convo.on('end', function (convo) {
 
                         if (convo.successful()) {
-                            // Compute score
-                            var sum = score.reduce(function (a, b) { return a + b; }, 0);
-                            score.push(sum);
-
                             controller.storage.users.get(message.user, function (err, user) {
                                 if (err) {
                                     console.log("error: ", err);
-                                    convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")
+                                    convo.say("I'm so sorry, I don't remember what you said. Would you mind checking in again? :grimacing:")
                                 }
 
                                 var today = new Date();
@@ -1114,8 +1107,7 @@ module.exports = function (controller) {
                                             user.channel = message.channel
                                         user.logs = {
                                             [today]: {
-                                                check_in: score,
-                                                permission: permission[0]
+                                                check_in: score
                                             }
                                         };
                                     })
@@ -1123,51 +1115,39 @@ module.exports = function (controller) {
                                 } else if (!user.logs) {
                                     user.logs = {
                                         [today]: {
-                                            check_in: score,
-                                            permission: permission[0]
+                                            check_in: score
                                         }
                                     };
                                     controller.storage.users.save(user);
                                 } else {
                                     user.logs[today] = {
-                                        check_in: score,
-                                        permission: permission[0],
+                                        check_in: score
                                     }
                                     controller.storage.users.save(user);
                                 }
                             });
-
-                            const overall = GetOverall(score);
-                            if (permission[0] == true) {
-                                var error;
+                            
+                            if (permission[0] == 'Score') {
+                                const overall = GetOverall(score);
                                 if (overall > 90) {
                                     bot.say({
                                         text: "<@" + message.user + "> is feeling " + overall + "% today :rocket:",
                                         channel: team.bot.channel
-                                    }, function (err, response) {
-                                        if (err) {
-                                            console.log("Erorr: ", err);
-                                            error = true;
-                                        }
                                     });
                                 } else {
                                     bot.say({
                                         text: "<@" + message.user + "> is feeling " + overall + "% today",
                                         channel: team.bot.channel
-                                    }, function (err, response) {
-                                        if (err) {
-                                            console.log("Erorr: ", err);
-                                            error = true;
-                                        }
                                     });
                                 }
-                                if (error == true) {
-                                    bot.reply(message, "Sorry!! There has been an error sharing your score. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
-                                } else {
-                                    bot.reply(message, "Your score of " + overall + "% has been shared successfully in <#" + team.bot.channel + ">!");
-                                }
+                            } else if (permission[0] == 'Snapshot') {
+                                const snapshot = GetSnapshot(score, message.user);
+                                bot.say({
+                                    attachments: snapshot,
+                                    channel: team.bot.channel
+                                });
                             } else {
-                                bot.reply(message, 'Okay, no problem! Your score of ' + overall + "% has been recorded");
+                                bot.reply(message, 'Your score of ' + overall + "% has been recorded");
                             }
                         }
                         else {
@@ -1185,9 +1165,79 @@ module.exports = function (controller) {
     })
 }
 
+function GetSnapshot(input, user) {
+    // Get qualitative snapshot
+    var overview = {
+        0: {
+            4: 'Perfect',
+            3: 'Sufficient',
+            2: 'Restless',
+            1: 'Terrible',
+            0: 'Sleep'
+        },
+        1: {
+            4: 'Full',
+            3: 'Alright',
+            2: 'Hanging On',
+            1: 'Dead',
+            0: 'Energy'
+        },
+        2: {
+            4: 'Happy',
+            3: 'Calm',
+            2: 'Tense',
+            1: 'Upset',
+            0: 'Mood'
+        },
+        3: {
+            4: 'Grounded',
+            3: 'Aware',
+            2: 'Out of It',
+            1: 'Disconnected',
+            0: 'Presence'
+        }
+    };
+
+    var qualitative = [];
+    for (var l = 0; l < input.length; l++) {
+        qualitative.push(overview[l][input[l]]);
+    }
+
+    // Get quantitative overall score
+    var scores = [];
+    for (var j = 0; j < input.length; j++) {
+        if (j == 0) {
+            // Sleep
+            scores.push((input[j] * 25) * 1.3);
+        } else if (j == 1) {
+            // Energy
+            scores.push((input[j] * 25) * 0.8);
+        } else if (j == 2) {
+            // Mood
+            scores.push((input[j] * 25) * 0.9);
+        } else if (j == 2) {
+            // Presence
+            scores.push((input[j] * 25) * 1);
+        }
+        
+    }
+    var sum = scores.reduce(function (a, b) { return a + b; }, 0);
+    var overall = sum / scores.length;
+    overall = Math.round(overall);
+
+    var attachments = {
+        title: '<@' + user + '>\'s End of Day Snapshot',
+        color: '#CF02FF',
+        attachment_type: 'default',
+        text: '*Sleep:* ' + qualitative[0] + '\n*Energy:* ' + qualitative[1] + '\n*Mood:* ' + qualitative[2] + '\n*Presence:* ' + qualitative[3] + '\n*Score:* ' + overall + '%'
+    };
+
+    return attachments;
+}
+
 function GetOverall(score) {
     var scores = [];
-    for (var j = 0; j < score.length - 1; j++) {
+    for (var j = 0; j < score.length; j++) {
         if (j == 0) {
             // Sleep
             scores.push((score[j] * 25) * 1.8);

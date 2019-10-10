@@ -12,23 +12,23 @@ module.exports = function (controller) {
             team.installer_email = response.user.profile.email;
         });
 
-        bot.api.channels.create({ token: bot.config.app_token, name: 'internal-vibe' }, function (err, response) {
+        bot.api.groups.create({ token: bot.config.app_token, name: 'internal-vibe' }, function (err, response) {
             if (err) {
                 console.log("error: ", err);
                 bot.reply(reply, "I'm sorry, that channel name is already taken. Try another?");
                 convo.repeat();
             } else {
-                bot.api.channels.setPurpose({ token: bot.config.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share the daily overall emotional scores of those who opt to share." }, function (err, response) {
+                bot.api.groups.setPurpose({ token: bot.config.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share insights to how you and your cofounder(s) are feeling" }, function (err, response) {
                     if (err) {
                         console.log("error: ", err);
                     }
                 })
-                bot.api.channels.setTopic({ token: bot.config.app_token, channel: response.channel.id, topic: "Know how your coworkers are doing today" }, function (err, response) {
+                bot.api.groups.setTopic({ token: bot.config.app_token, channel: response.channel.id, topic: "Easily monitor your relationship with your cofounder(s)" }, function (err, response) {
                     if (err) {
                         console.log("error: ", err);
                     }
                 })
-                bot.api.channels.invite({ token: team.bot.app_token, channel: response.channel.id, user: team.bot.user_id }, function (err, outcome) {
+                bot.api.groups.invite({ token: team.bot.app_token, channel: response.channel.id, user: team.bot.user_id }, function (err, outcome) {
                     if (err) {
                         console.log("error: ", err);
                     }
@@ -43,6 +43,25 @@ module.exports = function (controller) {
                 console.log(err);
             }
             convo.say("Hey, <@" + bot.config.createdBy + ">! Thank you for installing me to this wonderful Slack team :hugging_face:");
+            convo.ask("Would you mind sending me the email you used to start your subscription?", function (response, convo) {
+                stripe.customers.list( { email: response.text }, function (err, customers) {
+                    if (err || !customers) {
+                        bot.reply(message, "I actually wasn't able to verify that email. Are you sure it is correct?");
+                        convo.repeat();
+                    } else if (customers) {
+                        team.stripe_email = response.text;
+                        controller.storage.teams.save(team);
+                        bot.api.reactions.add({
+                            name: 'thumbsup',
+                            channel: message.channel,
+                            timestamp: reply.ts
+                        });
+                        bot.reply(message, "Email verified!\nThank you for that :blush:");
+                        convo.stop();
+                    }
+                })
+                convo.next()
+            })
 
             convo.activate()
 

@@ -4,12 +4,10 @@ module.exports = function (controller) {
             if (err) {
                 console.log(err);
             }
-            if (team.status.subscription.status == 'inactive' && team.status.trial.status == 'inactive') {
-                if (team.status.trial.status == 'inactive' && team.status.subscription.seats_used == 0) {
-                    var text = "Your trial is up! Would you like to purchase a subscription?"
-                } else if (team.status.subscription.status == 'inactive' && team.status.subscription.seats_used > 0) {
-                    var text = "It looks like your subscription is up! Would you like to renew?"
-                }
+            if (team.subscription.status == 'inactive') {
+                
+                var text = "It looks like your subscription is up! Would you like to renew?"
+                
                 bot.reply(message, {
                     attachments: [{
                         title: "Subscribe",
@@ -21,7 +19,7 @@ module.exports = function (controller) {
                             {
                                 'text': 'Yes',
                                 'type': 'button',
-                                'url': 'https://getinternal.co/subscribe'
+                                'url': 'https://getinternal.co/#pricing'
                             },
                             {
                                 'name': 'no-button',

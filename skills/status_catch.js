@@ -10,19 +10,19 @@ module.exports = function (controller) {
                     if (err) {
                         console.log("error: ", err);
                     }
-                    var renew = '';
                     convo.addQuestion({
-                        text: "Hmm... I'm sorry you're not interested in subscribing. Has having me around helped with team communication and cohesion?",
+                        text: "I'm sorry you haven't gotten much value out of me. Would you like to email my creators for a refund of your last month?",
                         attachments: [{
-                            callback_id: 'no-question',
-                            color: "#0294ff",
+                            title: "Refund",
+                            text: "My purpose of existence is to provide value and you shouldn't have to pay if I don't!",
+                            color: "#ff0228",
+                            callback_id: 'refund',
                             attachment_type: 'default',
                             actions: [
                                 {
-                                    'name': 'yes-button',
-                                    'value': 'Yes',
                                     'text': 'Yes',
-                                    'type': 'button'
+                                    'type': 'button',
+                                    'url': "mailto:support@getinternal.co?subject=Request%20For%20Refund&body=Hello%2C%0A%0AI%20am%20not%20interested%20in%20continuing%20with%20my%20subscription%20and%20would%20like%20a%20refund%20of%20my%20last%20month's%20payment.%0A%0AThank%20you%2C%0A"
                                 },
                                 {
                                     'name': 'no-button',
@@ -31,91 +31,46 @@ module.exports = function (controller) {
                                     'type': 'button'
                                 }
                             ]
-                        }]
-                    }, function (response, convo) {
-                        if (response.text == 'Yes') {
-                            bot.replyInteractive(response, {
-                                attachments: [{
-                                    callback_id: 'no-question',
-                                    color: "#0294ff",
-                                    attachment_type: 'default',
-                                    actions: [
-                                        {
-                                            'name': 'yes-button',
-                                            'value': 'Yes',
-                                            'style': 'primary',
-                                            'text': 'Yes',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'no-button',
-                                            'value': 'No',
-                                            'text': 'No',
-                                            'type': 'button'
-                                        }
-                                    ]
-                                }]
-                            })
-                            bot.reply('Yay! That\'s my main (and pretty much only) goal in this immortal existence. I\'ll extend your trial for 2 more weeks to give you some time to evaluate');
-                            renew = renew + 'yes';
-                        } else if (response.text == 'No') {
-                            bot.replyInteractive(response, {
-                                attachments: [{
-                                    callback_id: 'no-question',
-                                    color: "#0294ff",
-                                    attachment_type: 'default',
-                                    actions: [
-                                        {
-                                            'name': 'yes-button',
-                                            'value': 'Yes',
-                                            'text': 'Yes',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'no-button',
-                                            'value': 'No',
-                                            'style': 'danger',
-                                            'text': 'No',
-                                            'type': 'button'
-                                        }
-                                    ]
-                                }]
-                            })
-                            bot.reply('Aw, man! I\'ll make a note to have my creators reach out to you. I\'m sorry I wasn\'t able to help');
-                            renew = renew + 'no';
+                        }],
+                    }, [
+                        {
+                            pattern: 'No',
+                            callback: function (response, convo) {
+                                bot.interactiveReply(response, {
+                                    text: "I'm sorry you haven't gotten much value out of me. Would you like to email my creators for a refund of your last month?",
+                                    attachments: [{
+                                        title: "Refund",
+                                        text: "My purpose of existence is to provide value and you shouldn't have to pay if I don't!",
+                                        color: "#ff0228",
+                                        callback_id: 'refund',
+                                        attachment_type: 'default',
+                                        actions: [
+                                            {
+                                                'text': 'Yes',
+                                                'type': 'button',
+                                                'url': "mailto:support@getinternal.co?subject=Request%20For%20Refund&body=Hello%2C%0A%0AI%20am%20not%20interested%20in%20continuing%20with%20my%20subscription%20and%20would%20like%20a%20refund%20of%20my%20last%20month's%20payment.%0A%0AThank%20you%2C%0A"
+                                            },
+                                            {
+                                                'name': 'no-button',
+                                                'value': 'No',
+                                                'style': 'primary',
+                                                'text': 'No',
+                                                'type': 'button'
+                                            }
+                                        ]
+                                    }], 
+                                });
+                                bot.reply(response, "Okay, I appreciate that!");
+                                convo.next();
+                            }
                         }
-                        convo.next();
-                    });
+                    ]);
 
                     convo.activate();
 
                     convo.on('end', function (convo) {
                         if (convo.successful()) {
-                            if (renew == 'yes') {
-                                var today = new Date();
-                                var dd = String(today.getDate()).padStart(2, '0');
-                                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                                var yyyy = today.getFullYear();
-                                today = mm + '/' + dd + '/' + yyyy;
-
-                                var end = new Date();
-                                var numberOfDaysToAdd = 14;
-                                end.setDate(end.getDate() + numberOfDaysToAdd);
-
-                                var dd = end.getDate();
-                                var mm = end.getMonth() + 1;
-                                var y = end.getFullYear();
-
-                                var endDate = mm + '/' + dd + '/' + y;
-
-                                team.status.trial.start = today;
-                                team.status.trial.end = endDate;
-                                team.status.trial.status = 'active';
-                                team.status.trial.tally = team.status.trial.tally + 1;
-                                controller.storage.teams.save(team);
-                            } else if (renew == 'no') {
-                                team.status.trial.status = 'inactive';
-                            }
+                            // Nothing
                         }
                     })
                 })
