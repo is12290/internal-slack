@@ -31,76 +31,42 @@ if (n === 6 || n === 0) {
         for (var j = 0; j < all_users.length; j++) {
             var user = all_users[j];
             if (typeof user.token != 'undefined') {
-            var bot = controller.spawn({ token: user.token });
-            if (user.logs && typeof user.logs[today] != 'undefined' && typeof user.logs[today].reflection != 'undefined') {
-                // Pass
-            } else if (!user.customization || !user.customization.logging || typeof user.customization.logging.reflection_time == 'undefined') {
-                if (moment.tz(rounded, user.timezone).format('HH:mm') == '18:30') {
-                    bot.say({
-                        text: "Ready to reflect?",
-                        attachments: [{
-                            title: "Reflection",
-                            color: "#0294ff",
-                            callback_id: 'automatic-reflections',
-                            attachment_type: 'default',
-                            actions: [
-                                {
-                                    'name': 'yes-button',
-                                    'value': 'Yes-Reflect',
-                                    'text': 'Yes',
-                                    'type': 'button'
-                                },
-                                {
-                                    'name': 'no-button',
-                                    'value': 'No-Reflect',
-                                    'text': 'No',
-                                    'type': 'button'
-                                }
-                            ]
-                        }],
-                        channel: user.channel
-                    }, function (err, response) {
-                        if (err) {
-                            console.log(err);
-                        }
-                    });
-                }
-            } else {
-                if (user.customization.logging.reflection_time == moment.tz(rounded, user.customization.logging.timezone).format('HH:mm')) {
-                    bot.say({
-                        text: "Ready to reflect?",
-                        attachments: [{
-                            title: "Reflection",
-                            color: "#0294ff",
-                            callback_id: 'automatic-reflections',
-                            attachment_type: 'default',
-                            actions: [
-                                {
-                                    'name': 'yes-button',
-                                    'value': 'Yes-Reflect',
-                                    'text': 'Yes',
-                                    'type': 'button'
-                                },
-                                {
-                                    'name': 'no-button',
-                                    'value': 'No-Reflect',
-                                    'text': 'No',
-                                    'type': 'button'
-                                }
-                            ]
-                        }],
-                        channel: user.channel
-                    }, function (err, response) {
-                        if (err) {
-                            console.log(err);
-                        }
-                    });
-                    sleep(400);
-                } else {
+                if (user.logs && typeof user.logs[today] != 'undefined' && typeof user.logs[today].check_out != 'undefined') {
                     // Pass
                 }
+                if (moment.tz(rounded, user.timezone).format('HH:mm') == '18:30') {
+                    var bot = controller.spawn({ token: user.token });
+                    bot.say({
+                        text: "Ready to reflect?",
+                        attachments: [{
+                            title: "Reflection",
+                            color: "#0294ff",
+                            callback_id: 'automatic-reflections',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'yes-button',
+                                    'value': 'Yes-Reflect',
+                                    'text': 'Yes',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'no-button',
+                                    'value': 'No-Reflect',
+                                    'text': 'No',
+                                    'type': 'button'
+                                }
+                            ]
+                        }],
+                        channel: user.channel
+                    }, function (err, response) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                }
             }
-        }
+            sleep(400);
         }
     })
 }

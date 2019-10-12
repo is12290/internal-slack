@@ -338,16 +338,16 @@ function GetReport(input, timeframe) {
                         for (var q = 0; q < checkOut.length; q++) {
                             if (q == 0) {
                                 // Sleep
-                                scores.push((checkOut[q] * 25) * 1.3);
+                                scores.push((checkOut[q] * 25) * 1.2);
                             } else if (q == 1) {
                                 // Energy
                                 scores.push((checkOut[q] * 25) * 0.8);
                             } else if (q == 2) {
                                 // Mood
-                                scores.push((checkOut[q] * 25) * 0.9);
+                                scores.push((checkOut[q] * 25) * 1.1);
                             } else if (q == 2) {
                                 // Presence
-                                scores.push((checkOut[q] * 25) * 1);
+                                scores.push((checkOut[q] * 25) * 0.9);
                             }
 
                         }
