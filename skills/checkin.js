@@ -1147,6 +1147,7 @@ module.exports = function (controller) {
                                     attachments: [snapshot],
                                     channel: team.bot.channel
                                 });
+                                bot.reply(message, "Your snapshot has been recorded and shared successfully!");
                             } else {
                                 bot.reply(message, 'Your score of ' + overall + "% has been recorded");
                             }
@@ -1226,9 +1227,10 @@ function GetSnapshot(input, user) {
     var overall = sum / scores.length;
     overall = Math.round(overall);
 
+    var colors = ['#02FF57', '#FFE602', '#FF8402', '#FF029D', '#CF02FF', '#2A02FF', '#02D2FF'];
     var attachments = {
         title: '<@' + user + '>\'s Start of Day Snapshot',
-        color: '#CF02FF',
+        color: colors[getRandomInt(0, 6)],
         attachment_type: 'default',
         text: 'Sleep: *' + qualitative[0] + '*\nEnergy: *' + qualitative[1] + '*\nMood: *' + qualitative[2] + '*\nPresence: *' + qualitative[3] + '*\nScore: *' + overall + '%*'
     };

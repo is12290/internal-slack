@@ -250,6 +250,7 @@ function GetReport(input, timeframe) {
     // Get Dates
     var moment = require('moment');
     var days = [];
+    var message1 = '';
     if (timeframe == 'monthly') {
         var start = moment().startOf('month');
         var end = moment().endOf('month');

@@ -1059,7 +1059,7 @@ module.exports = function (controller) {
                                 if (error == true) {
                                     bot.reply(message, "Sorry!! There has been an error sharing your snapshot. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
                                 } else {
-                                    bot.reply(message, "Your snapshot has been shared successfully in <#" + team.bot.channel + ">!");
+                                    bot.reply(message, "Your snapshot has been recorded and shared successfully!");
                                 }
                             } else {
                                 bot.reply(message, 'Okay, no problem! Your score of ' + overall + "% has been recorded");
@@ -1140,9 +1140,10 @@ function GetSnapshot(input, user) {
     var overall = sum / scores.length;
     overall = Math.round(overall);
 
+    var colors = ['#02FF57', '#FFE602', '#FF8402', '#FF029D', '#CF02FF', '#2A02FF', '#02D2FF'];
     var attachments = {
         title: '<@' + user + '>\'s End of Day Snapshot',
-        color: '#CF02FF',
+        color: colors[getRandomInt(0, 6)],
         attachment_type: 'default',
         text: 'Progress: *' + qualitative[0] + '*\nFrustration: *' + qualitative[1] + '*\nWork Distribution: *' + qualitative[2] + '*\nConfidence: *' + qualitative[3] + '*\nScore: *' + overall + '%*'
     };
