@@ -1049,7 +1049,6 @@ module.exports = function (controller) {
                             if (typeof snapshot != 'undefined') {
                                 var error;
                                     bot.say({
-                                        text: "Snapshot",
                                         attachments: [snapshot],
                                         channel: team.bot.channel
                                     }, function (err, response) {
@@ -1146,7 +1145,7 @@ function GetSnapshot(input, user) {
         title: '<@' + user + '>\'s End of Day Snapshot',
         color: '#CF02FF',
         attachment_type: 'default',
-        text: '*Progress:* ' + qualitative[0] + '\n*Frustration:* ' + qualitative[1] + '\n*Work Distribution:* ' + qualitative[2] + '\n*Confidence:* ' + qualitative[3] + '\n*Score:* ' + overall + '%'
+        text: 'Progress: *' + qualitative[0] + '*\nFrustration: *' + qualitative[1] + '*\nWork Distribution: *' + qualitative[2] + '*\nConfidence: *' + qualitative[3] + '*\nScore: *' + overall + '%*'
     };
 
     return attachments;

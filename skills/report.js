@@ -392,13 +392,18 @@ function GetReport(input, timeframe) {
             qualitative.push(checkout_overview[r][checkout_array[r]]);
         }
 
+        if (timeframe == 'monthly') {
+            var title_text = 'Month';
+        } else if (timeframe == 'weekly') {
+            var title_text = 'Week';
+        }
         // Create snapshot and push it to attachments
         var colors = ['#02FF57', '#FFE602', '#FF8402', '#FF029D', '#CF02FF', '#2A02FF', '#02D2FF'];
         var user_snapshot = {
-            title: '<@' + instance.id + '>\'s Week',
+            title: '<@' + instance.id + '>\'s ' + title_text,
             color: colors[getRandomInt(0, 6)],
             attachment_type: 'default',
-            text: '*Progress:* ' + qualitative[0] + '\n*Frustration:* ' + qualitative[1] + '\n*Work Distribution:* ' + qualitative[2] + '\n*Confidence:* ' + qualitative[3] + '\n*Progress:* ' + qualitative[4] + '\n*Frustration:* ' + qualitative[5] + '\n*Work Distribution:* ' + qualitative[6] + '\n*Confidence:* ' + qualitative[7] +'\n*Score:* ' + overall + '%'
+            text: 'Progress: *' + qualitative[0] + '*\n*Frustration:* ' + qualitative[1] + '*\nWork Distribution: *' + qualitative[2] + '*\nConfidence: *' + qualitative[3] + '*\nProgress: *' + qualitative[4] + '*\nFrustration: *' + qualitative[5] + '*\nWork Distribution: *' + qualitative[6] + '*\nConfidence: *' + qualitative[7] +'*\nScore: * ' + overall + '%*'
         };
 
         attachments.push(user_snapshot);
@@ -414,8 +419,9 @@ function GetReport(input, timeframe) {
         var message = '*Standing:* Negative';
     }
 
+    
     var week_snapshot = {
-        title: 'Overall Week',
+        title: 'Overall ' + title_text,
         color: '#8A02FF',
         attachment_type: 'default',
         text: message + '\n*Score:* ' + overall_score

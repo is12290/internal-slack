@@ -1143,7 +1143,6 @@ module.exports = function (controller) {
                             } else if (permission[0] == 'Snapshot') {
                                 const snapshot = GetSnapshot(score, message.user);
                                 bot.say({
-                                    text: "Snapshot",
                                     attachments: [snapshot],
                                     channel: team.bot.channel
                                 });
@@ -1227,10 +1226,10 @@ function GetSnapshot(input, user) {
     overall = Math.round(overall);
 
     var attachments = {
-        title: '<@' + user + '>\'s End of Day Snapshot',
+        title: '<@' + user + '>\'s Start of Day Snapshot',
         color: '#CF02FF',
         attachment_type: 'default',
-        text: '*Sleep:* ' + qualitative[0] + '\n*Energy:* ' + qualitative[1] + '\n*Mood:* ' + qualitative[2] + '\n*Presence:* ' + qualitative[3] + '\n*Score:* ' + overall + '%'
+        text: 'Sleep: *' + qualitative[0] + '*\nEnergy: *' + qualitative[1] + '*\nMood: *' + qualitative[2] + '*\nPresence: *' + qualitative[3] + '*\nScore: *' + overall + '%*'
     };
 
     return attachments;
