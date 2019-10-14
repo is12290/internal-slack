@@ -1008,7 +1008,7 @@ module.exports = function (controller) {
 
                                     if (!user) {
                                         user = {};
-                                        bot.api.users.info({ user: message.user }, (error, response) => {
+                                        bot.api.users.info({ user: message.user }, function (error, response) {
                                             if (error) {
                                                 console.log("error: ", error);
                                             }
@@ -1021,12 +1021,11 @@ module.exports = function (controller) {
                                             user.channel = message.channel
                                             user.logs = {
                                                 [today]: {
-                                                    check_out: score,
-                                                    permission: permission[0]
+                                                    check_out: score
                                                 }
                                             };
+                                            controller.storage.users.save(user);
                                         })
-                                        controller.storage.users.save(user);
                                     } else if (!user.logs) {
                                         user.logs = {
                                             [today]: {

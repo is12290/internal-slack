@@ -1094,7 +1094,7 @@ module.exports = function (controller) {
 
                                 if (!user) {
                                     user = {};
-                                    bot.api.users.info({ user: message.user }, (error, response) => {
+                                    bot.api.users.info({ user: message.user }, function (error, response) {
                                         if (error) {
                                             console.log("error: ", error);
                                         }
@@ -1110,8 +1110,9 @@ module.exports = function (controller) {
                                                 check_in: score
                                             }
                                         };
+                                        controller.storage.users.save(user);
                                     })
-                                    controller.storage.users.save(user);
+                                    
                                 } else if (!user.logs) {
                                     user.logs = {
                                         [today]: {

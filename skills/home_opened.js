@@ -1275,7 +1275,6 @@ module.exports = function (controller) {
                                                         controller.storage.users.save(user);
                                                     }
         
-                                                    const overall = GetOverall(score);
                                                     if (permission[0] == 'Score') {
                                                         const overall = GetOverall(score);
                                                         if (overall > 90) {
