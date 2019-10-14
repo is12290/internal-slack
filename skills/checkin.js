@@ -5,7 +5,7 @@ module.exports = function (controller) {
                 if (err) {
                     console.log("error: ", err);
                 }
-                if (team.status.subscription.status == 'inactive') {
+                if (team.subscription.status == 'inactive') {
                     
                     var text = "It looks like your subscription is up! Would you like to renew?"
                     
