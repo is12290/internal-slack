@@ -16,22 +16,22 @@ module.exports = function (controller) {
             if (err) {
                 console.log("error: ", err);
             } else {
-                bot.api.groups.setPurpose({ token: bot.config.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share insights to how you and your cofounder(s) are feeling" }, function (err, response) {
+                bot.api.groups.setPurpose({ token: bot.config.app_token, channel: response.group.id, purpose: "This channel is used by the Internal app to share insights to how you and your cofounder(s) are feeling" }, function (err, response) {
                     if (err) {
                         console.log("error: ", err);
                     }
                 })
-                bot.api.groups.setTopic({ token: bot.config.app_token, channel: response.channel.id, topic: "Easily monitor your relationship with your cofounder(s)" }, function (err, response) {
+                bot.api.groups.setTopic({ token: bot.config.app_token, channel: response.group.id, topic: "Easily monitor your relationship with your cofounder(s)" }, function (err, response) {
                     if (err) {
                         console.log("error: ", err);
                     }
                 })
-                bot.api.groups.invite({ token: team.bot.app_token, channel: response.channel.id, user: team.bot.user_id }, function (err, outcome) {
+                bot.api.groups.invite({ token: team.bot.app_token, channel: response.group.id, user: team.bot.user_id }, function (err, outcome) {
                     if (err) {
                         console.log("error: ", err);
                     }
                 });
-                team.bot.channel = response.channel.id;
+                team.bot.channel = response.group.id;
                 controller.storage.teams.save(team);
             }
         });
