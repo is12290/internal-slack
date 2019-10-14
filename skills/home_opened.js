@@ -8,7 +8,7 @@ module.exports = function (controller) {
                 if (err) {
                     console.log("error: ", err);
                 }
-                bot.api.groups.info({token: bot.config.token, channel: team.channel}, function (err, api_group) {
+                bot.api.groups.info({token: bot.config.token, channel: team.bot.channel}, function (err, api_group) {
                     if (err) {
                         console.log("error: ", err);
                     }
