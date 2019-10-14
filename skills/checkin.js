@@ -1144,7 +1144,7 @@ module.exports = function (controller) {
                                 const snapshot = GetSnapshot(score, message.user);
                                 bot.say({
                                     text: "Snapshot",
-                                    attachments: snapshot,
+                                    attachments: [snapshot],
                                     channel: team.bot.channel
                                 });
                             } else {

@@ -1050,7 +1050,7 @@ module.exports = function (controller) {
                                 var error;
                                     bot.say({
                                         text: "Snapshot",
-                                        attachments: snapshot,
+                                        attachments: [snapshot],
                                         channel: team.bot.channel
                                     }, function (err, response) {
                                         if (err) {
