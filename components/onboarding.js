@@ -15,8 +15,6 @@ module.exports = function (controller) {
         bot.api.groups.create({ token: bot.config.app_token, name: 'internal-vibe' }, function (err, response) {
             if (err) {
                 console.log("error: ", err);
-                bot.reply(reply, "I'm sorry, that channel name is already taken. Try another?");
-                convo.repeat();
             } else {
                 bot.api.groups.setPurpose({ token: bot.config.app_token, channel: response.channel.id, purpose: "This channel is used by the Internal app to share insights to how you and your cofounder(s) are feeling" }, function (err, response) {
                     if (err) {
