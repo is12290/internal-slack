@@ -965,7 +965,7 @@ module.exports = function (controller) {
                             }
                         ]);
 
-                        const permission = [];
+                    const permission = [];
                     convo.addQuestion({
                         attachments: [
                             {
@@ -1143,6 +1143,7 @@ module.exports = function (controller) {
                             } else if (permission[0] == 'Snapshot') {
                                 const snapshot = GetSnapshot(score, message.user);
                                 bot.say({
+                                    text: "Snapshot",
                                     attachments: snapshot,
                                     channel: team.bot.channel
                                 });

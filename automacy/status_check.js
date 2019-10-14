@@ -45,6 +45,7 @@ controller.storage.teams.all(function (err, teams) {
 
             if (subscription_status == 'inactive') {
                 bot.say({
+                    text: "No Subscription",
                     attachments: [{
                         title: "Subscription Ended",
                         text: "It appears yous subscription has ended. Would you like to renew?",

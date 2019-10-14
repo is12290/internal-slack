@@ -1049,6 +1049,7 @@ module.exports = function (controller) {
                             if (typeof snapshot != 'undefined') {
                                 var error;
                                     bot.say({
+                                        text: "Snapshot",
                                         attachments: snapshot,
                                         channel: team.bot.channel
                                     }, function (err, response) {
