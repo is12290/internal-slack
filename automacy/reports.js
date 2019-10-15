@@ -285,7 +285,7 @@ function GetReport(input, timeframe) {
             title: '<@' + instance.id + '>\'s ' + title_text,
             color: colors[getRandomInt(0, 6)],
             attachment_type: 'default',
-            text: 'Progress: *' + qualitative[0] + '*\n*Frustration:* ' + qualitative[1] + '*\nWork Distribution: *' + qualitative[2] + '*\nConfidence: *' + qualitative[3] + '*\nProgress: *' + qualitative[4] + '*\nFrustration: *' + qualitative[5] + '*\nWork Distribution: *' + qualitative[6] + '*\nConfidence: *' + qualitative[7] +'*\nScore: * ' + overall + '%*'
+            text: 'Sleep: *' + qualitative[0] + '*\nEnergy:* ' + qualitative[1] + '*\nMood: *' + qualitative[2] + '*\nPresence: *' + qualitative[3] + '*\nProgress: *' + qualitative[4] + '*\nFrustration: *' + qualitative[5] + '*\nWork Distribution: *' + qualitative[6] + '*\nConfidence: *' + qualitative[7] +'*\nScore: * ' + overall + '%*'
         };
 
         attachments.push(user_snapshot);

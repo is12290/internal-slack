@@ -1103,8 +1103,8 @@ module.exports = function (controller) {
                                         user.email = response.user.profile.email;
                                         user.timezone = response.user.tz
                                         user.id = message.user,
-                                            user.team = message.team,
-                                            user.channel = message.channel
+                                        user.team = message.team.id,
+                                        user.channel = message.channel
                                         user.logs = {
                                             [today]: {
                                                 check_in: score
