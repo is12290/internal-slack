@@ -169,7 +169,7 @@ module.exports = function (controller) {
                                         bot.reply(message, "Something has gone awry :thinking_face:");
                                     } else {
                                         bot.reply(message, {
-                                            text: 'Here is your ' + timeframe + 'report...',
+                                            text: 'Here is your ' + timeframe + ' report...',
                                             attachments: results
                                         });
                                     }
@@ -360,6 +360,7 @@ function GetReport(input, timeframe) {
                 }
             }
         }
+        console.log(overallCount);
 
         // Average counts
         var sleep = (sleepCount.reduce(function (a, b) { return a + b; }, 0) / sleepCount.length);
