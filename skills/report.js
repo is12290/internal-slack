@@ -164,7 +164,9 @@ module.exports = function (controller) {
                                         console.log("error: ", err);
                                     }
 
+                                    console.log("ALL USERS: ", all_users);
                                     var results = GetReport(all_users, timeframe);
+                                    console.log("RESULTS: ", results);
                                     if (typeof results == 'undefined') {
                                         bot.reply(message, "Something has gone awry :thinking_face:");
                                     } else {
@@ -301,7 +303,6 @@ function GetReport(input, timeframe) {
                         energyCount.push(checkIn[1]);
                         moodCount.push(checkIn[2]);
                         presenceCount.push(checkIn[3]);
-                        overallCount.push(checkIn[4] / 4);
 
                         var scores = [];
                         for (var p = 0; p < checkIn.length; p++) {
@@ -360,7 +361,6 @@ function GetReport(input, timeframe) {
                 }
             }
         }
-        console.log(overallCount);
 
         // Average counts
         var sleep = (sleepCount.reduce(function (a, b) { return a + b; }, 0) / sleepCount.length);
