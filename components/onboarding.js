@@ -46,7 +46,15 @@ module.exports = function (controller) {
 
             convo.on('end', function (convo) {
                 if (convo.successful()) {
-                    // Do Nothing
+                    const sgMail = require('@sendgrid/mail');
+                        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+                        const msg = {
+                            to: team.installer_email,
+                            from: 'ian@getinternal.co',
+                            subject: 'Thanks for Installing Internal!',
+                            text: 'Hey,\n\nThank you so much for installing Internal to your team’s Slack! We’re on a mission to make virtual communication just as emotionally insightful as in-person communication, and you have taken the first step towards making that a reality.\n\nWith that, I would love to answer any questions, hear any feature requests, or personally guide you through the intent of the app. Please call or text me at any time at (610) 597-5353, or shoot me an email at ian@getinternal.co!\n\nI look forward to hearing from you,\n\nIan Scalzo\nCo-Founder & CEO',
+                        };
+                        sgMail.send(msg);
                 }
             })
         })
