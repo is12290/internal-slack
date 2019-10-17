@@ -1258,3 +1258,9 @@ function GetOverall(score) {
     overall = Math.round(overall);
     return overall
 }
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
