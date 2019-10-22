@@ -70,7 +70,7 @@ module.exports = function (controller) {
                         const score = [];
 
                         convo.addMessage({
-                            text: "Hey, here's your end of day reflection! Just choose which option vibes best for each of the 4 topics..."
+                            text: "Hey, here's your end of day reflection! Just choose which option vibes best for each of the 4 topics so that I can share how you're feeling with your co-founder(s)..."
                         });
 
                         // Progress
@@ -1119,33 +1119,33 @@ function GetSnapshot(input, user) {
     }
 
     // Get quantitative overall score
-    var scores = [];
-    for (var j = 0; j < input.length; j++) {
-        if (j == 0) {
-            // Progress
-            scores.push((input[j] * 25) * 1.2);
-        } else if (j == 1) {
-            // Frustration
-            scores.push((input[j] * 25) * 0.8);
-        } else if (j == 2) {
-            // Work Distribution
-            scores.push((input[j] * 25) * 1.1);
-        } else if (j == 2) {
-            // Confidence
-            scores.push((input[j] * 25) * 0.9);
-        }
+    // var scores = [];
+    // for (var j = 0; j < input.length; j++) {
+    //     if (j == 0) {
+    //         // Progress
+    //         scores.push((input[j] * 25) * 1.2);
+    //     } else if (j == 1) {
+    //         // Frustration
+    //         scores.push((input[j] * 25) * 0.8);
+    //     } else if (j == 2) {
+    //         // Work Distribution
+    //         scores.push((input[j] * 25) * 1.1);
+    //     } else if (j == 2) {
+    //         // Confidence
+    //         scores.push((input[j] * 25) * 0.9);
+    //     }
         
-    }
-    var sum = scores.reduce(function (a, b) { return a + b; }, 0);
-    var overall = sum / scores.length;
-    overall = Math.round(overall);
+    // }
+    // var sum = scores.reduce(function (a, b) { return a + b; }, 0);
+    // var overall = sum / scores.length;
+    // overall = Math.round(overall);
 
     var colors = ['#02FF57', '#FFE602', '#FF8402', '#FF029D', '#CF02FF', '#2A02FF', '#02D2FF'];
     var attachments = {
         title: '<@' + user + '>\'s End of Day Snapshot',
         color: colors[getRandomInt(0, 6)],
         attachment_type: 'default',
-        text: 'Progress: *' + qualitative[0] + '*\nFrustration: *' + qualitative[1] + '*\nWork Distribution: *' + qualitative[2] + '*\nConfidence: *' + qualitative[3] + '*\nScore: *' + overall + '%*'
+        text: 'Progress: *' + qualitative[0] + '*\nFrustration: *' + qualitative[1] + '*\nWork Distribution: *' + qualitative[2] + '*\nConfidence: *' + qualitative[3]
     };
 
     return attachments;
