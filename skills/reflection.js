@@ -985,6 +985,112 @@ module.exports = function (controller) {
                                 }
                             ]);
 
+                            const permission = [];
+                            convo.addQuestion({
+                                attachments: [
+                                    {
+                                        callback_id: 'permission',
+                                        text: "Would you like to keep your reflection to yourself or share a snapshot with your co-founder(s)?",
+                                        color: "#0294ff",
+                                        attachment_type: 'default',
+                                        actions: [
+                                            {
+                                                'name': 'private-button',
+                                                'value': 'Private',
+                                                'text': 'Keep Private',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'share-button',
+                                                'value': 'Share',
+                                                'text': 'Share',
+                                                'type': 'button'
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }, [
+                                    {
+                                        pattern: 'Private',
+                                        callback: function (reply, convo) {
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            callback_id: 'permission',
+                                                            text: "Would you like to keep your reflection to yourself or share a snapshot with your co-founder(s)?",
+                                                            color: "#0294ff",
+                                                            attachment_type: 'default',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'private-button',
+                                                                    'value': 'Private',
+                                                                    'style': 'primary',
+                                                                    'text': 'Keep Private',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'share-button',
+                                                                    'value': 'Share',
+                                                                    'text': 'Share',
+                                                                    'type': 'button'
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            )
+                                            permission.push('Snapshot');
+                                            bot.api.reactions.add({
+                                                name: 'thumbsup',
+                                                channel: reply.channel,
+                                                timestamp: reply.ts
+                                            });
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Share',
+                                        callback: function (reply, convo) {
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            callback_id: 'permission',
+                                                            text: "Would you like to keep your reflection to yourself or share a snapshot with your co-founder(s)?",
+                                                            color: "#0294ff",
+                                                            attachment_type: 'default',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'private-button',
+                                                                    'value': 'Private',
+                                                                    'text': 'Keep Private',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'share-button',
+                                                                    'value': 'Share',
+                                                                    'style': 'primary',
+                                                                    'text': 'Share',
+                                                                    'type': 'button'
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            permission.push('Score');
+                                            bot.api.reactions.add({
+                                                name: 'thumbsup',
+                                                channel: reply.channel,
+                                                timestamp: reply.ts
+                                            });
+                                            convo.next();
+                                        }
+                                    }
+                                ]
+                            );
+
                         convo.addMessage("Reflection complete!");
 
                         convo.activate();
@@ -1044,8 +1150,9 @@ module.exports = function (controller) {
                                     }
                                 });
 
+                            
+                            if (permission[0] == 'Share') {
                                 const snapshot = GetSnapshot(score, message.user);
-                            if (typeof snapshot != 'undefined') {
                                 var error;
                                     bot.say({
                                         attachments: [snapshot],
@@ -1062,7 +1169,7 @@ module.exports = function (controller) {
                                     bot.reply(message, "Your snapshot has been recorded and shared successfully!");
                                 }
                             } else {
-                                bot.reply(message, 'Okay, no problem! Your score of ' + overall + "% has been recorded");
+                                bot.reply(message, 'Okay, no problem! Your reflection has been recorded');
                             }
                             }
                             else {
