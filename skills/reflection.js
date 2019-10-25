@@ -1145,7 +1145,7 @@ function GetSnapshot(input, user) {
         title: '<@' + user + '>\'s End of Day Snapshot',
         color: colors[getRandomInt(0, 6)],
         attachment_type: 'default',
-        text: 'Progress: *' + qualitative[0] + '*\nFrustration: *' + qualitative[1] + '*\nWork Distribution: *' + qualitative[2] + '*\nConfidence: *' + qualitative[3]
+        text: 'Progress: *' + qualitative[0] + '*\nFrustration: *' + qualitative[1] + '*\nWork Distribution: *' + qualitative[2] + '*\nConfidence: *' + qualitative[3] + '*'
     };
 
     return attachments;
