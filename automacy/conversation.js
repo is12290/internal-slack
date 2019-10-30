@@ -44,7 +44,7 @@ if (n === 6 || n === 0) {
                 if (err) {
                     console.log("error: ", err);
                 }
-                if (response.messages[0].text == '') { // FILL IN WITH OPT IN TEXT 'Hey <@user>, we thought you may be interested to talk about XYZ. Would you like me to send a notification to your co-founder to get the conversation going?
+                
                     controller.storage.users.find({ team: team.bot.channel }, function (err, all_users) {
                         if (err) {
                             console.log("error: ", err);
@@ -116,7 +116,8 @@ if (n === 6 || n === 0) {
 
                                     if (progress == true || frustration == true || work == true || confidence == true) {
                                         controller.spawn({ token: user.token }, function (bot) {
-                                            var message = 'Hey <@' + user.id + '>, I realized you weren\'t feeling too well this week in regards to ';
+                                            
+                                            var message = '<@' + user.id + '>, wasn\'t feeling too well this week in regards to ';
 
                                             for (var t = 0; t < message_context.length; t++) {
                                                 if (t == 0 && message_context[t] == true) {
@@ -154,35 +155,30 @@ if (n === 6 || n === 0) {
                                                     }
                                                 }
                                             }
-                                            bot.say({
-                                                text: message,
-                                                attachments: [{
-                                                    title: "Talk About It",
-                                                    text: "Would you like to start a conversation with your co-founder(s) about this?",
-                                                    color: "#0294ff",
-                                                    callback_id: 'automatic-checkin',
-                                                    attachment_type: 'default',
-                                                    actions: [
-                                                        {
-                                                            'name': 'yes-button',
-                                                            'value': 'Yes-Talk',
-                                                            'text': 'Yes',
-                                                            'type': 'button'
-                                                        },
-                                                        {
-                                                            'name': 'no-button',
-                                                            'value': 'No-Talk',
-                                                            'text': 'No',
-                                                            'type': 'button'
-                                                        }
-                                                    ]
-                                                }],
-                                                channel: user.channel
-                                            }, function (err, response) {
-                                                if (err) {
-                                                    console.log(err);
+
+                                            message = message + ' It would be great if you would be willing to take a few minutes to chat with them about it!';
+
+                                            var channel_message = 'Happy Friday, <@channel>! It\'d be great if you could clear some time to talk to your fellow founders today :partly_sunny:';
+
+                                            if (response.messages[0].text == channel_message || response.messages[1].text == channel_message || response.messages[2].text == channel_message || response.messages[3].text == channel_message) { 
+                                                bot.say({
+                                                    text: channel_message,
+                                                    channel: team.bot.channel
+                                                });
+                                            }
+
+                                            for (var y = 0; y < all_users.length; y++) {
+                                                var user_instance = all_users[y];
+                                                if (user_instance.id == user.id) {
+                                                    // Pass
+                                                } else {
+                                                    bot.say({
+                                                        text: message,
+                                                        channel: user_instance.channel
+                                                    });
                                                 }
-                                            });
+                                            }
+                                            
                                         });
                                     } else {
                                         // Pass
@@ -192,7 +188,6 @@ if (n === 6 || n === 0) {
                             }
                         }
                     })
-                }
             })
         }
     })
