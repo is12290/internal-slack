@@ -24,41 +24,35 @@ if (n == 5 || today == endOfMonth) {
     var controller = Botkit.slackbot(bot_options);
     controller.startTicking();
 
-    controller.storage.teams.all(function (err, all_teams) {
+    controller.storage.users.all(function (err, all_users) {
         if (err) {
             console.log("error: ", err);
         }
-        for (var l = 0; l < all_teams.length; l++) {
-            var instance_team = all_teams[l];
-            if (!instance_team.timezone) {
-                var team_timezone = "America/New_York";
-            } else {
-                var team_timezone = instance_team.timezone;
+        for (var j = 0; j < all_users.length; j++) {
+            var user = all_users[j];
+            if (typeof user.token != 'undefined') {
+                if (moment.tz(rounded, user.timezone).format('HH:mm') == '18:30') {
+                    controller.spawn({ token: user.token }, function (bot) {
+                        if (today == endOfMonth) {
+                            var results = GetReport(user, 'monthly');
+                            var message = 'Here is your monthly report...';
+                        } else {
+                            var results = GetReport(user, 'weekly');
+                            var message = 'Here is your weekly report...';
+                        }
+                        if (typeof results == 'undefined') {
+                            // Pass
+                        } else {
+                            bot.say({
+                                text: message,
+                                channel: user.channel,
+                                attachments: results
+                            });
+                        }
+                    });
+                }
             }
-            if (moment.tz(rounded, team_timezone).format('HH:mm') == '18:30') {
-                var bot = controller.spawn({token: team_instance.bot.token});
-                controller.storage.users.find({team: instance_team.id}, function (err, all_users) {
-                    if (err) {
-                        console.log("error: ", err);
-                    }
-                    if (today == endOfMonth) {
-                        var results = GetReport(all_users, 'monthly');
-                        var message = 'Here is your monthly report...';
-                    } else {
-                        var results = GetReport(all_users, 'weekly');
-                        var message = 'Here is your weekly report...';
-                    }
-                    if (typeof results == 'undefined') {
-                        // Pass
-                    } else {
-                        bot.say({
-                            text: message,
-                            channel: team_instance.channel,
-                            attachments: results
-                        });
-                    }
-                })
-            }
+            sleep(200);
         }
     })
 } else {
@@ -100,32 +94,32 @@ function GetReport(input, timeframe) {
 
     var checkout_overview = {
         0: {
-            4: 'Substantial',
-            3: 'Acceptable',
-            2: 'Minimal',
-            1: 'Stagnant',
-            0: 'Progress'
+            4: 'Fulfilled',
+            3: 'Social',
+            2: 'Independent',
+            1: 'Isolated',
+            0: 'Relationships'
         },
         1: {
-            4: 'Nonexistent',
-            3: 'Present',
-            2: 'Considerable',
-            1: 'Peak',
-            0: 'Frustration'
+            4: 'Great',
+            3: 'Decent',
+            2: 'Average',
+            1: 'Poor',
+            0: 'Diet'
         },
         2: {
-            4: 'Equal',
-            3: 'Fair',
-            2: 'Mostly Me',
-            1: 'Mostly Them',
-            0: 'Work Distribution'
+            4: 'Complete',
+            3: 'Present',
+            2: 'Lacking',
+            1: 'Nonexistent',
+            0: 'Fulfillment'
         },
         3: {
-            4: 'Certain',
-            3: 'Hopeful',
-            2: 'Dwindling',
-            1: 'Lost',
-            0: 'Confidence'
+            4: 'Aware',
+            3: 'Receptive',
+            2: 'Uninterested',
+            1: 'Numb',
+            0: 'Emotional Clarity'
         }
     };
 
@@ -162,10 +156,10 @@ function GetReport(input, timeframe) {
         var energyCount = [];
         var moodCount = [];
         var presenceCount = [];
-        var progressCount = [];
-        var frustrationCount = [];
-        var distributionCount = [];
-        var confidenceCount = [];
+        var relationshipsCount = [];
+        var dietCount = [];
+        var fulfillmentCount = [];
+        var clarityCount = [];
         var overallCount = [];
         
         for (var j = 0; j < days.length; j++) {
@@ -206,15 +200,15 @@ function GetReport(input, timeframe) {
                         overall = Math.round(overall);
                         overallCount.push(overall);
                     }
-                    if (typeof instance.logs[days[j]].check_out == 'undefined' || typeof instance.logs[days[j]].type == 'personal') {
+                    if (typeof instance.logs[days[j]].check_out == 'undefined' || typeof instance.logs[days[j]].type == 'project') {
                         // Pass
                     } else {
                         var checkOut = instance.logs[days[j]].check_out;
 
-                        progressCount.push(checkOut[0]);
-                        frustrationCount.push(checkOut[1]);
-                        distributionCount.push(checkOut[2]);
-                        confidenceCount.push(checkOut[3]);
+                        relationshipsCount.push(checkOut[0]);
+                        dietCount.push(checkOut[1]);
+                        fulfillmentCount.push(checkOut[2]);
+                        clarityCount.push(checkOut[3]);
 
                         var scores = [];
                         for (var q = 0; q < checkOut.length; q++) {
@@ -251,14 +245,14 @@ function GetReport(input, timeframe) {
         mood = Math.round(mood);
         var presence = (presenceCount.reduce(function (a, b) { return a + b; }, 0) / presenceCount.length);
         presence = Math.round(presence);
-        var progress = (progressCount.reduce(function (a, b) { return a + b; }, 0) / progressCount.length);
-        progress = Math.round(progress);
-        var frustration = (frustrationCount.reduce(function (a, b) { return a + b; }, 0) / frustrationCount.length);
-        frustration = Math.round(frustration);
-        var distribution = (distributionCount.reduce(function (a, b) { return a + b; }, 0) / distributionCount.length);
-        distribution = Math.round(distribution);
-        var confidence = (confidenceCount.reduce(function (a, b) { return a + b; }, 0) / confidenceCount.length);
-        confidence = Math.round(confidence);
+        var relationships = (relationshipsCount.reduce(function (a, b) { return a + b; }, 0) / relationshipsCount.length);
+        relationships = Math.round(relationships);
+        var diet = (dietCount.reduce(function (a, b) { return a + b; }, 0) / dietCount.length);
+        diet = Math.round(diet);
+        var fulfillment = (fulfillmentCount.reduce(function (a, b) { return a + b; }, 0) / fulfillmentCount.length);
+        fulfillment = Math.round(fulfillment);
+        var clarity = (clarityCount.reduce(function (a, b) { return a + b; }, 0) / clarityCount.length);
+        clarity = Math.round(clarity);
         var overall = (overallCount.reduce(function (a, b) { return a + b; }, 0) / overallCount.length).toFixed(2);
 
         // Loop through check in array of averages and check out array of averages
@@ -269,7 +263,7 @@ function GetReport(input, timeframe) {
             qualitative.push(checkin_overview[l][checkin_array[l]]);
         }
 
-        var checkout_array = [progress, frustration, distribution, confidence];
+        var checkout_array = [relationships, diet, fulfillment, clarity];
         for (var r = 0; r < checkout_array.length; r++) {
             qualitative.push(checkout_overview[r][checkout_array[r]]);
         }
@@ -285,7 +279,7 @@ function GetReport(input, timeframe) {
             title: '<@' + instance.id + '>\'s ' + title_text,
             color: colors[getRandomInt(0, 6)],
             attachment_type: 'default',
-            text: 'Sleep: *' + qualitative[0] + '*\nEnergy:* ' + qualitative[1] + '*\nMood: *' + qualitative[2] + '*\nPresence: *' + qualitative[3] + '*\nProgress: *' + qualitative[4] + '*\nFrustration: *' + qualitative[5] + '*\nWork Distribution: *' + qualitative[6] + '*\nConfidence: *' + qualitative[7] +'*\nScore: * ' + overall + '%*'
+            text: 'Sleep: *' + qualitative[0] + '*\nEnergy:* ' + qualitative[1] + '*\nMood: *' + qualitative[2] + '*\nPresence: *' + qualitative[3] + '*\nRelationships: *' + qualitative[4] + '*\nDiet: *' + qualitative[5] + '*\nFulfillment: *' + qualitative[6] + '*\nEmotional Clarity: *' + qualitative[7] +'*\nScore: * ' + overall + '%*'
         };
 
         attachments.push(user_snapshot);
@@ -296,16 +290,16 @@ function GetReport(input, timeframe) {
     overall_score = Math.round(overall_score);
 
     if (overall_score > 50) {
-        var message = '*Standing:* Positive';
+        var message = 'Standing: *Positive*';
     } else if (overall_score <= 50) {
-        var message = '*Standing:* Negative';
+        var message = 'Standing: *Negative*';
     }
 
     var week_snapshot = {
         title: 'Overall Week',
         color: '#8A02FF',
         attachment_type: 'default',
-        text: message + '\n*Score:* ' + overall_score
+        text: message + '\nScore: *' + overall_score + '*'
     };
     attachments.push(week_snapshot);
     // return attachments

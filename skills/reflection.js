@@ -6,9 +6,9 @@ module.exports = function (controller) {
                     console.log("error: ", err);
                 }
                 if (team.subscription.status == 'inactive') {
-                    
+
                     var text = "It looks like your subscription is up! Would you like to renew?"
-                    
+
                     bot.reply(message, {
                         attachments: [{
                             title: "Subscribe",
@@ -59,931 +59,935 @@ module.exports = function (controller) {
                         }
                     })
                 } else {
-                    // Reflection convo
-                    bot.startConversation(message, function (err, convo) {
-                        if (err) {
-                            console.log("error: ", err);
-                            bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
-                        }
+                    var d = new Date();
+                    var n = d.getDay();
 
-                        // Keep Score
-                        const score = [];
+                    // Startup Reflection
+                    if (n == 2 | n == 4) {
+                        bot.startConversation(message, function (err, convo) {
+                            if (err) {
+                                console.log("error: ", err);
+                                bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
+                            }
 
-                        convo.addMessage({
-                            text: "Hey, here's your end of day reflection! Just choose which option vibes best for each of the 4 topics so that I can share how you're feeling with your co-founder(s)..."
-                        });
+                            // Keep Score
+                            const score = [];
 
-                        // Progress
-                        convo.addQuestion({
-                            attachments: [
-                                {
-                                    title: "Progress",
-                                    callback_id: 'reflection-progress',
-                                    attachment_type: 'default',
-                                    color: '#02D2FF',
-                                    actions: [
-                                        {
-                                            'name': 'substantial-button',
-                                            'value': 'Substantial',
-                                            'text': 'Substantial',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'acceptable-button',
-                                            'value': 'Acceptable',
-                                            'text': 'Acceptable',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'minimal-button',
-                                            'value': 'Minimal',
-                                            'text': 'Minimal',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'stagnant-button',
-                                            'value': 'Stagnant',
-                                            'text': 'Stagnant',
-                                            'type': 'button'
-                                        },
-                                    ]
-                                }
-                            ]
-                        }, [
-                                {
-                                    pattern: 'Substantial',
-                                    callback: function (reply, convo) {
-                                        score.push(4);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Progress",
-                                                        callback_id: 'reflection-progress',
-                                                        attachment_type: 'default',
-                                                        color: '#02D2FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'substantial-button',
-                                                                'value': 'Substantial',
-                                                                'style': 'primary',
-                                                                'text': 'Substantial',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'acceptable-button',
-                                                                'value': 'Acceptable',
-                                                                'text': 'Acceptable',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'minimal-button',
-                                                                'value': 'Minimal',
-                                                                'text': 'Minimal',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'stagnant-button',
-                                                                'value': 'Stagnant',
-                                                                'text': 'Stagnant',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Acceptable',
-                                    callback: function (reply, convo) {
-                                        score.push(3);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Progress",
-                                                        callback_id: 'reflection-progress',
-                                                        attachment_type: 'default',
-                                                        color: '#02D2FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'substantial-button',
-                                                                'value': 'Substantial',
-                                                                'text': 'Substantial',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'acceptable-button',
-                                                                'value': 'Acceptable',
-                                                                'style': 'primary',
-                                                                'text': 'Acceptable',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'minimal-button',
-                                                                'value': 'Minimal',
-                                                                'text': 'Minimal',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'stagnant-button',
-                                                                'value': 'Stagnant',
-                                                                'text': 'Stagnant',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Minimal',
-                                    callback: function (reply, convo) {
-                                        score.push(2);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Progress",
-                                                        callback_id: 'reflection-progress',
-                                                        attachment_type: 'default',
-                                                        color: '#02D2FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'substantial-button',
-                                                                'value': 'Substantial',
-                                                                'text': 'Substantial',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'acceptable-button',
-                                                                'value': 'Acceptable',
-                                                                'text': 'Acceptable',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'minimal-button',
-                                                                'value': 'Minimal',
-                                                                'style': 'primary',
-                                                                'text': 'Minimal',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'stagnant-button',
-                                                                'value': 'Stagnant',
-                                                                'text': 'Stagnant',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Stagnant',
-                                    callback: function (reply, convo) {
-                                        score.push(1);
-                                        bot.replyInteractive(reply,
-                                            {
-                                                attachments: [
-                                                    {
-                                                        title: "Progress",
-                                                        callback_id: 'reflection-progress',
-                                                        attachment_type: 'default',
-                                                        color: '#02D2FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'substantial-button',
-                                                                'value': 'Substantial',
-                                                                'text': 'Substantial',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'acceptable-button',
-                                                                'value': 'Acceptable',
-                                                                'text': 'Acceptable',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'minimal-button',
-                                                                'value': 'Minimal',
-                                                                'text': 'Minimal',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'stagnant-button',
-                                                                'value': 'Stagnant',
-                                                                'style': 'primary',
-                                                                'text': 'Stagnant',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                }
-                            ]);
+                            convo.addMessage({
+                                text: "Hey, here's your end of day startup reflection! Just choose which option vibes best for each of the 4 topics..."
+                            });
 
-                        // Frustration
-                        convo.addQuestion({
-                            attachments: [
-                                {
-                                    title: "Frustration",
-                                    callback_id: 'reflection-frustration',
-                                    attachment_type: 'default',
-                                    color: '#2A02FF',
-                                    actions: [
-                                        {
-                                            'name': 'nonexistent-button',
-                                            'value': 'Nonexistent',
-                                            'text': 'Nonexistent',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'present-button',
-                                            'value': 'Present',
-                                            'text': 'Present',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'considerable-button',
-                                            'value': 'Considerable',
-                                            'text': 'Considerable',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'peak-button',
-                                            'value': 'Peak',
-                                            'text': 'Peak',
-                                            'type': 'button'
-                                        },
-                                    ]
-                                }
-                            ]
-                        }, [
-                                {
-                                    pattern: 'Nonexistent',
-                                    callback: function (reply, convo) {
-                                        score.push(4);
-                                        bot.replyInteractive(reply,
+                            // Progress
+                            convo.addQuestion({
+                                attachments: [
+                                    {
+                                        title: "Progress",
+                                        callback_id: 'reflection-progress',
+                                        attachment_type: 'default',
+                                        color: '#02D2FF',
+                                        actions: [
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Frustration",
-                                                        callback_id: 'reflection-frustration',
-                                                        attachment_type: 'default',
-                                                        color: '#2A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'nonexistent-button',
-                                                                'value': 'Nonexistent',
-                                                                'style': 'primary',
-                                                                'text': 'Nonexistent',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'present-button',
-                                                                'value': 'Present',
-                                                                'text': 'Present',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'considerable-button',
-                                                                'value': 'Considerable',
-                                                                'text': 'Considerable',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'peak-button',
-                                                                'value': 'Peak',
-                                                                'text': 'Peak',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Present',
-                                    callback: function (reply, convo) {
-                                        score.push(3);
-                                        bot.replyInteractive(reply,
+                                                'name': 'substantial-button',
+                                                'value': 'Substantial',
+                                                'text': 'Substantial',
+                                                'type': 'button'
+                                            },
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Frustration",
-                                                        callback_id: 'reflection-frustration',
-                                                        attachment_type: 'default',
-                                                        color: '#2A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'nonexistent-button',
-                                                                'value': 'Nonexistent',
-                                                                'text': 'Nonexistent',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'present-button',
-                                                                'value': 'Present',
-                                                                'style': 'primary',
-                                                                'text': 'Present',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'considerable-button',
-                                                                'value': 'Considerable',
-                                                                'text': 'Considerable',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'peak-button',
-                                                                'value': 'Peak',
-                                                                'text': 'Peak',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Considerable',
-                                    callback: function (reply, convo) {
-                                        score.push(2);
-                                        bot.replyInteractive(reply,
+                                                'name': 'acceptable-button',
+                                                'value': 'Acceptable',
+                                                'text': 'Acceptable',
+                                                'type': 'button'
+                                            },
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Frustration",
-                                                        callback_id: 'reflection-frustration',
-                                                        attachment_type: 'default',
-                                                        color: '#2A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'nonexistent-button',
-                                                                'value': 'Nonexistent',
-                                                                'text': 'Nonexistent',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'present-button',
-                                                                'value': 'Present',
-                                                                'text': 'Present',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'considerable-button',
-                                                                'value': 'Considerable',
-                                                                'style': 'primary',
-                                                                'text': 'Considerable',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'peak-button',
-                                                                'value': 'Peak',
-                                                                'text': 'Peak',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Peak',
-                                    callback: function (reply, convo) {
-                                        score.push(1);
-                                        bot.replyInteractive(reply,
+                                                'name': 'minimal-button',
+                                                'value': 'Minimal',
+                                                'text': 'Minimal',
+                                                'type': 'button'
+                                            },
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Frustration",
-                                                        callback_id: 'reflection-frustration',
-                                                        attachment_type: 'default',
-                                                        color: '#2A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'nonexistent-button',
-                                                                'value': 'Nonexistent',
-                                                                'text': 'Nonexistent',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'present-button',
-                                                                'value': 'Present',
-                                                                'text': 'Present',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'considerable-button',
-                                                                'value': 'Considerable',
-                                                                'text': 'Considerable',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'peak-button',
-                                                                'value': 'Peak',
-                                                                'style': 'primary',
-                                                                'text': 'Peak',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
+                                                'name': 'stagnant-button',
+                                                'value': 'Stagnant',
+                                                'text': 'Stagnant',
+                                                'type': 'button'
+                                            },
+                                        ]
                                     }
-                                }
-                            ]);
+                                ]
+                            }, [
+                                    {
+                                        pattern: 'Substantial',
+                                        callback: function (reply, convo) {
+                                            score.push(4);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Progress",
+                                                            callback_id: 'reflection-progress',
+                                                            attachment_type: 'default',
+                                                            color: '#02D2FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'substantial-button',
+                                                                    'value': 'Substantial',
+                                                                    'style': 'primary',
+                                                                    'text': 'Substantial',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'acceptable-button',
+                                                                    'value': 'Acceptable',
+                                                                    'text': 'Acceptable',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'minimal-button',
+                                                                    'value': 'Minimal',
+                                                                    'text': 'Minimal',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'stagnant-button',
+                                                                    'value': 'Stagnant',
+                                                                    'text': 'Stagnant',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Acceptable',
+                                        callback: function (reply, convo) {
+                                            score.push(3);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Progress",
+                                                            callback_id: 'reflection-progress',
+                                                            attachment_type: 'default',
+                                                            color: '#02D2FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'substantial-button',
+                                                                    'value': 'Substantial',
+                                                                    'text': 'Substantial',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'acceptable-button',
+                                                                    'value': 'Acceptable',
+                                                                    'style': 'primary',
+                                                                    'text': 'Acceptable',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'minimal-button',
+                                                                    'value': 'Minimal',
+                                                                    'text': 'Minimal',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'stagnant-button',
+                                                                    'value': 'Stagnant',
+                                                                    'text': 'Stagnant',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Minimal',
+                                        callback: function (reply, convo) {
+                                            score.push(2);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Progress",
+                                                            callback_id: 'reflection-progress',
+                                                            attachment_type: 'default',
+                                                            color: '#02D2FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'substantial-button',
+                                                                    'value': 'Substantial',
+                                                                    'text': 'Substantial',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'acceptable-button',
+                                                                    'value': 'Acceptable',
+                                                                    'text': 'Acceptable',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'minimal-button',
+                                                                    'value': 'Minimal',
+                                                                    'style': 'primary',
+                                                                    'text': 'Minimal',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'stagnant-button',
+                                                                    'value': 'Stagnant',
+                                                                    'text': 'Stagnant',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Stagnant',
+                                        callback: function (reply, convo) {
+                                            score.push(1);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Progress",
+                                                            callback_id: 'reflection-progress',
+                                                            attachment_type: 'default',
+                                                            color: '#02D2FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'substantial-button',
+                                                                    'value': 'Substantial',
+                                                                    'text': 'Substantial',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'acceptable-button',
+                                                                    'value': 'Acceptable',
+                                                                    'text': 'Acceptable',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'minimal-button',
+                                                                    'value': 'Minimal',
+                                                                    'text': 'Minimal',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'stagnant-button',
+                                                                    'value': 'Stagnant',
+                                                                    'style': 'primary',
+                                                                    'text': 'Stagnant',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    }
+                                ]);
 
-                        // Work Distribution
-                        convo.addQuestion({
-                            attachments: [
-                                {
-                                    title: "Work Distribution",
-                                    callback_id: 'reflection-workDistribution',
-                                    attachment_type: 'default',
-                                    color: '#8A02FF',
-                                    actions: [
-                                        {
-                                            'name': 'equal-button',
-                                            'value': 'Equal',
-                                            'text': 'Equal',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'fair-button',
-                                            'value': 'Fair',
-                                            'text': 'Fair',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'me-button',
-                                            'value': 'Mostly-Me',
-                                            'text': 'Mostly Me',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'them-button',
-                                            'value': 'Mostly-Them',
-                                            'text': 'Mostly-Them',
-                                            'type': 'button'
-                                        },
-                                    ]
-                                }
-                            ]
-                        }, [
-                                {
-                                    pattern: 'Equal',
-                                    callback: function (reply, convo) {
-                                        score.push(4);
-                                        bot.replyInteractive(reply,
+                            // Frustration
+                            convo.addQuestion({
+                                attachments: [
+                                    {
+                                        title: "Frustration",
+                                        callback_id: 'reflection-frustration',
+                                        attachment_type: 'default',
+                                        color: '#2A02FF',
+                                        actions: [
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Work Distribution",
-                                                        callback_id: 'reflection-workDistribution',
-                                                        attachment_type: 'default',
-                                                        color: '#8A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'equal-button',
-                                                                'value': 'Equal',
-                                                                'style': 'primary',
-                                                                'text': 'Equal',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'fair-button',
-                                                                'value': 'Fair',
-                                                                'text': 'Fair',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'me-button',
-                                                                'value': 'Mostly-Me',
-                                                                'text': 'Mostly Me',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'them-button',
-                                                                'value': 'Mostly-Them',
-                                                                'text': 'Mostly-Them',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Fair',
-                                    callback: function (reply, convo) {
-                                        score.push(3);
-                                        bot.replyInteractive(reply,
+                                                'name': 'nonexistent-button',
+                                                'value': 'Nonexistent',
+                                                'text': 'Nonexistent',
+                                                'type': 'button'
+                                            },
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Work Distribution",
-                                                        callback_id: 'reflection-workDistribution',
-                                                        attachment_type: 'default',
-                                                        color: '#8A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'equal-button',
-                                                                'value': 'Equal',
-                                                                'text': 'Equal',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'fair-button',
-                                                                'value': 'Fair',
-                                                                'style': 'primary',
-                                                                'text': 'Fair',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'me-button',
-                                                                'value': 'Mostly-Me',
-                                                                'text': 'Mostly Me',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'them-button',
-                                                                'value': 'Mostly-Them',
-                                                                'text': 'Mostly-Them',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Mostly-Me',
-                                    callback: function (reply, convo) {
-                                        score.push(2);
-                                        bot.replyInteractive(reply,
+                                                'name': 'present-button',
+                                                'value': 'Present',
+                                                'text': 'Present',
+                                                'type': 'button'
+                                            },
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Work Distribution",
-                                                        callback_id: 'reflection-workDistribution',
-                                                        attachment_type: 'default',
-                                                        color: '#8A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'equal-button',
-                                                                'value': 'Equal',
-                                                                'text': 'Equal',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'fair-button',
-                                                                'value': 'Fair',
-                                                                'text': 'Fair',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'me-button',
-                                                                'value': 'Mostly-Me',
-                                                                'style': 'primary',
-                                                                'text': 'Mostly Me',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'them-button',
-                                                                'value': 'Mostly-Them',
-                                                                'text': 'Mostly-Them',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Mostly-Them',
-                                    callback: function (reply, convo) {
-                                        score.push(1);
-                                        bot.replyInteractive(reply,
+                                                'name': 'considerable-button',
+                                                'value': 'Considerable',
+                                                'text': 'Considerable',
+                                                'type': 'button'
+                                            },
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Work Distribution",
-                                                        callback_id: 'reflection-workDistribution',
-                                                        attachment_type: 'default',
-                                                        color: '#8A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'equal-button',
-                                                                'value': 'Equal',
-                                                                'text': 'Equal',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'fair-button',
-                                                                'value': 'Fair',
-                                                                'text': 'Fair',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'me-button',
-                                                                'value': 'Mostly-Me',
-                                                                'text': 'Mostly Me',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'them-button',
-                                                                'value': 'Mostly-Them',
-                                                                'style': 'primary',
-                                                                'text': 'Mostly-Them',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        convo.next();
+                                                'name': 'peak-button',
+                                                'value': 'Peak',
+                                                'text': 'Peak',
+                                                'type': 'button'
+                                            },
+                                        ]
                                     }
-                                }
-                            ]);
+                                ]
+                            }, [
+                                    {
+                                        pattern: 'Nonexistent',
+                                        callback: function (reply, convo) {
+                                            score.push(4);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Frustration",
+                                                            callback_id: 'reflection-frustration',
+                                                            attachment_type: 'default',
+                                                            color: '#2A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'nonexistent-button',
+                                                                    'value': 'Nonexistent',
+                                                                    'style': 'primary',
+                                                                    'text': 'Nonexistent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'present-button',
+                                                                    'value': 'Present',
+                                                                    'text': 'Present',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'considerable-button',
+                                                                    'value': 'Considerable',
+                                                                    'text': 'Considerable',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'peak-button',
+                                                                    'value': 'Peak',
+                                                                    'text': 'Peak',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Present',
+                                        callback: function (reply, convo) {
+                                            score.push(3);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Frustration",
+                                                            callback_id: 'reflection-frustration',
+                                                            attachment_type: 'default',
+                                                            color: '#2A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'nonexistent-button',
+                                                                    'value': 'Nonexistent',
+                                                                    'text': 'Nonexistent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'present-button',
+                                                                    'value': 'Present',
+                                                                    'style': 'primary',
+                                                                    'text': 'Present',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'considerable-button',
+                                                                    'value': 'Considerable',
+                                                                    'text': 'Considerable',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'peak-button',
+                                                                    'value': 'Peak',
+                                                                    'text': 'Peak',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Considerable',
+                                        callback: function (reply, convo) {
+                                            score.push(2);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Frustration",
+                                                            callback_id: 'reflection-frustration',
+                                                            attachment_type: 'default',
+                                                            color: '#2A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'nonexistent-button',
+                                                                    'value': 'Nonexistent',
+                                                                    'text': 'Nonexistent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'present-button',
+                                                                    'value': 'Present',
+                                                                    'text': 'Present',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'considerable-button',
+                                                                    'value': 'Considerable',
+                                                                    'style': 'primary',
+                                                                    'text': 'Considerable',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'peak-button',
+                                                                    'value': 'Peak',
+                                                                    'text': 'Peak',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Peak',
+                                        callback: function (reply, convo) {
+                                            score.push(1);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Frustration",
+                                                            callback_id: 'reflection-frustration',
+                                                            attachment_type: 'default',
+                                                            color: '#2A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'nonexistent-button',
+                                                                    'value': 'Nonexistent',
+                                                                    'text': 'Nonexistent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'present-button',
+                                                                    'value': 'Present',
+                                                                    'text': 'Present',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'considerable-button',
+                                                                    'value': 'Considerable',
+                                                                    'text': 'Considerable',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'peak-button',
+                                                                    'value': 'Peak',
+                                                                    'style': 'primary',
+                                                                    'text': 'Peak',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    }
+                                ]);
 
-                        // Confidence
-                        convo.addQuestion({
-                            attachments: [
-                                {
-                                    title: "Confidence",
-                                    callback_id: 'reflection-confidence',
-                                    attachment_type: 'default',
-                                    color: '#CF02FF',
-                                    actions: [
-                                        {
-                                            'name': 'certain-button',
-                                            'value': 'Certain',
-                                            'text': 'Certain',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'hopeful-button',
-                                            'value': 'Hopeful',
-                                            'text': 'Hopeful',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'dwindling-button',
-                                            'value': 'Dwindling',
-                                            'text': 'Dwindling',
-                                            'type': 'button'
-                                        },
-                                        {
-                                            'name': 'lost-button',
-                                            'value': 'Lost',
-                                            'text': 'Lost',
-                                            'type': 'button'
-                                        },
-                                    ]
-                                }
-                            ]
-                        }, [
-                                {
-                                    pattern: 'Certain',
-                                    callback: function (reply, convo) {
-                                        score.push(4);
-                                        bot.replyInteractive(reply,
+                            // Work Distribution
+                            convo.addQuestion({
+                                attachments: [
+                                    {
+                                        title: "Work Distribution",
+                                        callback_id: 'reflection-workDistribution',
+                                        attachment_type: 'default',
+                                        color: '#8A02FF',
+                                        actions: [
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Confidence",
-                                                        callback_id: 'reflection-confidence',
-                                                        attachment_type: 'default',
-                                                        color: '#CF02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'certain-button',
-                                                                'value': 'Certain',
-                                                                'style': 'primary',
-                                                                'text': 'Certain',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'hopeful-button',
-                                                                'value': 'Hopeful',
-                                                                'text': 'Hopeful',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'dwindling-button',
-                                                                'value': 'Dwindling',
-                                                                'text': 'Dwindling',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'lost-button',
-                                                                'value': 'Lost',
-                                                                'text': 'Lost',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        bot.api.reactions.add({
-                                            name: 'thumbsup',
-                                            channel: reply.channel,
-                                            timestamp: reply.ts
-                                        });
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Hopeful',
-                                    callback: function (reply, convo) {
-                                        score.push(3);
-                                        bot.replyInteractive(reply,
+                                                'name': 'equal-button',
+                                                'value': 'Equal',
+                                                'text': 'Equal',
+                                                'type': 'button'
+                                            },
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Confidence",
-                                                        callback_id: 'reflection-confidence',
-                                                        attachment_type: 'default',
-                                                        color: '#CF02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'certain-button',
-                                                                'value': 'Certain',
-                                                                'text': 'Certain',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'hopeful-button',
-                                                                'value': 'Hopeful',
-                                                                'style': 'primary',
-                                                                'text': 'Hopeful',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'dwindling-button',
-                                                                'value': 'Dwindling',
-                                                                'text': 'Dwindling',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'lost-button',
-                                                                'value': 'Lost',
-                                                                'text': 'Lost',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        bot.api.reactions.add({
-                                            name: 'thumbsup',
-                                            channel: reply.channel,
-                                            timestamp: reply.ts
-                                        });
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Dwindling',
-                                    callback: function (reply, convo) {
-                                        score.push(2);
-                                        bot.replyInteractive(reply,
+                                                'name': 'fair-button',
+                                                'value': 'Fair',
+                                                'text': 'Fair',
+                                                'type': 'button'
+                                            },
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Confidence",
-                                                        callback_id: 'reflection-confidence',
-                                                        attachment_type: 'default',
-                                                        color: '#CF02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'certain-button',
-                                                                'value': 'Certain',
-                                                                'text': 'Certain',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'hopeful-button',
-                                                                'value': 'Hopeful',
-                                                                'text': 'Hopeful',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'dwindling-button',
-                                                                'value': 'Dwindling',
-                                                                'style': 'primary',
-                                                                'text': 'Dwindling',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'lost-button',
-                                                                'value': 'Lost',
-                                                                'text': 'Lost',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        bot.api.reactions.add({
-                                            name: 'thumbsup',
-                                            channel: reply.channel,
-                                            timestamp: reply.ts
-                                        });
-                                        convo.next();
-                                    }
-                                },
-                                {
-                                    pattern: 'Lost',
-                                    callback: function (reply, convo) {
-                                        score.push(1);
-                                        bot.replyInteractive(reply,
+                                                'name': 'me-button',
+                                                'value': 'Mostly-Me',
+                                                'text': 'Mostly Me',
+                                                'type': 'button'
+                                            },
                                             {
-                                                attachments: [
-                                                    {
-                                                        title: "Confidence",
-                                                        callback_id: 'reflection-confidence',
-                                                        attachment_type: 'default',
-                                                        color: '#CF02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'certain-button',
-                                                                'value': 'Certain',
-                                                                'text': 'Certain',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'hopeful-button',
-                                                                'value': 'Hopeful',
-                                                                'text': 'Hopeful',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'dwindling-button',
-                                                                'value': 'Dwindling',
-                                                                'text': 'Dwindling',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'lost-button',
-                                                                'value': 'Lost',
-                                                                'text': 'Lost',
-                                                                'style': 'primary',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        );
-                                        bot.api.reactions.add({
-                                            name: 'thumbsup',
-                                            channel: reply.channel,
-                                            timestamp: reply.ts
-                                        });
-                                        convo.next();
+                                                'name': 'them-button',
+                                                'value': 'Mostly-Them',
+                                                'text': 'Mostly-Them',
+                                                'type': 'button'
+                                            },
+                                        ]
                                     }
-                                }
-                            ]);
+                                ]
+                            }, [
+                                    {
+                                        pattern: 'Equal',
+                                        callback: function (reply, convo) {
+                                            score.push(4);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Work Distribution",
+                                                            callback_id: 'reflection-workDistribution',
+                                                            attachment_type: 'default',
+                                                            color: '#8A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'equal-button',
+                                                                    'value': 'Equal',
+                                                                    'style': 'primary',
+                                                                    'text': 'Equal',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'fair-button',
+                                                                    'value': 'Fair',
+                                                                    'text': 'Fair',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'me-button',
+                                                                    'value': 'Mostly-Me',
+                                                                    'text': 'Mostly Me',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'them-button',
+                                                                    'value': 'Mostly-Them',
+                                                                    'text': 'Mostly-Them',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Fair',
+                                        callback: function (reply, convo) {
+                                            score.push(3);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Work Distribution",
+                                                            callback_id: 'reflection-workDistribution',
+                                                            attachment_type: 'default',
+                                                            color: '#8A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'equal-button',
+                                                                    'value': 'Equal',
+                                                                    'text': 'Equal',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'fair-button',
+                                                                    'value': 'Fair',
+                                                                    'style': 'primary',
+                                                                    'text': 'Fair',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'me-button',
+                                                                    'value': 'Mostly-Me',
+                                                                    'text': 'Mostly Me',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'them-button',
+                                                                    'value': 'Mostly-Them',
+                                                                    'text': 'Mostly-Them',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Mostly-Me',
+                                        callback: function (reply, convo) {
+                                            score.push(2);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Work Distribution",
+                                                            callback_id: 'reflection-workDistribution',
+                                                            attachment_type: 'default',
+                                                            color: '#8A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'equal-button',
+                                                                    'value': 'Equal',
+                                                                    'text': 'Equal',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'fair-button',
+                                                                    'value': 'Fair',
+                                                                    'text': 'Fair',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'me-button',
+                                                                    'value': 'Mostly-Me',
+                                                                    'style': 'primary',
+                                                                    'text': 'Mostly Me',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'them-button',
+                                                                    'value': 'Mostly-Them',
+                                                                    'text': 'Mostly-Them',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Mostly-Them',
+                                        callback: function (reply, convo) {
+                                            score.push(1);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Work Distribution",
+                                                            callback_id: 'reflection-workDistribution',
+                                                            attachment_type: 'default',
+                                                            color: '#8A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'equal-button',
+                                                                    'value': 'Equal',
+                                                                    'text': 'Equal',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'fair-button',
+                                                                    'value': 'Fair',
+                                                                    'text': 'Fair',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'me-button',
+                                                                    'value': 'Mostly-Me',
+                                                                    'text': 'Mostly Me',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'them-button',
+                                                                    'value': 'Mostly-Them',
+                                                                    'style': 'primary',
+                                                                    'text': 'Mostly-Them',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    }
+                                ]);
+
+                            // Confidence
+                            convo.addQuestion({
+                                attachments: [
+                                    {
+                                        title: "Confidence",
+                                        callback_id: 'reflection-confidence',
+                                        attachment_type: 'default',
+                                        color: '#CF02FF',
+                                        actions: [
+                                            {
+                                                'name': 'certain-button',
+                                                'value': 'Certain',
+                                                'text': 'Certain',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'hopeful-button',
+                                                'value': 'Hopeful',
+                                                'text': 'Hopeful',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'dwindling-button',
+                                                'value': 'Dwindling',
+                                                'text': 'Dwindling',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'lost-button',
+                                                'value': 'Lost',
+                                                'text': 'Lost',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }, [
+                                    {
+                                        pattern: 'Certain',
+                                        callback: function (reply, convo) {
+                                            score.push(4);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Confidence",
+                                                            callback_id: 'reflection-confidence',
+                                                            attachment_type: 'default',
+                                                            color: '#CF02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'certain-button',
+                                                                    'value': 'Certain',
+                                                                    'style': 'primary',
+                                                                    'text': 'Certain',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'hopeful-button',
+                                                                    'value': 'Hopeful',
+                                                                    'text': 'Hopeful',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'dwindling-button',
+                                                                    'value': 'Dwindling',
+                                                                    'text': 'Dwindling',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'lost-button',
+                                                                    'value': 'Lost',
+                                                                    'text': 'Lost',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            bot.api.reactions.add({
+                                                name: 'thumbsup',
+                                                channel: reply.channel,
+                                                timestamp: reply.ts
+                                            });
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Hopeful',
+                                        callback: function (reply, convo) {
+                                            score.push(3);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Confidence",
+                                                            callback_id: 'reflection-confidence',
+                                                            attachment_type: 'default',
+                                                            color: '#CF02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'certain-button',
+                                                                    'value': 'Certain',
+                                                                    'text': 'Certain',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'hopeful-button',
+                                                                    'value': 'Hopeful',
+                                                                    'style': 'primary',
+                                                                    'text': 'Hopeful',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'dwindling-button',
+                                                                    'value': 'Dwindling',
+                                                                    'text': 'Dwindling',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'lost-button',
+                                                                    'value': 'Lost',
+                                                                    'text': 'Lost',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            bot.api.reactions.add({
+                                                name: 'thumbsup',
+                                                channel: reply.channel,
+                                                timestamp: reply.ts
+                                            });
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Dwindling',
+                                        callback: function (reply, convo) {
+                                            score.push(2);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Confidence",
+                                                            callback_id: 'reflection-confidence',
+                                                            attachment_type: 'default',
+                                                            color: '#CF02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'certain-button',
+                                                                    'value': 'Certain',
+                                                                    'text': 'Certain',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'hopeful-button',
+                                                                    'value': 'Hopeful',
+                                                                    'text': 'Hopeful',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'dwindling-button',
+                                                                    'value': 'Dwindling',
+                                                                    'style': 'primary',
+                                                                    'text': 'Dwindling',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'lost-button',
+                                                                    'value': 'Lost',
+                                                                    'text': 'Lost',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            bot.api.reactions.add({
+                                                name: 'thumbsup',
+                                                channel: reply.channel,
+                                                timestamp: reply.ts
+                                            });
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Lost',
+                                        callback: function (reply, convo) {
+                                            score.push(1);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Confidence",
+                                                            callback_id: 'reflection-confidence',
+                                                            attachment_type: 'default',
+                                                            color: '#CF02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'certain-button',
+                                                                    'value': 'Certain',
+                                                                    'text': 'Certain',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'hopeful-button',
+                                                                    'value': 'Hopeful',
+                                                                    'text': 'Hopeful',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'dwindling-button',
+                                                                    'value': 'Dwindling',
+                                                                    'text': 'Dwindling',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'lost-button',
+                                                                    'value': 'Lost',
+                                                                    'text': 'Lost',
+                                                                    'style': 'primary',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            bot.api.reactions.add({
+                                                name: 'thumbsup',
+                                                channel: reply.channel,
+                                                timestamp: reply.ts
+                                            });
+                                            convo.next();
+                                        }
+                                    }
+                                ]);
 
                             const permission = [];
                             convo.addQuestion({
@@ -1091,92 +1095,1072 @@ module.exports = function (controller) {
                                 ]
                             );
 
-                        convo.addMessage("Reflection complete!");
+                            convo.addMessage("Reflection complete!");
 
-                        convo.activate();
+                            convo.activate();
 
 
-                        // capture the results of the conversation and see what happened...
-                        convo.on('end', function (convo) {
+                            // capture the results of the conversation and see what happened...
+                            convo.on('end', function (convo) {
 
-                            if (convo.successful()) {
-                                controller.storage.users.get(message.user, function (err, user) {
-                                    if (err) {
-                                        console.log("error: ", err);
-                                        convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")
-                                    }
-                                    var today = new Date();
-                                    var dd = String(today.getDate()).padStart(2, '0');
-                                    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                                    var yyyy = today.getFullYear();
+                                if (convo.successful()) {
+                                    controller.storage.users.get(message.user, function (err, user) {
+                                        if (err) {
+                                            console.log("error: ", err);
+                                            convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")
+                                        }
+                                        var today = new Date();
+                                        var dd = String(today.getDate()).padStart(2, '0');
+                                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                                        var yyyy = today.getFullYear();
 
-                                    today = mm + '/' + dd + '/' + yyyy;
+                                        today = mm + '/' + dd + '/' + yyyy;
 
-                                    if (!user) {
-                                        user = {};
-                                        bot.api.users.info({ user: message.user }, function (error, response) {
-                                            if (error) {
-                                                console.log("error: ", error);
-                                            }
-                                            let { name, real_name } = response.user;
-                                            user.name = real_name;
-                                            user.email = response.user.profile.email;
-                                            user.timezone = response.user.tz
-                                            user.id = message.user,
-                                            user.team = message.team.id,
-                                            user.channel = message.channel
+                                        if (!user) {
+                                            user = {};
+                                            bot.api.users.info({ user: message.user }, function (error, response) {
+                                                if (error) {
+                                                    console.log("error: ", error);
+                                                }
+                                                let { name, real_name } = response.user;
+                                                user.name = real_name;
+                                                user.email = response.user.profile.email;
+                                                user.timezone = response.user.tz
+                                                user.id = message.user,
+                                                    user.team = message.team.id,
+                                                    user.channel = message.channel
+                                                user.logs = {
+                                                    [today]: {
+                                                        type: 'project',
+                                                        check_out: score
+                                                    }
+                                                };
+                                                controller.storage.users.save(user);
+                                            })
+                                        } else if (!user.logs) {
                                             user.logs = {
                                                 [today]: {
+                                                    type: 'project',
                                                     check_out: score
                                                 }
+                                            }
+                                            controller.storage.users.save(user);
+                                        } else if (!user.logs[today]) {
+                                            user.logs[today] = {
+                                                type: 'project',
+                                                check_out: score,
                                             };
                                             controller.storage.users.save(user);
-                                        })
-                                    } else if (!user.logs) {
-                                        user.logs = {
-                                            [today]: {
-                                                check_out: score
-                                            }
-                                        }
-                                        controller.storage.users.save(user);
-                                    } else if (!user.logs[today]) {
-                                        user.logs[today] = {
-                                            check_out: score,
-                                        };
-                                        controller.storage.users.save(user);
-                                    } else {
-                                        user.logs[today].check_out = score;
-                                        controller.storage.users.save(user);
-                                    }
-                                });
-
-                            
-                            if (permission[0] == 'Share') {
-                                const snapshot = GetSnapshot(score, message.user);
-                                var error;
-                                    bot.say({
-                                        attachments: [snapshot],
-                                        channel: team.bot.channel
-                                    }, function (err, response) {
-                                        if (err) {
-                                            console.log("Erorr: ", err);
-                                            error = true;
+                                        } else {
+                                            user.logs[today].check_out = score;
+                                            user.logs[today].type = 'project';
+                                            controller.storage.users.save(user);
                                         }
                                     });
-                                if (error == true) {
-                                    bot.reply(message, "Sorry!! There has been an error sharing your snapshot. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
-                                } else {
-                                    bot.reply(message, "Your snapshot has been recorded and shared successfully!");
+
+
+                                    if (permission[0] == 'Share') {
+                                        const snapshot = GetSnapshot(score, message.user);
+                                        var error;
+                                        bot.say({
+                                            attachments: [snapshot],
+                                            channel: team.bot.channel
+                                        }, function (err, response) {
+                                            if (err) {
+                                                console.log("Erorr: ", err);
+                                                error = true;
+                                            }
+                                        });
+                                        if (error == true) {
+                                            bot.reply(message, "Sorry!! There has been an error sharing your snapshot. We'll just keep this one to ourselves and I'll be fixed come tomorrow!")
+                                        } else {
+                                            bot.reply(message, "Your snapshot has been recorded and shared successfully!");
+                                        }
+                                    } else {
+                                        bot.reply(message, 'Okay, no problem! Your reflection has been recorded');
+                                    }
                                 }
-                            } else {
-                                bot.reply(message, 'Okay, no problem! Your reflection has been recorded');
-                            }
-                            }
-                            else {
-                                bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?')
-                            }
+                                else {
+                                    bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?')
+                                }
+                            });
                         });
-                    });
+                    } else {
+                        bot.startConversation(message, function (err, convo) {
+                            if (err) {
+                                console.log("error: ", err);
+                                bot.whisper(message, "I'm a bit popular right now and missed what you said, say it again?");
+                            }
+
+                            // Keep Score
+                            const score = [];
+
+                            convo.addMessage({
+                                text: "Hey, here's your end of day personal reflection! Just choose which option vibes best for each of the 4 topics..."
+                            });
+
+                            // Isolation
+                            convo.addQuestion({
+                                attachments: [
+                                    {
+                                        title: "Relationships",
+                                        callback_id: 'reflection-isolation',
+                                        attachment_type: 'default',
+                                        color: '#02D2FF',
+                                        actions: [
+                                            {
+                                                'name': 'Fulfilled-button',
+                                                'value': 'Fulfilled',
+                                                'text': 'Fulfilled',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'social-button',
+                                                'value': 'Social',
+                                                'text': 'Social',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'Independent-button',
+                                                'value': 'Independent',
+                                                'text': 'Independent',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'Isolated-button',
+                                                'value': 'Isolated',
+                                                'text': 'Isolated',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }, [
+                                    {
+                                        pattern: 'Fulfilled',
+                                        callback: function (reply, convo) {
+                                            score.push(4);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Relationships",
+                                                            callback_id: 'reflection-isolation',
+                                                            attachment_type: 'default',
+                                                            color: '#02D2FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Fulfilled-button',
+                                                                    'value': 'Fulfilled',
+                                                                    'style': 'primary',
+                                                                    'text': 'Fulfilled',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'social-button',
+                                                                    'value': 'Social',
+                                                                    'text': 'Social',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Independent-button',
+                                                                    'value': 'Independent',
+                                                                    'text': 'Independent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Isolated-button',
+                                                                    'value': 'Isolated',
+                                                                    'text': 'Isolated',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Social',
+                                        callback: function (reply, convo) {
+                                            score.push(3);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Relationships",
+                                                            callback_id: 'reflection-isolation',
+                                                            attachment_type: 'default',
+                                                            color: '#02D2FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Fulfilled-button',
+                                                                    'value': 'Fulfilled',
+                                                                    'text': 'Fulfilled',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'social-button',
+                                                                    'value': 'Social',
+                                                                    'text': 'Social',
+                                                                    'style': 'primary',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Independent-button',
+                                                                    'value': 'Independent',
+                                                                    'text': 'Independent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Isolated-button',
+                                                                    'value': 'Isolated',
+                                                                    'text': 'Isolated',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Independent',
+                                        callback: function (reply, convo) {
+                                            score.push(2);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Relationships",
+                                                            callback_id: 'reflection-isolation',
+                                                            attachment_type: 'default',
+                                                            color: '#02D2FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Fulfilled-button',
+                                                                    'value': 'Fulfilled',
+                                                                    'text': 'Fulfilled',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'social-button',
+                                                                    'value': 'Social',
+                                                                    'text': 'Social',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Independent-button',
+                                                                    'value': 'Independent',
+                                                                    'text': 'Independent',
+                                                                    'style': 'primary',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Isolated-button',
+                                                                    'value': 'Isolated',
+                                                                    'text': 'Isolated',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Isolated',
+                                        callback: function (reply, convo) {
+                                            score.push(1);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Relationships",
+                                                            callback_id: 'reflection-isolation',
+                                                            attachment_type: 'default',
+                                                            color: '#02D2FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Fulfilled-button',
+                                                                    'value': 'Fulfilled',
+                                                                    'text': 'Fulfilled',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'social-button',
+                                                                    'value': 'Social',
+                                                                    'text': 'Social',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Independent-button',
+                                                                    'value': 'Independent',
+                                                                    'text': 'Independent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Isolated-button',
+                                                                    'value': 'Isolated',
+                                                                    'style': 'primary',
+                                                                    'text': 'Isolated',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    }
+                                ]);
+
+                            // Diet
+                            convo.addQuestion({
+                                attachments: [
+                                    {
+                                        title: "Diet",
+                                        callback_id: 'reflection-diet',
+                                        attachment_type: 'default',
+                                        color: '#2A02FF',
+                                        actions: [
+                                            {
+                                                'name': 'Great-button',
+                                                'value': 'Great',
+                                                'text': 'Great',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'Decent-button',
+                                                'value': 'Decent',
+                                                'text': 'Decent',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'Average-button',
+                                                'value': 'Average',
+                                                'text': 'Average',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'Poor-button',
+                                                'value': 'Poor',
+                                                'text': 'Poor',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }, [
+                                    {
+                                        pattern: 'Great',
+                                        callback: function (reply, convo) {
+                                            score.push(4);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Diet",
+                                                            callback_id: 'reflection-diet',
+                                                            attachment_type: 'default',
+                                                            color: '#2A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Great-button',
+                                                                    'value': 'Great',
+                                                                    'style': 'primary',
+                                                                    'text': 'Great',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Decent-button',
+                                                                    'value': 'Decent',
+                                                                    'text': 'Decent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Average-button',
+                                                                    'value': 'Average',
+                                                                    'text': 'Average',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Poor-button',
+                                                                    'value': 'Poor',
+                                                                    'text': 'Poor',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Decent',
+                                        callback: function (reply, convo) {
+                                            score.push(3);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Diet",
+                                                            callback_id: 'reflection-diet',
+                                                            attachment_type: 'default',
+                                                            color: '#2A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Great-button',
+                                                                    'value': 'Great',
+                                                                    'text': 'Great',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Decent-button',
+                                                                    'style': 'primary',
+                                                                    'value': 'Decent',
+                                                                    'text': 'Decent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Average-button',
+                                                                    'value': 'Average',
+                                                                    'text': 'Average',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Poor-button',
+                                                                    'value': 'Poor',
+                                                                    'text': 'Poor',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Average',
+                                        callback: function (reply, convo) {
+                                            score.push(2);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Diet",
+                                                            callback_id: 'reflection-diet',
+                                                            attachment_type: 'default',
+                                                            color: '#2A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Great-button',
+                                                                    'value': 'Great',
+                                                                    'text': 'Great',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Decent-button',
+                                                                    'value': 'Decent',
+                                                                    'text': 'Decent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Average-button',
+                                                                    'value': 'Average',
+                                                                    'style': 'primary',
+                                                                    'text': 'Average',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Poor-button',
+                                                                    'value': 'Poor',
+                                                                    'text': 'Poor',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Poor',
+                                        callback: function (reply, convo) {
+                                            score.push(1);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Diet",
+                                                            callback_id: 'reflection-diet',
+                                                            attachment_type: 'default',
+                                                            color: '#2A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Great-button',
+                                                                    'value': 'Great',
+                                                                    'text': 'Great',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Decent-button',
+                                                                    'value': 'Decent',
+                                                                    'text': 'Decent',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Average-button',
+                                                                    'value': 'Average',
+                                                                    'text': 'Average',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Poor-button',
+                                                                    'value': 'Poor',
+                                                                    'style': 'primary',
+                                                                    'text': 'Poor',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    }
+                                ]);
+
+                            // Fulfillment
+                            convo.addQuestion({
+                                attachments: [
+                                    {
+                                        title: "Fulfillment",
+                                        callback_id: 'reflection-fulfillment',
+                                        attachment_type: 'default',
+                                        color: '#8A02FF',
+                                        actions: [
+                                            {
+                                                'name': 'Complete-button',
+                                                'value': 'Complete',
+                                                'text': 'Complete',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'Present-button',
+                                                'value': 'Present',
+                                                'text': 'Present',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'Lacking-button',
+                                                'value': 'Lacking',
+                                                'text': 'Lacking',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'nonexistent-button',
+                                                'value': 'Nonexistent',
+                                                'text': 'Nonexistent',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }, [
+                                    {
+                                        pattern: 'Complete',
+                                        callback: function (reply, convo) {
+                                            score.push(4);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Fulfillment",
+                                                            callback_id: 'reflection-fulfillment',
+                                                            attachment_type: 'default',
+                                                            color: '#8A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Complete-button',
+                                                                    'value': 'Complete',
+                                                                    'style': 'primary',
+                                                                    'text': 'Complete',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Present-button',
+                                                                    'value': 'Present',
+                                                                    'text': 'Present',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Lacking-button',
+                                                                    'value': 'Lacking',
+                                                                    'text': 'Lacking',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'nonexistent-button',
+                                                                    'value': 'Nonexistent',
+                                                                    'text': 'Nonexistent',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Present',
+                                        callback: function (reply, convo) {
+                                            score.push(3);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Fulfillment",
+                                                            callback_id: 'reflection-fulfillment',
+                                                            attachment_type: 'default',
+                                                            color: '#8A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Complete-button',
+                                                                    'value': 'Complete',
+                                                                    'text': 'Complete',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Present-button',
+                                                                    'value': 'Present',
+                                                                    'text': 'Present',
+                                                                    'style': 'primary',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Lacking-button',
+                                                                    'value': 'Lacking',
+                                                                    'text': 'Lacking',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'nonexistent-button',
+                                                                    'value': 'Nonexistent',
+                                                                    'text': 'Nonexistent',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Lacking',
+                                        callback: function (reply, convo) {
+                                            score.push(2);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Fulfillment",
+                                                            callback_id: 'reflection-fulfillment',
+                                                            attachment_type: 'default',
+                                                            color: '#8A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Complete-button',
+                                                                    'value': 'Complete',
+                                                                    'text': 'Complete',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Present-button',
+                                                                    'value': 'Present',
+                                                                    'text': 'Present',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Lacking-button',
+                                                                    'value': 'Lacking',
+                                                                    'text': 'Lacking',
+                                                                    'style': 'primary',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'nonexistent-button',
+                                                                    'value': 'Nonexistent',
+                                                                    'text': 'Nonexistent',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Nonexistent',
+                                        callback: function (reply, convo) {
+                                            score.push(1);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Fulfillment",
+                                                            callback_id: 'reflection-fulfillment',
+                                                            attachment_type: 'default',
+                                                            color: '#8A02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Complete-button',
+                                                                    'value': 'Complete',
+                                                                    'text': 'Complete',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Present-button',
+                                                                    'value': 'Present',
+                                                                    'text': 'Present',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Lacking-button',
+                                                                    'value': 'Lacking',
+                                                                    'text': 'Lacking',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'nonexistent-button',
+                                                                    'value': 'Nonexistent',
+                                                                    'text': 'Nonexistent',
+                                                                    'style': 'primary',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    }
+                                ]);
+
+                            // Emotional Clarity
+                            convo.addQuestion({
+                                attachments: [
+                                    {
+                                        title: "Emotional Clarity",
+                                        callback_id: 'reflection-clarity',
+                                        attachment_type: 'default',
+                                        color: '#CF02FF',
+                                        actions: [
+                                            {
+                                                'name': 'Aware-button',
+                                                'value': 'Aware',
+                                                'text': 'Aware',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'Receptive-button',
+                                                'value': 'Receptive',
+                                                'text': 'Receptive',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'Uninterested-button',
+                                                'value': 'Uninterested',
+                                                'text': 'Uninterested',
+                                                'type': 'button'
+                                            },
+                                            {
+                                                'name': 'Numb-button',
+                                                'value': 'Numb',
+                                                'text': 'Numb',
+                                                'type': 'button'
+                                            },
+                                        ]
+                                    }
+                                ]
+                            }, [
+                                    {
+                                        pattern: 'Aware',
+                                        callback: function (reply, convo) {
+                                            score.push(4);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Emotional Clarity",
+                                                            callback_id: 'reflection-clarity',
+                                                            attachment_type: 'default',
+                                                            color: '#CF02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Aware-button',
+                                                                    'value': 'Aware',
+                                                                    'style': 'primary',
+                                                                    'text': 'Aware',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Receptive-button',
+                                                                    'value': 'Receptive',
+                                                                    'text': 'Receptive',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Uninterested-button',
+                                                                    'value': 'Uninterested',
+                                                                    'text': 'Uninterested',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Numb-button',
+                                                                    'value': 'Numb',
+                                                                    'text': 'Numb',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Receptive',
+                                        callback: function (reply, convo) {
+                                            score.push(3);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Emotional Clarity",
+                                                            callback_id: 'reflection-clarity',
+                                                            attachment_type: 'default',
+                                                            color: '#CF02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Aware-button',
+                                                                    'value': 'Aware',
+                                                                    'text': 'Aware',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Receptive-button',
+                                                                    'value': 'Receptive',
+                                                                    'text': 'Receptive',
+                                                                    'style': 'primary',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Uninterested-button',
+                                                                    'value': 'Uninterested',
+                                                                    'text': 'Uninterested',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Numb-button',
+                                                                    'value': 'Numb',
+                                                                    'text': 'Numb',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Uninterested',
+                                        callback: function (reply, convo) {
+                                            score.push(2);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Emotional Clarity",
+                                                            callback_id: 'reflection-clarity',
+                                                            attachment_type: 'default',
+                                                            color: '#CF02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Aware-button',
+                                                                    'value': 'Aware',
+                                                                    'text': 'Aware',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Receptive-button',
+                                                                    'value': 'Receptive',
+                                                                    'text': 'Receptive',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Uninterested-button',
+                                                                    'value': 'Uninterested',
+                                                                    'text': 'Uninterested',
+                                                                    'style': 'primary',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Numb-button',
+                                                                    'value': 'Numb',
+                                                                    'text': 'Numb',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    },
+                                    {
+                                        pattern: 'Numb',
+                                        callback: function (reply, convo) {
+                                            score.push(1);
+                                            bot.replyInteractive(reply,
+                                                {
+                                                    attachments: [
+                                                        {
+                                                            title: "Emotional Clarity",
+                                                            callback_id: 'reflection-clarity',
+                                                            attachment_type: 'default',
+                                                            color: '#CF02FF',
+                                                            actions: [
+                                                                {
+                                                                    'name': 'Aware-button',
+                                                                    'value': 'Aware',
+                                                                    'text': 'Aware',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Receptive-button',
+                                                                    'value': 'Receptive',
+                                                                    'text': 'Receptive',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Uninterested-button',
+                                                                    'value': 'Uninterested',
+                                                                    'text': 'Uninterested',
+                                                                    'type': 'button'
+                                                                },
+                                                                {
+                                                                    'name': 'Numb-button',
+                                                                    'value': 'Numb',
+                                                                    'style': 'primary',
+                                                                    'text': 'Numb',
+                                                                    'type': 'button'
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            );
+                                            convo.next();
+                                        }
+                                    }
+                                ]);
+
+                            convo.addMessage("Reflection complete!");
+
+                            convo.activate();
+
+                            // capture the results of the conversation and see what happened...
+                            convo.on('end', function (convo) {
+
+                                if (convo.successful()) {
+                                    controller.storage.users.get(message.user, function (err, user) {
+                                        if (err) {
+                                            console.log("error: ", err);
+                                            convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")
+                                        }
+                                        var today = new Date();
+                                        var dd = String(today.getDate()).padStart(2, '0');
+                                        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                                        var yyyy = today.getFullYear();
+
+                                        today = mm + '/' + dd + '/' + yyyy;
+
+                                        if (!user) {
+                                            user = {};
+                                            bot.api.users.info({ user: message.user }, function (error, response) {
+                                                if (error) {
+                                                    console.log("error: ", error);
+                                                }
+                                                let { name, real_name } = response.user;
+                                                user.name = real_name;
+                                                user.email = response.user.profile.email;
+                                                user.timezone = response.user.tz
+                                                user.id = message.user,
+                                                    user.team = message.team.id,
+                                                    user.channel = message.channel
+                                                user.logs = {
+                                                    [today]: {
+                                                        type: 'personal',
+                                                        check_out: score
+                                                    }
+                                                };
+                                                controller.storage.users.save(user);
+                                            })
+                                        } else if (!user.logs) {
+                                            user.logs = {
+                                                [today]: {
+                                                    type: 'personal',
+                                                    check_out: score
+                                                }
+                                            }
+                                            controller.storage.users.save(user);
+                                        } else if (!user.logs[today]) {
+                                            user.logs[today] = {
+                                                type: 'personal',
+                                                check_out: score,
+                                            };
+                                            controller.storage.users.save(user);
+                                        } else {
+                                            user.logs[today].check_out = score;
+                                            user.logs[today].type = 'personal';
+                                            controller.storage.users.save(user);
+                                        }
+                                    });
+
+                                    bot.reply(message, 'Your reflection has been recorded successfully!');
+                                }
+                                else {
+                                    bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?');
+                                }
+                            });
+                        });
+                    }
                 }
             })
         } else if (message.actions[0].value == "No-Reflect") {

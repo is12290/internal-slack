@@ -80,7 +80,7 @@ if (n === 6 || n === 0) {
                                 };
                                 if (typeof user.token != 'undefined') {
                                     for (var k = 0; k < days.length; k++) {
-                                        if (days[k] in user.logs && user.logs[days[k]].check_out != 'undefined') {
+                                        if (days[k] in user.logs && user.logs[days[k]].check_out != 'undefined' && user.logs[days[k]].type != 'personal') {
                                             var reflection = user.logs[days[k]].check_out;
                                             for (var z = 0; z < reflection.length; z++) {
                                                 reflection_tally[z][reflection[z]] = reflection_tally[z][reflection[z]] + 1;
