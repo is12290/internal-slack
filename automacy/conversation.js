@@ -45,7 +45,7 @@ if (n === 6 || n === 0) {
                     console.log("error: ", err);
                 }
                 
-                    controller.storage.users.find({ team: team.bot.channel }, function (err, all_users) {
+                    controller.storage.users.find({ team: team.id }, function (err, all_users) {
                         if (err) {
                             console.log("error: ", err);
                         }
