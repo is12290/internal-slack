@@ -4,1348 +4,1610 @@ module.exports = function (controller) {
             if (err) {
                 console.log("error: ", err);
             }
-            controller.storage.teams.get(api_user.user.team_id, function (err, team) {
+
+            bot.api.conversations.history({ token: bot.config.token, channel: message.channel }, function (err, response) {
                 if (err) {
-                    console.log("error: ", err);
+                    console.log("Error: ", err);
                 }
-                bot.api.groups.info({token: bot.config.token, channel: team.bot.channel}, function (err, api_group) {
-                    if (err) {
-                        console.log("error: ", err);
-                    }
-                    var group_members = api_group.group.members;
-                    for (var m = 0; m < group_members.length; m++) {
-                        if (group_members[m] == message.user) {
-                            var is_member = true;
+                if (response.messages.length < 5) {
+                    controller.storage.users.get(message.user, function (err, user) {
+                        if (err) {
+                            console.log("error: ", err);
+                            convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")
                         }
-                    }
-                    if (is_member == true) {
-                        if (!team || typeof team.subscription == 'undefined' || team.subscription.status == 'inactive') {
-                            // Subscribe message
-                            var text = "It looks like your subscription is up! Would you like to renew?"
-                            
-                            bot.reply(message, {
-                                attachments: [{
-                                    title: "Subscribe",
-                                    text: text,
-                                    callback_id: 'subscribe',
-                                    color: "#0294ff",
-                                    attachment_type: 'default',
-                                    actions: [
-                                        {
-                                            'text': 'Yes',
-                                            'type': 'button',
-                                            'url': 'https://getinternal.co/#pricing'
-                                        },
-                                        {
-                                            'name': 'no-button',
-                                            'value': 'No-Subscribe',
-                                            'text': 'No',
-                                            'type': 'button'
-                                        }
-                                    ]
-                                }]
-                            }, function (err, response) {
-                                if (response.text == 'No-Subscribe') {
-                                    bot.replyInteractive(response, {
-                                        attachments: [{
-                                            title: "Subscribe",
-                                            text: text,
-                                            callback_id: 'subscribe',
-                                            color: "#0294ff",
-                                            attachment_type: 'default',
-                                            actions: [
-                                                {
-                                                    'name': 'yes-button',
-                                                    'value': 'Yes-Subscribe',
-                                                    'text': 'Yes',
-                                                    'type': 'button'
-                                                },
-                                                {
-                                                    'name': 'no-button',
-                                                    'value': 'No-Subscribe',
-                                                    'style': 'danger',
-                                                    'text': 'No',
-                                                    'type': 'button'
-                                                }
-                                            ]
-                                        }]
-                                    })
+                        // Tutorial
+                        bot.startConversation(message, function (err, convo) {
+                            if (err) {
+                                console.log("error: ", err);
+                            }
+
+                            // Keep Score
+                            const outcome = {
+                                warmth: {},
+                                dominance: {},
+                                sensitivity: {},
+                                stability: {},
+                                privateness: {}
+                            };
+
+                            convo.addMessage({
+                                text: "Nice to meet you, <@" + message.user + ">!\nFirst things first, I need you to take a quick 15 question quiz about yourself. Don't worry, your answers stay between us :wink:"
+                            });
+
+                            // Warmth 3
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'warmth-3',
+                            title: '(1/15) I know how to comfort others',
+                            color: '#2F4DED',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
                                 }
-                            })
-                        } else {
-                            bot.api.conversations.history({ token: bot.config.token, channel: message.channel }, function (err, response) {
-                                if (err) {
-                                    console.log("Error: ", err);
-                                }
-                                if (response.messages.length < 5) {
-                                    controller.storage.users.get(message.user, function (err, user) {
-                                        if (err) {
-                                            console.log("error: ", err);
-                                            convo.say("I'm so sorry, I don't remember what you said. Would you mind reflecting again? :grimacing:")
-                                        }
-                                        // Tutorial
-                                        bot.startConversation(message, function (err, convo) {
-                                            if (err) {
-                                                console.log("error: ", err);
-                                            }
-        
-                                            if (!user) {
-                                                user = {};
-                                                let { name, real_name } = api_user.user;
-                                                user.name = real_name;
-                                                user.email = api_user.user.profile.email;
-                                                user.timezone = api_user.user.tz
-                                                user.id = message.user,
-                                                user.team = api_user.user.team_id,
-                                                user.channel = message.channel
-                                            }
-        
-                                            var conversation = '';
-                                            convo.addQuestion({
-                                                attachments: [
-                                                    {
-                                                        title: 'Tutorial',
-                                                        color: '#02D2FF',
-                                                        callback_id: 'tutorial',
-                                                        text: 'Nice to meet you <@' + message.user + '>! Would you like to learn how I work?',
-                                                        attachment_type: 'default',
-                                                        actions: [
-                                                            {
-                                                                'name': 'tutorial-button',
-                                                                'value': 'Yes-Tutorial',
-                                                                'text': 'Tutorial',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'no-button',
-                                                                'value': 'No-Tutorial',
-                                                                'text': 'No Thanks',
-                                                                'type': 'button'
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }, [
-                                                    {
-                                                        pattern: 'Yes-Tutorial',
-                                                        callback: function (reply, convo) {
-                                                            bot.replyInteractive(reply, {
-                                                                attachments: [
-                                                                    {
-                                                                        title: 'Tutorial',
-                                                                        color: '#02D2FF',
-                                                                        callback_id: 'tutorial',
-                                                                        text: 'Nice to meet you <@' + message.user + '>! Would you like to learn how I work?',
-                                                                        attachment_type: 'default',
-                                                                        actions: [
-                                                                            {
-                                                                                'name': 'tutorial-button',
-                                                                                'value': 'Yes-Tutorial',
-                                                                                'style': 'primary',
-                                                                                'text': 'Tutorial',
-                                                                                'type': 'button'
-                                                                            },
-                                                                            {
-                                                                                'name': 'no-button',
-                                                                                'value': 'No-Tutorial',
-                                                                                'text': 'No Thanks',
-                                                                                'type': 'button'
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            })
-                                                            conversation = conversation + 'Yes';
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'No-Tutorial',
-                                                        callback: function (reply, convo) {
-                                                            bot.replyInteractive(reply, {
-                                                                attachments: [
-                                                                    {
-                                                                        title: 'Tutorial',
-                                                                        color: '#02D2FF',
-                                                                        callback_id: 'tutorial',
-                                                                        text: 'Nice to meet you <@' + message.user + '>! Would you like to learn how I work?',
-                                                                        attachment_type: 'default',
-                                                                        actions: [
-                                                                            {
-                                                                                'name': 'tutorial-button',
-                                                                                'value': 'Yes-Tutorial',
-                                                                                'text': 'Tutorial',
-                                                                                'type': 'button'
-                                                                            },
-                                                                            {
-                                                                                'name': 'no-button',
-                                                                                'value': 'No-Tutorial',
-                                                                                'style': 'danger',
-                                                                                'text': 'No Thanks',
-                                                                                'type': 'button'
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            })
-                                                            bot.reply(message,{ 
-                                                                text: "Oh, okay! You can go ahead and choose what ever you're interested in doing...",
-                                                                attachments: [
-                                                                    {
-                                                                        title: 'Logs',
-                                                                        color: '#02D2FF',
-                                                                        callback_id: 'Logs',
-                                                                        attachment_type: 'default',
-                                                                        text: "Record your headspace at the beginning and end of your workday",
-                                                                        actions: [
-                                                                            {
-                                                                                'name': 'checkin-button',
-                                                                                'value': 'Yes-CheckIn',
-                                                                                'text': 'Check In',
-                                                                                'type': 'button'
-                                                                            },
-                                                                            {
-                                                                                'name': 'reflect-button',
-                                                                                'value': 'Yes-Reflect',
-                                                                                'text': 'Reflect',
-                                                                                'type': 'button'
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        title: 'Reports',
-                                                                        color: '#2A02FF',
-                                                                        attachment_type: 'default',
-                                                                        callback_id: 'report',
-                                                                        text: "Monitor yourself and your relationship with your cofounder(s)",
-                                                                        actions: [
-                                                                            {
-                                                                                'name': 'Report-button',
-                                                                                'value': 'Generate-Report',
-                                                                                'text': 'Generate Report',
-                                                                                'type': 'button'
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            })
-                                                            controller.storage.users.save(user);
-                                                            convo.stop();
-                                                        }
-                                                    }
-                                                ])
-        
-                                            convo.say("Perfect! All the value that I can add is dependent on your logs that tell me how you're feeling");
-        
-                                            // Keep Score
-                                            const score = [];
-        
-                                            convo.addMessage({
-                                                text: "Here's your check in log! I send you this every morning to fill out"
-                                            });
-        
-                                            // Sleep
-                                            convo.addQuestion({
-                                                text: "Simply choose which options vibe best",
-                                                attachments: [
-                                                    {
-                                                        title: "Sleep",
-                                                        callback_id: 'checkin-sleep',
-                                                        attachment_type: 'default',
-                                                        color: '#02D2FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'perfect-button',
-                                                                'value': 'Perfect',
-                                                                'text': 'Perfect',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'sufficient-button',
-                                                                'value': 'Sufficient',
-                                                                'text': 'Sufficient',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'restless-button',
-                                                                'value': 'Restless',
-                                                                'text': 'Restless',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'terrible-button',
-                                                                'value': 'Terrible',
-                                                                'text': 'Terrible',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }, [
-                                                    {
-                                                        pattern: 'Perfect',
-                                                        callback: function (reply, convo) {
-                                                            score.push(4);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Sleep",
-                                                                            callback_id: 'checkin-sleep',
-                                                                            attachment_type: 'default',
-                                                                            color: '#02D2FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'perfect-button',
-                                                                                    'value': 'Perfect',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Perfect',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'sufficient-button',
-                                                                                    'value': 'Sufficient',
-                                                                                    'text': 'Sufficient',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'restless-button',
-                                                                                    'value': 'Restless',
-                                                                                    'text': 'Restless',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'terrible-button',
-                                                                                    'value': 'Terrible',
-                                                                                    'text': 'Terrible',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Sufficient',
-                                                        callback: function (reply, convo) {
-                                                            score.push(3);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Sleep",
-                                                                            callback_id: 'checkin-sleep',
-                                                                            attachment_type: 'default',
-                                                                            color: '#02D2FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'perfect-button',
-                                                                                    'value': 'Perfect',
-                                                                                    'text': 'Perfect',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'sufficient-button',
-                                                                                    'value': 'Sufficient',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Sufficient',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'restless-button',
-                                                                                    'value': 'Restless',
-                                                                                    'text': 'Restless',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'terrible-button',
-                                                                                    'value': 'Terrible',
-                                                                                    'text': 'Terrible',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Restless',
-                                                        callback: function (reply, convo) {
-                                                            score.push(2);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Sleep",
-                                                                            callback_id: 'checkin-sleep',
-                                                                            attachment_type: 'default',
-                                                                            color: '#02D2FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'perfect-button',
-                                                                                    'value': 'Perfect',
-                                                                                    'text': 'Perfect',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'sufficient-button',
-                                                                                    'value': 'Sufficient',
-                                                                                    'text': 'Sufficient',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'restless-button',
-                                                                                    'value': 'Restless',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Restless',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'terrible-button',
-                                                                                    'value': 'Terrible',
-                                                                                    'text': 'Terrible',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Terrible',
-                                                        callback: function (reply, convo) {
-                                                            score.push(1);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Sleep",
-                                                                            callback_id: 'checkin-sleep',
-                                                                            attachment_type: 'default',
-                                                                            color: '#02D2FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'perfect-button',
-                                                                                    'value': 'Perfect',
-                                                                                    'text': 'Perfect',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'sufficient-button',
-                                                                                    'value': 'Sufficient',
-                                                                                    'text': 'Sufficient',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'restless-button',
-                                                                                    'value': 'Restless',
-                                                                                    'text': 'Restless',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'terrible-button',
-                                                                                    'value': 'Terrible',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Terrible',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    }
-                                                ]);
-        
-                                            // Energy
-                                            convo.addQuestion({
-                                                attachments: [
-                                                    {
-                                                        title: "Energy",
-                                                        callback_id: 'checkin-energy',
-                                                        attachment_type: 'default',
-                                                        color: '#2A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'full-button',
-                                                                'value': 'Full',
-                                                                'text': 'Full',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'alright-button',
-                                                                'value': 'Alright',
-                                                                'text': 'Alright',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'hangingOn-button',
-                                                                'value': 'Hanging-On',
-                                                                'text': 'Hanging On',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'dead-button',
-                                                                'value': 'Dead',
-                                                                'text': 'Dead',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }, [
-                                                    {
-                                                        pattern: 'Full',
-                                                        callback: function (reply, convo) {
-                                                            score.push(4);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Energy",
-                                                                            callback_id: 'checkin-energy',
-                                                                            attachment_type: 'default',
-                                                                            color: '#2A02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'full-button',
-                                                                                    'value': 'Full',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Full',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'alright-button',
-                                                                                    'value': 'Alright',
-                                                                                    'text': 'Alright',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'hangingOn-button',
-                                                                                    'value': 'Hanging-On',
-                                                                                    'text': 'Hanging On',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'dead-button',
-                                                                                    'value': 'Dead',
-                                                                                    'text': 'Dead',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Alright',
-                                                        callback: function (reply, convo) {
-                                                            score.push(3);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Energy",
-                                                                            callback_id: 'checkin-energy',
-                                                                            attachment_type: 'default',
-                                                                            color: '#2A02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'full-button',
-                                                                                    'value': 'Full',
-                                                                                    'text': 'Full',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'alright-button',
-                                                                                    'value': 'Alright',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Alright',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'hangingOn-button',
-                                                                                    'value': 'Hanging-On',
-                                                                                    'text': 'Hanging On',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'dead-button',
-                                                                                    'value': 'Dead',
-                                                                                    'text': 'Dead',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Hanging-On',
-                                                        callback: function (reply, convo) {
-                                                            score.push(2);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Energy",
-                                                                            callback_id: 'checkin-energy',
-                                                                            attachment_type: 'default',
-                                                                            color: '#2A02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'full-button',
-                                                                                    'value': 'Full',
-                                                                                    'text': 'Full',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'alright-button',
-                                                                                    'value': 'Alright',
-                                                                                    'text': 'Alright',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'hangingOn-button',
-                                                                                    'value': 'Hanging-On',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Hanging On',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'dead-button',
-                                                                                    'value': 'Dead',
-                                                                                    'text': 'Dead',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Dead',
-                                                        callback: function (reply, convo) {
-                                                            score.push(1);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Energy",
-                                                                            callback_id: 'checkin-energy',
-                                                                            attachment_type: 'default',
-                                                                            color: '#2A02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'full-button',
-                                                                                    'value': 'Full',
-                                                                                    'text': 'Full',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'alright-button',
-                                                                                    'value': 'Alright',
-                                                                                    'text': 'Alright',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'hangingOn-button',
-                                                                                    'value': 'Hanging-On',
-                                                                                    'text': 'Hanging On',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'dead-button',
-                                                                                    'value': 'Dead',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Dead',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    }
-                                                ]);
-        
-                                            // Mood
-                                            convo.addQuestion({
-                                                attachments: [
-                                                    {
-                                                        title: "Mood",
-                                                        callback_id: 'checkin-mood',
-                                                        attachment_type: 'default',
-                                                        color: '#8A02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'happy-button',
-                                                                'value': 'Happy',
-                                                                'text': 'Happy',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'calm-button',
-                                                                'value': 'Calm',
-                                                                'text': 'Calm',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'tense-button',
-                                                                'value': 'Tense',
-                                                                'text': 'Tense',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'upset-button',
-                                                                'value': 'Upset',
-                                                                'text': 'Upset',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }, [
-                                                    {
-                                                        pattern: 'Happy',
-                                                        callback: function (reply, convo) {
-                                                            score.push(4);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Mood",
-                                                                            callback_id: 'checkin-mood',
-                                                                            attachment_type: 'default',
-                                                                            color: '#8A02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'happy-button',
-                                                                                    'style': 'primary',
-                                                                                    'value': 'Happy',
-                                                                                    'text': 'Happy',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'calm-button',
-                                                                                    'value': 'Calm',
-                                                                                    'text': 'Calm',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'tense-button',
-                                                                                    'value': 'Tense',
-                                                                                    'text': 'Tense',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'upset-button',
-                                                                                    'value': 'Upset',
-                                                                                    'text': 'Upset',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Calm',
-                                                        callback: function (reply, convo) {
-                                                            score.push(3);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Mood",
-                                                                            callback_id: 'checkin-mood',
-                                                                            attachment_type: 'default',
-                                                                            color: '#8A02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'happy-button',
-                                                                                    'value': 'Happy',
-                                                                                    'text': 'Happy',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'calm-button',
-                                                                                    'style': 'primary',
-                                                                                    'value': 'Calm',
-                                                                                    'text': 'Calm',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'tense-button',
-                                                                                    'value': 'Tense',
-                                                                                    'text': 'Tense',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'upset-button',
-                                                                                    'value': 'Upset',
-                                                                                    'text': 'Upset',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Tense',
-                                                        callback: function (reply, convo) {
-                                                            score.push(2);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Mood",
-                                                                            callback_id: 'checkin-mood',
-                                                                            attachment_type: 'default',
-                                                                            color: '#8A02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'happy-button',
-                                                                                    'value': 'Happy',
-                                                                                    'text': 'Happy',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'calm-button',
-                                                                                    'value': 'Calm',
-                                                                                    'text': 'Calm',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'tense-button',
-                                                                                    'value': 'Tense',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Tense',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'upset-button',
-                                                                                    'value': 'Upset',
-                                                                                    'text': 'Upset',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Upset',
-                                                        callback: function (reply, convo) {
-                                                            score.push(1);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Mood",
-                                                                            callback_id: 'checkin-mood',
-                                                                            attachment_type: 'default',
-                                                                            color: '#8A02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'happy-button',
-                                                                                    'value': 'Happy',
-                                                                                    'text': 'Happy',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'calm-button',
-                                                                                    'value': 'Calm',
-                                                                                    'text': 'Calm',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'tense-button',
-                                                                                    'value': 'Tense',
-                                                                                    'text': 'Tense',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'upset-button',
-                                                                                    'style': 'primary',
-                                                                                    'value': 'Upset',
-                                                                                    'text': 'Upset',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    }
-                                                ]);
-
-                                            // Presence
-                                            convo.addQuestion({
-                                                attachments: [
-                                                    {
-                                                        title: "Presence",
-                                                        callback_id: 'checkin-presence',
-                                                        attachment_type: 'default',
-                                                        color: '#CF02FF',
-                                                        actions: [
-                                                            {
-                                                                'name': 'grounded-button',
-                                                                'value': 'Grounded',
-                                                                'text': 'Grounded',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'aware-button',
-                                                                'value': 'Aware',
-                                                                'text': 'Aware',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'outOfIt-button',
-                                                                'value': 'Out-of-It',
-                                                                'text': 'Out of It',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'disconnected-button',
-                                                                'value': 'Disconnected',
-                                                                'text': 'Disconnected',
-                                                                'type': 'button'
-                                                            },
-                                                        ]
-                                                    }
-                                                ]
-                                            }, [
-                                                    {
-                                                        pattern: 'Grounded',
-                                                        callback: function (reply, convo) {
-                                                            score.push(4);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Presence",
-                                                                            callback_id: 'checkin-presence',
-                                                                            attachment_type: 'default',
-                                                                            color: '#CF02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'grounded-button',
-                                                                                    'value': 'Grounded',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Grounded',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'aware-button',
-                                                                                    'value': 'Aware',
-                                                                                    'text': 'Aware',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'outOfIt-button',
-                                                                                    'value': 'Out-of-It',
-                                                                                    'text': 'Out of It',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'disconnected-button',
-                                                                                    'value': 'Disconnected',
-                                                                                    'text': 'Disconnected',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Aware',
-                                                        callback: function (reply, convo) {
-                                                            score.push(3);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Presence",
-                                                                            callback_id: 'checkin-presence',
-                                                                            attachment_type: 'default',
-                                                                            color: '#CF02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'grounded-button',
-                                                                                    'value': 'Grounded',
-                                                                                    'text': 'Grounded',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'aware-button',
-                                                                                    'style': 'primary',
-                                                                                    'value': 'Aware',
-                                                                                    'text': 'Aware',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'outOfIt-button',
-                                                                                    'value': 'Out-of-It',
-                                                                                    'text': 'Out of It',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'disconnected-button',
-                                                                                    'value': 'Disconnected',
-                                                                                    'text': 'Disconnected',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Out-of-It',
-                                                        callback: function (reply, convo) {
-                                                            score.push(2);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Presence",
-                                                                            callback_id: 'checkin-presence',
-                                                                            attachment_type: 'default',
-                                                                            color: '#CF02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'grounded-button',
-                                                                                    'value': 'Grounded',
-                                                                                    'text': 'Grounded',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'aware-button',
-                                                                                    'value': 'Aware',
-                                                                                    'text': 'Aware',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'outOfIt-button',
-                                                                                    'style': 'primary',
-                                                                                    'value': 'Out-of-It',
-                                                                                    'text': 'Out of It',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'disconnected-button',
-                                                                                    'value': 'Disconnected',
-                                                                                    'text': 'Disconnected',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Disconnected',
-                                                        callback: function (reply, convo) {
-                                                            score.push(1);
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            title: "Presence",
-                                                                            callback_id: 'checkin-presence',
-                                                                            attachment_type: 'default',
-                                                                            color: '#CF02FF',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'grounded-button',
-                                                                                    'value': 'Grounded',
-                                                                                    'text': 'Grounded',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'aware-button',
-                                                                                    'value': 'Aware',
-                                                                                    'text': 'Aware',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'outOfIt-button',
-                                                                                    'value': 'Out-of-It',
-                                                                                    'text': 'Out of It',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'disconnected-button',
-                                                                                    'value': 'Disconnected',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Disconnected',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            convo.next();
-                                                        }
-                                                    }
-                                                ]);
-
-                                            const permission = [];
-                                            convo.addQuestion({
-                                                attachments: [
-                                                    {
-                                                        callback_id: 'permission',
-                                                        title: "Permission",
-                                                        text: "Now you choose if you want to share your exact answers with your cofounder(s), or just an overall score so they know how you're feeling",
-                                                        color: "#0294ff",
-                                                        attachment_type: 'default',
-                                                        actions: [
-                                                            {
-                                                                'name': 'snapshot-button',
-                                                                'value': 'Snapshot',
-                                                                'text': 'Snapshot',
-                                                                'type': 'button'
-                                                            },
-                                                            {
-                                                                'name': 'score-button',
-                                                                'value': 'Score',
-                                                                'text': 'Score',
-                                                                'type': 'button'
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }, [
-                                                    {
-                                                        pattern: 'Snapshot',
-                                                        callback: function (reply, convo) {
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            callback_id: 'permission',
-                                                                            text: "Would you like to share a complete snapshot of your check in or just your score?",
-                                                                            color: "#0294ff",
-                                                                            attachment_type: 'default',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'snapshot-button',
-                                                                                    'value': 'Snapshot',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Snapshot',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'score-button',
-                                                                                    'value': 'Score',
-                                                                                    'text': 'Score',
-                                                                                    'type': 'button'
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            )
-                                                            permission.push('Snapshot');
-                                                            bot.api.reactions.add({
-                                                                name: 'thumbsup',
-                                                                channel: reply.channel,
-                                                                timestamp: reply.ts
-                                                            });
-                                                            convo.next();
-                                                        }
-                                                    },
-                                                    {
-                                                        pattern: 'Score',
-                                                        callback: function (reply, convo) {
-                                                            bot.replyInteractive(reply,
-                                                                {
-                                                                    attachments: [
-                                                                        {
-                                                                            callback_id: 'permission',
-                                                                            text: "Would you like to share a complete snapshot of your check in or just your score?",
-                                                                            color: "#0294ff",
-                                                                            attachment_type: 'default',
-                                                                            actions: [
-                                                                                {
-                                                                                    'name': 'snapshot-button',
-                                                                                    'value': 'Snapshot',
-                                                                                    'text': 'Snapshot',
-                                                                                    'type': 'button'
-                                                                                },
-                                                                                {
-                                                                                    'name': 'score-button',
-                                                                                    'value': 'Score',
-                                                                                    'style': 'primary',
-                                                                                    'text': 'Score',
-                                                                                    'type': 'button'
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            );
-                                                            permission.push('Score');
-                                                            bot.api.reactions.add({
-                                                                name: 'thumbsup',
-                                                                channel: reply.channel,
-                                                                timestamp: reply.ts
-                                                            });
-                                                            convo.next();
-                                                        }
-                                                    }
-                                                ]
-                                            );
-
-                                            convo.say("And that's that! I'll send you another log similar to the check in to fill out at the end of the day :rocket:");
-        
-                                            convo.activate();
-    
-                                            // capture the results of the conversation and see what happened...
-                                            convo.on('end', function (convo) {
-        
-                                                if (convo.successful()) {
-                                                    if (conversation == 'Yes') {
-    
-                                                    var today = new Date();
-                                                    var dd = String(today.getDate()).padStart(2, '0');
-                                                    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                                                    var yyyy = today.getFullYear();
-        
-                                                    today = mm + '/' + dd + '/' + yyyy;
-        
-                                                    if (!user.logs) {
-                                                        user.logs = {
-                                                            [today]: {
-                                                                check_in: score
-                                                            }
-                                                        };
-                                                        controller.storage.users.save(user);
-                                                    } else {
-                                                        user.logs[today] = {
-                                                            check_in: score
-                                                        }
-                                                        controller.storage.users.save(user);
-                                                    }
-        
-                                                    if (permission[0] == 'Score') {
-                                                        const overall = GetOverall(score);
-                                                        if (overall > 90) {
-                                                            bot.say({
-                                                                text: "<@" + message.user + "> is feeling " + overall + "% today :rocket:",
-                                                                channel: team.bot.channel
-                                                            });
-                                                        } else {
-                                                            bot.say({
-                                                                text: "<@" + message.user + "> is feeling " + overall + "% today",
-                                                                channel: team.bot.channel
-                                                            });
-                                                        }
-                                                    } else if (permission[0] == 'Snapshot') {
-                                                        const snapshot = GetSnapshot(score, message.user);
-                                                        bot.say({
-                                                            attachments: snapshot,
-                                                            channel: team.bot.channel
-                                                        });
-                                                    }
-                                                    } else {
-                                                        bot.reply(message, 'Okay, no problem! Your score of ' + overall + "% has been recorded");
-                                                    }
-                                                }
-                                                else {
-                                                    bot.reply(message, 'Whoops! Something has gone awry')
-                                                }
-                                            });
-        
-        
-                                        })
-                                    });
-                                } else if (response.messages[0].text == 'Ready to check in?' || response.messages[0].text == 'Ready to reflect?' || response.messages[0].text == "Hiya! What are you looking to do?") {
-                                    // Pass
-                                } else {
-                                    // Show help message
-                                    bot.reply(message, {
-                                        text: "Hiya! What are you looking to do?",
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.warmth[3] = 1;
+                                bot.replyInteractive(reply,
+                                    {
                                         attachments: [
                                             {
-                                                title: 'Logs',
-                                                color: '#02D2FF',
-                                                callback_id: 'Logs',
+                                                callback_id: 'warmth-3',
+                                                title: '(1/15) I know how to comfort others',
+                                                color: '#2F4DED',
                                                 attachment_type: 'default',
-                                                text: "Record your headspace at the beginning and end of your workday",
                                                 actions: [
                                                     {
-                                                        'name': 'checkin-button',
-                                                        'value': 'Yes-CheckIn',
-                                                        'text': 'Check In',
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
                                                         'type': 'button'
                                                     },
                                                     {
-                                                        'name': 'reflect-button',
-                                                        'value': 'Yes-Reflect',
-                                                        'text': 'Reflect',
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.warmth[3] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'warmth-3',
+                                                title: '(1/15) I know how to comfort others',
+                                                color: '#2F4DED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Sensitivity 2
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'sensitivity-2',
+                            title: '(2/15) I spend time thinking about past mistakes',
+                            color: '#2FC2ED',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.sensitivity[2] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'sensitivity-2',
+                                                title: '(2/15) I spend time thinking about past mistakes',
+                                                color: '#2FC2ED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.sensitivity[2] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'sensitivity-2',
+                                                title: '(2/15) I spend time thinking about past mistakes',
+                                                color: '#2FC2ED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Privateness 3
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'privateness-3',
+                            title: '(3/15) I don\'t talk a lot',
+                            color: '#762FED',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.privateness[3] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'privateness-3',
+                                                title: '(3/15) I don\'t talk a lot',
+                                                color: '#762FED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.privateness[3] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'privateness-3',
+                                                title: '(3/15) I don\'t talk a lot',
+                                                color: '#762FED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Sensitivity 1
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'sensitivity-1',
+                            title: '(4/15) I don\'t worry about things that have already happened',
+                            color: '#C12FED',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.sensitivity[1] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'sensitivity-1',
+                                                title: '(4/15) I don\'t worry about things that have already happened',
+                                                color: '#C12FED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.sensitivity[1] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'sensitivity-1',
+                                                title: '(4/15) I don\'t worry about things that have already happened',
+                                                color: '#C12FED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Stability 3
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'stability-3',
+                            title: '(5/15) I rarely notice my emotional reactions',
+                            color: '#2FEDA8',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.stability[3] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'stability-3',
+                                                title: '(5/15) I rarely notice my emotional reactions',
+                                                color: '#2FEDA8',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.stability[2] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'stability-3',
+                                                title: '(5/15) I rarely notice my emotional reactions',
+                                                color: '#2FEDA8',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Privateness 1
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'privateness-1',
+                            title: '(6/15) I enjoy my privacy',
+                            color: '#2FDCED',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.privateness[1] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'privateness-1',
+                                                title: '(6/15) I enjoy my privacy',
+                                                color: '#2FDCED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.privateness[1] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'privateness-1',
+                                                title: '(6/15) I enjoy my privacy',
+                                                color: '#2FDCED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Warmth 1
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'warmth-1',
+                            title: '(7/15) I try not to think about the needy',
+                            color: '#BAED2F',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.warmth[1] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'warmth-1',
+                                                title: '(7/15) I try not to think about the needy',
+                                                color: '#BAED2F',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.warmth[1] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'warmth-1',
+                                                title: '(7/15) I try not to think about the needy',
+                                                color: '#BAED2F',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Dominance 1
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'dominance-1',
+                            title: '(8/15) I feel uncomfortable giving orders to others',
+                            color: '#EDE62F',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.dominance[1] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'dominance-1',
+                                                title: '(8/15) I feel uncomfortable giving orders to others',
+                                                color: '#EDE62F',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.dominance[1] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'dominance-1',
+                                                title: '(8/15) I feel uncomfortable giving orders to others',
+                                                color: '#EDE62F',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Stability 1
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'stability-1',
+                            title: '(9/15) I am comfortable with myself',
+                            color: '#ED2F2F',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.stability[1] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'stability-1',
+                                                title: '(9/15) I am comfortable with myself',
+                                                color: '#ED2F2F',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.stability[1] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'stability-1',
+                                                title: '(9/15) I am comfortable with myself',
+                                                color: '#ED2F2F',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Privateness 2
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'privateness-2',
+                            title: '(10/15) I read a lot',
+                            color: '#B72FED',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.privateness[2] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'privateness-2',
+                                                title: '(10/15) I read a lot',
+                                                color: '#B72FED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.privateness[2] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'privateness-2',
+                                                title: '(10/15) I read a lot',
+                                                color: '#B72FED',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Dominance 3
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'dominance-3',
+                            title: '(11/15) I feel guilty when I say "no"',
+                            color: '#ED2F74',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.dominance[3] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'dominance-3',
+                                                title: '(11/15) I feel guilty when I say "no"',
+                                                color: '#ED2F74',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.dominance[3] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'dominance-3',
+                                                title: '(11/15) I feel guilty when I say "no"',
+                                                color: '#ED2F74',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Warmth 2
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'warmth-2',
+                            title: '(12/15) I feel others\'s emotions',
+                            color: '#EDD72F',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.warmth[2] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'warmth-2',
+                                                title: '(12/15) I feel others\'s emotions',
+                                                color: '#EDD72F',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.warmth[2] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'warmth-2',
+                                                title: '(12/15) I feel others\'s emotions',
+                                                color: '#EDD72F',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Stability 2
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'stability-2',
+                            title: '(13/15) I get irritated easily',
+                            color: '#ED2F5B',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.stability[2] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'stability-2',
+                                                title: '(13/15) I get irritated easily',
+                                                color: '#ED2F5B',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.stability[2] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'stability-2',
+                                                title: '(13/15) I get irritated easily',
+                                                color: '#ED2F5B',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                // Sensitivity 3
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'sensitivity-3',
+                            title: '(14/15) I cry during movies',
+                            color: '#75ED2F',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.sensitivity[3] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'sensitivity-3',
+                                                title: '(14/15) I cry during movies',
+                                                color: '#75ED2F',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.sensitivity[3] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'sensitivity-3',
+                                                title: '(14/15) I cry during movies',
+                                                color: '#75ED2F',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+
+                // Dominance 2
+                convo.addQuestion({
+                    attachments: [
+                        {
+                            callback_id: 'dominance-2',
+                            title: '(15/15) I take control of things',
+                            color: '#ED2FCA',
+                            attachment_type: 'default',
+                            actions: [
+                                {
+                                    'name': 'true-button',
+                                    'value': 'True',
+                                    'text': 'True',
+                                    'type': 'button'
+                                },
+                                {
+                                    'name': 'false-button',
+                                    'value': 'False',
+                                    'text': 'False',
+                                    'type': 'button'
+                                }
+                            ]
+                        }
+                    ]
+                }, [
+                        {
+                            pattern: 'True',
+                            callback: function (reply, convo) {
+                                outcome.dominance[2] = 1;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'dominance-2',
+                                                title: '(15/15) I take control of things',
+                                                color: '#ED2FCA',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'style': 'primary',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        },
+                        {
+                            pattern: 'False',
+                            callback: function (reply, convo) {
+                                outcome.dominance[2] = 0;
+                                bot.replyInteractive(reply,
+                                    {
+                                        attachments: [
+                                            {
+                                                callback_id: 'dominance-2',
+                                                title: '(15/15) I take control of things',
+                                                color: '#ED2FCA',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'true-button',
+                                                        'value': 'True',
+                                                        'text': 'True',
+                                                        'type': 'button'
+                                                    },
+                                                    {
+                                                        'name': 'false-button',
+                                                        'value': 'False',
+                                                        'style': 'danger',
+                                                        'text': 'False',
+                                                        'type': 'button'
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                );
+                                convo.next();
+                            }
+                        }]);
+
+                            convo.activate();
+
+                            // capture the results of the conversation and see what happened...
+                            convo.on('end', function (convo) {
+                                if (convo.successful()) {
+                                    for (var key in outcome) {
+                                        var scores = [outcome[key][1], outcome[key][2], outcome[key][3]];
+                                        var overall = (scores.reduce(function (a, b) { return a + b; }, 0) / 3);
+                                        outcome[key].score = overall;
+                                    }
+
+                                    var today = new Date();
+                                    var dd = String(today.getDate()).padStart(2, '0');
+                                    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                                    var yyyy = today.getFullYear();
+
+                                    today = mm + '/' + dd + '/' + yyyy;
+
+                                    if (!user) {
+                                        user = {};
+                                        bot.api.users.info({ user: message.user }, function (error, response) {
+                                            if (error) {
+                                                console.log("error: ", error);
+                                            }
+                                            let { name, real_name } = response.user;
+                                            user.name = real_name;
+                                            user.email = response.user.profile.email;
+                                            user.timezone = response.user.tz;
+                                            user.id = message.user;
+                                            user.team = message.team.id;
+                                            user.channel = message.channel;
+                                            user.status = {
+                                                self: {
+                                                    warmth: outcome.warmth.score,
+                                                    dominance: outcome.dominance.score,
+                                                    sensitivity: outcome.sensitivity.score,
+                                                    stability: outcome.stability.score,
+                                                    privateness: outcome.privateness.score
+                                                }
+                                            };
+                                            user.history = {
+                                                self: {
+                                                    [today]: {
+                                                        status: {
+                                                            warmth: outcome.warmth.score,
+                                                            dominance: outcome.dominance.score,
+                                                            sensitivity: outcome.sensitivity.score,
+                                                            stability: outcome.stability.score,
+                                                            privateness: outcome.privateness.score
+                                                        }
+                                                    }
+                                                }
+                                            };
+                                            controller.storage.users.save(user);
+                                        })
+
+                                    } else if (!user.status && !user.history) {
+                                        user.status = {
+                                            self: {
+                                                warmth: outcome.warmth.score,
+                                                dominance: outcome.dominance.score,
+                                                sensitivity: outcome.sensitivity.score,
+                                                stability: outcome.stability.score,
+                                                privateness: outcome.privateness.score
+                                            }
+                                        };
+                                        user.history = {
+                                            self: {
+                                                [today]: {
+                                                    status: {
+                                                        warmth: outcome.warmth.score,
+                                                        dominance: outcome.dominance.score,
+                                                        sensitivity: outcome.sensitivity.score,
+                                                        stability: outcome.stability.score,
+                                                        privateness: outcome.privateness.score
+                                                    }
+                                                }
+                                            }
+                                        };
+                                        controller.storage.users.save(user);
+                                    } else {
+                                        user.status.self = {
+                                            warmth: (user.status.self.warmth + outcome.warmth.score) / 2,
+                                            dominance: (user.status.self.dominance + outcome.dominance.score) / 2,
+                                            sensitivity: (user.status.self.sensitivity + outcome.sensitivity.score) / 2,
+                                            stability: (user.status.self.stability + outcome.stability.score) / 2,
+                                            privateness: (user.status.self.privateness + outcome.privateness.score) / 2,
+                                        }
+                                        user.history.self[today] = {
+                                            warmth: outcome.warmth.score,
+                                            dominance: outcome.dominance.score,
+                                            sensitivity: outcome.sensitivity.score,
+                                            stability: outcome.stability.score,
+                                            privateness: outcome.privateness.score
+                                        }
+                                        controller.storage.users.save(user);
+                                    }
+
+                                    // Introversion/Extroversion
+                                    if (outcome.warmth.score <= 0.5 && outcome.privateness.score >= 0.5) {
+                                        var introversion = 'introvert';
+                                    } else if (outcome.warmth.score > 0.5 && outcome.privateness.score < 0.5) {
+                                        var introversion = 'extrovert';
+                                    } else {
+                                        var introversion = 'ambivert';
+                                    }
+
+                                    // Low Anxiety/High Anxiety
+                                    if (outcome.stability.score > 0.5) {
+                                        var anxiety = 'low';
+                                    } else if (outcome.stability.score < 0.5) {
+                                        var anxiety = 'high';
+                                    } else {
+                                        var anxiety = 'moderate';
+                                    }
+
+                                    // Receptiviity/Tough-Mindedness
+                                    if (outcome.warmth.score > 0.5 && outcome.sensitivity.score > 0.5) {
+                                        var receptivity = 'receptive';
+                                    } else if (outcome.warmth.score < 0.5 && outcome.sensitivity.score < 0.5) {
+                                        var receptivity = 'tough-minded';
+                                    } else {
+                                        var receptivity = 'objective';
+                                    }
+
+                                    // Accomodation/Independence
+                                    if (outcome.dominance.score > 0.5) {
+                                        var accommodation = 'independent';
+                                    } else if (outcome.dominance.score < 0.5) {
+                                        var accommodation = 'accommodative';
+                                    } else {
+                                        var accommodation = 'indifferent';
+                                    }
+
+                                    bot.reply(message, "Thanks for letting me get to know you!\nAccording to my calculations, you're likely a *" + anxiety + " anxiety " + introversion + "* who tends to be *" + receptivity + "* and *" + accommodation + "*");
+                                    bot.reply(message, "Now you can use me to take a similar test about your coworkers to figure out whether your perception of them aligns with who they are!");
+                                    bot.reply(message, {
+                                        text: "I'll be here for when you need me",
+                                        attachments: [
+                                            {
+                                                title: 'Record your current perception of yourself (You just did this)',
+                                                color: '#02D2FF',
+                                                callback_id: 'self',
+                                                attachment_type: 'default',
+                                                actions: [
+                                                    {
+                                                        'name': 'self-button',
+                                                        'value': 'self-test',
+                                                        'text': 'Self Test',
                                                         'type': 'button'
                                                     }
                                                 ]
                                             },
                                             {
-                                                title: 'Reports',
+                                                title: 'Align your current perception of a peer',
                                                 color: '#2A02FF',
                                                 attachment_type: 'default',
-                                                callback_id: 'report',
-                                                text: "Monitor yourself and your relationship with your cofounder(s)",
+                                                callback_id: 'peer',
                                                 actions: [
                                                     {
-                                                        'name': 'Report-button',
-                                                        'value': 'Generate-Report',
-                                                        'text': 'Generate Report',
+                                                        'name': 'peer-button',
+                                                        'value': 'peer-test',
+                                                        'text': 'Peer Test',
                                                         'type': 'button'
                                                     }
                                                 ]
@@ -1353,94 +1615,51 @@ module.exports = function (controller) {
                                         ]
                                     })
                                 }
+                                else {
+                                    bot.reply(message, 'Whoops! Sorry, I wasn\'t able to record this conversation. Lets try again?')
+                                }
                             });
-                        }
-                    } else {
-                        bot.reply(message, "I'm sorry! I only work exclusively with the founding team right now")
-                    }
-                })
-            })
+                        });
+                    })
+                } else if (response.messages[0].text == 'Ready to check in?' || response.messages[0].text == 'Ready to reflect?' || response.messages[0].text == "Hiya! What are you looking to do?") {
+                    // Pass
+                } else {
+                    // Show help message
+                    bot.reply(message, {
+                        text: "Hiya! What are you looking to do?",
+                        attachments: [
+                            {
+                                title: 'Record your current perception of yourself',
+                                color: '#02D2FF',
+                                callback_id: 'self',
+                                attachment_type: 'default',
+                                actions: [
+                                    {
+                                        'name': 'self-button',
+                                        'value': 'self-test',
+                                        'text': 'Self Test',
+                                        'type': 'button'
+                                    }
+                                ]
+                            },
+                            {
+                                title: 'Align your current perception of a peer',
+                                color: '#2A02FF',
+                                attachment_type: 'default',
+                                callback_id: 'peer',
+                                actions: [
+                                    {
+                                        'name': 'peer-button',
+                                        'value': 'peer-test',
+                                        'text': 'Peer Test',
+                                        'type': 'button'
+                                    }
+                                ]
+                            }
+                        ]
+                    })
+                }
+            });
         })
     })
-}
-
-function GetSnapshot(input, user) {
-    // Get qualitative snapshot
-    var overview = {
-        0: {
-            4: 'Perfect',
-            3: 'Sufficient',
-            2: 'Restless',
-            1: 'Terrible',
-            0: 'Sleep'
-        },
-        1: {
-            4: 'Full',
-            3: 'Alright',
-            2: 'Hanging On',
-            1: 'Dead',
-            0: 'Energy'
-        },
-        2: {
-            4: 'Happy',
-            3: 'Calm',
-            2: 'Tense',
-            1: 'Upset',
-            0: 'Mood'
-        },
-        3: {
-            4: 'Grounded',
-            3: 'Aware',
-            2: 'Out of It',
-            1: 'Disconnected',
-            0: 'Presence'
-        }
-    };
-
-    var qualitative = [];
-    for (var l = 0; l < input.length; l++) {
-        qualitative.push(overview[l][input[l]]);
-    }
-
-    // Get quantitative overall score
-    var scores = [];
-    for (var j = 0; j < input.length; j++) {
-        if (j == 0) {
-            // Sleep
-            scores.push((input[j] * 25) * 1.3);
-        } else if (j == 1) {
-            // Energy
-            scores.push((input[j] * 25) * 0.8);
-        } else if (j == 2) {
-            // Mood
-            scores.push((input[j] * 25) * 0.9);
-        } else if (j == 2) {
-            // Presence
-            scores.push((input[j] * 25) * 1);
-        }
-        
-    }
-    var sum = scores.reduce(function (a, b) { return a + b; }, 0);
-    var overall = sum / scores.length;
-    overall = Math.round(overall);
-
-    var attachments = {
-        title: '<@' + user + '>\'s End of Day Snapshot',
-        color: '#CF02FF',
-        attachment_type: 'default',
-        text: '*Sleep:* ' + qualitative[0] + '\n*Energy:* ' + qualitative[1] + '\n*Mood:* ' + qualitative[2] + '\n*Presence:* ' + qualitative[3] + '\n*Score:* ' + overall + '%'
-    };
-
-    return attachments;
-}
-
-function GetOverall(score) {
-    var scores = [];
-    for (var j = 0; j < score.length - 1; j++) {
-        scores.push(score[j] * 25);
-    }
-    var sum = scores.reduce(function (a, b) { return a + b; }, 0);
-    var overall = sum / scores.length;
-    overall = Math.round(overall);
-    return overall
 }

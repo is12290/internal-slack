@@ -48,7 +48,6 @@ This bot demonstrates many of the core features of Botkit:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 require('dotenv').config();
-const dashbot = require('dashbot')(process.env.DASHBOT_API_KEY).slack;
 
 if (!process.env.clientId || !process.env.clientSecret || !process.env.PORT) {
   usage_tip();
@@ -78,9 +77,6 @@ if (process.env.MONGODB_URI) {
 
 // Create the Botkit controller, which controls all instances of the bot.
 var controller = Botkit.slackbot(bot_options);
-
-controller.middleware.receive.use(dashbot.receive);
-controller.middleware.send.use(dashbot.send);
 
 controller.startTicking();
 
@@ -120,8 +116,3 @@ if (!process.env.clientId || !process.env.clientSecret) {
     require("./skills/" + file)(controller);
   });
 }
-
-// var Honeybadger = require('honeybadger');
-// Honeybadger.configure({
-//   apiKey: process.env.HONEYBADGER_API_KEY
-// });
